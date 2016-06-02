@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<div class="col-lg-1"></div>
+<div class="col-lg-10">
+    <div ng-show="user.nombre"
+         class="panel panel-info"
+         data-ng-init="detailUsuario()"
+         id="perfil"> 
+        <div class="panel panel-heading" style='margin-bottom: 0px;'># {{user.idUsuario}}: {{user.username}}
+            <a href='' ui-sref="modificar-perfil" style="color: #FFFFFF;float: right;">Editar</a>
+        </div>
+        <div class="panel-body" style=''>
+            <div class="row col-lg-8" style=''>
+                <form class="form-horizontal">
+                    <div class='row col-lg-6'>
+                        <div class="form-group">
+                            <label class="control-label">Nombre:</label>
+                            <div>{{user.nombre}}</div>                                
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Apellido:</label>
+                            <div>{{user.apellido}}</div>  
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">D.N.I.:</label>
+                            <div>{{user.dni|number:0}}</div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Fecha de nacimiento:</label>
+                            <div>{{user.fechaNacimiento| date: 'fullDate'}}</div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Ciudad:</label>
+                            <div>{{user.provincia}}</div>
+                        </div>                        
+                    </div>
+                    <div class='row col-lg-6'>
+                        <div class="form-group">
+                            <label class="control-label">Email:</label>
+                            <div>{{user.email}}</div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Telefono:</label>
+                            <div>{{user.telefono|tel}}</div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Rol:</label>
+                            <div>{{user.roles.nombreRol}}</div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Estado:</label>
+                            <div>{{user.estado}}</div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Sucursal:</label>
+                            <div>{{user.usuarioSucursal.nombreSucursal}}</div>
+                        </div>
+                    </div>
+                </form>  
+            </div>
+            <div class="row col-lg-4" style=''>
+                <div class="form-group">
+                    <img ng-src="data:image/JPEG;base64,{{user.imagen}}" id="foto-perfil">
+                </div>
+            </div>
+        </div>        
+    </div>
+</div>
+<div class="col-lg-1"></div>
+
+<toaster-container toaster-options="{'time-out': 3000, 'close-button':true, 'animation-class': 'toast-top-center'}"></toaster-container>
+      

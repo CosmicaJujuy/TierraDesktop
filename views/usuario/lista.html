@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title></title>        
+    </head>
+    <body>
+    <center><h1 id="tituloTablas">Lista de usuarios</h1></center>
+    <div class="table-responsive">
+        <table ng-show="usuarios[0]"
+               data-ng-init="listaUsuarios()"
+               class="table table-bordered"
+               title="Usuarios"
+               style="background-color: white;">
+            <thead id="headTableProductos">
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre y Apellido</th>
+                    <th>Rol</th>
+                    <th>Sucursal</th>
+                    <th>E-mail</th>
+                    <th>Telefono</th>
+                    <th>Domicilio Particular</th>                
+                    <th>Ultima conexion</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tr ng-repeat="usuario in usuarios">
+                <td>{{usuario.idUsuario}}</td>
+                <td>{{usuario.nombre}} {{usuario.apellido}}</td>
+                <td style="font-size: smaller;">{{usuario.roles.nombreRol}}</td>
+                <td style="font-size: smaller;">{{usuario.usuarioSucursal.nombreSucursal}}</td>
+                <td>{{usuario.email}}</td>
+                <td>{{usuario.telefono}}</td>
+                <td>{{usuario.domicilio}}</td>
+                <td style="text-align: center;">
+                    <div style="font-size: smaller">{{usuario.ultimaConexion| date: 'medium'}}</div>
+                    <div ng-hide="usuario.ultimaConexion">NUNCA</div>
+                </td>
+                <td style="text-align: center;">
+                    <div ng-show="{{::usuario.estado}}">ACTIVO</div>
+                    <div ng-hide="{{::usuario.estado}}">INACTIVO</div>
+                </td>
+                <td>
+            <center>
+                <button type="button"
+                        ng-hide="usuario.estado"
+                        class="btn btn-success btn-xs"
+                        data-toggle="modal"
+                        uib-tooltip="Activar usuario"
+                        ng-click="seleccionarUsuario(usuario)"
+                        data-target="#myModal">
+                    <span class="glyphicon glyphicon-check"></span>
+                </button>
+                <button type="button"
+                        ng-show="usuario.estado"
+                        class="btn btn-danger btn-xs"
+                        data-toggle="modal"
+                        uib-tooltip="Desactivar usuario"
+                        ng-click="seleccionarUsuario(usuario)"
+                        data-target="#myModal">
+                    <span class="glyphicon glyphicon-remove-sign"></span>
+                </button>
+            </center>
+            </td>
+            </tr>
+        </table>
+    </div>
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Cambiar estado de usuario</h4>
+                </div>
+                <div class="modal-body">
+                    <center>
+                        ¿Desea cambiar el estado del usuario?
+                        <br>
+                        <button class="btn btn-success"
+                                type="button"
+                                ng-hide="modificarUsuario.estado"
+                                data-dismiss="modal"
+                                ng-click="cambiarEstado(true)">Activar</button>
+                        <button class="btn btn-danger"
+                                type="button"
+                                ng-show="modificarUsuario.estado"
+                                data-dismiss="modal"
+                                ng-click="cambiarEstado(false)">Desactivar</button>
+                    </center>                
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+</html>
