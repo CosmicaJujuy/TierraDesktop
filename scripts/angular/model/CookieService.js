@@ -5,7 +5,7 @@ miAppHome.service('cookieService', function ($q) {
     this.put = function (data, name) {
         var expiration = new Date();
         var hour = expiration.getHours();
-        hour = hour + 8;
+        hour = hour + 6;
         expiration.setHours(hour);
         ses.cookies.set({
             url: 'https://tierradecoloresapi.herokuapp.com/',

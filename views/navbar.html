@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<nav class="navbar navbar-inverse navbar-fixed-top" ng-hide="false">            
+<nav class="navbar navbar-inverse navbar-fixed-top" ng-hide="false"ng-controller="UsuarioController">         
     <div class="navbar-header">
         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
             <span class="sr-only">Toggle navigation</span>
@@ -10,19 +10,19 @@
         <a style='padding-left: 45px;' class="navbar-brand" href="#/home" id="nav-titulo">Tierra de colores</a>
     </div>
     <div id="navbar" class="collapse navbar-collapse pull-right" style="margin-right: 5%;">
-        <ul class="nav navbar-nav">
-            <li ui-sref-active="active"><a href="" ui-sref="perfil">Perfil</a></li>
+        <ul class="nav navbar-nav" ng-show="user.idUsuario">
+            <li ui-sref-active="active"><a href="" ui-sref="perfil" data-ng-init="detailUsuario()"><img ng-src="data:image/JPEG;base64,{{user.imagen}}" style="width: 25px; height: 25px; margin-right: 10px;">{{user.nombre}}</a></li>
             <li class="dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Usuarios<span class="caret"></span></a>
                 <ul class="dropdown-menu">
                     <li ui-sref-active="active"><a href="" ui-sref="usuarios">Lista de usuarios</a></li>
-                    <li><a href="">Agregar usuario</a></li>
+                    <li ui-sref-active="active"><a href="" ui-sref="nuevo-usuario">Agregar usuario</a></li>
                 </ul>
             </li>
             <li class="dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Finanzas<span class="caret"></span></a>
                 <ul class="dropdown-menu">
-                    <li><a href="">Tarjetas</a></li>
+                    <li  ui-sref-active="active"><a href="" ui-sref="tarjetas">Tarjetas</a></li>
                     <li><a href="">Bancos</a></li>
                     <li><a href="">Planes de Pago</a></li>
                 </ul>

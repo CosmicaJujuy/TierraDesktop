@@ -11,7 +11,6 @@ miAppHome.service('UsuarioService', function ($http, $q, $rootScope, $cookies, c
         var uri = 'https://tierradecoloresapi.herokuapp.com/usuarios/list';
         var token = cookieService.get('token');
         token.then(function (data) {
-            console.log(data);
             $http({
                 url: uri,
                 method: 'get',

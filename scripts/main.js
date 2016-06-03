@@ -10,6 +10,7 @@ var miAppHome = angular.module('tierraDeColoresApp', [
     'LocalStorageModule',
     'ngMaterial',
     'ui.bootstrap',
+    'ngTable',
     'angular-loading-bar'])
         .config(function ($stateProvider, $urlRouterProvider) {
             $stateProvider
@@ -100,6 +101,46 @@ var miAppHome = angular.module('tierraDeColoresApp', [
                             'body': {
                                 templateUrl: "views/usuario/lista.html",
                                 controller: 'UsuarioController'
+                            }
+                        }
+                    })
+                    .state('nuevo-usuario', {
+                        url: '/nuevo-usuario',
+                        data: {pageTitle: 'Agregar nuevo usuario.'},
+                        views: {
+                            'navbar': {
+                                templateProvider: function ($templateRequest, sessionProvider) {
+                                    var templateName;
+                                    if (sessionProvider.getPath() === "admin") {
+                                        templateName = 'views/navbar.html';
+                                    }
+                                    return $templateRequest(templateName);
+                                },
+                                controller: null
+                            },
+                            'body': {
+                                templateUrl: "views/usuario/nuevoUsuario.html",
+                                controller: 'UsuarioController'
+                            }
+                        }
+                    })
+                    .state('tarjetas', {
+                        url: '/tarjetas',
+                        data: {pageTitle: 'Panel tarjetas'},
+                        views: {
+                            'navbar': {
+                                templateProvider: function ($templateRequest, sessionProvider) {
+                                    var templateName;
+                                    if (sessionProvider.getPath() === "admin") {
+                                        templateName = 'views/navbar.html';
+                                    }
+                                    return $templateRequest(templateName);
+                                },
+                                controller: null
+                            },
+                            'body': {
+                                templateUrl: "views/tarjeta/panelTarjeta.html",
+                                controller: 'TarjetaController'
                             }
                         }
                     });
