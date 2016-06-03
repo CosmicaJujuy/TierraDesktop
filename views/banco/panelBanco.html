@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<div class="col-lg-3"></div>
+<div class="col-lg-6">
+    <uib-tabset justified="true"
+                ng-show="entidadBancarias[0]"
+                style="margin-top: 100px; background-color: white; min-height: 500px;">
+        <uib-tab heading="Entidades Bancarias">
+            <div class="table-responsive">
+                <table data-ng-init="listaEntidadBancaria()"
+                       class="table table-bordered"
+                       ng-table="tableEntidades">
+                    <thead id="headTableProductos">
+                        <tr>
+                            <th style="text-align: center">ID</th>
+                            <th style="text-align: center">Nombre</th> 
+                            <th style="text-align: center">Direccion</th> 
+                            <th style="text-align: center">Acciones</th> 
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="entidad in $data">
+                            <th style="text-align: center">{{entidad.idEntidadMonetaria}}</th>
+                            <th style="text-align: center">{{entidad.nombreEntidad}}</th>                        
+                            <th style="text-align: center">{{entidad.direccionEntidad}}</th>                        
+                            <th style="text-align: center">
+                                <button type="button"
+                                        class="btn btn-xs btn-info"
+                                        data-toggle="modal" 
+                                        uib-tooltip="Modificar entidad"
+                                        data-target="#myModal"
+                                        ng-click="seleccionarEntidad(entidad)"><span class="glyphicon glyphicon-pencil"></span></button>
+                                <button type="button" 
+                                        class="btn btn-xs btn-danger"
+                                        data-toggle="modal" 
+                                        uib-tooltip="Eliminar entidad"
+                                        data-target="#myModalDelete"
+                                        ng-click="seleccionarEntidad(entidad)"><span class="glyphicon glyphicon-trash"></span></button>
+                            </th>                        
+                        </tr>
+                    </tbody>
+                </table>
+            </div>                    
+        </uib-tab>
+        <uib-tab heading="Agregar nueva Entidad">
+            <div class="col-lg-2"></div>
+            <div class="col-lg-8">
+                <form name="newEntidad" class="form-horizontal">
+                    <fieldset>
+                        <legend style="text-align: center;">Datos de la entidad</legend>
+                        <div class="form-group">                    
+                            <label class="control-label">Nombre</label>                                
+                            <input type="text"
+                                   class="form-control"
+                                   placeholder="Ingrese nombre de la entidad bancaria"
+                                   ng-model="_entidadBancaria.nombreEntidad"
+                                   maxlength="20"
+                                   name="nombreEntidad" required
+                                   data-ng-class='{error: newEntidad.nombreEntidad.$invalid && !newEntidad.$pristine}'/>
+                        </div>
+                        <div class="form-group">                    
+                            <label class="control-label">Direccion</label>                                
+                            <input type="text"
+                                   class="form-control"
+                                   maxlength="30"
+                                   placeholder="Ingrese direccion"
+                                   ng-model="_entidadBancaria.direccionEntidad" name="direccionEntidad" required
+                                   data-ng-class='{error: newEntidad.direccionEntidad.$invalid && !newEntidad.$pristine}'/>
+                        </div>
+                        <div class="form-group">                    
+                            <label class="control-label">Telefono</label>
+                            <input type="tel"
+                                   class="form-control"
+                                   placeholder="Ingrese número de telefono"
+                                   ng-model="_entidadBancaria.telefonoEntidad"
+                                   name="entidadTelefono" required
+                                   data-ng-class='{error: newEntidad.entidadTelefono.$invalid && !newEntidad.$pristine}'/>
+                        </div>               
+                        <div class="form-group">
+                            <center>
+                                <button ng-click="agregarEntidad(_entidadBancaria)"
+                                        type="submit"
+                                        class="btn btn-warning"
+                                        ng-disabled="newEntidad.$invalid">Agregar</button>
+                            </center>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>                    
+            <div class="col-lg-2"></div>
+        </uib-tab>        
+    </uib-tabset>
+</div>
+<div class="col-lg-3"></div>
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Cambiar datos de la entidad</h4>
+            </div>
+            <div class="modal-body">
+                <form name="updateEntidad" class="form-horizontal">
+                    <div class="form-group">                    
+                        <label class="control-label">Nombre</label>                                
+                        <input type="text"
+                               class="form-control"
+                               ng-model="entidadSeleccionada.nombreEntidad"
+                               maxlength="20"x
+                               name="nombreEntidad" required
+                               data-ng-class='{error: updateEntidad.nombreEntidad.$invalid && !updateEntidad.$pristine}'/>
+                    </div>
+                    <div class="form-group">                    
+                        <label class="control-label">Direccion</label>                                
+                        <input type="text" 
+                               class="form-control"
+                               ng-model="entidadSeleccionada.direccionEntidad"
+                               maxlength="30"
+                               name="direccionEntidad" required
+                               data-ng-class='{error: updateEntidad.direccionEntidad.$invalid && !updateEntidad.$pristine}'/>
+                    </div>
+                    <div class="form-group">                    
+                        <label class="control-label">Telefono</label>                                
+                        <input type="tel" 
+                               class="form-control"
+                               ng-model="entidadSeleccionada.telefonoEntidad" name="entidadTelefono" required
+                               data-ng-class='{error: updateEntidad.entidadTelefono.$invalid && !updateEntidad.$pristine}'/>
+                    </div>               
+                    <div class="form-group">
+                        <center>
+                            <button ng-click="modificarEntidad(entidadSeleccionada)"
+                                    type="submit"
+                                    class="btn btn-warning"
+                                    data-dismiss="modal"
+                                    ng-disabled="updateEntidad.$invalid">Modificar</button>
+                        </center>                                
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="myModalDelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Eliminar entidad</h4>
+            </div>
+            <div class="modal-body">
+                <center>
+                    ¿Desea eliminar esta entidad?
+                    <br>
+                    <button class="btn btn-danger"
+                            ng-click="eliminarEntidad()"
+                            data-dismiss="modal"
+                            >Eliminar</button>
+                </center>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<toaster-container toaster-options="{'time-out': 3000, 'close-button':true, 'animation-class': 'toast-top-center'}"></toaster-container>
+

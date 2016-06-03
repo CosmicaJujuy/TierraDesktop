@@ -3,10 +3,7 @@
     font-style: normal;
     font-weight: 400;
     src: local('Pacifico Regular'), local('Pacifico-Regular'), url(https://fonts.gstatic.com/s/pacifico/v7/Q_Z9mv4hySLTMoMjnk_rCfesZW2xOQ-xsNqO47m55DA.woff2) format('woff2');}
-#loading-bar .bar {
-    background: white !important;
-    height: 3px !important;
-}
+
 /*OVERIDE BOOTSTRAP*/
 .control-label{
     color: #000000 !important;
@@ -506,13 +503,17 @@ fieldset[disabled] .navbar .btn-link:focus {
 .warning {
     border-color: #FDA504;
 }
+#loading-bar .bar {
+    background: #fb6b8c !important;
+    height: 5px !important;
+}
 #loading-bar-spinner .spinner-icon {
-    width: 24px;
-    height: 24px;
+    width: 30px;
+    height: 30px;
     margin-top: 7px;
-    border:  solid 2px transparent;
-    border-top-color:  white;
-    border-left-color: white;
+    border:  solid 4px transparent;
+    border-top-color:  #fb6b8c;
+    border-left-color: #fb6b8c;
     border-radius: 50%;
 }
 #shadow-boz{
@@ -556,8 +557,9 @@ fieldset[disabled] .navbar .btn-link:focus {
 #nav-titulo{
     font-family: kaufmann-bold !important;
     font-size: 30pt;
-    color: #EC4D71;
-    text-shadow: 2px 0 0 white;
+    color: #fb6b8c;
+    text-shadow: 2px 0 0 #8904B1;
+    width: 100%;
 }
 #perfil{
     margin-top: 100px;

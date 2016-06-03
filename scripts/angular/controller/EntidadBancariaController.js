@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-miAppHome.controller('EntidadBancariaController', function ($scope, $timeout, $state, NgTableParams, toaster, $route, entidadBancariaService) {
+miAppHome.controller('EntidadBancariaController', function ($scope, $timeout, $state, NgTableParams, toaster, entidadBancariaService) {
 
     /**
      * Objeto modelo para entidad bancaria

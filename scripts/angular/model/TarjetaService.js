@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-miAppHome.service('tarjetaService', function ($http, $q, $rootScope, $cookies, cookieService) {
+miAppHome.service('tarjetaService', function ($http, $q, $rootScope, cookieService) {
 
     this.getAll = function () {
         var datosRecu = null;

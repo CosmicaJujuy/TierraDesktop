@@ -3,26 +3,28 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-miAppHome.service('_tipoService', function ($http, $q, $rootScope, $cookies) {
+miAppHome.service('_tipoService', function ($http, $q, $rootScope, cookieService) {
 
     this.getListaTipo = function () {
         var datosRecu = null;
         var deferred = $q.defer();
-        var token = $cookies.getObject('token');
         var uri = 'https://tierradecoloresapi.herokuapp.com/tipo/list';
-        $http({
-            url: uri,
-            method: 'get',
-            headers: {
-                'Authorization': 'Bearer ' + token.data.access_token,
-                'Content-type': 'application/json'
-            }
-        }).then(function successCallback(response) {
-            datosRecu = response;
-            deferred.resolve(datosRecu);
-        }, function errorCallback(response) {
-            datosRecu = response;
-            deferred.resolve(datosRecu);
+        var token = cookieService.get('token');
+        token.then(function (data) {
+            $http({
+                url: uri,
+                method: 'get',
+                headers: {
+                    'Authorization': 'Bearer ' + data,
+                    'Content-type': 'application/json'
+                }
+            }).then(function successCallback(response) {
+                datosRecu = response;
+                deferred.resolve(datosRecu);
+            }, function errorCallback(response) {
+                datosRecu = response;
+                deferred.resolve(datosRecu);
+            });
         });
         return deferred.promise;
     };
@@ -30,22 +32,24 @@ miAppHome.service('_tipoService', function ($http, $q, $rootScope, $cookies) {
     this.addTipo = function (tipo) {
         var datosRecu = null;
         var deferred = $q.defer();
-        var token = $cookies.getObject('token');
         var uri = 'https://tierradecoloresapi.herokuapp.com/tipo/add';
-        $http({
-            url: uri,
-            method: 'post',
-            data: angular.toJson(tipo),
-            headers: {
-                'Authorization': 'Bearer ' + token.data.access_token,
-                'Content-type': 'application/json'
-            }
-        }).then(function successCallback(response) {
-            datosRecu = response;
-            deferred.resolve(datosRecu);
-        }, function errorCallback(response) {
-            datosRecu = response;
-            deferred.resolve(datosRecu);
+        var token = cookieService.get('token');
+        token.then(function (data) {
+            $http({
+                url: uri,
+                method: 'post',
+                data: angular.toJson(tipo),
+                headers: {
+                    'Authorization': 'Bearer ' + data,
+                    'Content-type': 'application/json'
+                }
+            }).then(function successCallback(response) {
+                datosRecu = response;
+                deferred.resolve(datosRecu);
+            }, function errorCallback(response) {
+                datosRecu = response;
+                deferred.resolve(datosRecu);
+            });
         });
         return deferred.promise;
     };
@@ -53,22 +57,24 @@ miAppHome.service('_tipoService', function ($http, $q, $rootScope, $cookies) {
     this.updateTipo = function (tipo) {
         var datosRecu = null;
         var deferred = $q.defer();
-        var token = $cookies.getObject('token');
         var uri = 'https://tierradecoloresapi.herokuapp.com/tipo/update';
-        $http({
-            url: uri,
-            method: 'post',
-            data: angular.toJson(tipo),
-            headers: {
-                'Authorization': 'Bearer ' + token.data.access_token,
-                'Content-type': 'application/json'
-            }
-        }).then(function successCallback(response) {
-            datosRecu = response;
-            deferred.resolve(datosRecu);
-        }, function errorCallback(response) {
-            datosRecu = response;
-            deferred.resolve(datosRecu);
+        var token = cookieService.get('token');
+        token.then(function (data) {
+            $http({
+                url: uri,
+                method: 'post',
+                data: angular.toJson(tipo),
+                headers: {
+                    'Authorization': 'Bearer ' + data,
+                    'Content-type': 'application/json'
+                }
+            }).then(function successCallback(response) {
+                datosRecu = response;
+                deferred.resolve(datosRecu);
+            }, function errorCallback(response) {
+                datosRecu = response;
+                deferred.resolve(datosRecu);
+            });
         });
         return deferred.promise;
     };
@@ -76,22 +82,24 @@ miAppHome.service('_tipoService', function ($http, $q, $rootScope, $cookies) {
     this.deleteTipo = function (tipo) {
         var datosRecu = null;
         var deferred = $q.defer();
-        var token = $cookies.getObject('token');
         var uri = 'https://tierradecoloresapi.herokuapp.com/tipo/delete';
-        $http({
-            url: uri,
-            method: 'post',
-            data: angular.toJson(tipo),
-            headers: {
-                'Authorization': 'Bearer ' + token.data.access_token,
-                'Content-type': 'application/json'
-            }
-        }).then(function successCallback(response) {
-            datosRecu = response;
-            deferred.resolve(datosRecu);
-        }, function errorCallback(response) {
-            datosRecu = response;
-            deferred.resolve(datosRecu);
+        var token = cookieService.get('token');
+        token.then(function (data) {
+            $http({
+                url: uri,
+                method: 'post',
+                data: angular.toJson(tipo),
+                headers: {
+                    'Authorization': 'Bearer ' + data,
+                    'Content-type': 'application/json'
+                }
+            }).then(function successCallback(response) {
+                datosRecu = response;
+                deferred.resolve(datosRecu);
+            }, function errorCallback(response) {
+                datosRecu = response;
+                deferred.resolve(datosRecu);
+            });
         });
         return deferred.promise;
     };

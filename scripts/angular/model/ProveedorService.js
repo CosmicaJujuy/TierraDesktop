@@ -3,26 +3,28 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-miAppHome.service('_proveedorService', function ($http, $q, $rootScope, $cookies) {
+miAppHome.service('_proveedorService', function ($http, $q, $rootScope, cookieService) {
 
     this.getAll = function () {
         var datosRecu = null;
         var deferred = $q.defer();
-        var token = $cookies.getObject('token');
         var uri = 'https://tierradecoloresapi.herokuapp.com/proveedor/list';
-        $http({
-            url: uri,
-            method: 'get',
-            headers: {
-                'Authorization': 'Bearer ' + token.data.access_token,
-                'Content-type': 'application/json'
-            }
-        }).then(function successCallback(response) {
-            datosRecu = response;
-            deferred.resolve(datosRecu);
-        }, function errorCallback(response) {
-            datosRecu = response;
-            deferred.resolve(datosRecu);
+        var token = cookieService.get('token');
+        token.then(function (data) {
+            $http({
+                url: uri,
+                method: 'get',
+                headers: {
+                    'Authorization': 'Bearer ' + data,
+                    'Content-type': 'application/json'
+                }
+            }).then(function successCallback(response) {
+                datosRecu = response;
+                deferred.resolve(datosRecu);
+            }, function errorCallback(response) {
+                datosRecu = response;
+                deferred.resolve(datosRecu);
+            });
         });
         return deferred.promise;
     };
@@ -30,22 +32,24 @@ miAppHome.service('_proveedorService', function ($http, $q, $rootScope, $cookies
     this.add = function (proveedor) {
         var datosRecu = null;
         var deferred = $q.defer();
-        var token = $cookies.getObject('token');
         var uri = 'https://tierradecoloresapi.herokuapp.com/proveedor/add';
-        $http({
-            url: uri,
-            method: 'post',
-            data: angular.toJson(proveedor),
-            headers: {
-                'Authorization': 'Bearer ' + token.data.access_token,
-                'Content-type': 'application/json'
-            }
-        }).then(function successCallback(response) {
-            datosRecu = response;
-            deferred.resolve(datosRecu);
-        }, function errorCallback(response) {
-            datosRecu = response;
-            deferred.resolve(datosRecu);
+        var token = cookieService.get('token');
+        token.then(function (data) {
+            $http({
+                url: uri,
+                method: 'post',
+                data: angular.toJson(proveedor),
+                headers: {
+                    'Authorization': 'Bearer ' + data,
+                    'Content-type': 'application/json'
+                }
+            }).then(function successCallback(response) {
+                datosRecu = response;
+                deferred.resolve(datosRecu);
+            }, function errorCallback(response) {
+                datosRecu = response;
+                deferred.resolve(datosRecu);
+            });
         });
         return deferred.promise;
     };
@@ -53,22 +57,24 @@ miAppHome.service('_proveedorService', function ($http, $q, $rootScope, $cookies
     this.update = function (proveedor) {
         var datosRecu = null;
         var deferred = $q.defer();
-        var token = $cookies.getObject('token');
         var uri = 'https://tierradecoloresapi.herokuapp.com/proveedor/update';
-        $http({
-            url: uri,
-            method: 'post',
-            data: angular.toJson(proveedor),
-            headers: {
-                'Authorization': 'Bearer ' + token.data.access_token,
-                'Content-type': 'application/json'
-            }
-        }).then(function successCallback(response) {
-            datosRecu = response;
-            deferred.resolve(datosRecu);
-        }, function errorCallback(response) {
-            datosRecu = response;
-            deferred.resolve(datosRecu);
+        var token = cookieService.get('token');
+        token.then(function (data) {
+            $http({
+                url: uri,
+                method: 'post',
+                data: angular.toJson(proveedor),
+                headers: {
+                    'Authorization': 'Bearer ' + data,
+                    'Content-type': 'application/json'
+                }
+            }).then(function successCallback(response) {
+                datosRecu = response;
+                deferred.resolve(datosRecu);
+            }, function errorCallback(response) {
+                datosRecu = response;
+                deferred.resolve(datosRecu);
+            });
         });
         return deferred.promise;
     };
@@ -76,22 +82,24 @@ miAppHome.service('_proveedorService', function ($http, $q, $rootScope, $cookies
     this.delete = function (proveedor) {
         var datosRecu = null;
         var deferred = $q.defer();
-        var token = $cookies.getObject('token');
         var uri = 'https://tierradecoloresapi.herokuapp.com/proveedor/delete';
-        $http({
-            url: uri,
-            method: 'post',
-            data: angular.toJson(proveedor),
-            headers: {
-                'Authorization': 'Bearer ' + token.data.access_token,
-                'Content-type': 'application/json'
-            }
-        }).then(function successCallback(response) {
-            datosRecu = response;
-            deferred.resolve(datosRecu);
-        }, function errorCallback(response) {
-            datosRecu = response;
-            deferred.resolve(datosRecu);
+        var token = cookieService.get('token');
+        token.then(function (data) {
+            $http({
+                url: uri,
+                method: 'post',
+                data: angular.toJson(proveedor),
+                headers: {
+                    'Authorization': 'Bearer ' + data,
+                    'Content-type': 'application/json'
+                }
+            }).then(function successCallback(response) {
+                datosRecu = response;
+                deferred.resolve(datosRecu);
+            }, function errorCallback(response) {
+                datosRecu = response;
+                deferred.resolve(datosRecu);
+            });
         });
         return deferred.promise;
     };
@@ -99,24 +107,26 @@ miAppHome.service('_proveedorService', function ($http, $q, $rootScope, $cookies
     this.searchById = function (idProveedor) {
         var datosRecu = null;
         var deferred = $q.defer();
-        var token = $cookies.getObject('token');
         var uri = 'https://tierradecoloresapi.herokuapp.com/proveedor/search';
-        $http({
-            url: uri,
-            method: 'post',
-            params: {
-                'id': idProveedor
-            },
-            headers: {
-                'Authorization': 'Bearer ' + token.data.access_token,
-                'Content-type': 'application/json'
-            }
-        }).then(function successCallback(response) {
-            datosRecu = response;
-            deferred.resolve(datosRecu);
-        }, function errorCallback(response) {
-            datosRecu = response;
-            deferred.resolve(datosRecu);
+        var token = cookieService.get('token');
+        token.then(function (data) {
+            $http({
+                url: uri,
+                method: 'post',
+                params: {
+                    'id': idProveedor
+                },
+                headers: {
+                    'Authorization': 'Bearer ' + data,
+                    'Content-type': 'application/json'
+                }
+            }).then(function successCallback(response) {
+                datosRecu = response;
+                deferred.resolve(datosRecu);
+            }, function errorCallback(response) {
+                datosRecu = response;
+                deferred.resolve(datosRecu);
+            });
         });
         return deferred.promise;
     };

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-miAppHome.service('categoriaService', function ($http, $q, $cookies, $rootScope) {
+miAppHome.service('categoriaService', function ($http, $q, cookieService, $rootScope) {
 
     this.getListaCategorias = function () {
         var datosRecu = null;

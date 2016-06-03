@@ -68,7 +68,6 @@
                                    ng-model="_tarjeta.nombreTarjeta" name="nombre" required
                                    ng-minlength="4"
                                    ng-maxlength="25"
-                                   ng-pattern="[a-zA-Z]+"
                                    minlength="4"
                                    maxlength="30"/>
                             <!-- MENSAJES-->
@@ -209,3 +208,4 @@
         </div>
     </div>
 </div>
+<toaster-container toaster-options="{'time-out': 3000, 'close-button':true, 'animation-class': 'toast-top-center'}"></toaster-container>
