@@ -23,7 +23,7 @@
                             ng-class="{ danger: stockMinimo(producto) }"                
                             >
                             <td style="text-align: center">{{producto.idProducto}}</td>
-                            <td style="text-align: center"><a href="" ui-sref="^.producto-detalle({idProducto:{{producto.idProducto}}})">{{producto.descripcion}}</a></td>
+                            <td style="text-align: center"><a href="" ui-sref="^.producto({idProducto:{{producto.idProducto}}})">{{producto.descripcion}}</a></td>
                             <td style="text-align: center">{{producto.cantidadTotal}}</td>
                             <td style="text-align: center">{{producto.talla| uppercase}}</td>
                             <td style="text-align: center">{{producto.colorProducto| uppercase}}</td>                

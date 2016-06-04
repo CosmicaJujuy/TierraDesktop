@@ -2,7 +2,9 @@
 <div ng-controller="DemoBasicCtrl as ctrl" ng-cloak style="width: 100%; left: 0; right: 0; position: absolute;">
     <md-toolbar class="md-menu-toolbar">
         <div layout="row">
-            <button class="quit"><span class="glyphicon glyphicon-remove"></span></button>
+            <button class="minimize" style="color: rgb(240,98,146);"><md-icon class="material-icons">&#xE258;</md-icon></button>
+            <button class="maximize" style="color: rgb(240,98,146);"><md-icon class="material-icons">&#xE069;</md-icon></button>
+            <button class="quit" style="color: rgb(240,98,146);"><md-icon class="material-icons">&#xE14C;</md-icon></button>
             <div>
                 <a style="padding-left: 45px;" class="navbar-brand" href="#/home" id="nav-titulo">Tierra de colores</a>
                 <md-menu-bar>
@@ -10,14 +12,16 @@
                         <button ng-click="$mdOpenMenu()">
                             Perfil
                         </button>
-                        <md-menu-content>
-                            <md-menu-item>                                
-                                <md-button ui-sref="perfil" style="color: rgb(240,98,146);">
+                        <md-menu-content class="menu-content">
+                            <md-menu-item class="md-indent">
+                                <md-icon class="material-icons">&#xE7FD;</md-icon>
+                                <md-button ui-sref="perfil">
                                     Ver mi perfil
                                 </md-button>
                             </md-menu-item>
-                            <md-menu-item>                                
-                                <md-button ui-sref="modificar-perfil" style="color: rgb(240,98,146);">
+                            <md-menu-item class="md-indent">
+                                <md-icon class="material-icons">&#xE3C9;</md-icon>
+                                <md-button ui-sref="modificar-perfil">
                                     Modificar mi perfil
                                 </md-button>
                             </md-menu-item>
@@ -27,14 +31,16 @@
                         <button ng-click="$mdOpenMenu()">
                             Usuarios
                         </button>
-                        <md-menu-content>
-                            <md-menu-item>
-                                <md-button ui-sref="usuarios" style="color: rgb(240,98,146);">
+                        <md-menu-content class="menu-content">
+                            <md-menu-item class="md-indent">
+                                <md-icon class="material-icons">&#xE896;</md-icon>
+                                <md-button ui-sref="usuarios">
                                     Lista de usuarios
                                 </md-button>
-                            </md-menu-item>
-                            <md-menu-item>
-                                <md-button ui-sref="nuevo-usuario" style="color: rgb(240,98,146);">
+                            </md-menu-item>                     
+                            <md-menu-item class="md-indent">
+                                <md-icon class="material-icons">&#xE7FE;</md-icon>
+                                <md-button ui-sref="nuevo-usuario">
                                     Agregar nuevo usuario
                                 </md-button>
                             </md-menu-item>
@@ -44,19 +50,22 @@
                         <button ng-click="$mdOpenMenu()">
                             Finanzas
                         </button>
-                        <md-menu-content>
-                            <md-menu-item>
-                                <md-button ui-sref="bancos" style="color: rgb(240,98,146);">
+                        <md-menu-content class="menu-content">
+                            <md-menu-item class="md-indent">
+                                <md-icon class="material-icons">&#xE84F;</md-icon>
+                                <md-button ui-sref="bancos">
                                     Bancos
                                 </md-button>
                             </md-menu-item>
-                            <md-menu-item>
-                                <md-button ui-sref="tarjetas" style="color: rgb(240,98,146);">
+                            <md-menu-item class="md-indent">
+                                <md-icon class="material-icons">&#xE870;</md-icon>
+                                <md-button ui-sref="tarjetas">
                                     Tarjetas
                                 </md-button>
                             </md-menu-item>
-                            <md-menu-item>
-                                <md-button ui-sref="nuevo-usuario" style="color: rgb(240,98,146);">
+                            <md-menu-item class="md-indent">
+                                <md-icon class="material-icons">&#xE263;</md-icon>
+                                <md-button ui-sref="pagos">
                                     Planes de pago
                                 </md-button>
                             </md-menu-item>
@@ -64,140 +73,122 @@
                     </md-menu>
                     <md-menu>
                         <button ng-click="$mdOpenMenu()">
-                            File
+                            Inventario
                         </button>
-                        <md-menu-content>
-                            <md-menu-item>
-                                <md-button ng-click="ctrl.sampleAction('share', $event)">
-                                    Share...
-                                </md-button>
-                            </md-menu-item>
-                            <md-menu-divider></md-menu-divider>
-                            <md-menu-item>
+                        <md-menu-content class="menu-content">
+                            <md-menu-item class="md-indent">
+                                <md-icon class="material-icons">&#xE8D1;</md-icon>
                                 <md-menu>
-                                    <md-button ng-click="$mdOpenMenu()">New</md-button>
-                                    <md-menu-content>
-                                        <md-menu-item><md-button ng-click="ctrl.sampleAction('New Document', $event)">Document</md-button></md-menu-item>
-                                        <md-menu-item><md-button ng-click="ctrl.sampleAction('New Spreadsheet', $event)">Spreadsheet</md-button></md-menu-item>
-                                        <md-menu-item><md-button ng-click="ctrl.sampleAction('New Presentation', $event)">Presentation</md-button></md-menu-item>
-                                        <md-menu-item><md-button ng-click="ctrl.sampleAction('New Form', $event)">Form</md-button></md-menu-item>
-                                        <md-menu-item><md-button ng-click="ctrl.sampleAction('New Drawing', $event)">Drawing</md-button></md-menu-item>
+                                    <md-button ng-click="$mdOpenMenu()">
+                                        Productos
+                                    </md-button>
+                                    <md-menu-content class="menu-content">
+                                        <md-menu-item class="md-indent">
+                                            <md-icon class="material-icons">&#xE8B0;</md-icon>
+                                            <md-button ui-sref="productos">
+                                                Productos / Facturas
+                                            </md-button>
+                                        </md-menu-item>
+                                        <md-menu-item class="md-indent">
+                                            <md-icon class="material-icons">&#xE0B6;</md-icon>
+                                            <md-button>Distribución</md-button>
+                                        </md-menu-item>
+                                        <md-menu-item class="md-indent">
+                                            <md-icon class="material-icons">&#xE8B6;</md-icon>
+                                            <md-button>Busqueda</md-button>
+                                        </md-menu-item>
                                     </md-menu-content>
                                 </md-menu>
                             </md-menu-item>
-                            <md-menu-item>
-                                <md-button ng-click="ctrl.sampleAction('Open', $event)">
-                                    Open...
-                                    <span class="md-alt-text"> {{ 'M-O' | keyboardShortcut }}</span>
-                                </md-button>
-                            </md-menu-item>
-                            <md-menu-item>
-                                <md-button disabled="disabled" ng-click="ctrl.sampleAction('Rename', $event)">
-                                    Rename
-                                </md-button>
-                            </md-menu-item>
-                            <md-menu-divider></md-menu-divider>
-                            <md-menu-item>
-                                <md-button ng-click="ctrl.sampleAction('Print', $event)">
-                                    Print
-                                    <span class="md-alt-text">{{ 'M-P' | keyboardShortcut }}</span>
-                                </md-button>
-                            </md-menu-item>
-                        </md-menu-content>
-                    </md-menu>
-                    <md-menu>
-                        <button ng-click="$mdOpenMenu()">
-                            Edit
-                        </button>
-                        <md-menu-content>
                             <md-menu-item class="md-indent">
-                                <md-icon md-svg-icon="undo"></md-icon>
-                                <md-icon md-font-library="material-icons">undo</md-icon>
-                                <md-button ng-click="ctrl.sampleAction('undo', $event)">
-                                    Undo
-                                    <span class="md-alt-text">{{ 'M-Z' | keyboardShortcut }}</span>
-                                </md-button>
-                            </md-menu-item>
-                            <md-menu-item class="md-indent">
-                                <md-icon md-svg-icon="redo"></md-icon>
-                                <md-button ng-click="ctrl.sampleAction('redo', $event)">
-                                    Redo
-                                    <span class="md-alt-text">{{ 'M-Y' | keyboardShortcut }}</span>
-                                </md-button>
-                            </md-menu-item>
-                            <md-menu-divider></md-menu-divider>
-                            <md-menu-item class="md-indent">
-                                <md-icon md-svg-icon="content-cut"></md-icon>
-                                <md-button ng-click="ctrl.sampleAction('cut', $event)">
-                                    Cut
-                                    <span class="md-alt-text">{{ 'M-X' | keyboardShortcut }}</span>
-                                </md-button>
-                            </md-menu-item>
-                            <md-menu-item class="md-indent">
-                                <md-icon md-svg-icon="content-copy"></md-icon>
-                                <md-button ng-click="ctrl.sampleAction('copy', $event)">
-                                    Copy
-                                    <span class="md-alt-text">{{ 'M-C' | keyboardShortcut }}</span>
-                                </md-button>
-                            </md-menu-item>
-                            <md-menu-item class="md-indent">
-                                <md-icon md-svg-icon="content-paste"></md-icon>
-                                <md-button ng-click="ctrl.sampleAction('paste', $event)">
-                                    Paste
-                                    <span class="md-alt-text">{{ 'M-P' | keyboardShortcut }}</span>
-                                </md-button>
-                            </md-menu-item>
-                            <md-menu-divider></md-menu-divider>
-                            <md-menu-item class="md-indent">
-                                <md-button ng-click="ctrl.sampleAction('Find and replace', $event)">
-                                    Find and replace...
-                                    <span class="md-alt-text">{{ 'M-S-H' | keyboardShortcut }}</span>
-                                </md-button>
-                            </md-menu-item>
-                        </md-menu-content>
-                    </md-menu>
-                    <md-menu>
-                        <button ng-click="$mdOpenMenu()">
-                            View
-                        </button>
-                        <md-menu-content>
-                            <md-menu-item type="checkbox" ng-model="ctrl.settings.printLayout">Print layout</md-menu-item>
-                            <md-menu-item class="md-indent">
+                                <md-icon class="material-icons">&#xE8D1;</md-icon>
                                 <md-menu>
-                                    <md-button ng-click="$mdOpenMenu()">Mode</md-button>
-                                    <md-menu-content width="3">
-                                        <md-menu-item type="radio" ng-model="ctrl.settings.presentationMode" value="'presentation'">Presentation</md-menu-item>
-                                        <md-menu-item type="radio" ng-model="ctrl.settings.presentationMode" value="'edit'">Edit</md-menu-item>
-                                        <md-menu-item type="radio" ng-model="ctrl.settings.presentationMode" value="'modifiable'">Modifiable</md-menu-item>
+                                    <md-button ng-click="$mdOpenMenu()">Stock</md-button>
+                                    <md-menu-content class="menu-content">
+                                        <md-menu-item class="md-indent">
+                                            <md-icon class="material-icons">&#xE86E;</md-icon>
+                                            <md-button>Categorias</md-button>
+                                        </md-menu-item>
+                                        <md-menu-item class="md-indent">
+                                            <md-icon class="material-icons">&#xE06B;</md-icon>
+                                            <md-button>Marcas</md-button>
+                                        </md-menu-item>
+                                        <md-menu-item class="md-indent">
+                                            <md-icon class="material-icons">&#xE252;</md-icon>
+                                            <md-button>Tipo de Productos</md-button>
+                                        </md-menu-item>
                                     </md-menu-content>
                                 </md-menu>
                             </md-menu-item>
-                            <md-menu-divider></md-menu-divider>
-                            <md-menu-item type="checkbox" ng-model="ctrl.settings.showRuler">Show ruler</md-menu-item>
-                            <md-menu-item type="checkbox" ng-model="ctrl.settings.showEquationToolbar">Show equation toolbar</md-menu-item>
-                            <md-menu-item type="checkbox" ng-model="ctrl.settings.showSpellingSuggestions">Show spelling suggestions</md-menu-item>
-                            <md-menu-divider></md-menu-divider>
-                            <md-menu-item type="checkbox" ng-model="ctrl.settings.compactControls">Compact controls</md-menu-item>
-                            <md-menu-item type="checkbox" ng-model="ctrl.settings.fullScreen">Full screen</md-menu-item>
+                            <md-menu-divider style="background-color: rgb(250,250,250);"></md-menu-divider>
+                            <md-menu-item class="md-indent">
+                                <md-icon class="material-icons">&#xE0AF;</md-icon>
+                                <md-button>Proveedores</md-button>
+                            </md-menu-item>
                         </md-menu-content>
                     </md-menu>
-
                 </md-menu-bar>
             </div>
         </div>
     </md-toolbar>
 </div>
 <style>
+    a.md-button.md-default-theme:not([disabled]):hover, a.md-button:not([disabled]):hover, .md-button.md-default-theme:not([disabled]):hover, .md-button:not([disabled]):hover {
+        background-color: rgba(40, 53, 147, 0.35);
+    }
+    a:focus, a:hover {
+        color: rgb(255,128,171);
+        text-decoration: underline;
+    }
+    .menu-content{
+        background-color: rgba(63, 81, 181, 0.75);
+        color: white;
+    }
+    md-icon.md-default-theme, md-icon{
+        color: rgb(250,250,250);
+    }
+    md-menu-bar.md-default-theme md-menu.md-open > button,
+    md-menu-bar md-menu.md-open > button, 
+    md-menu-bar.md-default-theme md-menu > button:focus,
+    md-menu-bar md-menu > button:focus {
+        background: rgba(63, 81, 181, 0.53);
+    }
+    a.md-button.md-default-theme:not([disabled]):hover,
+    a.md-button:not([disabled]):hover, 
+    .md-button.md-default-theme:not([disabled]):hover, 
+    .md-button:not([disabled]):hover {
+        background-color: rgba(63, 81, 181, 0.53);
+        color: rgb(255,128,171);
+        text-decoration: underline;
+    }
     md-toolbar.md-default-theme.md-menu-toolbar, md-toolbar.md-menu-toolbar {
-        background-color: rgb(66,66,66);
-        color: rgb(240,98,146);
+        /*background-color: rgb(66,66,66);*/
+        background-color: rgba(63, 81, 181, 0.53);
+        /*color: rgb(240,98,146);*/
+        color: rgba(255,255,255,0.87);
     }
     .quit{
         background-color: transparent;
         border-color: transparent;
         color: black;
-        top: 5px;
+        top: 0px;
         right: 0;
+        position: absolute;
+    }
+    .maximize{
+        background-color: transparent;
+        border-color: transparent;
+        color: black;
+        top: 0px;
+        right: 30px;
+        position: absolute;
+    }
+    .minimize{
+        background-color: transparent;
+        border-color: transparent;
+        color: black;
+        top: 0px;
+        right: 60px;
         position: absolute;
     }
     .menuBardemoBasicUsage .page-container {

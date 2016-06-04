@@ -11,24 +11,13 @@ var miAppHome = angular.module('tierraDeColoresApp', [
     'ngMaterial',
     'ui.bootstrap',
     'ngTable',
+    'ngDialog',
+    'kendo.directives',
     'angular-loading-bar'])
         .config(function ($stateProvider, $urlRouterProvider, $mdIconProvider, $mdThemingProvider) {
             $mdIconProvider
                     .iconSet('social', 'img/icons/sets/social-icons.svg', 24)
                     .defaultIconSet('styles/icons/sets/core-icons.svg', 24);
-
-            var neonRedMap = $mdThemingProvider.extendPalette('red', {
-                '500': '#ff0000',
-                'contrastDefaultColor': 'dark'
-            });
-            // Register the new color palette map with the name <code>neonRed</code>
-            $mdThemingProvider.definePalette('neonRed', neonRedMap);
-
-            $mdThemingProvider.theme('default').dark();
-//                    .primaryPalette('neonRed')
-//                    .accentPalette('orange');
-//                    .warnPalette('orange')
-//                    .backgroundPalette('indigo');
             $stateProvider
                     /*Login*/
                     .state('login', {
@@ -177,6 +166,66 @@ var miAppHome = angular.module('tierraDeColoresApp', [
                             'body': {
                                 templateUrl: "views/banco/panelBanco.html",
                                 controller: 'EntidadBancariaController'
+                            }
+                        }
+                    })
+                    .state('pagos', {
+                        url: '/planes-de-pago',
+                        data: {pageTitle: 'Panel Planes de Pago'},
+                        views: {
+                            'navbar': {
+                                templateProvider: function ($templateRequest, sessionProvider) {
+                                    var templateName;
+                                    if (sessionProvider.getPath() === "admin") {
+                                        templateName = 'views/navbar2.html';
+                                    }
+                                    return $templateRequest(templateName);
+                                },
+                                controller: null
+                            },
+                            'body': {
+                                templateUrl: "views/planes/panelPlanes.html",
+                                controller: 'PlanPagoController'
+                            }
+                        }
+                    })
+                    .state('productos', {
+                        url: '/productos',
+                        data: {pageTitle: 'Lista de Productos'},
+                        views: {
+                            'navbar': {
+                                templateProvider: function ($templateRequest, sessionProvider) {
+                                    var templateName;
+                                    if (sessionProvider.getPath() === "admin") {
+                                        templateName = 'views/navbar2.html';
+                                    }
+                                    return $templateRequest(templateName);
+                                },
+                                controller: null
+                            },
+                            'body': {
+                                templateUrl: "views/producto/lista.html",
+                                controller: 'ProductoController'
+                            }
+                        }
+                    })
+                    .state('producto', {
+                        url: '/producto/:idProducto',
+                        data: {pageTitle: 'Detalle de Producto'},
+                        views: {
+                            'navbar': {
+                                templateProvider: function ($templateRequest, sessionProvider) {
+                                    var templateName;
+                                    if (sessionProvider.getPath() === "admin") {
+                                        templateName = 'views/navbar2.html';
+                                    }
+                                    return $templateRequest(templateName);
+                                },
+                                controller: null
+                            },
+                            'body': {
+                                templateUrl: "views/producto/detalleProducto.html",
+                                controller: 'ProductoController'
                             }
                         }
                     });

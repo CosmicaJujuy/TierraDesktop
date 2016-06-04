@@ -3,7 +3,7 @@
  * @param {type} param1
  * @param {type} param2
  */
-miAppHome.controller('ProductoController', function ($scope, localStorageService, $state, facturaProductoService, $stateParams, toaster, NgTableParams, $rootScope, $http, $routeParams, $route, $timeout, $cookies, $location, _productoService) {
+miAppHome.controller('ProductoController', function ($scope, localStorageService, $state, facturaProductoService, $stateParams, toaster, NgTableParams, $rootScope, $http, $timeout, $cookies, _productoService) {
     /*
      * objeto type encargado de dar formato a los codigos de barra.
      */
@@ -251,7 +251,7 @@ miAppHome.controller('ProductoController', function ($scope, localStorageService
      * @returns {undefined}
      */
     $scope.eliminarProducto = function () {
-        var idProducto = $routeParams.idProducto;
+        var idProducto = $stateParams.idProducto;
         $producto = _productoService.searchById(idProducto);
         $producto.then(function (datos) {
             if (datos.status === 200) {
@@ -356,8 +356,28 @@ miAppHome.controller('ProductoController', function ($scope, localStorageService
         popupWin.document.open();
         popupWin.document.write('<html><head><link rel="stylesheet" type="text/css" href="styles/main.css"  type=\"text/css\" media=\"print\" /></head><body onload="window.print()">' + printContents + '</body></html>');
         popupWin.document.close();
+        var windowPrint = require('electron').remote.BrowserWindow;
+        var fs = require('fs');
+        var newWindow = new windowPrint({width: 800, height: 600, show: false});
+        console.log(newWindow);
+        newWindow.loadURL('');
+        newWindow.show();
+        newWindow.webContents.print({silent: true, printBackground: true});
+        newWindow.webContents.printToPDF({printSelectionOnly : true, printBackground: true}, function (error, data) {
+            if (error) {
+                throw error;
+            }
+            console.log(error);
+            console.log(data);
+            fs.writeFile('print.pdf', function (data, error) {
+                if (error) {
+                    throw error;
+                }
+                console.log(error);
+                console.log(data);
+            });
+        });
     };
-
     /**
      * configuracion para la busqueda dinamica de Productos para la directiva 
      * select 

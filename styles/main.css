@@ -558,7 +558,8 @@ fieldset[disabled] .navbar .btn-link:focus {
     font-family: kaufmann-bold !important;
     font-size: 30pt;
     color: #fb6b8c;
-    text-shadow: 2px 0 0 #8904B1;
+    text-shadow: 2px 0 0 white;
+    /*text-shadow: 2px 0 0 #8904B1;*/
     width: 100%;
 }
 #perfil{
