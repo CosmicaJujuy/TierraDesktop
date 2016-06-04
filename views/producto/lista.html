@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<div class="col-lg-2"></div>
+<div class="col-lg-8" style="margin-top: 100px;">
+    <uib-tabset justified="true" style="min-height: 500px; background-color: white;">
+        <uib-tab heading="Listado de productos">
+            <div class="table-responsive">                
+                <table data-ng-init="listaProductos()"
+                       class="table table-bordered table-condensed"
+                       ng-table="tableProductos"
+                       id="tableProductos">
+                    <thead id="headTableProductos">
+                        <tr>
+                            <th style="text-align: center">ID</th>
+                            <th style="text-align: center">Descripcion</th> 
+                            <th style="text-align: center">Cantidad</th> 
+                            <th style="text-align: center">Talla</th> 
+                            <th style="text-align: center">Color</th> 
+                            <th style="text-align: center">Acciones</th> 
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="producto in $data"
+                            ng-class="{ danger: stockMinimo(producto) }"                
+                            >
+                            <td style="text-align: center">{{producto.idProducto}}</td>
+                            <td style="text-align: center"><a href="" ui-sref="^.producto-detalle({idProducto:{{producto.idProducto}}})">{{producto.descripcion}}</a></td>
+                            <td style="text-align: center">{{producto.cantidadTotal}}</td>
+                            <td style="text-align: center">{{producto.talla| uppercase}}</td>
+                            <td style="text-align: center">{{producto.colorProducto| uppercase}}</td>                
+                            <td style="text-align: center">
+                                <button class="btn btn-xs btn-info"
+                                        type="button"                            
+                                        data-toggle="modal" data-target="#myModal"
+                                        uib-tooltip="Ocultar producto."
+                                        ng-click="seleccionarProducto(producto)"
+                                        ><span class="glyphicon glyphicon-eye-close"></span></button>
+                            </td>                
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th id="btnAgregarProducto">
+                                <button class="btn btn-warning" 
+                                        type="button"
+                                        uib-tooltip="Agregar nuevo producto"
+                                        ui-sref="home.producto-factura">Iniciar Carga</button>
+                            </th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div> 
+        </uib-tab>
+        <uib-tab heading="Listado de facturas">
+            <div class="table-responsive">
+                <table class="table table-bordered table-condensed"
+                       ng-table="tableFacturaProductos"
+                       ng-controller="FacturaProductoController"
+                       data-ng-init="listaFacturaProducto()">
+                    <thead id="headTableProductos">
+                        <tr>
+                            <th>ID</th>
+                            <th>N° Factura</th>
+                            <th>Proveedor</th>
+                            <th>Monto</th>
+                            <th>Estado</th>
+                            <th>Carga</th>
+                        </tr>
+                    </thead>
+                    <tbody ng-repeat="facturaProducto in $data">
+                        <tr
+                            ng-class="{danger: facturaProducto.carga === true, success: facturaProducto.carga === false}">
+                            <td style="text-align: center">{{facturaProducto.idFacturaProducto}}</td>
+                            <td style="text-align: center">
+                                <a ui-sref="^.agregar-producto-factura({idFactura: facturaProducto.idFacturaProducto})"
+                                   ng-class="{ disabled: facturaProducto.carga === false}">{{facturaProducto.numeroFactura}}</a>
+                            </td>
+                            <td style="text-align: center">{{facturaProducto.proveedor.nombreProveedor}}</td>
+                            <td style="text-align: center">{{facturaProducto.monto|currency}}</td>
+                            <td style="text-align: center">{{facturaProducto.estadoLocal}}</td>
+                            <td style="text-align: center">
+                                <div ng-show="facturaProducto.carga">INICIADA</div>                                
+                                <div ng-hide="facturaProducto.carga">FINALIZADA</div> 
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </uib-tab>
+    </uib-tabset>           
+</div>
+<div class="col-lg-2"></div>
+
+
+<!-- Modal eliminar producto-->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <center><h4 class="modal-title" id="myModalLabel">Ocultar producto</h4></center>
+            </div>
+            <div class="modal-body">
+                <center class="well">                        
+                    <p style="font-weight: bolder">Estas a punto de ocultar este producto.</p>                       
+                    <p>¿Deseas continuar?</p> 
+                    <button class="btn btn-info"
+                            style="margin-top: 20px;"
+                            data-dismiss="modal"
+                            uib-tooltip="Esta acción no elimina el producto y es totalmente reversible."
+                            tooltip-placement="bottom"
+                            ng-click="removerProducto()">Ocultar</button>
+                </center>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>                    
+            </div>
+        </div>
+    </div>
+</div>
