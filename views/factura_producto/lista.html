@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<div style="margin-top: 100px;">
+    <div class="col-lg-3" data-ng-init="detallesFacturaProducto()">
+        <div class="panel" style="min-height: 500px; background-color: white;">
+            <div class="panel-heading panel-warning" style="text-align: center; color: #8a6d3b">
+                <label>Datos de la factura</label>
+            </div>
+            <div class="panel-body" ng-show="detalle">
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label class="col-lg-5">Número: </label>
+                        <div class="col-lg-7">{{::detalle.numeroFactura}}</div>                                
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-5">Fecha: </label>
+                        <div class="col-lg-7">{{::detalle.fechaFactura|date:'yyyy-MM-dd'}}</div>                                
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-5">Proveedor: </label>
+                        <div class="col-lg-7">{{::detalle.proveedor.nombreProveedor}}</div>                                
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-5">Monto: </label>
+                        <div class="col-lg-7">{{::detalle.monto|currency}}</div>                                
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-5">Estado: </label>
+                        <div class="col-lg-7">{{::detalle.estadoLocal}}</div>                                
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-5">Carga: </label>
+                        <div class="col-lg-7" ng-show="detalle.carga">INICIADA</div>                                
+                        <div class="col-lg-7" ng-hide="detalle.carga">FINALIZADA</div>                                
+                    </div>
+                    <div class="form-group" style="text-align: center;">
+                        <label class="control-label">Observaciones</label>                        
+                    </div>
+                    <div class="form-group" style="text-align: center;">
+                        <div>{{::detalle.observaciones}}</div>
+                        <div ng-hide="detalle.observaciones">NINGUNA</div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-9">
+        <uib-tabset justified="true" style="min-height: 500px; background-color: white;">
+            <uib-tab heading="Productos de factura.">
+                <div class="table-responsive"
+                     ng-controller="ProductoController">
+                    <table class="table table-bordered table-condensed"
+                           ng-table="tableProductosFactura"
+                           data-ng-init="listaProductosFactura()">
+                        <thead id="headTableProductos">
+                            <tr>
+                                <th style="text-align: center">ID</th>
+                                <th style="text-align: center">Descripcion</th> 
+                                <th style="text-align: center">Cantidad</th> 
+                                <th style="text-align: center">Talla</th> 
+                                <th style="text-align: center">Color</th> 
+                                <th style="text-align: center">Acciones</th> 
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="producto in $data| orderBy: 'cantidadTotal'"
+                                ng-class="{ danger: stockMinimo(producto) }"                
+                                >
+                                <td style="text-align: center">{{producto.idProducto}}</td>
+                                <td style="text-align: center"><a target="_blank" href="" ui-sref="^.producto-detalle({idProducto:{{producto.idProducto}}})">{{producto.descripcion}}</a></td>
+                                <td style="text-align: center">{{producto.cantidadTotal}}</td>
+                                <td style="text-align: center">{{producto.talla| uppercase}}</td>
+                                <td style="text-align: center">{{producto.colorProducto| uppercase}}</td>                
+                                <td style="text-align: center">
+                                    <button class="btn btn-xs btn-danger"
+                                            type="button"                            
+                                            data-toggle="modal" data-target="#myModal"
+                                            uib-tooltip="Remover producto."
+                                            ng-click="seleccionarProducto(producto)"
+                                            ><span class="glyphicon glyphicon-remove"></span></button>
+                                </td>                
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th id="btnAgregarProducto">
+                                    <button class="btn btn-warning btn-sm" 
+                                            type="button"
+                                            uib-tooltip="Agregar nuevo producto"
+                                            ng-click="agregarProductoFactura()">Agregar Producto</button>
+                                </th>
+                            </tr>
+                            <tr>
+                                <th id="btnAgregarProducto">
+                                    <button class="btn btn-success btn-sm" 
+                                            type="button"
+                                            style="min-width: 118px;"
+                                            ng-click="finalizarCargaFactura()"
+                                            uib-tooltip="Finalizar carga">Finalizar</button>
+                                </th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </uib-tab>
+            <uib-tab heading="Modificar datos de la factura">
+                <div class="col-lg-2"></div>
+                <div class="col-lg-7">
+                    <form name="modificarFacturaPRoducto" class="form-horizontal" data-ng-init="detallesFacturaProducto()">
+                        <fieldset>
+                            <legend style="text-align: center;">Datos de la factura</legend>
+                            <div class="form-group">
+                                <label class="control-label col-md-4">N° Factura</label>
+                                <div class="col-md-8">
+                                    <input type="text"
+                                           ng-model="detalle.numeroFactura"
+                                           maxlength="12"
+                                           min="12"
+                                           placeholder="N° de Factura"
+                                           name="numeroFactura" required
+                                           class="form-control" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-4">Fecha</label>
+                                <div class="col-md-8">
+                                    <p class="input-group">
+                                        <input type="text" class="form-control"
+                                               uib-datepicker-popup ng-model="detalle.fechaFactura"
+                                               is-open="popup2.opened" 
+                                               placeholder="Fecha de la factura"
+                                               datepicker-options="dateOptions"
+                                               ng-required="true"
+                                               current-text="Hoy" clear-text="Limpiar" close-text="Cerrar"/>
+                                        <span class="input-group-btn">
+                                            <button type="button" class="btn btn-warning" ng-click="open2()"><i class="glyphicon glyphicon-calendar"></i></button>
+                                        </span>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="form-group" ng-controller="ProveedorController">
+                                <label class="control-label col-md-4">Proveedor</label>
+                                <div class="col-md-8">
+                                    <input type="text" 
+                                           maxlength="20"
+                                           required
+                                           ng-disabled="proveedorProducto"
+                                           ng-model="detalle.proveedor"
+                                           placeholder="Buscar proveedor..."
+                                           uib-typeahead="proveedor as proveedor.nombreProveedor for proveedor in getProveedor($viewValue)"
+                                           typeahead-loading="loadingcliente"
+                                           typeahead-no-results="noResults" class="form-control input-md">
+                                    <i ng-show="loadingcliente" class="glyphicon glyphicon-refresh"></i>
+                                    <div ng-show="noResults">
+                                        <i class="glyphicon glyphicon-remove"></i> No se encontraron resultados
+                                    </div>
+                                </div>                                
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-4">Monto</label>
+                                <div class="col-md-8">
+                                    <input type="text"
+                                           ng-model="detalle.monto"
+                                           min="2"
+                                           maxlength="9"
+                                           placeholder="Monto factura"
+                                           name="monto" required
+                                           class="form-control" />
+                                </div>                                
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-4">Observaciones</label>
+                                <div class="col-md-8">
+                                    <textarea type="text"
+                                              rows="3"
+                                              ng-model="detalle.observaciones"
+                                              name="observaciones"
+                                              maxlength="200"
+                                              placeholder="Observaciones del pedido"
+                                              id="textarea"
+                                              class="form-control"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group" style="text-align: center;">
+                                <button class="btn btn-warning" type="button"
+                                        ng-click="confirmarActualizarFacturaProducto(detalle)">Guardar</button>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+                <div class="col-lg-3"></div>               
+            </uib-tab>
+        </uib-tabset>
+    </div>
+</div>
+
+<!-- Modal eliminar producto-->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <center><h4 class="modal-title" id="myModalLabel">Eliminar producto</h4></center>
+            </div>
+            <div class="modal-body">
+                <center>                        
+                    ¿Desea eliminar este producto?                         
+                    <br>
+                    <button class="btn btn-danger"
+                            style="margin-top: 20px;"
+                            data-dismiss="modal"
+                            ng-click="removerProducto()">Remover</button>
+                </center>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>                    
+            </div>
+        </div>
+    </div>
+</div>
