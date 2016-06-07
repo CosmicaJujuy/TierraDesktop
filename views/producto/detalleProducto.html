@@ -1,352 +1,341 @@
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
-<html>
-    <head>
-        <title></title>        
-    </head>
-    <body>
-        <div class="col-lg-3"></div>
-        <div class="col-lg-6">
-            <div class="panel panel-warning"
-                 data-ng-init="buscarProducto()"
-                 style="margin-top: 100px;"
-                 ng-show="foundProducto"> 
-                <div class="panel panel-heading"># {{foundProducto.idProducto}}
-                    <div style="float: right;" ng-hide="edit">
-                        <a href='' 
-                           data-toggle="modal" 
-                           uib-tooltip="Eliminar producto"
-                           data-target="#myModalDelete"
-                           style="color: #8a6d3b;">Eliminar</a> / 
-                        <a href=''
-                           data-toggle="modal" 
-                           tooltip-placement="right"
-                           uib-tooltip="Modificar producto"
-                           data-target="#myModal"
-                           ng-click="seleccionarProducto(foundProducto)"
-                           style="color: #8a6d3b;">Editar</a>
+<div class="col-lg-3"></div>
+<div class="col-lg-6">
+    <div class="panel panel-warning"
+         data-ng-init="buscarProducto()"
+         style="margin-top: 100px;"
+         ng-show="foundProducto"> 
+        <div class="panel panel-heading"># {{foundProducto.idProducto}}
+            <div style="float: right;" ng-hide="edit">
+                <a href='' 
+                   data-toggle="modal" 
+                   uib-tooltip="Eliminar producto"
+                   data-target="#myModalDelete"
+                   style="color: #8a6d3b;">Eliminar</a> / 
+                <a href=''
+                   data-toggle="modal" 
+                   tooltip-placement="right"
+                   uib-tooltip="Modificar producto"
+                   data-target="#myModal"
+                   ng-click="seleccionarProducto(foundProducto)"
+                   style="color: #8a6d3b;">Editar</a>
+            </div>
+        </div>
+        <div class="panel-body">
+            <div class="row col-lg-8">
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label class="col-lg-6">Descripcion</label>                
+                        <div class="col-lg-6">{{foundProducto.descripcion}}</div>
                     </div>
-                </div>
-                <div class="panel-body">
-                    <div class="row col-lg-8">
-                        <form class="form-horizontal">
-                            <div class="form-group">
-                                <label class="col-lg-6">Descripcion</label>                
-                                <div class="col-lg-6">{{foundProducto.descripcion}}</div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-lg-6">Color</label>
-                                <div class="col-lg-6">{{foundProducto.colorProducto}}</div>  
-                            </div>
-                            <div class="form-group">
-                                <label class="col-lg-6">Talla</label>            
-                                <div class="col-lg-6">{{foundProducto.talla| uppercase}}</div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-lg-6">Precio costo</label>
-                                <div class="col-lg-6">{{foundProducto.precioCosto|currency}}</div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-lg-6">Precio venta</label>
-                                <div class="col-lg-6">{{foundProducto.precioVenta|currency}}</div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-lg-6">Cantidad en stock</label>
-                                <div class="col-lg-6">{{foundProducto.cantidadTotal}}</div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-lg-6">Marca</label>
-                                <div class="col-lg-6">{{foundProducto.marcas.nombreMarca}}</div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-lg-6">Categoria</label>
-                                <div class="col-lg-6">{{foundProducto.categoria.nombreCategoria}}</div>
-                            </div>                    
-                            <div class="form-group">
-                                <label class="col-lg-6">Temporada</label>
-                                <div class="col-lg-6">{{foundProducto.temporada.nombreTemporada}}</div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-lg-6">Sexo</label>
-                                <div class="col-lg-6">{{foundProducto.sexo.nombreSexo}}</div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-lg-6">Proveedor</label>
-                                <div class="col-lg-6">{{foundProducto.facturaProducto.proveedor.nombreProveedor}}</div>
-                            </div>
-                        </form>
+                    <div class="form-group">
+                        <label class="col-lg-6">Color</label>
+                        <div class="col-lg-6">{{foundProducto.colorProducto}}</div>  
                     </div>
-                    <div class="row col-lg-4">
+                    <div class="form-group">
+                        <label class="col-lg-6">Talla</label>            
+                        <div class="col-lg-6">{{foundProducto.talla| uppercase}}</div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-6">Precio costo</label>
+                        <div class="col-lg-6">{{foundProducto.precioCosto|currency}}</div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-6">Precio venta</label>
+                        <div class="col-lg-6">{{foundProducto.precioVenta|currency}}</div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-6">Cantidad en stock</label>
+                        <div class="col-lg-6">{{foundProducto.cantidadTotal}}</div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-6">Marca</label>
+                        <div class="col-lg-6">{{foundProducto.marcas.nombreMarca}}</div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-6">Categoria</label>
+                        <div class="col-lg-6">{{foundProducto.categoria.nombreCategoria}}</div>
+                    </div>                    
+                    <div class="form-group">
+                        <label class="col-lg-6">Temporada</label>
+                        <div class="col-lg-6">{{foundProducto.temporada.nombreTemporada}}</div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-6">Sexo</label>
+                        <div class="col-lg-6">{{foundProducto.sexo.nombreSexo}}</div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-6">Proveedor</label>
+                        <div class="col-lg-6">{{foundProducto.facturaProducto.proveedor.nombreProveedor}}</div>
+                    </div>
+                </form>
+            </div>
+            <div class="row col-lg-4">
+                <center>
+                    <!-- CODIGO VISIBLE -->
+                    <div class="etiqueta-box" ng-cloak>
                         <center>
-                            <!-- CODIGO VISIBLE -->
-                            <div class="etiqueta-box" ng-cloak>
-                                <center>
-                                    <div ng-bind="'Talla/edad: '+foundProducto.talla" class="etiqueta"></div>
-                                    <span kendo-barcode
-                                          k-type="'code128'"
-                                          ng-model="foundProducto.codigoProducto"
-                                          style="width: 160px; height: 80px;">                                          
-                                    </span>
-                                    <div ng-bind="foundProducto.descripcion" class="etiqueta" style="font-size: 8pt; font-family: monospace"></div>
-                                </center>
-                            </div>
-
-                            <!-- CODIGO 34 X 38 CON TALLE
-                            <div id="printable2" class="etiqueta-box" ng-hide="true">
-                                <center>
-                                    <div ng-bind="'Talla/edad: '+foundProducto.talla" class="etiqueta"></div>
-                                    <span kendo-barcode
-                                          k-type="'code128'"
-                                          ng-model="foundProducto.codigoProducto"
-                                          style="width: 160px; height: 80px;">                                          
-                                    </span>
-                                    <div ng-bind="foundProducto.descripcion" class="etiqueta" style="font-size: 8pt; font-family: monospace"></div>
-                                </center>
-                            </div>-->
-                            <!-- BOTON 20 X 30 -->
-                            <button ng-click="printDiv('printable');"
-                                    style='margin-top: 10%;'
-                                    class="btn btn-info">Imprimir codigo 20 x 30</button>
-                            <!-- BOTON  34 X 38-->
-                            <button ng-click="printDiv('printable2');"
-                                    style='margin-top: 10%;'
-                                    class="btn btn-info">Imprimir codigo 34 x 38</button>
+                            <div ng-bind="'Talla/edad: '+foundProducto.talla" class="etiqueta"></div>
+                            <span kendo-barcode
+                                  k-type="'code128'"
+                                  ng-model="foundProducto.codigoProducto"
+                                  style="width: 160px; height: 80px;">                                          
+                            </span>
+                            <div ng-bind="foundProducto.descripcion" class="etiqueta" style="font-size: 8pt; font-family: monospace"></div>
                         </center>
                     </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-3">
-            
-            <div id="printable2" ng-hide="true" style="margin-top: 50%;">
-                <div class="row">
-                    <div style="float: left; text-align: center;">
-                        <div style="font-family: monospace;">Talla: {{foundProducto.talla}}</div>
-                        <io-barcode options="options" code="{{foundProducto.codigoProducto}}" type="CODE128C"></io-barcode>
-                    </div>
-                    <div style="float: right; text-align: center;">
-                        <div style="font-family: monospace;">Talla: {{foundProducto.talla}}</div>
-                        <io-barcode options="options" code="{{foundProducto.codigoProducto}}" type="CODE128C"></io-barcode>
-                    </div>
-                </div>                
-            </div>
-            <!-- CODIGO 20 X 30 CON DESCRIPCION Y TALLE-->
-            <div id="printable" ng-hide="true" style="margin-top: 50%;">
-                <div class="row">
-                    <div style="float: left; text-align: center;">
-                        <div class="etiqueta">T-N: {{foundProducto.talla}}</div>
-                        <span kendo-barcode
-                              k-type="'code128'"
-                              ng-model="foundProducto.codigoProducto"
-                              style="width: 100px; height: 40px;"></span>   
-                    </div>
-                    <div style="float: right; text-align: center;">
-                        <div class="etiqueta">T-N: {{foundProducto.talla}}</div>
-                        <span kendo-barcode
-                              k-type="'code128'"
-                              ng-model="foundProducto.codigoProducto"
-                              style="width: 100px; height: 40px;"></span>   
-                    </div>
-                </div>                
-            </div>
-        </div>
 
-
-        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="myModalLabel">Modificar producto</h4>
-                    </div>
-                    <div class="modal-body">                    
-                        <form name="updateProducto" class="form-horizontal" style="">
-                            <div class="form-group"> 
-                                <label class="control-label col-lg-4">Descripcion </label>
-                                <div class="col-lg-8">
-                                    <input type="text"
-                                           style="text-transform:uppercase;"
-                                           class="form-control"
-                                           maxlength="30"
-                                           ng-model="__producto.descripcion"
-                                           name="descripcion" required
-                                           data-ng-class='{error: updateProducto.descripcion.$invalid && !updateProducto.$pristine}'/>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label col-lg-4">Marca</label>
-                                <div class="col-lg-8" ng-controller="MarcaController">                    
-                                    <input type="text" 
-                                           ng-model="__producto.marcas"
-                                           placeholder="Buscar marca..."
-                                           maxlength="20"
-                                           uib-typeahead="marca as marca.nombreMarca for marca in getMarca($viewValue)"
-                                           typeahead-loading="loadingcliente"
-                                           typeahead-no-results="noResults" class="form-control">
-                                    <i ng-show="loadingcliente" class="glyphicon glyphicon-refresh"></i>
-                                    <div ng-show="noResults">
-                                        <i class="glyphicon glyphicon-remove"></i> No se encontraron resultados
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label col-lg-4">Categoria</label>
-                                <div class="col-lg-8" ng-controller="CategoriaController" data-ng-init="listaCategorias()" >
-                                    <select class="form-control"
-                                            ng-options="categoria as categoria.nombreCategoria for categoria in categorias track by categoria.idCategoria" 
-                                            ng-model="__producto.categoria"></select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label col-lg-4">Temporada</label>
-                                <div class="col-lg-8">                                        
-                                    <select class="form-control"
-                                            ng-controller="TemporadaController"
-                                            data-ng-init="listaTemporadas()"
-                                            ng-options="temporada as temporada.nombreTemporada for temporada in temporadas track by temporada.idTemporada"
-                                            ng-model="__producto.temporada"></select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label col-lg-4">Sexo</label>
-                                <div class="col-lg-8">                    
-                                    <select class="form-control"
-                                            data-ng-init="listaSexos()"
-                                            ng-controller="SexoController"
-                                            ng-options="sexo as sexo.nombreSexo for sexo in sexos track by sexo.idSexo"
-                                            ng-model="__producto.sexo"></select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label col-lg-4">Talla</label>
-                                <div class="col-lg-8">
-                                    <input type="text" class="form-control" 
-                                           style="text-transform:uppercase;"
-                                           maxlength="10"
-                                           ng-model="__producto.talla" name="talla" required
-                                           data-ng-class='{error: updateProducto.talla.$invalid && !updateProducto.$pristine}'/>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-lg-4 control-label">Color</label>
-                                <div class="col-lg-8">
-                                    <input type="text" class="form-control"
-                                           maxlength="20"
-                                           ng-model="__producto.colorProducto" name="color" required
-                                           data-ng-class='{error: updateProducto.color.$invalid && !updateProducto.$pristine}'/>
-                                </div>
-                            </div> 
-                            <div class="form-group">
-                                <label class="control-label col-lg-4">Codigo</label>   
-                                <div class="input-group col-lg-8" style="padding-left: 15px;">                   
-                                    <input type="text" class="form-control"
-                                           ng-model="__producto.codigoProducto" 
-                                           name="codigo"                                           
-                                           required maxlength="30"
-                                           data-ng-class='{error: updateProducto.codigo.$invalid && !updateProducto.$pristine}'/>
-                                    <span class="input-group-btn">
-                                        <button class="btn btn-danger"
-                                                ng-click="__producto.codigoProducto = randomCode(
-                                                                    __producto.categoria.idCategoria,
-                                                                    __producto.marcas.idMarca,
-                                                                    __producto.talla)"
-                                                ng-disabled="__producto.codigoProducto"
-                                                type="button">Random</button>
-                                    </span>
-                                </div> 
-                            </div>
-                            <div class="form-group">
-                                <label class="col-lg-4 control-label">Clase</label>
-                                <div class="col-lg-8">
-                                    <select class="form-control" ng-model="__producto.claseProducto">
-                                        <option value="A"> Clase A</option>
-                                        <option value="B"> Clase B</option>
-                                    </select>
-                                </div>
-                            </div>            
-                            <div class="form-group">
-                                <label class="col-lg-4 control-label">Stock</label>
-                                <div class="col-lg-8">
-                                    <input type="text" class="form-control"
-                                           maxlength="3"
-                                           ng-model="__producto.cantidadTotal" name="stock" required
-                                           data-ng-class='{error: updateProducto.stock.$invalid && !updateProducto.$pristine}'/>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label col-lg-4">Stock minimo</label>
-                                <div class="col-lg-8">
-                                    <input type="text" class="form-control"
-                                           maxlength="3"
-                                           ng-model="__producto.cantidadMinima" name="minimo" required
-                                           data-ng-class='{error: updateProducto.minimo.$invalid && !updateProducto.$pristine}'/>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label col-lg-4">Costo real</label>
-                                <div class="col-lg-8">
-                                    <input type="text" class="form-control"
-                                           maxlength="8"
-                                           ng-model="__producto.precioLista" name="lista" required
-                                           data-ng-class='{error: updateProducto.lista.$invalid && !updateProducto.$pristine}'/>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label col-lg-4">Precio de Costo</label>
-                                <div class="col-lg-8">
-                                    <input type="text" class="form-control"
-                                           maxlength="8"
-                                           ng-model="__producto.precioCosto" name="costo" required
-                                           data-ng-class='{error: updateProducto.costo.$invalid && !updateProducto.$pristine}'/>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label col-lg-4">Precio de Venta</label>
-                                <div class="col-lg-8">
-                                    <input type="text" class="form-control"
-                                           maxlength="8"
-                                           ng-model="__producto.precioVenta" name="venta" required
-                                           data-ng-class='{error: updateProducto.venta.$invalid && !updateProducto.$pristine}'/>
-                                </div>
-                            </div>
-                            <button class="btn btn-warning"
-                                    style="margin-left: 40%;"
-                                    data-dismiss="modal"
-                                    ng-click="_modificarProducto(__producto)">Modificar</button>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="modal fade" id="myModalDelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-            <div class="modal-dialog modal-sm" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="myModalLabel">Eliminar producto</h4>
-                    </div>
-                    <div class="modal-body">
+                    <!-- CODIGO 34 X 38 CON TALLE
+                    <div id="printable2" class="etiqueta-box" ng-hide="true">
                         <center>
-                            ¿Desea eliminar esta Producto?
-                            <br>
-                            <button class="btn btn-danger"
-                                    ng-click="eliminarProducto()"
-                                    data-dismiss="modal"
-                                    >Eliminar</button>
+                            <div ng-bind="'Talla/edad: '+foundProducto.talla" class="etiqueta"></div>
+                            <span kendo-barcode
+                                  k-type="'code128'"
+                                  ng-model="foundProducto.codigoProducto"
+                                  style="width: 160px; height: 80px;">                                          
+                            </span>
+                            <div ng-bind="foundProducto.descripcion" class="etiqueta" style="font-size: 8pt; font-family: monospace"></div>
                         </center>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
-                    </div>
-                </div>
+                    </div>-->
+                    <!-- BOTON 20 X 30 -->
+                    <button ng-click="printDiv('printable');"
+                            style='margin-top: 10%;'
+                            class="btn btn-info">Imprimir codigo 20 x 30</button>
+                    <!-- BOTON  34 X 38-->
+                    <button ng-click="printDiv('printable2');"
+                            style='margin-top: 10%;'
+                            class="btn btn-info">Imprimir codigo 34 x 38</button>
+                </center>
             </div>
         </div>
-    </body>
-</html>
+    </div>
+</div>
+<div class="col-lg-3">
+
+    <div id="printable2" ng-hide="true" style="margin-top: 50%;">
+        <div class="row">
+            <div style="float: left; text-align: center;">
+                <div style="font-family: monospace;">Talla: {{foundProducto.talla}}</div>
+                <io-barcode options="options" code="{{foundProducto.codigoProducto}}" type="CODE128C"></io-barcode>
+            </div>
+            <div style="float: right; text-align: center;">
+                <div style="font-family: monospace;">Talla: {{foundProducto.talla}}</div>
+                <io-barcode options="options" code="{{foundProducto.codigoProducto}}" type="CODE128C"></io-barcode>
+            </div>
+        </div>                
+    </div>
+    <!-- CODIGO 20 X 30 CON DESCRIPCION Y TALLE-->
+    <div id="printable" ng-hide="true" style="margin-top: 50%;">
+        <div class="row">
+            <div style="float: left; text-align: center;">
+                <div class="etiqueta">T-N: {{foundProducto.talla}}</div>
+                <span kendo-barcode
+                      k-type="'code128'"
+                      ng-model="foundProducto.codigoProducto"
+                      style="width: 100px; height: 40px;"></span>   
+            </div>
+            <div style="float: right; text-align: center;">
+                <div class="etiqueta">T-N: {{foundProducto.talla}}</div>
+                <span kendo-barcode
+                      k-type="'code128'"
+                      ng-model="foundProducto.codigoProducto"
+                      style="width: 100px; height: 40px;"></span>   
+            </div>
+        </div>                
+    </div>
+</div>
+
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Modificar producto</h4>
+            </div>
+            <div class="modal-body">                    
+                <form name="updateProducto" class="form-horizontal" style="">
+                    <div class="form-group"> 
+                        <label class="control-label col-lg-4">Descripcion </label>
+                        <div class="col-lg-8">
+                            <input type="text"
+                                   style="text-transform:uppercase;"
+                                   class="form-control"
+                                   maxlength="30"
+                                   ng-model="__producto.descripcion"
+                                   name="descripcion" required
+                                   data-ng-class='{error: updateProducto.descripcion.$invalid && !updateProducto.$pristine}'/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-lg-4">Marca</label>
+                        <div class="col-lg-8" ng-controller="MarcaController">                    
+                            <input type="text" 
+                                   ng-model="__producto.marcas"
+                                   placeholder="Buscar marca..."
+                                   maxlength="20"
+                                   uib-typeahead="marca as marca.nombreMarca for marca in getMarca($viewValue)"
+                                   typeahead-loading="loadingcliente"
+                                   typeahead-no-results="noResults" class="form-control">
+                            <i ng-show="loadingcliente" class="glyphicon glyphicon-refresh"></i>
+                            <div ng-show="noResults">
+                                <i class="glyphicon glyphicon-remove"></i> No se encontraron resultados
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-lg-4">Categoria</label>
+                        <div class="col-lg-8" ng-controller="CategoriaController" data-ng-init="listaCategorias()" >
+                            <select class="form-control"
+                                    ng-options="categoria as categoria.nombreCategoria for categoria in categorias track by categoria.idCategoria" 
+                                    ng-model="__producto.categoria"></select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-lg-4">Temporada</label>
+                        <div class="col-lg-8">                                        
+                            <select class="form-control"
+                                    ng-controller="TemporadaController"
+                                    data-ng-init="listaTemporadas()"
+                                    ng-options="temporada as temporada.nombreTemporada for temporada in temporadas track by temporada.idTemporada"
+                                    ng-model="__producto.temporada"></select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-lg-4">Sexo</label>
+                        <div class="col-lg-8">                    
+                            <select class="form-control"
+                                    data-ng-init="listaSexos()"
+                                    ng-controller="SexoController"
+                                    ng-options="sexo as sexo.nombreSexo for sexo in sexos track by sexo.idSexo"
+                                    ng-model="__producto.sexo"></select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-lg-4">Talla</label>
+                        <div class="col-lg-8">
+                            <input type="text" class="form-control" 
+                                   style="text-transform:uppercase;"
+                                   maxlength="10"
+                                   ng-model="__producto.talla" name="talla" required
+                                   data-ng-class='{error: updateProducto.talla.$invalid && !updateProducto.$pristine}'/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-4 control-label">Color</label>
+                        <div class="col-lg-8">
+                            <input type="text" class="form-control"
+                                   maxlength="20"
+                                   ng-model="__producto.colorProducto" name="color" required
+                                   data-ng-class='{error: updateProducto.color.$invalid && !updateProducto.$pristine}'/>
+                        </div>
+                    </div> 
+                    <div class="form-group">
+                        <label class="control-label col-lg-4">Codigo</label>   
+                        <div class="input-group col-lg-8" style="padding-left: 15px;">                   
+                            <input type="text" class="form-control"
+                                   ng-model="__producto.codigoProducto" 
+                                   name="codigo"                                           
+                                   required maxlength="30"
+                                   data-ng-class='{error: updateProducto.codigo.$invalid && !updateProducto.$pristine}'/>
+                            <span class="input-group-btn">
+                                <button class="btn btn-danger"
+                                        ng-click="__producto.codigoProducto = randomCode(
+                                                    __producto.categoria.idCategoria,
+                                                    __producto.marcas.idMarca,
+                                                    __producto.talla)"
+                                        ng-disabled="__producto.codigoProducto"
+                                        type="button">Random</button>
+                            </span>
+                        </div> 
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-4 control-label">Clase</label>
+                        <div class="col-lg-8">
+                            <select class="form-control" ng-model="__producto.claseProducto">
+                                <option value="A"> Clase A</option>
+                                <option value="B"> Clase B</option>
+                            </select>
+                        </div>
+                    </div>            
+                    <div class="form-group">
+                        <label class="col-lg-4 control-label">Stock</label>
+                        <div class="col-lg-8">
+                            <input type="text" class="form-control"
+                                   maxlength="3"
+                                   ng-model="__producto.cantidadTotal" name="stock" required
+                                   data-ng-class='{error: updateProducto.stock.$invalid && !updateProducto.$pristine}'/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-lg-4">Stock minimo</label>
+                        <div class="col-lg-8">
+                            <input type="text" class="form-control"
+                                   maxlength="3"
+                                   ng-model="__producto.cantidadMinima" name="minimo" required
+                                   data-ng-class='{error: updateProducto.minimo.$invalid && !updateProducto.$pristine}'/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-lg-4">Costo real</label>
+                        <div class="col-lg-8">
+                            <input type="text" class="form-control"
+                                   maxlength="8"
+                                   ng-model="__producto.precioLista" name="lista" required
+                                   data-ng-class='{error: updateProducto.lista.$invalid && !updateProducto.$pristine}'/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-lg-4">Precio de Costo</label>
+                        <div class="col-lg-8">
+                            <input type="text" class="form-control"
+                                   maxlength="8"
+                                   ng-model="__producto.precioCosto" name="costo" required
+                                   data-ng-class='{error: updateProducto.costo.$invalid && !updateProducto.$pristine}'/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-lg-4">Precio de Venta</label>
+                        <div class="col-lg-8">
+                            <input type="text" class="form-control"
+                                   maxlength="8"
+                                   ng-model="__producto.precioVenta" name="venta" required
+                                   data-ng-class='{error: updateProducto.venta.$invalid && !updateProducto.$pristine}'/>
+                        </div>
+                    </div>
+                    <button class="btn btn-warning"
+                            style="margin-left: 40%;"
+                            data-dismiss="modal"
+                            ng-click="_modificarProducto(__producto)">Modificar</button>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="myModalDelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Eliminar producto</h4>
+            </div>
+            <div class="modal-body">
+                <center>
+                    ¿Desea eliminar esta Producto?
+                    <br>
+                    <button class="btn btn-danger"
+                            ng-click="eliminarProducto()"
+                            data-dismiss="modal"
+                            >Eliminar</button>
+                </center>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<toaster-container toaster-options="{'time-out': 3000, 'close-button':true, 'animation-class': 'toast-top-center'}"></toaster-container>

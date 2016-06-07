@@ -23,7 +23,7 @@
                             ng-class="{ danger: stockMinimo(producto) }"                
                             >
                             <td style="text-align: center">{{producto.idProducto}}</td>
-                            <td style="text-align: center"><a href="" ui-sref="^.producto({idProducto:{{producto.idProducto}}})">{{producto.descripcion}}</a></td>
+                            <td style="text-align: center"><a href="" ui-sref="producto({idProducto:{{producto.idProducto}}})">{{producto.descripcion}}</a></td>
                             <td style="text-align: center">{{producto.cantidadTotal}}</td>
                             <td style="text-align: center">{{producto.talla| uppercase}}</td>
                             <td style="text-align: center">{{producto.colorProducto| uppercase}}</td>                
@@ -43,7 +43,7 @@
                                 <button class="btn btn-warning" 
                                         type="button"
                                         uib-tooltip="Agregar nuevo producto"
-                                        ui-sref="home.producto-factura">Iniciar Carga</button>
+                                        ui-sref="add_factura_producto">Iniciar Carga</button>
                             </th>
                         </tr>
                     </tfoot>
@@ -71,7 +71,7 @@
                             ng-class="{danger: facturaProducto.carga === true, success: facturaProducto.carga === false}">
                             <td style="text-align: center">{{facturaProducto.idFacturaProducto}}</td>
                             <td style="text-align: center">
-                                <a ui-sref="^.agregar-producto-factura({idFactura: facturaProducto.idFacturaProducto})"
+                                <a ui-sref="panel_factura_producto({idFactura: facturaProducto.idFacturaProducto})"
                                    ng-class="{ disabled: facturaProducto.carga === false}">{{facturaProducto.numeroFactura}}</a>
                             </td>
                             <td style="text-align: center">{{facturaProducto.proveedor.nombreProveedor}}</td>
@@ -117,3 +117,4 @@
         </div>
     </div>
 </div>
+<toaster-container toaster-options="{'time-out': 3000, 'close-button':true, 'animation-class': 'toast-top-center'}"></toaster-container>

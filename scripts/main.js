@@ -109,7 +109,7 @@ var miAppHome = angular.module('tierraDeColoresApp', [
                             }
                         }
                     })
-                    .state('nuevo-usuario', {
+                    .state('add_usuario', {
                         url: '/nuevo-usuario',
                         data: {pageTitle: 'Agregar nuevo usuario.'},
                         views: {
@@ -209,6 +209,66 @@ var miAppHome = angular.module('tierraDeColoresApp', [
                             }
                         }
                     })
+                    .state('add_factura_producto', {
+                        url: '/productos/factura',
+                        data: {pageTitle: 'Lista de Productos'},
+                        views: {
+                            'navbar': {
+                                templateProvider: function ($templateRequest, sessionProvider) {
+                                    var templateName;
+                                    if (sessionProvider.getPath() === "admin") {
+                                        templateName = 'views/navbar2.html';
+                                    }
+                                    return $templateRequest(templateName);
+                                },
+                                controller: null
+                            },
+                            'body': {
+                                templateUrl: "views/factura_producto/agregarFactura.html",
+                                controller: 'FacturaProductoController'
+                            }
+                        }
+                    })
+                    .state('panel_factura_producto', {
+                        url: '/productos/factura/:idFactura',
+                        data: {pageTitle: 'Lista de Productos'},
+                        views: {
+                            'navbar': {
+                                templateProvider: function ($templateRequest, sessionProvider) {
+                                    var templateName;
+                                    if (sessionProvider.getPath() === "admin") {
+                                        templateName = 'views/navbar2.html';
+                                    }
+                                    return $templateRequest(templateName);
+                                },
+                                controller: null
+                            },
+                            'body': {
+                                templateUrl: "views/factura_producto/lista.html",
+                                controller: 'FacturaProductoController'
+                            }
+                        }
+                    })
+                    .state('add_producto_factura', {
+                        url: '/productos/factura/:idFactura/add',
+                        data: {pageTitle: 'Lista de Productos'},
+                        views: {
+                            'navbar': {
+                                templateProvider: function ($templateRequest, sessionProvider) {
+                                    var templateName;
+                                    if (sessionProvider.getPath() === "admin") {
+                                        templateName = 'views/navbar2.html';
+                                    }
+                                    return $templateRequest(templateName);
+                                },
+                                controller: null
+                            },
+                            'body': {
+                                templateUrl: "views/producto/agregarProducto.html",
+                                controller: 'ProductoController'
+                            }
+                        }
+                    })
                     .state('producto', {
                         url: '/producto/:idProducto',
                         data: {pageTitle: 'Detalle de Producto'},
@@ -226,6 +286,26 @@ var miAppHome = angular.module('tierraDeColoresApp', [
                             'body': {
                                 templateUrl: "views/producto/detalleProducto.html",
                                 controller: 'ProductoController'
+                            }
+                        }
+                    })
+                    .state('distribuir_facturas', {
+                        url: '/distribuir',
+                        data: {pageTitle: 'Detalle de Producto'},
+                        views: {
+                            'navbar': {
+                                templateProvider: function ($templateRequest, sessionProvider) {
+                                    var templateName;
+                                    if (sessionProvider.getPath() === "admin") {
+                                        templateName = 'views/navbar2.html';
+                                    }
+                                    return $templateRequest(templateName);
+                                },
+                                controller: null
+                            },
+                            'body': {
+                                templateUrl: 'views/distribucion/distribucionPanel.html',
+                                controller: 'DistribucionController'
                             }
                         }
                     });

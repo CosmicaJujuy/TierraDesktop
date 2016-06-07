@@ -195,9 +195,6 @@ miAppHome.controller('ProductoController', function ($scope, localStorageService
             if (datos.status === 200) {
                 producto.facturaProducto = datos.data;
             }
-//            if(producto.){
-//                
-//            }
             $promesa = _productoService.add(producto);
             $promesa.then(function (datos) {
                 if (datos.status === 200) {
@@ -210,7 +207,7 @@ miAppHome.controller('ProductoController', function ($scope, localStorageService
                             body: 'Producto agregado correctamente.',
                             showCloseButton: false
                         });
-                        $state.go('^.agregar-producto-factura', {"idFactura": idFacturaProducto});
+                        $state.go('panel_factura_producto', {"idFactura": idFacturaProducto});
                     }, 1000);
                 } else {
                     toaster.pop({
@@ -363,7 +360,7 @@ miAppHome.controller('ProductoController', function ($scope, localStorageService
         newWindow.loadURL('');
         newWindow.show();
         newWindow.webContents.print({silent: true, printBackground: true});
-        newWindow.webContents.printToPDF({printSelectionOnly : true, printBackground: true}, function (error, data) {
+        newWindow.webContents.printToPDF({printSelectionOnly: true, printBackground: true}, function (error, data) {
             if (error) {
                 throw error;
             }

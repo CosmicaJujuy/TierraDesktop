@@ -99,7 +99,7 @@ miAppHome.controller('FacturaProductoController', function ($scope, ngDialog, Ng
                     showCloseButton: false
                 });
                 $timeout(function timer() {
-                    $state.go('^.producto-lista');
+                    $state.go('productos');
                 }, 2000);
             } else {
                 toaster.pop({
@@ -114,7 +114,7 @@ miAppHome.controller('FacturaProductoController', function ($scope, ngDialog, Ng
 
     $scope.agregarProductoFactura = function () {
         var idFacturaProducto = parseInt($stateParams.idFactura);
-        $state.go('^.producto-agregar', {"idFactura": idFacturaProducto});
+        $state.go('add_producto_factura', {"idFactura": idFacturaProducto});
     };
 
     $scope.agregarFacturaProducto = function (facturaProducto) {
@@ -128,7 +128,7 @@ miAppHome.controller('FacturaProductoController', function ($scope, ngDialog, Ng
                     showCloseButton: false
                 });
                 $timeout(function timer() {
-                    $state.go('^.agregar-producto-factura', {"idFactura": datos.data.msg});
+                    $state.go('panel_factura_producto', {"idFactura": datos.data.msg});
                 }, 2000);
             } else {
                 toaster.pop({

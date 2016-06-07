@@ -4,7 +4,7 @@
  * @param {type} param1
  * @param {type} param2
  */
-miAppHome.controller('MarcaController', function ($scope, $state, toaster, $http, NgTableParams, $timeout, $cookies, _marcaService, $rootScope) {
+miAppHome.controller('MarcaController', function ($scope, cookieService, $state, toaster, $http, NgTableParams, $timeout, $cookies, _marcaService, $rootScope) {
 
     /**
      * Modelo de objecto Marca usado en la vista para agregar nuevas Marcas.
@@ -157,20 +157,22 @@ miAppHome.controller('MarcaController', function ($scope, $state, toaster, $http
      * @returns {unresolved}
      */
     $scope.getMarca = function (val) {
-        var token = $cookies.getObject('token');
         var uri = 'https://tierradecoloresapi.herokuapp.com/marcas/searchText';
-        return $http({
-            url: uri,
-            method: 'post',
-            headers: {
-                'Authorization': 'Bearer ' + token.data.access_token
-            },
-            params: {
-                'text': val
-            }
-        }).then(function (response) {
-            return response.data.map(function (item) {
-                return item;
+        var token = cookieService.get('token');
+        return token.then(function (data) {
+            return $http({
+                url: uri,
+                method: 'post',
+                headers: {
+                    'Authorization': 'Bearer ' + data
+                },
+                params: {
+                    'text': val
+                }
+            }).then(function (response) {
+                return response.data.map(function (item) {
+                    return item;
+                });
             });
         });
     };
