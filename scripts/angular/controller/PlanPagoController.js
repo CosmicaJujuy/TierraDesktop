@@ -78,7 +78,7 @@ miAppHome.controller('PlanPagoController', function ($scope, $timeout, toaster, 
             var data = datos.data;
             $scope.tablePlanes = new NgTableParams({
                 page: 1,
-                count: 8
+                count: 13
             }, {
                 total: data.length,
                 getData: function (params) {

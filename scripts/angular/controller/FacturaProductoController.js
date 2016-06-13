@@ -48,7 +48,7 @@ miAppHome.controller('FacturaProductoController', function ($scope, ngDialog, Ng
                 var data = datos.data;
                 $scope.tableFacturaProductos = new NgTableParams({
                     page: 1,
-                    count: 7
+                    count: 12
                 }, {
                     total: data.length,
                     getData: function (params) {

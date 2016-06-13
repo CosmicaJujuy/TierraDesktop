@@ -32,7 +32,7 @@ miAppHome.controller('EntidadBancariaController', function ($scope, $timeout, $s
             var data = datos.data;
             $scope.tableEntidades = new NgTableParams({
                 page: 1,
-                count: 8
+                count: 13
             }, {
                 total: data.length,
                 getData: function (params) {

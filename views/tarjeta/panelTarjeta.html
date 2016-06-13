@@ -1,139 +1,146 @@
 <!DOCTYPE html>
-<div class="col-lg-3"></div>
-<div class="col-lg-6">
+<div class="col-lg-12">
     <!-- TABS TARJETAS-->
-    <uib-tabset justified="true"
-                ng-show="tarjetas[0]"
-                style="margin-top: 100px; background-color: white; height: auto; min-height: 400px;">
-        <!-- TAB LISTA TARJETAS-->
-        <uib-tab heading="Tarjetas">
-            <!-- TABLA TARJETAS-->
-            <div class="table-responsive">
-                <table data-ng-init="listaTarjetas()"
-                       class="table table-bordered"
-                       ng-table="tableTarjetas">
-                    <!-- ENCABEZADO TABLA-->
-                    <thead id="headTableProductos">
-                        <tr>
-                            <th style="text-align: center">ID</th>
-                            <th style="text-align: center">Nombre</th> 
-                            <th style="text-align: center">Fecha</th> 
-                            <th style="text-align: center">Acciones</th> 
-                        </tr>
-                    </thead>
-                    <!-- CUERPO TABLA-->
-                    <tbody>
-                        <tr ng-repeat="tarjeta in $data">
-                            <th style="text-align: center">{{tarjeta.idTarjeta}}</th>
-                            <th style="text-align: center">{{tarjeta.nombreTarjeta}}</th>                        
-                            <th style="text-align: center">{{tarjeta.entidadBancaria.nombreEntidad}}</th>                        
-                            <th style="text-align: center">
-                                <button type="button"
-                                        class="btn btn-xs btn-info"
-                                        data-toggle="modal" 
-                                        uib-tooltip="Modificar tarjeta"
-                                        data-target="#myModal"
-                                        ng-click="seleccionarTarjeta(tarjeta)"><span class="glyphicon glyphicon-pencil"></span></button>
-                                <button type="button" 
-                                        class="btn btn-xs btn-danger"
-                                        data-toggle="modal" 
-                                        uib-tooltip="Eliminar tarjeta"
-                                        data-target="#myModalDelete"                                    
-                                        ng-click="seleccionarTarjeta(tarjeta)"><span class="glyphicon glyphicon-trash"></span></button>
-                            </th>                        
-                        </tr>
-                    </tbody>
-                </table><!-- FFIN TABLA TARJETAS-->
-            </div>                   
-        </uib-tab>
+    <div class="distribucion-panel">
+        <div ng-cloak>
+            <md-content>
+                <md-tabs md-dynamic-height md-border-bottom>
+                    <md-tab label="Tarjetas">
+                        <md-content class="md-padding">
+                            <!-- TABLA TARJETAS-->
+                            <div class="table-responsive">
+                                <table data-ng-init="listaTarjetas()"
+                                       class="table table-bordered table-condensed"
+                                       ng-table="tableTarjetas">
+                                    <!-- ENCABEZADO TABLA-->
+                                    <thead id="headTableProductos">
+                                        <tr>
+                                            <th style="text-align: center">ID</th>
+                                            <th style="text-align: center">Nombre tarjeta</th> 
+                                            <th style="text-align: center">Entidad Bancaria</th> 
+                                            <th style="text-align: center">Medio de pago</th> 
+                                            <th style="text-align: center">Fecha</th> 
+                                            <th style="text-align: center">Acciones</th> 
+                                        </tr>
+                                    </thead>
+                                    <!-- CUERPO TABLA-->
+                                    <tbody>
+                                        <tr ng-repeat="tarjeta in $data">
+                                            <th style="text-align: center">{{::tarjeta.idTarjeta}}</th>
+                                            <th style="text-align: center">{{::tarjeta.nombreTarjeta}}</th>                        
+                                            <th style="text-align: center">{{::tarjeta.entidadBancaria.nombreEntidad}}</th>                        
+                                            <th style="text-align: center">{{::tarjeta.medioPago.nombrePago}}</th>                        
+                                            <th style="text-align: center">{{::tarjeta.fechaCreacion}}</th>                        
+                                            <th style="text-align: center">
+                                                <button type="button"
+                                                        class="btn btn-xs btn-info"
+                                                        data-toggle="modal" 
+                                                        uib-tooltip="Modificar tarjeta"
+                                                        data-target="#myModal"
+                                                        ng-click="seleccionarTarjeta(tarjeta)"><span class="glyphicon glyphicon-pencil"></span></button>
+                                                <button type="button" 
+                                                        class="btn btn-xs btn-danger"
+                                                        data-toggle="modal" 
+                                                        uib-tooltip="Eliminar tarjeta"
+                                                        data-target="#myModalDelete"                                    
+                                                        ng-click="seleccionarTarjeta(tarjeta)"><span class="glyphicon glyphicon-trash"></span></button>
+                                            </th>                        
+                                        </tr>
+                                    </tbody>
+                                </table><!-- FFIN TABLA TARJETAS-->
+                            </div> 
+                        </md-content>                            
+                    </md-tab>
+                    <md-tab label="Agregar nueva Tarjeta">
+                        <md-content class="md-padding">
+                            <div class="col-lg-2"></div>
+                            <div class="col-lg-8">
+                                <!-- FORMULARIO AGREGAR TARJETA-->
+                                <form class="form-horizontal" name="addTarjeta" >
+                                    <fieldset>
+                                        <legend style="text-align: center;">Datos de la tarjeta</legend>
 
-        <!-- TAB AGREGAR TARJETA-->
-        <uib-tab heading="Agregar nueva Tarjeta">
-            <div class="col-lg-2"></div>
-            <div class="col-lg-8">
-                <!-- FORMULARIO AGREGAR TARJETA-->
-                <form class="form-horizontal" name="addTarjeta" >
-                    <fieldset>
-                        <legend style="text-align: center;">Datos de la tarjeta</legend>
-
-                        <!-- INPUT NOMBRE TARJETA-->
-                        <div class="form-group"
-                             data-ng-class="{'has-error has-feedback': addTarjeta.nombre.$invalid && !addTarjeta.$pristine && addTarjeta.nombre.$dirty,
+                                        <!-- INPUT NOMBRE TARJETA-->
+                                        <div class="form-group"
+                                             data-ng-class="{'has-error has-feedback': addTarjeta.nombre.$invalid && !addTarjeta.$pristine && addTarjeta.nombre.$dirty,
                              'has-success has-feedback': addTarjeta.nombre.$valid,
                          'has-warning has-feedback': addTarjeta.nombre.$invalid && addTarjeta.nombre.$touched}">
-                            <label class="control-label">Nombre tarjeta</label>
-                            <input type="text"
-                                   placeholder="Ingresa nombre de la tarjeta"
-                                   class="form-control"
-                                   ng-model="_tarjeta.nombreTarjeta" name="nombre" required
-                                   ng-minlength="4"
-                                   ng-maxlength="25"
-                                   minlength="4"
-                                   maxlength="30"/>
-                            <!-- MENSAJES-->
-                            <div class="pull-left" 
-                                 style="color: #a94442; margin-top: 1%;"
-                                 ng-messages="addTarjeta.nombre.$error"
-                                 ng-if='addTarjeta.nombre.$dirty || addTarjeta.nombre.$touched'>
-                                <div ng-message="minlength">Nombre demasiado corto.</div>
-                                <div ng-message="maxlength">Nombre demasiado largo.</div>
-                                <div ng-message="required" style="color: #8a6d3b;">Este campo no puede estar vacio.</div>
+                                            <label class="control-label">Nombre tarjeta</label>
+                                            <input type="text"
+                                                   placeholder="Ingresa nombre de la tarjeta"
+                                                   class="form-control"
+                                                   ng-model="_tarjeta.nombreTarjeta" name="nombre" required
+                                                   ng-minlength="4"
+                                                   ng-maxlength="25"
+                                                   minlength="4"
+                                                   maxlength="30"/>
+                                            <!-- MENSAJES-->
+                                            <div class="pull-left" 
+                                                 style="color: #a94442; margin-top: 1%;"
+                                                 ng-messages="addTarjeta.nombre.$error"
+                                                 ng-if='addTarjeta.nombre.$dirty || addTarjeta.nombre.$touched'>
+                                                <div ng-message="minlength">Nombre demasiado corto.</div>
+                                                <div ng-message="maxlength">Nombre demasiado largo.</div>
+                                                <div ng-message="required" style="color: #8a6d3b;">Este campo no puede estar vacio.</div>
+                                            </div>
+                                            <!-- ICONOS DE MENSAJE-->
+                                            <span ng-show="addTarjeta.nombre.$dirty && addTarjeta.nombre.$valid" class="glyphicon glyphicon-ok form-control-feedback" ></span>
+                                            <span ng-show="addTarjeta.nombre.$dirty && addTarjeta.nombre.$invalid" class="glyphicon glyphicon-remove  form-control-feedback"></span>
+                                            <span ng-show="addTarjeta.nombre.$touched && addTarjeta.nombre.$pristine" class="glyphicon glyphicon-warning-sign  form-control-feedback"></span>
+                                        </div><!-- FIN INPUT NOMBRE TARJETA-->
+                                        <!------------------------------------------------------------------------------------------>
+
+
+                                        <!-- SELECT MEDIO DE PAGO-->
+                                        <div class="form-group" ng-controller="MedioPagoController" data-ng-init="listaMedioPago()">
+                                            <!-- LABEL MEDIO DE PAGO-->
+                                            <label class="control-label">Tipo de tarjeta</label>
+                                            <!-- SELECT-->
+                                            <select name="medio"
+                                                    class="form-control"
+                                                    ng-options="medio as medio.nombrePago for medio in medioPagos track by medio.idMedioPago"
+                                                    ng-model="_tarjeta.medioPago" required
+                                                    data-ng-class='{error: addTarjeta.medio.$invalid && !addTarjeta.$pristine}'>
+                                                <option value="" disabled selected>Seleccionar tipo de tarjeta</option>
+                                            </select>
+                                        </div><!-- FIN SELECT MEDIO DE PAGO-->
+                                        <!------------------------------------------------------------------------------------------>
+
+
+                                        <!-- SELECT ENTIDAD-->
+                                        <div class="form-group" ng-controller="EntidadBancariaController" data-ng-init="listaEntidadBancaria()">
+                                            <!-- LABEL ENTIDAD-->
+                                            <label class="control-label">Entidad bancaria</label>
+                                            <!-- SELECT-->
+                                            <select name="entidad"
+                                                    class="form-control"
+                                                    ng-options="entidad as entidad.nombreEntidad for entidad in entidadBancarias track by entidad.idEntidadMonetaria"
+                                                    ng-model="_tarjeta.entidadBancaria" required
+                                                    data-ng-class='{error: addTarjeta.entidad.$invalid && !addTarjeta.$pristine}'>
+                                                <option value="" disabled selected>Seleccionar entidad bancaria</option>
+                                            </select>
+                                        </div><!--FIN SELECT ENTIDAD -->
+                                        <!------------------------------------------------------------------------------------------>
+
+
+                                        <!-- BOTON AGREGAR-->
+                                        <center class="form-group">
+                                            <button ng-click="agregarTarjeta(_tarjeta)"
+                                                    type="submit" 
+                                                    class="btn btn-warning"
+                                                    ng-disabled="addTarjeta.$invalid">Agregar</button>
+                                        </center><!-- FIN BOTON AGREGAR-->
+                                    </fieldset>
+                                </form><!-- FIN FORMULARIO-->
                             </div>
-                            <!-- ICONOS DE MENSAJE-->
-                            <span ng-show="addTarjeta.nombre.$dirty && addTarjeta.nombre.$valid" class="glyphicon glyphicon-ok form-control-feedback" ></span>
-                            <span ng-show="addTarjeta.nombre.$dirty && addTarjeta.nombre.$invalid" class="glyphicon glyphicon-remove  form-control-feedback"></span>
-                            <span ng-show="addTarjeta.nombre.$touched && addTarjeta.nombre.$pristine" class="glyphicon glyphicon-warning-sign  form-control-feedback"></span>
-                        </div><!-- FIN INPUT NOMBRE TARJETA-->
-                        <!------------------------------------------------------------------------------------------>
-
-
-                        <!-- SELECT MEDIO DE PAGO-->
-                        <div class="form-group" ng-controller="MedioPagoController" data-ng-init="listaMedioPago()">
-                            <!-- LABEL MEDIO DE PAGO-->
-                            <label class="control-label">Tipo de tarjeta</label>
-                            <!-- SELECT-->
-                            <select name="medio"
-                                    class="form-control"
-                                    ng-options="medio as medio.nombrePago for medio in medioPagos track by medio.idMedioPago"
-                                    ng-model="_tarjeta.medioPago" required
-                                    data-ng-class='{error: addTarjeta.medio.$invalid && !addTarjeta.$pristine}'>
-                                <option value="" disabled selected>Seleccionar tipo de tarjeta</option>
-                            </select>
-                        </div><!-- FIN SELECT MEDIO DE PAGO-->
-                        <!------------------------------------------------------------------------------------------>
-                        
-                        
-                        <!-- SELECT ENTIDAD-->
-                        <div class="form-group" ng-controller="EntidadBancariaController" data-ng-init="listaEntidadBancaria()">
-                            <!-- LABEL ENTIDAD-->
-                            <label class="control-label">Entidad bancaria</label>
-                            <!-- SELECT-->
-                            <select name="entidad"
-                                    class="form-control"
-                                    ng-options="entidad as entidad.nombreEntidad for entidad in entidadBancarias track by entidad.idEntidadMonetaria"
-                                    ng-model="_tarjeta.entidadBancaria" required
-                                    data-ng-class='{error: addTarjeta.entidad.$invalid && !addTarjeta.$pristine}'>
-                                <option value="" disabled selected>Seleccionar entidad bancaria</option>
-                            </select>
-                        </div><!--FIN SELECT ENTIDAD -->
-                        <!------------------------------------------------------------------------------------------>
-                        
-                        
-                        <!-- BOTON AGREGAR-->
-                        <center class="form-group">
-                            <button ng-click="agregarTarjeta(_tarjeta)"
-                                    type="submit" 
-                                    class="btn btn-warning"
-                                    ng-disabled="addTarjeta.$invalid">Agregar</button>
-                        </center><!-- FIN BOTON AGREGAR-->
-                    </fieldset>
-                </form><!-- FIN FORMULARIO-->
-            </div>
-            <div class="col-lg-2"></div>
-        </uib-tab>
-    </uib-tabset>
+                            <div class="col-lg-2"></div>
+                        </md-content>                            
+                    </md-tab>
+                </md-tabs>                    
+            </md-content>
+        </div>
+    </div>
 </div>
-<div class="col-lg-3"></div>
 
 
 <!-- MODAL MODIFICAR TARJETA-->

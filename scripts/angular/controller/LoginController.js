@@ -16,9 +16,6 @@ miAppHome.controller('LoginController',
                 $promesa.then(function (datos) {
                     switch (datos.status) {
                         case 200:
-                            $cookies.put('render', true);
-                            $cookies.putObject('token', datos);
-                            $cookies.put('a_tk', datos.data.access_token);
                             cookieService.put(datos.data.access_token, 'token');
                             $rootScope.render = true;
                             localStorageService.set('session', 'views/navbar.html');
@@ -29,9 +26,9 @@ miAppHome.controller('LoginController',
                             var role = datos.data.role[0].authority;
                             if (role === 'ROLE_ADMIN') {
                                 $rootScope.navbar = 'views/navbar.html';
-                                $state.go('home');
                                 $timeout(function timer() {
                                     window.maximize();
+                                    $state.go('home');
                                 }, 1000);
                             } else {
                                 if (role === 'ROLE_VENDEDOR') {

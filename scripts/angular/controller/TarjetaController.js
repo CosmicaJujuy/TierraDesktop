@@ -44,7 +44,7 @@ miAppHome.controller('TarjetaController',
                     var data = datos.data;
                     $scope.tableTarjetas = new NgTableParams({
                         page: 1,
-                        count: 8
+                        count: 13
                     }, {
                         total: data.length,
                         getData: function (params) {

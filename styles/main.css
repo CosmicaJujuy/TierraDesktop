@@ -737,16 +737,11 @@ body {
 }
 #agregarUsuario{
     background-color: white;
-    border-radius: 25px;
-    margin-bottom: 5%;
+    border-radius: 5px;
 }
 #tituloUsuario{
     padding-top: 5%;
     padding-bottom: 3%;
-}
-#btn-register{
-    margin-bottom: 5%;
-    margin-top: 5%;
 }
 #tabTipo{
     margin-top: 100px;
@@ -773,7 +768,7 @@ body {
     margin-top: 10%;
 }
 .ng-table-counts{
-    /*display: none !important;*/
+    display: none !important;
 }
 #panelFacturacion{
     background-color: white;
@@ -847,7 +842,7 @@ body {
 }
 .distribucion-panel{
     margin-top: 100px;
-    min-height: 500px;
+    min-height: 600px;
     height: fit-content;
     background-color: white;
     border: 1px solid #8a6d3b;
@@ -893,10 +888,15 @@ body {
     margin-bottom: 0px;
     padding-bottom: 0px;
 }
+.animate-repeat{
+    
+}
 .animate-repeat.ng-move,
 .animate-repeat.ng-enter,
 .animate-repeat.ng-leave {
-    transition:all linear 0.5s;
+/*    transition:all linear 0.5s;*/
+    /*backface-visibility: hidden;*/
+    
 }
 .animate-repeat.ng-leave.ng-leave-active,
 .animate-repeat.ng-move,
@@ -912,3 +912,6 @@ body {
     max-height:30px;
 }
 .highlighted { background: yellow }
+.pagination {
+    margin: 0px 0 !important;
+}

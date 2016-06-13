@@ -137,7 +137,7 @@ miAppHome.controller('ProductoController', function ($scope, localStorageService
             length = $scope.productos.length;
             $scope.tableProductos = new NgTableParams({
                 page: 1,
-                count: 10
+                count: 12
             }, {
                 total: length,
                 getData: function (params) {
@@ -349,31 +349,7 @@ miAppHome.controller('ProductoController', function ($scope, localStorageService
      */
     $scope.printDiv = function (divName) {
         var printContents = document.getElementById(divName).innerHTML;
-        var popupWin = window.open('', '_blank', 'width=500,height=500');
-        popupWin.document.open();
-        popupWin.document.write('<html><head><link rel="stylesheet" type="text/css" href="styles/main.css"  type=\"text/css\" media=\"print\" /></head><body onload="window.print()">' + printContents + '</body></html>');
-        popupWin.document.close();
-        var windowPrint = require('electron').remote.BrowserWindow;
-        var fs = require('fs');
-        var newWindow = new windowPrint({width: 800, height: 600, show: false});
-        console.log(newWindow);
-        newWindow.loadURL('');
-        newWindow.show();
-        newWindow.webContents.print({silent: true, printBackground: true});
-        newWindow.webContents.printToPDF({printSelectionOnly: true, printBackground: true}, function (error, data) {
-            if (error) {
-                throw error;
-            }
-            console.log(error);
-            console.log(data);
-            fs.writeFile('print.pdf', function (data, error) {
-                if (error) {
-                    throw error;
-                }
-                console.log(error);
-                console.log(data);
-            });
-        });
+        sendCommandToWorker(printContents);
     };
     /**
      * configuracion para la busqueda dinamica de Productos para la directiva 

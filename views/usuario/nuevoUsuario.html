@@ -1,25 +1,22 @@
 <!DOCTYPE html>
-<div class="col-lg-3"></div>
-<div class="col-lg-6" style="margin-top: 100px;">
-    <center id="agregarUsuario">
+<div class="col-lg-12" style="margin-top: 95px;">
+    <div id="agregarUsuario">
         <!-- FORMULARIO AGREGAR NUEVO USUARIO-->
         <form name="registrarUsuario" class="form-horizontal" novalidate>
             <fieldset>
                 <!-- TITULO FORMULARIO-->
-                <legend style="font-size: xx-large;">Registrar nuevo Usuario</legend>
+                <legend style="font-size: xx-large; text-align: center;">Registrar nuevo Usuario</legend>
                 <!------------------------------------------------------------------------------------------>
-
-
-                <!-- INPUT NOMBRE-->
-                <div class="form-group"
-                     data-ng-class="
+                <div class="col-lg-6">
+                    <!-- INPUT NOMBRE-->
+                    <div class="form-group"
+                         data-ng-class="
                                   {'has-error has-feedback': registrarUsuario.nombre.$invalid && !registrarUsuario.$pristine && registrarUsuario.nombre.$dirty,
                              'has-success has-feedback': registrarUsuario.nombre.$valid,
                          'has-warning has-feedback': registrarUsuario.nombre.$invalid&& registrarUsuario.nombre.$touched}">
-                    <!-- LABEL INPUT NOMBRE-->
-                    <label class="col-lg-4 control-label">Nombre</label>
-                    <!-- INPUT NOMBRE-->
-                    <div class="col-lg-8">
+                        <!-- LABEL INPUT NOMBRE-->
+                        <label class="control-label">Nombre</label>
+                        <!-- INPUT NOMBRE-->                        
                         <input type="text"
                                class="form-control"
                                ng-minlength="4"
@@ -29,7 +26,7 @@
                                name="nombre" required placeholder="Nombre"/>
                         <!-- MENSAJES-->
                         <div class="pull-left" 
-                             style="color: #a94442; margin-top: 1%;"
+                             style="color: #a94442;"
                              ng-messages="registrarUsuario.nombre.$error"
                              ng-if='registrarUsuario.nombre.$dirty || registrarUsuario.nombre.$touched'>
                             <div ng-message="minlength">Nombre demasiado corto.</div>
@@ -40,23 +37,19 @@
                         <span ng-show="registrarUsuario.nombre.$dirty && registrarUsuario.nombre.$valid" class="glyphicon glyphicon-ok form-control-feedback" ></span>
                         <span ng-show="registrarUsuario.nombre.$dirty && registrarUsuario.nombre.$invalid" class="glyphicon glyphicon-remove  form-control-feedback"></span>
                         <span ng-show="registrarUsuario.nombre.$touched && registrarUsuario.nombre.$pristine" class="glyphicon glyphicon-warning-sign  form-control-feedback"></span>
-                    </div>
-                </div><!-- FIN INPUT NOMBRE-->
-                <!-- ------------------------------------------------------------------------------------ -->
 
-
-                <!-- INPUT APELLIDO-->
-                <div class="form-group" 
-                     data-ng-class="{'has-error has-feedback': registrarUsuario.apellido.$invalid && !registrarUsuario.$pristine && registrarUsuario.apellido.$dirty,
+                    </div><!-- FIN INPUT NOMBRE-->
+                    <!-- ------------------------------------------------------------------------------------ -->
+                    <!-- INPUT APELLIDO-->
+                    <div class="form-group" 
+                         data-ng-class="{'has-error has-feedback': registrarUsuario.apellido.$invalid && !registrarUsuario.$pristine && registrarUsuario.apellido.$dirty,
                                  'has-warning has-feedback':registrarUsuario.apellido.$invalid && registrarUsuario.apellido.$touched,
-                                     'has-success has-feed-back': registrarUsuario.apellido.$valid}">
-                    <!-- LABEL APELLIDO-->
-                    <label class="col-lg-4 control-label">Apellido</label>
-                    <div class="col-lg-8">
+                                     'has-success has-feedback': registrarUsuario.apellido.$valid}">
+                        <!-- LABEL APELLIDO-->
+                        <label class="control-label">Apellido</label>
                         <!-- INPUT APELLIDO-->
                         <input type="text" 
                                class="form-control"
-                               ng-pattern="/^[A-Za-záéíóúñÑÁÉÍÓÚ']{4,}$/"
                                ng-minlength="4" 
                                ng-maxlength="20"
                                maxlength="25"
@@ -72,22 +65,18 @@
                             <div ng-message="required" style="color: #8a6d3b;">Este campo no puede estar vacio.</div>
                         </div>
                         <!-- ICONOS DE MENSAJE-->
-                        <span ng-show="registrarUsuario.apellido.$dirty && registrarUsuario.apellido.$valid" class="glyphicon glyphicon-ok form-control-feedback" style="padding-right: 39px"></span>
+                        <span ng-show="registrarUsuario.apellido.$dirty && registrarUsuario.apellido.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
                         <span ng-show="registrarUsuario.apellido.$dirty && registrarUsuario.apellido.$invalid" class="glyphicon glyphicon-remove  form-control-feedback"></span>
                         <span ng-show="registrarUsuario.apellido.$touched && registrarUsuario.apellido.$pristine" class="glyphicon glyphicon-warning-sign  form-control-feedback"></span>
-                    </div>                    
-                </div><!--FIN INPUT APELLIDO-->
-                <!-- ------------------------------------------------------------------------------------ -->
-
-
-                <!-- INPUT DNI-->
-                <div class="form-group"
-                     data-ng-class="{'has-error has-feedback': registrarUsuario.dni.$invalid && !registrarUsuario.$pristine && registrarUsuario.dni.$dirty,
+                    </div><!--FIN INPUT APELLIDO-->
+                    <!-- ------------------------------------------------------------------------------------ -->
+                    <!-- INPUT DNI-->
+                    <div class="form-group"
+                         data-ng-class="{'has-error has-feedback': registrarUsuario.dni.$invalid && !registrarUsuario.$pristine && registrarUsuario.dni.$dirty,
                      'has-warning has-feedback': registrarUsuario.dni.$invalid && registrarUsuario.dni.$touched,
                  'has-success has-feedback': registrarUsuario.dni.$valid}">
-                    <!-- LABEL DNI-->
-                    <label class="col-lg-4 control-label">D.N.I.</label>
-                    <div class="col-lg-8">
+                        <!-- LABEL DNI-->
+                        <label class="control-label">D.N.I.</label>
                         <!-- INPUT DNI-->
                         <input type="text"
                                class="form-control"                                       
@@ -107,19 +96,15 @@
                         <span ng-show="registrarUsuario.dni.$dirty && registrarUsuario.dni.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
                         <span ng-show="registrarUsuario.dni.$dirty && registrarUsuario.dni.$invalid" class="glyphicon glyphicon-remove  form-control-feedback"></span>
                         <span ng-show="registrarUsuario.dni.$touched && registrarUsuario.dni.$pristine" class="glyphicon glyphicon-warning-sign  form-control-feedback"></span>
-                    </div>
-                </div><!-- FIN DNI-->
-                <!------------------------------------------------------------------------------------------>
-
-
-                <!--INPUT DOMICILIO -->
-                <div class="form-group"
-                     data-ng-class="{'has-error has-feedback': registrarUsuario.domicilio.$invalid && !registrarUsuario.$pristine && registrarUsuario.domicilio.$dirty,
+                    </div><!-- FIN DNI-->
+                    <!------------------------------------------------------------------------------------------>
+                    <!--INPUT DOMICILIO -->
+                    <div class="form-group"
+                         data-ng-class="{'has-error has-feedback': registrarUsuario.domicilio.$invalid && !registrarUsuario.$pristine && registrarUsuario.domicilio.$dirty,
                      'has-warning has-feedback': registrarUsuario.domicilio.$invalid && registrarUsuario.domicilio.$touched,
                  'has-success has-feedback': registrarUsuario.domicilio.$valid}">
-                    <!-- LABEL DOMICILIO-->
-                    <label class="col-lg-4 control-label">Domicilio</label>
-                    <div class="col-lg-8">
+                        <!-- LABEL DOMICILIO-->
+                        <label class="control-label">Domicilio</label>
                         <!-- INPUT DOMICILIO-->
                         <input type="text" 
                                class="form-control"
@@ -141,19 +126,15 @@
                         <span ng-show="registrarUsuario.domicilio.$dirty && registrarUsuario.domicilio.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
                         <span ng-show="registrarUsuario.domicilio.$dirty && registrarUsuario.domicilio.$invalid" class="glyphicon glyphicon-remove  form-control-feedback"></span>
                         <span ng-show="registrarUsuario.domicilio.$touched && registrarUsuario.domicilio.$pristine" class="glyphicon glyphicon-warning-sign  form-control-feedback"></span>
-                    </div>
-                </div><!-- FIN INPUT DOMICILIO-->
-                <!------------------------------------------------------------------------------------------>
-
-
-                <!-- INPUT FECHA-->
-                <div class="form-group"
-                     data-ng-class="{'has-error has-feedback': registrarUsuario.nacimiento.$invalid && !registrarUsuario.$pristine && registrarUsuario.nacimiento.$dirty,
+                    </div><!-- FIN INPUT DOMICILIO-->
+                    <!------------------------------------------------------------------------------------------>
+                    <!-- INPUT FECHA-->
+                    <div class="form-group"
+                         data-ng-class="{'has-error has-feedback': registrarUsuario.nacimiento.$invalid && !registrarUsuario.$pristine && registrarUsuario.nacimiento.$dirty,
                      'has-warning has-feedback': registrarUsuario.nacimiento.$invalid && registrarUsuario.nacimiento.$touched,
                  'has-success has-feedback': registrarUsuario.nacimiento.$valid}">
-                    <!-- LABEL FECHA-->
-                    <label class="col-lg-4 control-label">Fecha nacimiento</label>
-                    <div class="col-lg-8">
+                        <!-- LABEL FECHA-->
+                        <label class="control-label">Fecha nacimiento</label>
                         <!-- INPUT FECHA-->
                         <p class="input-group">
                             <input type="text" class="form-control"
@@ -185,19 +166,44 @@
                         <span ng-show="registrarUsuario.nacimiento.$dirty && registrarUsuario.nacimiento.$valid" class="glyphicon glyphicon-ok form-control-feedback" style="padding-right:  65px;"></span>
                         <span ng-show="registrarUsuario.nacimiento.$dirty && registrarUsuario.nacimiento.$invalid" class="glyphicon glyphicon-remove  form-control-feedback" style="padding-right: 65px;"></span>
                         <span ng-show="registrarUsuario.nacimiento.$touched && registrarUsuario.nacimiento.$pristine" class="glyphicon glyphicon-warning-sign  form-control-feedback" style="padding-right: 65px;"></span>
-                    </div>
-                </div><!-- FIN INPUT FECHA-->
-                <!------------------------------------------------------------------------------------------>
-
-
-                <!-- INPUT EMAIL-->
-                <div class="form-group" 
-                     data-ng-class="{'has-error has-feedback': registrarUsuario.email.$invalid && !registrarUsuario.$pristine && registrarUsuario.email.$dirty,
+                    </div><!-- FIN INPUT FECHA-->
+                    <!------------------------------------------------------------------------------------------>
+                </div>
+                <div class="col-lg-6">
+                    <!--INPUT TELEFONO -->
+                    <div class="form-group"
+                         data-ng-class="{'has-error has-feedback': registrarUsuario.telefono.$invalid && !registrarUsuario.$pristine && registrarUsuario.telefono.$dirty,
+                     'has-warning has-feedback': registrarUsuario.telefono.$invalid && registrarUsuario.telefono.$touched,
+                 'has-success has-feedback': registrarUsuario.telefono.$valid}">
+                        <!-- LABEL TELEFONO-->
+                        <label class="control-label">Telefono</label>
+                        <input type="tel"
+                               class="form-control"
+                               placeholder="Telefono"
+                               ui-mask="(999) 999-9999" 
+                               ui-mask-placeholder ui-mask-placeholder-char="_"
+                               ng-model="user.telefono" name="telefono" required/>
+                        <!-- MENSAJES-->
+                        <div class="pull-left" 
+                             style="color: #a94442; margin-top: 1%;"
+                             ng-messages="registrarUsuario.telefono.$error"
+                             ng-if='registrarUsuario.telefono.$dirty || registrarUsuario.telefono.$touched'>
+                            <div ng-message="tel">Número de telefono invalido.</div>
+                            <div ng-message="required" style="color: #8a6d3b;">Este campo no puede estar vacio.</div>                            
+                        </div>
+                        <!--ICONOS DE MENSAJE -->
+                        <span ng-show="registrarUsuario.telefono.$dirty && registrarUsuario.telefono.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
+                        <span ng-show="registrarUsuario.telefono.$dirty && registrarUsuario.telefono.$invalid" class="glyphicon glyphicon-remove  form-control-feedback"></span>
+                        <span ng-show="registrarUsuario.telefono.$touched && registrarUsuario.telefono.$pristine" class="glyphicon glyphicon-warning-sign  form-control-feedback"></span>
+                    </div><!-- FIN INPUT TELEFONO-->
+                    <!------------------------------------------------------------------------------------------>
+                    <!-- INPUT EMAIL-->
+                    <div class="form-group" 
+                         data-ng-class="{'has-error has-feedback': registrarUsuario.email.$invalid && !registrarUsuario.$pristine && registrarUsuario.email.$dirty,
                      'has-warning has-feedback': registrarUsuario.email.$invalid && registrarUsuario.email.$touched,
                  'has-success has-feedback': registrarUsuario.email.$valid}">
-                    <!-- LABEL EMAIL-->
-                    <label class="col-lg-4 control-label">E-mail</label>
-                    <div class="col-lg-8">
+                        <!-- LABEL EMAIL-->
+                        <label class="control-label">E-mail</label>
                         <!-- INPUT EMAIL-->
                         <input type="email" 
                                class="form-control"
@@ -220,120 +226,83 @@
                         <span ng-show="registrarUsuario.email.$dirty && registrarUsuario.email.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
                         <span ng-show="registrarUsuario.email.$dirty && registrarUsuario.email.$invalid" class="glyphicon glyphicon-remove  form-control-feedback"></span>
                         <span ng-show="registrarUsuario.email.$touched && registrarUsuario.email.$pristine" class="glyphicon glyphicon-warning-sign  form-control-feedback"></span>
-                    </div>
-                </div><!-- FIN INPUT EMAIL-->
-                <!------------------------------------------------------------------------------------------>
-
-
-                <!--INPUT TELEFONO -->
-                <div class="form-group"
-                     data-ng-class="{'has-error has-feedback': registrarUsuario.telefono.$invalid && !registrarUsuario.$pristine && registrarUsuario.telefono.$dirty,
-                     'has-warning has-feedback': registrarUsuario.telefono.$invalid && registrarUsuario.telefono.$touched,
-                 'has-success has-feedback': registrarUsuario.telefono.$valid}">
-                    <!-- LABEL TELEFONO-->
-                    <label class="col-lg-4 control-label">Telefono</label>
-                    <div class="col-lg-8">
-                        <input type="tel"
-                               class="form-control"
-                               placeholder="Telefono"
-                               ui-mask="(999) 999-9999" 
-                               ui-mask-placeholder ui-mask-placeholder-char="_"
-                               ng-model="user.telefono" name="telefono" required/>
-                        <!-- MENSAJES-->
-                        <div class="pull-left" 
-                             style="color: #a94442; margin-top: 1%;"
-                             ng-messages="registrarUsuario.telefono.$error"
-                             ng-if='registrarUsuario.telefono.$dirty || registrarUsuario.telefono.$touched'>
-                            <div ng-message="tel">Número de telefono invalido.</div>
-                            <div ng-message="required" style="color: #8a6d3b;">Este campo no puede estar vacio.</div>                            
-                        </div>
-                        <!--ICONOS DE MENSAJE -->
-                        <span ng-show="registrarUsuario.telefono.$dirty && registrarUsuario.telefono.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
-                        <span ng-show="registrarUsuario.telefono.$dirty && registrarUsuario.telefono.$invalid" class="glyphicon glyphicon-remove  form-control-feedback"></span>
-                        <span ng-show="registrarUsuario.telefono.$touched && registrarUsuario.telefono.$pristine" class="glyphicon glyphicon-warning-sign  form-control-feedback"></span>
-                    </div>
-                </div><!-- FIN INPUT TELEFONO-->
-                <!------------------------------------------------------------------------------------------>
-
-
-                <!--INPUT USERNAME -->
-                <div class="form-group" 
-                     data-ng-class="{'has-error has-feedback': registrarUsuario.username.$invalid && !registrarUsuario.$pristine && registrarUsuario.username.$dirty,
+                    </div><!-- FIN INPUT EMAIL-->
+                    <!------------------------------------------------------------------------------------------>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <!--INPUT USERNAME -->
+                            <div class="form-group" 
+                                 data-ng-class="{'has-error has-feedback': registrarUsuario.username.$invalid && !registrarUsuario.$pristine && registrarUsuario.username.$dirty,
                          'has-warning has-feedback': registrarUsuario.username.$invalid && registrarUsuario.username.$touched,
                      'has-success has-feedback': registrarUsuario.username.$valid}">
-                    <!-- LABEL USERNAME-->
-                    <label class="col-lg-4 control-label">Nombre de usuario</label>
-                    <div class="col-lg-8">
-                        <!-- INPUT USERNAME -->
-                        <input type="text"
-                               class="form-control"
-                               ng-minlength="4" 
-                               ng-maxlength="15"
-                               maxlength="20"
-                               placeholder="Nombre de usuario"
-                               ng-model="user.username" name="username" required/>
-                        <!-- MENSAJES-->
-                        <div class="pull-left"
-                             style="color: #a94442; margin-top: 1%;"
-                             ng-messages="registrarUsuario.username.$error"
-                             ng-if='registrarUsuario.username.$dirty || registrarUsuario.username.$touched'>
-                            <div ng-message="minlength">Nombre de usuario demasiado corto.</div>
-                            <div ng-message="maxlength">Nombre de usuario demasiado largo.</div>
-                            <div ng-message="required" style="color: #8a6d3b;">Este campo no puede estar vacio.</div>
+                                <!-- LABEL USERNAME-->
+                                <label class="control-label">Nombre de usuario</label>
+                                <!-- INPUT USERNAME -->
+                                <input type="text"
+                                       class="form-control"
+                                       ng-minlength="4" 
+                                       ng-maxlength="15"
+                                       maxlength="20"
+                                       placeholder="Nombre de usuario"
+                                       ng-model="user.username" name="username" required/>
+                                <!-- MENSAJES-->
+                                <div class="pull-left"
+                                     style="color: #a94442; margin-top: 1%;"
+                                     ng-messages="registrarUsuario.username.$error"
+                                     ng-if='registrarUsuario.username.$dirty || registrarUsuario.username.$touched'>
+                                    <div ng-message="minlength">Nombre de usuario demasiado corto.</div>
+                                    <div ng-message="maxlength">Nombre de usuario demasiado largo.</div>
+                                    <div ng-message="required" style="color: #8a6d3b;">Este campo no puede estar vacio.</div>
+                                </div>
+                                <!-- ICONOS DE MENSAJE-->
+                                <span ng-show="registrarUsuario.username.$dirty && registrarUsuario.username.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
+                                <span ng-show="registrarUsuario.username.$dirty && registrarUsuario.username.$invalid" class="glyphicon glyphicon-remove  form-control-feedback"></span>
+                                <span ng-show="registrarUsuario.username.$touched && registrarUsuario.username.$pristine" class="glyphicon glyphicon-warning-sign  form-control-feedback"></span>
+                            </div><!-- FIN INPUT USERNAME-->
+                            <!-- ------------------------------------------------------------------------------------ -->
                         </div>
-                        <!-- ICONOS DE MENSAJE-->
-                        <span ng-show="registrarUsuario.username.$dirty && registrarUsuario.username.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
-                        <span ng-show="registrarUsuario.username.$dirty && registrarUsuario.username.$invalid" class="glyphicon glyphicon-remove  form-control-feedback"></span>
-                        <span ng-show="registrarUsuario.username.$touched && registrarUsuario.username.$pristine" class="glyphicon glyphicon-warning-sign  form-control-feedback"></span>
-                    </div>
-                </div><!-- FIN INPUT USERNAME-->
-                <!-- ------------------------------------------------------------------------------------ -->
-
-
-                <!-- INPUT CONTRASEÑA-->
-                <div class="form-group"
-                     data-ng-class="{'has-error has-feedback': registrarUsuario.password.$invalid && !registrarUsuario.$pristine && registrarUsuario.password.$dirty,
+                        <div class="col-lg-6">
+                            <!-- INPUT CONTRASEÑA-->
+                            <div class="form-group"
+                                 data-ng-class="{'has-error has-feedback': registrarUsuario.password.$invalid && !registrarUsuario.$pristine && registrarUsuario.password.$dirty,
                      'has-warning has-feedback': registrarUsuario.password.$invalid && registrarUsuario.password.$touched,
                  'has-success has-feedback': registrarUsuario.password.$valid}">
-                    <!--LABEL CONTRASEÑA -->
-                    <label class="col-lg-4 control-label">Contraseña</label>
-                    <div class="col-lg-8">
-                        <!-- INPUT CONTRASEÑA-->
-                        <input type="password" 
-                               class="form-control"
-                               ng-minlength="8" 
-                               ng-maxlength="25"
-                               maxlength="25"
-                               ng-pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*$"
-                               pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*$"
-                               placeholder="Contraseña"
-                               ng-model="user.password" name="password" required/>
-                        <!-- MENSAJES-->
-                        <div class="pull-left" 
-                             style="color: #a94442; margin-top: 1%;"
-                             ng-messages="registrarUsuario.password.$error"
-                             ng-if='registrarUsuario.password.$dirty || registrarUsuario.password.$touched'>
-                            <div ng-message="minlength">Contraseña ingresada demasiado corta.</div>
-                            <div ng-message="pattern">La contraseña debe contener al menos una mayuscula, una minuscula y un número.</div>
-                            <div ng-message="required" style="color: #8a6d3b;">Este campo no puede estar vacio.</div>
+                                <!--LABEL CONTRASEÑA -->
+                                <label class="control-label">Contraseña</label>
+                                <!-- INPUT CONTRASEÑA-->
+                                <input type="password" 
+                                       class="form-control"
+                                       ng-minlength="8" 
+                                       ng-maxlength="25"
+                                       maxlength="25"
+                                       ng-pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*$"
+                                       pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*$"
+                                       placeholder="Contraseña"
+                                       ng-model="user.password" name="password" required/>
+                                <!-- MENSAJES-->
+                                <div class="pull-left" 
+                                     style="color: #a94442; margin-top: 1%;"
+                                     ng-messages="registrarUsuario.password.$error"
+                                     ng-if='registrarUsuario.password.$dirty || registrarUsuario.password.$touched'>
+                                    <div ng-message="minlength">Contraseña ingresada demasiado corta.</div>
+                                    <div ng-message="pattern">La contraseña debe contener al menos una mayuscula, una minuscula y un número.</div>
+                                    <div ng-message="required" style="color: #8a6d3b;">Este campo no puede estar vacio.</div>
+                                </div>
+                                <!--ICONOS DE MENSAJE -->
+                                <span ng-show="registrarUsuario.password.$dirty && registrarUsuario.password.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
+                                <span ng-show="registrarUsuario.password.$dirty && registrarUsuario.password.$invalid" class="glyphicon glyphicon-remove  form-control-feedback"></span>
+                                <span ng-show="registrarUsuario.password.$touched && registrarUsuario.password.$pristine" class="glyphicon glyphicon-warning-sign  form-control-feedback"></span>
+                            </div><!-- FIN INPUT CONTRASEÑA-->
+                            <!------------------------------------------------------------------------------------------>
                         </div>
-                        <!--ICONOS DE MENSAJE -->
-                        <span ng-show="registrarUsuario.password.$dirty && registrarUsuario.password.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
-                        <span ng-show="registrarUsuario.password.$dirty && registrarUsuario.password.$invalid" class="glyphicon glyphicon-remove  form-control-feedback"></span>
-                        <span ng-show="registrarUsuario.password.$touched && registrarUsuario.password.$pristine" class="glyphicon glyphicon-warning-sign  form-control-feedback"></span>
                     </div>
-                </div><!-- FIN INPUT CONTRASEÑA-->
-                <!------------------------------------------------------------------------------------------>
-
-
-                <!-- SELECT ROLES-->
-                <div class="form-group"
-                     data-ng-class="{'has-error has-feedback': registrarUsuario.rol.$invalid && !registrarUsuario.$pristine && registrarUsuario.rol.$dirty,
+                    <!-- SELECT ROLES-->
+                    <div class="form-group" data-ng-init="listaRoles()"
+                         data-ng-class="{'has-error has-feedback': registrarUsuario.rol.$invalid && !registrarUsuario.$pristine && registrarUsuario.rol.$dirty,
                      'has-warning has-feedback': registrarUsuario.rol.$invalid && registrarUsuario.rol.$touched,
                  'has-success has-feedback': registrarUsuario.rol.$valid}">
-                    <!--LABEL ROL -->
-                    <label class="col-lg-4 control-label">Rol</label>
-                    <div class="col-lg-8" data-ng-init="listaRoles()">
+                        <!--LABEL ROL -->
+                        <label class="control-label">Rol</label>
                         <!-- SELECT ROLES-->
                         <select name="rol"
                                 class="form-control"
@@ -352,19 +321,15 @@
                         <span ng-show="registrarUsuario.rol.$dirty && registrarUsuario.rol.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
                         <span ng-show="registrarUsuario.rol.$dirty && registrarUsuario.rol.$invalid" class="glyphicon glyphicon-remove  form-control-feedback"></span>
                         <span ng-show="registrarUsuario.rol.$touched && registrarUsuario.rol.$pristine" class="glyphicon glyphicon-warning-sign  form-control-feedback"></span>
-                    </div>
-                </div><!-- FIN SELECT ROLES-->
-                 <!------------------------------------------------------------------------------------------>
-
-
-                <!-- SELECT ROLES-->
-                <div class="form-group"
-                     data-ng-class="{'has-error has-feedback': registrarUsuario.sucursal.$invalid && !registrarUsuario.$pristine && registrarUsuario.sucursal.$dirty,
+                    </div><!-- FIN SELECT ROLES-->
+                    <!------------------------------------------------------------------------------------------>
+                    <!-- SELECT ROLES-->
+                    <div class="form-group" data-ng-init="listaSucursales()"
+                         data-ng-class="{'has-error has-feedback': registrarUsuario.sucursal.$invalid && !registrarUsuario.$pristine && registrarUsuario.sucursal.$dirty,
                      'has-warning has-feedback': registrarUsuario.sucursal.$invalid && registrarUsuario.sucursal.$touched,
                  'has-success has-feedback': registrarUsuario.sucursal.$valid}">
-                    <!--LABEL ROL -->
-                    <label class="col-lg-4 control-label">Sucursal</label>
-                    <div class="col-lg-8" data-ng-init="listaSucursales()">
+                        <!--LABEL ROL -->
+                        <label class="control-label">Sucursal</label>
                         <!-- SELECT ROLES-->
                         <select name="sucursal"
                                 class="form-control"
@@ -383,19 +348,16 @@
                         <span ng-show="registrarUsuario.sucursal.$dirty && registrarUsuario.sucursal.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
                         <span ng-show="registrarUsuario.sucursal.$dirty && registrarUsuario.sucursal.$invalid" class="glyphicon glyphicon-remove  form-control-feedback"></span>
                         <span ng-show="registrarUsuario.sucursal.$touched && registrarUsuario.sucursal.$pristine" class="glyphicon glyphicon-warning-sign  form-control-feedback"></span>
-                    </div>
-                </div><!-- FIN SELECT ROLES-->
-
-
+                    </div><!-- FIN SELECT ROLES-->
+                </div>
                 <!-- BOTON AGREGAR USUARIO-->
-                <button class="btn btn-lg btn-success"
-                        id="btn-register"
-                        type="submit"
+                <button class="btn btn-success"
+                        type="submit" style="float: right; margin-right: 35px; margin-bottom: 15px; margin-top: -5px;"
                         ng-click="nuevoUsuario(user)"
-                        ng-disabled="registrarUsuario.$invalid">Registrarse</button><!-- FIN BOTON AGREGAR USUARIO-->
-            </fieldset>
+                        ng-disabled="registrarUsuario.$invalid">Registrarse</button>
+                <!-- FIN BOTON AGREGAR USUARIO-->
+            </fieldset>            
         </form>
-    </center>
+    </div>
 </div>
-<div class="col-lg-3"></div>
 <toaster-container toaster-options="{'time-out': 3000, 'close-button':true, 'animation-class': 'toast-top-center'}"></toaster-container>

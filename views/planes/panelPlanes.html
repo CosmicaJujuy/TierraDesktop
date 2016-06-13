@@ -1,154 +1,175 @@
 <!DOCTYPE html>
-<div class="col-lg-3"></div>
-<div class="col-lg-6">
-    <uib-tabset justified="true"
-                ng-show="planes[1]"
-                style="margin-top: 100px; background-color: white; height: auto;">
-        <uib-tab heading="Planes de pago">
-            <div class="table-responsive">
-                <table data-ng-init="listaPlanPago()"
-                       class="table table-bordered"
-                       ng-table="tablePlanes">
-                    <thead id="headTableProductos">
-                        <tr>
-                            <th style="text-align: center">ID</th>
-                            <th style="text-align: center">Tarjeta</th> 
-                            <th style="text-align: center">Plan de pago</th> 
-                            <th style="text-align: center">Acciones</th> 
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr ng-repeat="plan in $data">
-                            <th style="text-align: center">{{plan.idPlanesPago}}</th>
-                            <th style="text-align: center">{{plan.tarjeta.entidadBancaria.nombreEntidad}} ~ {{plan.tarjeta.nombreTarjeta}}</th>                        
-                            <th style="text-align: center">{{plan.nombrePlanesPago}}</th>                        
-                            <th style="text-align: center">
-                                <button type="button"
-                                        class="btn btn-xs btn-info"
-                                        data-toggle="modal" 
-                                        uib-tooltip="Modificar plan"
-                                        data-target="#myModal"
-                                        ng-click="seleccionarPlanPago(plan)"><span class="glyphicon glyphicon-pencil"></span></button>
-                                <button type="button" 
-                                        class="btn btn-xs btn-danger"
-                                        data-toggle="modal" 
-                                        uib-tooltip="Eliminar plan"
-                                        data-target="#myModalDelete"
-                                        ng-click="seleccionarPlanPago(plan)"><span class="glyphicon glyphicon-trash"></span></button>
-                            </th>                        
-                        </tr>
-                    </tbody>
-                </table>
-            </div>                    
-        </uib-tab>
-        <uib-tab heading="Agregar nuevo Plan de Pago">                    
-            <form name="newPlan" class="form-horizontal" style="">
-                <fieldset>
-                    <legend style="text-align: center;">Datos del plan de pago</legend>
-                    <div class="form-group">                    
-                        <label class="control-label col-lg-4">Nombre de plan de pago</label>
-                        <div class="col-lg-8">
-                            <input type="text"
-                                   class="form-control" 
-                                   placeholder="Ingresar nombre del plan de pago"
-                                   ng-model="_planPago.nombrePlanesPago"
-                                   name="nombrePlan" required
-                                   data-ng-class='{error: newPlan.nombrePlan.$invalid && !newPlan.$pristine}'/>
-                        </div>
-                    </div>
-                    <div class="form-group" ng-controller="TarjetaController" data-ng-init="listaTarjetas()">                    
-                        <label class="control-label col-lg-4">Tarjeta</label>
-                        <div class="col-lg-8">
-                            <select name="tarjeta"
-                                    class="form-control"
-                                    ng-options="tarjeta as tarjeta.entidadBancaria.nombreEntidad + ' ~ ' + tarjeta.nombreTarjeta  for tarjeta in tarjetas track by tarjeta.idTarjeta"
-                                    ng-model="_planPago.tarjeta" required
-                                    data-ng-class='{error: newPlan.tarjeta.$invalid && !newPlan.$pristine}'>
-                                <option value="" disabled selected>Seleccionar tarjeta</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">                    
-                        <label class="control-label col-lg-4">Cantidad de cuotas</label>
-                        <div class="col-lg-8">
-                            <input type="text"
-                                   class="form-control"
-                                   placeholder="Ingresar cantidad de cuotas"
-                                   ng-model="_planPago.cuotasPlanesPago" 
-                                   name="cuotasPlan" required
-                                   maxlength="2" data-ng-class='{error: newPlan.cuotasPlan.$invalid && !newPlan.$pristine}'/>
-                        </div>
-                    </div>
-                    <div class="form-group">                    
-                        <label class="control-label col-lg-4">Fecha de inicio</label>
-                        <div class="col-lg-8">
-                            <p class="input-group">
-                                <input type="text" class="form-control"
-                                       uib-datepicker-popup ng-model="_planPago.fechaInicioPlanes"
-                                       is-open="popup.opened" 
-                                       datepicker-options="dateOptions"
-                                       ng-required="true"
-                                       placeholder="Ingresar fecha de inicio del plan"
-                                       current-text="Hoy" clear-text="Limpiar" close-text="Cerrar"/>
-                                <span class="input-group-btn">
-                                    <button type="button" class="btn btn-default" ng-click="open()"><i class="glyphicon glyphicon-calendar"></i></button>
-                                </span>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="form-group">                    
-                        <label class="control-label col-lg-4">Fecha de finalizacion</label>
-                        <div class="col-lg-8">
-                            <p class="input-group">
-                                <input type="text" class="form-control"
-                                       uib-datepicker-popup ng-model="_planPago.fechaFinalizacionPlanes"
-                                       is-open="popup2.opened" 
-                                       datepicker-options="dateOptions"
-                                       ng-required="true"
-                                       placeholder="Ingresar fecha de finalizacion del plan"
-                                       current-text="Hoy" clear-text="Limpiar" close-text="Cerrar"/>
-                                <span class="input-group-btn">
-                                    <button type="button" class="btn btn-default" ng-click="open2()"><i class="glyphicon glyphicon-calendar"></i></button>
-                                </span>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="form-group">                    
-                        <label class="control-label col-lg-4">Dia de cierre</label>
-                        <div class="col-lg-8">
-                            <input type="text" 
-                                   class="form-control"
-                                   placeholder="Ingresar dia de cierre del plan"
-                                   ng-model="_planPago.fechaCierre"
-                                   name="cierraPlan" required
-                                   maxlength="2" data-ng-class='{error: newPlan.cierraPlan.$invalid && !newPlan.$pristine}'/>
-                        </div>
-                    </div>
-                    <div class="form-group">                    
-                        <label class="control-label col-lg-4">% de interes</label>
-                        <div class="col-lg-8">
-                            <input type="text"                               
-                                   class="form-control" 
-                                   placeholder="Ingresar porcentaje de interez del plan"
-                                   ng-model="_planPago.porcentajeInterez" 
-                                   name="porcentajePlan" required
-                                   maxlength="2" data-ng-class='{error: newPlan.porcentajePlan.$invalid && !newPlan.$pristine}'/>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <center>
-                            <button ng-click="agregarPlan(_planPago)"
-                                    type="submit" 
-                                    class="btn btn-warning"
-                                    ng-disabled="newPlan.$invalid">Agregar</button>
-                        </center>                                
-                    </div>
-                </fieldset>
-            </form>                      
-        </uib-tab>        
-    </uib-tabset>
+<div class="col-lg-12">
+    <div class="distribucion-panel">
+        <div ng-cloak>
+            <md-content>
+                <md-tabs md-dynamic-height md-border-bottom>
+                    <md-tab label="Planes de pago">
+                        <md-content class="md-padding">
+                            <div class="table-responsive">
+                                <table data-ng-init="listaPlanPago()"
+                                       class="table table-bordered table-condensed"
+                                       ng-table="tablePlanes">
+                                    <thead id="headTableProductos">
+                                        <tr>
+                                            <th style="text-align: center">ID</th>
+                                            <th style="text-align: center">Plan de pago</th>
+                                            <th style="text-align: center">Banco</th> 
+                                            <th style="text-align: center">Tarjeta</th> 
+                                            <th style="text-align: center">Medio</th>
+                                            <th style="text-align: center">Cuotas</th>
+                                            <th style="text-align: center">Inicio</th>
+                                            <th style="text-align: center">Finalizacion</th>
+                                            <th style="text-align: center">Dia cierre</th>
+                                            <th style="text-align: center">% Interes</th>
+                                            <th style="text-align: center">Acciones</th> 
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="plan in $data">
+                                            <th style="text-align: center">{{::plan.idPlanesPago}}</th>
+                                            <th style="text-align: center">{{::plan.nombrePlanesPago}}</th> 
+                                            <th style="text-align: center">{{::plan.tarjeta.entidadBancaria.nombreEntidad}}</th>                        
+                                            <th style="text-align: center">{{::plan.tarjeta.nombreTarjeta}}</th>                        
+                                            <th style="text-align: center">{{::plan.tarjeta.medioPago.nombrePago}}</th>                       
+                                            <th style="text-align: center">{{::plan.cuotasPlanesPago}}</th>                       
+                                            <th style="text-align: center">{{::plan.fechaInicioPlanes}}</th>                       
+                                            <th style="text-align: center">{{::plan.fechaFinalizacionPlanes}}</th>                       
+                                            <th style="text-align: center">{{::plan.porcentajeInterez}}</th>                       
+                                            <th style="text-align: center">{{::plan.fechaCierre}}</th>                       
+
+                                            <th style="text-align: center">
+                                                <button type="button"
+                                                        class="btn btn-xs btn-info"
+                                                        data-toggle="modal" 
+                                                        uib-tooltip="Modificar plan"
+                                                        data-target="#myModal"
+                                                        ng-click="seleccionarPlanPago(plan)"><span class="glyphicon glyphicon-pencil"></span></button>
+                                                <button type="button" 
+                                                        class="btn btn-xs btn-danger"
+                                                        data-toggle="modal" 
+                                                        uib-tooltip="Eliminar plan"
+                                                        data-target="#myModalDelete"
+                                                        ng-click="seleccionarPlanPago(plan)"><span class="glyphicon glyphicon-trash"></span></button>
+                                            </th>                        
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </md-content>
+                    </md-tab>
+                    <md-tab label="Agregar nuevo Plan de pago">
+                        <md-content class="md-padding">
+                            <form name="newPlan" class="form-horizontal" style="">
+                                <fieldset>
+                                    <legend style="text-align: center;">Datos del plan de pago</legend>
+                                    <div class="form-group">                    
+                                        <label class="control-label col-lg-4">Nombre de plan de pago</label>
+                                        <div class="col-lg-8">
+                                            <input type="text"
+                                                   class="form-control" 
+                                                   placeholder="Ingresar nombre del plan de pago"
+                                                   ng-model="_planPago.nombrePlanesPago"
+                                                   name="nombrePlan" required
+                                                   data-ng-class='{error: newPlan.nombrePlan.$invalid && !newPlan.$pristine}'/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" ng-controller="TarjetaController" data-ng-init="listaTarjetas()">                    
+                                        <label class="control-label col-lg-4">Tarjeta</label>
+                                        <div class="col-lg-8">
+                                            <select name="tarjeta"
+                                                    class="form-control"
+                                                    ng-options="tarjeta as tarjeta.entidadBancaria.nombreEntidad + ' ~ ' + tarjeta.nombreTarjeta  for tarjeta in tarjetas track by tarjeta.idTarjeta"
+                                                    ng-model="_planPago.tarjeta" required
+                                                    data-ng-class='{error: newPlan.tarjeta.$invalid && !newPlan.$pristine}'>
+                                                <option value="" disabled selected>Seleccionar tarjeta</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">                    
+                                        <label class="control-label col-lg-4">Cantidad de cuotas</label>
+                                        <div class="col-lg-8">
+                                            <input type="text"
+                                                   class="form-control"
+                                                   placeholder="Ingresar cantidad de cuotas"
+                                                   ng-model="_planPago.cuotasPlanesPago" 
+                                                   name="cuotasPlan" required
+                                                   maxlength="2" data-ng-class='{error: newPlan.cuotasPlan.$invalid && !newPlan.$pristine}'/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">                    
+                                        <label class="control-label col-lg-4">Fecha de inicio</label>
+                                        <div class="col-lg-8">
+                                            <p class="input-group">
+                                                <input type="text" class="form-control"
+                                                       uib-datepicker-popup ng-model="_planPago.fechaInicioPlanes"
+                                                       is-open="popup.opened" 
+                                                       datepicker-options="dateOptions"
+                                                       ng-required="true"
+                                                       placeholder="Ingresar fecha de inicio del plan"
+                                                       current-text="Hoy" clear-text="Limpiar" close-text="Cerrar"/>
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-default" ng-click="open()"><i class="glyphicon glyphicon-calendar"></i></button>
+                                                </span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">                    
+                                        <label class="control-label col-lg-4">Fecha de finalizacion</label>
+                                        <div class="col-lg-8">
+                                            <p class="input-group">
+                                                <input type="text" class="form-control"
+                                                       uib-datepicker-popup ng-model="_planPago.fechaFinalizacionPlanes"
+                                                       is-open="popup2.opened" 
+                                                       datepicker-options="dateOptions"
+                                                       ng-required="true"
+                                                       placeholder="Ingresar fecha de finalizacion del plan"
+                                                       current-text="Hoy" clear-text="Limpiar" close-text="Cerrar"/>
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-default" ng-click="open2()"><i class="glyphicon glyphicon-calendar"></i></button>
+                                                </span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">                    
+                                        <label class="control-label col-lg-4">Dia de cierre</label>
+                                        <div class="col-lg-8">
+                                            <input type="text" 
+                                                   class="form-control"
+                                                   placeholder="Ingresar dia de cierre del plan"
+                                                   ng-model="_planPago.fechaCierre"
+                                                   name="cierraPlan" required
+                                                   maxlength="2" data-ng-class='{error: newPlan.cierraPlan.$invalid && !newPlan.$pristine}'/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">                    
+                                        <label class="control-label col-lg-4">% de interes</label>
+                                        <div class="col-lg-8">
+                                            <input type="text"                               
+                                                   class="form-control" 
+                                                   placeholder="Ingresar porcentaje de interez del plan"
+                                                   ng-model="_planPago.porcentajeInterez" 
+                                                   name="porcentajePlan" required
+                                                   maxlength="2" data-ng-class='{error: newPlan.porcentajePlan.$invalid && !newPlan.$pristine}'/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <center>
+                                            <button ng-click="agregarPlan(_planPago)"
+                                                    type="submit" 
+                                                    class="btn btn-warning"
+                                                    ng-disabled="newPlan.$invalid">Agregar</button>
+                                        </center>                                
+                                    </div>
+                                </fieldset>
+                            </form> 
+                        </md-content>
+                    </md-tab>
+                </md-tabs>                    
+            </md-content>
+        </div>
+    </div>
 </div>
-<div class="col-lg-3"></div>
 
 
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">

@@ -63,7 +63,7 @@ miAppHome.controller('DistribucionController', function ($scope, localStorageSer
             $scope.tierraStock = datos.data;
             $scope.tableTierraStock = new NgTableParams({
                 page: 1,
-                count: 7
+                count: 11
             }, {
                 total: data.length,
                 getData: function (params) {
@@ -84,7 +84,7 @@ miAppHome.controller('DistribucionController', function ($scope, localStorageSer
             $scope.bebelandiaStock = datos.data;
             $scope.tableBebelandiaStock = new NgTableParams({
                 page: 1,
-                count: 7
+                count: 11
             }, {
                 total: data.length,
                 getData: function (params) {
@@ -105,7 +105,7 @@ miAppHome.controller('DistribucionController', function ($scope, localStorageSer
             $scope.libertadorStock = datos.data;
             $scope.tableLibertadorStock = new NgTableParams({
                 page: 1,
-                count: 7
+                count: 11
             }, {
                 total: data.length,
                 getData: function (params) {

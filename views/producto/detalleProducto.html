@@ -114,11 +114,11 @@
 
     <div id="printable2" ng-hide="true" style="margin-top: 50%;">
         <div class="row">
-            <div style="float: left; text-align: center;">
+            <div style="float: left; text-align: center; font-family: monospace; font-size: small;">
                 <div style="font-family: monospace;">Talla: {{foundProducto.talla}}</div>
                 <io-barcode options="options" code="{{foundProducto.codigoProducto}}" type="CODE128C"></io-barcode>
             </div>
-            <div style="float: right; text-align: center;">
+            <div style="float: right; text-align: center; font-family: monospace; font-size: small;">
                 <div style="font-family: monospace;">Talla: {{foundProducto.talla}}</div>
                 <io-barcode options="options" code="{{foundProducto.codigoProducto}}" type="CODE128C"></io-barcode>
             </div>
@@ -127,14 +127,14 @@
     <!-- CODIGO 20 X 30 CON DESCRIPCION Y TALLE-->
     <div id="printable" ng-hide="true" style="margin-top: 50%;">
         <div class="row">
-            <div style="float: left; text-align: center;">
+            <div style="float: left; text-align: center; font-family: monospace; font-size: small;">
                 <div class="etiqueta">T-N: {{foundProducto.talla}}</div>
                 <span kendo-barcode
                       k-type="'code128'"
                       ng-model="foundProducto.codigoProducto"
                       style="width: 100px; height: 40px;"></span>   
             </div>
-            <div style="float: right; text-align: center;">
+            <div style="float: right; text-align: center; font-family: monospace; font-size: small;">
                 <div class="etiqueta">T-N: {{foundProducto.talla}}</div>
                 <span kendo-barcode
                       k-type="'code128'"
@@ -339,3 +339,9 @@
     </div>
 </div>
 <toaster-container toaster-options="{'time-out': 3000, 'close-button':true, 'animation-class': 'toast-top-center'}"></toaster-container>
+<script>
+    var ipcRenderer = require("electron").ipcRenderer;  
+    function sendCommandToWorker(content) {
+        ipcRenderer.send("printPDF", content);
+    }    
+</script>

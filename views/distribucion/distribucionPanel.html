@@ -7,10 +7,7 @@
                 <md-tabs md-dynamic-height md-border-bottom>
                     <md-tab label="Facturas">
                         <md-content class="md-padding">
-                            <div class="table-responsive">
-                                <blockquote class="well" ng-show="localStorageDemoValue">
-                                    <p ng-bind="localStorageDemoValue"></p>                                   
-                                </blockquote>
+                            <div class="table-responsive">                                
                                 <table class="table table-bordered table-condensed"
                                        ng-table="tableFacturaProductos"
                                        ng-controller="FacturaProductoController"
@@ -36,8 +33,7 @@
                                     </thead>
                                     <tbody>
                                         <tr ng-class="{danger: facturaProducto.carga === true, success: facturaProducto.carga === false}"
-                                            ng-repeat="facturaProducto in $data| filter:f as results"
-                                            class="animate-repeat">
+                                            ng-repeat="facturaProducto in $data| filter:f as results">
                                             <td style="text-align: center">{{facturaProducto.idFacturaProducto}}</td>
                                             <td style="text-align: center">
                                                 <a ui-sref="^.agregar-producto-factura({idFactura: facturaProducto.idFacturaProducto})" target="_blank"
@@ -93,8 +89,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr class="animate-repeat"
-                                            ng-repeat="producto in $data| orderBy: 'producto.idProducto.idProducto' | filter:q as results">                                            
+                                        <tr ng-repeat="producto in $data| orderBy: 'producto.idProducto.idProducto' | filter:q as results">                                            
                                             <td style="text-align: center">{{producto.idProducto.idProducto}}</td>
                                             <td style="text-align: center">
                                                 <a target="_blank"
@@ -154,7 +149,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr class="animate-repeat" ng-repeat="bebelandia in $data| filter:r as results track by $index">
+                                        <tr ng-repeat="bebelandia in $data| filter:r as results track by $index">
                                             <td style="text-align: center">{{bebelandia.idProducto.idProducto}}</td>
                                             <td style="text-align: center">
                                                 <a target="_blank"
@@ -214,7 +209,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr class="animate-repeat" ng-repeat="libertador in $data| filter: s as results track by $index">
+                                        <tr ng-repeat="libertador in $data| filter: s as results track by $index">
                                             <td style="text-align: center">{{libertador.idProducto.idProducto}}</td>
                                             <td style="text-align: center">
                                                 <a target="_blank"
