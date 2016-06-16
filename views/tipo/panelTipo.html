@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<div class="col-lg-12">
+    <div class="distribucion-panel">
+        <div ng-cloak>
+            <md-content>
+                <md-tabs md-dynamic-height md-border-bottom>
+                    <md-tab label="Tipos de producto">
+                        <md-content class="md-padding">
+                            <div class="table-responsive">
+                                <table data-ng-init="listaTipo()" class="table table-hover table-condensed table-striped">
+                                    <thead id="headTableProductos">
+                                        <tr>
+                                            <th style="text-align: center">ID</th>
+                                            <th style="text-align: center">Nombre</th> 
+                                            <th style="text-align: center">Fecha</th> 
+                                            <th style="text-align: center">Acciones</th> 
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="tipo in tipos">
+                                            <th style="text-align: center">{{::tipo.idTipo}}</th>
+                                            <th style="text-align: center">{{::tipo.nombreTipo}}</th>                        
+                                            <th style="text-align: center">{{::tipo.fechaCreacion}}</th>                        
+                                            <th style="text-align: center">
+                                                <button type="button"
+                                                        class="btn btn-xs btn-info"
+                                                        data-toggle="modal" 
+                                                        data-target="#myModal" 
+                                                        uib-tooltip="Modificar tipo"
+                                                        ng-click="seleccionarTipo(tipo)"><span class="glyphicon glyphicon-pencil"></span></button>
+                                                <button type="button"
+                                                        class="btn btn-xs btn-danger" 
+                                                        data-toggle="modal" 
+                                                        data-target="#myModalDelete"
+                                                        uib-tooltip="Eliminar Tipo"
+                                                        ng-click="seleccionarTipo(tipo)"><span class="glyphicon glyphicon-trash"></span></button>
+                                            </th>                        
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>          
+                        </md-content>
+                    </md-tab>
+                    <md-tab label="Agregar nuevo Tipo de producto">
+                        <md-content class="md-padding">
+                            <div class="col-lg-2"></div>
+                            <div class="col-lg-8">
+                                <form name="nuevoTipo" class="form-horizontal">
+                                    <fieldset>
+                                        <legend style="text-align: center;">Datos del tipo de producto</legend>
+                                        <div class="form-group">                    
+                                            <label class="control-label">Nombre del tipo de producto</label>
+                                            <input type="text"
+                                                   maxlength="20"
+                                                   placeholder="Ingrese nombre del tipo de producto"
+                                                   class="form-control"
+                                                   ng-model="_tipo.nombreTipo" name="tipo" required
+                                                   data-ng-class='{error: nuevoTipo.tipo.$invalid && !nuevoTipo.$pristine}'/>
+                                        </div>
+                                        <div class="form-group">
+                                            <center>
+                                                <button ng-click="agregarTipo(_tipo)"
+                                                        type="submit" class="btn btn-warning"
+                                                        ng-disabled="nuevoTipo.$invalid" style="margin-top: 5%;">Agregar</button>
+                                            </center>                                    
+                                        </div>                            
+                                    </fieldset>
+                                </form>
+                            </div>
+                            <div class="col-lg-2"></div>   
+                        </md-content>
+                    </md-tab>
+                </md-tabs>                    
+            </md-content>
+        </div>
+    </div>
+</div>
+
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Cambiar datos del tipo de producto</h4>
+            </div>
+            <div class="modal-body">
+                <form name="modificarTipo" class="form-horizontal" id="newAfilidadoModal">    
+                    <div class="form-group">                    
+                        <label class="control-label">Id tipo producto</label>                                
+                        <input type="number"
+                               class="form-control"
+                               ng-model="__tipo.idTipo"
+                               name="idTipo" required  disabled
+                               data-ng-class='{ error: modificarTipo.idTipo.$invalid && !modificarTipo.$pristine }'/>            
+                    </div>    
+                    <div class="form-group">                    
+                        <label class="control-label">Nombre Tipo de Producto</label>                                
+                        <input type="text"
+                               class="form-control"
+                               ng-model="__tipo.nombreTipo" 
+                               name="nombreTipo" required placeholder="Ingrese nombre del tipo de producto"
+                               data-ng-class='{ error: modificarTipo.nombreTipo.$invalid && !modificarTipo.$pristine }'/>
+                    </div>
+                    <div class="form-group">
+                        <center>                            
+                            <button class="btn btn-warning"
+                                    data-dismiss="modal"
+                                    style="margin-top: 5%;"
+                                    ng-click="_modificarTipo(__tipo)"
+                                    ng-disabled="modificarTipo.$invalid">Modificar</button>                            
+                        </center>
+                    </div>                        
+                </form>
+            </div>                   
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="myModalDelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Eliminar tipo producto</h4>
+            </div>
+            <div class="modal-body">
+                <center>
+                    ¿Desea eliminar esta Tipo producto?
+                    <br>
+                    <button class="btn btn-danger"
+                            ng-click="eliminarTipo()"
+                            data-dismiss="modal"
+                            >Eliminar</button>
+                </center>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
