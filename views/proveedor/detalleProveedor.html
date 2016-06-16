@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title></title>        
+    </head>
+    <body>
+        <div ng-show="foundProveedor" class="panel panel-warning" data-ng-init="buscarProveedor()" style="margin-top: 70px; width: 40%; margin-left: 30%;"> 
+            <div class="panel panel-heading">Detalles de Proveedor # {{foundProveedor.idProveedor}}                
+                <a href="" ng-click="seleccionarProveedor(foundProveedor)" data-toggle="modal" data-target="#myModal" style="color: #8a6d3b; float: right;">Editar</a>
+                <a href="" ui-sref="^.proveedor" style="color: #8a6d3b; float: right; margin-right: 10px;">« Atras</a>
+            </div>
+            <div class="panel-body">
+                <form class="form-horizontal" style="margin-left: 20%;">                    
+                    <div class="form-group">
+                        <label class="col-xs-4">Proveedor</label>                
+                        <div type="text" class="col-xs-6">{{foundProveedor.nombreProveedor}}</div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-4">C.U.I.T.</label>
+                        <div type="text" class="col-xs-6">{{foundProveedor.cuitProveedor}}</div>  
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-4">Direccion</label>            
+                        <div type="text" class="col-xs-6">{{foundProveedor.direccionProveedor}}</div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-4">Pais</label>
+                        <div type="text" class="col-xs-6">{{foundProveedor.paisProveedor}}</div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-4">Provincia</label>
+                        <div type="text" class="col-xs-6">{{foundProveedor.provinciaProveedor}}</div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-4">Localidad</label>
+                        <div type="text" class="col-xs-6">{{foundProveedor.localidadProveedor}}</div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-4">Codigo postal</label>
+                        <div type="text" class="col-xs-6">{{foundProveedor.codigoPostal}}</div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-4">Telefono</label>
+                        <div type="text" class="col-xs-6">{{foundProveedor.telefonoProveedor|tel}}</div>
+                    </div>                    
+                    <div class="form-group">
+                        <label class="col-xs-4">E-mail</label>
+                        <div type="text" class="col-xs-6">{{foundProveedor.emailProveedor}}</div>
+                    </div>                    
+                    <div class="form-group">
+                        <label class="col-xs-4">Fecha de registro</label>
+                        <div type="text" class="col-xs-6">{{foundProveedor.fechaCreacion}}</div>
+                    </div>           
+                </form>
+            </div>
+        </div>
+
+
+        <div id="myModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Modificar Proveedor</h4>
+                    </div>
+                    <form name="modificarProveedor" class="form-horizontal" style="width: 90%; margin-left: 5%; margin-top: 2%;">
+                        <div class="form-group">
+                            <label class="col-xs-4">Id Proveedor</label>
+                            <input type="text" class="col-xs-7" ng-model="__proveedor.idProveedor" name="idProveedor" required disabled
+                                   data-ng-class='{
+                                           error: modificarProveedor.idProveedor.$invalid && !nuevoProveedor.$pristine
+                                       }'/>
+                        </div>  
+                        <div class="form-group">
+                            <label class="col-xs-4">Nombre Proovedor</label>
+                            <input type="text" class="col-xs-7" ng-model="__proveedor.nombreProveedor" name="nombreProveedor" required
+                                   data-ng-class='{
+                                           error: modificarProveedor.nombreProveedor.$invalid && !nuevoProveedor.$pristine
+                                       }'/>
+                        </div>                    
+                        <div class="form-group">
+                            <label class="col-xs-4">C.U.I.T. Proovedor</label>
+                            <input type="text" class="col-xs-7" ng-model="__proveedor.cuitProveedor" name="cuitProveedor" required
+                                   data-ng-class='{
+                                           error: modificarProveedor.cuitProveedor.$invalid && !nuevoProveedor.$pristine
+                                       }'/>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-xs-4">Direccion Proovedor</label>
+                            <input type="text" class="col-xs-7" ng-model="__proveedor.direccionProveedor" name="direccionProveedor" required
+                                   data-ng-class='{
+                                           error: modificarProveedor.direccionProveedor.$invalid && !nuevoProveedor.$pristine
+                                       }'/>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-xs-4">Pais</label>
+                            <input type="text" class="col-xs-7" ng-model="__proveedor.paisProveedor" name="paisProveedor" required
+                                   data-ng-class='{
+                                           error: modificarProveedor.paisProveedor.$invalid && !nuevoProveedor.$pristine
+                                       }'/>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-xs-4">Provincia</label>
+                            <input type="text" class="col-xs-7" ng-model="__proveedor.provinciaProveedor" name="provinciaProveedor" required
+                                   data-ng-class='{
+                                           error: modificarProveedor.provinciaProveedor.$invalid && !nuevoProveedor.$pristine
+                                       }'/>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-xs-4">Localidad</label>
+                            <input type="text" class="col-xs-7" ng-model="__proveedor.localidadProveedor" name="localidadProveedor" required
+                                   data-ng-class='{
+                                           error: modificarProveedor.localidadProveedor.$invalid && !nuevoProveedor.$pristine
+                                       }'/>
+                        </div>                
+                        <div class="form-group">
+                            <label class="col-xs-4">Codigo Postal</label>
+                            <input type="text" class="col-xs-7" ng-model="__proveedor.codigoPostal" name="codigoPostal" required
+                                   data-ng-class='{
+                                           error: modificarProveedor.codigoPostal.$invalid && !nuevoProveedor.$pristine
+                                       }'/>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-xs-4">Telefono</label>
+                            <input type="text" class="col-xs-7" ng-model="__proveedor.telefonoProveedor" name="telefonoProveedor" required
+                                   data-ng-class='{
+                                           error: modificarProveedor.telefonoProveedor.$invalid && !nuevoProveedor.$pristine
+                                       }'/>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-xs-4">E-mail</label>
+                            <input type="text" class="col-xs-7" ng-model="__proveedor.emailProveedor" name="emailProveedor" required
+                                   data-ng-class='{
+                                           error: modificarProveedor.emailProveedor.$invalid && !nuevoProveedor.$pristine
+                                       }'/>
+                        </div>
+                        <button ng-click="_modificarProveedor(__proveedor)" data-dismiss="modal" type="submit" class="btn btn-success" ng-disabled="modificarProveedor.$invalid" style="margin-left: 40%;">Modificar</button>
+                    </form>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
