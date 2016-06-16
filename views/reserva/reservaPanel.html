@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<div style="margin-top: 90px;">
+    <div class="col-lg-3">
+        <div class="panel panel-factura"
+             ng-show="factura"
+             style="min-height: 525px;"
+             data-ng-init="detailFactura()">
+            <div class="panel-heading panel-warning" style="text-align: center; color: #8a6d3b">
+                <label>Reserva N°{{factura.idFactura}} {{factura.numeracion}}</label>
+            </div>
+            <div class="panel-body">
+                <form class="form-horizontal" style="text-align: center;">
+                    <p ng-if="factura.idSucursal === 1" style="font-weight: bolder; font-size: medium; margin-bottom: 20px;">Tierra de colores</p>
+                    <p ng-if="factura.idSucursal === 2" style="font-weight: bolder; font-size: medium; margin-bottom: 20px;">Bebelandia</p>
+                    <p ng-if="factura.idSucursal === 3" style="font-weight: bolder; font-size: medium; margin-bottom: 20px;">Libertador</p>
+                    <div class="form-group" style="margin-bottom: 0px;">
+                        <label class="control-label">Fecha de reserva</label>
+                        <div>{{factura.fechaCreacion| date : 'medium'}}</div>                                
+                    </div>
+                    <div class="form-group" style="margin-bottom: 0px;">
+                        <label class="control-label">Estado</label>
+                        <div>{{factura.estado}}</div>
+                    </div>
+                    <div class="form-group" style="margin-bottom: 0px;">
+                        <label class="control-label">Total</label>
+                        <div>{{factura.total|currency}}</div>
+                    </div>
+                    <div class="form-group" style="margin-bottom: 20px;">
+                        <label class="control-label">Saldo</label>
+                        <div>{{factura.total - totalPago|currency}}</div>
+                    </div>
+                    <div class="form-group">    
+                        <button class="btn btn-block btn-success"
+                                ng-disabled="factura.estado === 'CONFIRMADO'"
+                                style="float: bottom;">Terminar reserva</button>
+                        <button class="btn btn-block btn-success"
+                                ng-disabled="factura.estado === 'CONFIRMADO'"
+                                style="float: bottom;">Continuar y salir</button>
+                    </div>
+                </form>            
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-9" ng-controller="FacturaController">
+        <div class="panel-factura">
+            <div ng-cloak>
+                <md-content>
+                    <md-tabs md-dynamic-height md-border-bottom>                    
+                        <md-tab label="Productos">
+                            <md-content class="md-padding">
+                                <div class="col-lg-12"
+                                     data-ng-init="detailFactura()">
+                                    <md-content layout-padding>
+                                        <form name="codigoBarras" novalidate>
+                                            <div layout="row" flex>
+                                                <md-input-container flex class="md-block">
+                                                    <label>Codigo de barras</label>
+                                                    <input md-maxlength="30" required name="codigo" ng-model="codigo" focus-if>
+                                                    <div ng-messages="codigoBarras.codigo.$error">
+                                                        <div ng-message="required">No debe estar vacio para realizar una busqueda.</div>
+                                                        <div ng-message="md-maxlength">El codigo de barras es demasiado largo.</div>
+                                                    </div>                                                
+                                                </md-input-container>
+                                                <div>
+                                                    <md-button class="md-raised"
+                                                               type="button"
+                                                               ng-disabled="factura.estado === 'CONFIRMADO'"
+                                                               ng-click="buscarCodigoBarra(codigo)">Buscar <span class="glyphicon glyphicon-search"></span></md-button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </md-content>
+                                    <div class="table-responsive">
+                                        <table ng-table="tableParams" style="margin-top: 10px;" 
+                                               class="table table-condensed table-bordered table-striped"                                   
+                                               data-ng-init="listaDetalleFactura()">
+                                            <thead id="headTableProductos">
+                                                <tr>
+                                                    <th>Id</th>
+                                                    <th>Descripcion</th>
+                                                    <th>Cantidad</th>
+                                                    <th>Precio U. + IVA 21%</th>
+                                                    <th>Precio U. sin IVA</th>
+                                                    <th>Descuento</th>
+                                                    <th>Total</th>
+                                                    <th>Acciones</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody style="text-align: center;">
+                                                <tr ng-repeat="detalleFactura in $data">
+                                                    <td>{{detalleFactura.idDetalleFactura}}</td>
+                                                    <td>{{detalleFactura.producto.descripcion}}</td>
+                                                    <td>{{detalleFactura.cantidadDetalle}}</td>
+                                                    <td>{{detalleFactura.producto.precioVenta|currency}}</td>
+                                                    <td>{{detalleFactura.producto.precioVenta - (detalleFactura.producto.precioVenta * 21 / 100) | currency}}</td>
+                                                    <td>{{detalleFactura.descuentoDetalle|currency}}</td>
+                                                    <td>{{detalleFactura.totalDetalle|currency}}</td>
+                                                    <td>
+                                                        <button type="button"
+                                                                uib-tooltip="Aplicar descuento"
+                                                                ng-disabled="detalleFactura.descuentoDetalle !== 0 || factura.estado === 'CONFIRMADO'"
+                                                                ng-click="cargarDescuento(detalleFactura)"
+                                                                class="btn btn-xs btn-success">
+                                                            <span class="glyphicon glyphicon-usd"></span>
+                                                        </button>
+                                                        <button type="button"
+                                                                ng-disabled="factura.estado === 'CONFIRMADO'"
+                                                                ng-click="eliminarDetalleFactura(detalleFactura)"
+                                                                class="btn btn-xs btn-danger">
+                                                            <span class="glyphicon glyphicon-remove"></span>
+                                                        </button>
+                                                        <button type="button"
+                                                                ng-disabled="factura.estado === 'CONFIRMADO'"
+                                                                ng-click="eliminarDescuento(detalleFactura)"
+                                                                class="btn btn-xs btn-warning">
+                                                            <span class="glyphicon glyphicon-erase"></span>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <th>Total</th>
+                                                    <th style="text-align: center;">{{totalCompra|currency}}</th>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                </div>
+                            </md-content>
+                        </md-tab>
+                        <md-tab label="Metodos de pago">
+                            <md-content class="md-padding">
+                                <div class="col-lg-6" ng-controller="FacturaController">
+                                    <form class="form-horizontal">
+                                        <fieldset>
+                                            <!-- Form Name -->
+                                            <legend style="text-align: center;">Formas de pago</legend>
+                                            <!-- Prepended text-->
+                                            <div class="form-group">
+                                                <label class="col-md-4 control-label" for="prependedtext">Monto</label>
+                                                <div class="col-md-8">
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon">$</span>
+                                                        <input id="prependedtext"
+                                                               name="prependedtext"
+                                                               class="form-control"
+                                                               maxlength="7"
+                                                               placeholder="Monto a pagar"
+                                                               required type="text"
+                                                               ng-model="montoPago">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- Select Basic -->
+                                            <div class="form-group">
+                                                <label class="col-md-4 control-label" for="medioPago">Medio Pago</label>
+                                                <div class="col-md-8" data-ng-init="listaMedioPago()">
+                                                    <select class="form-control"
+                                                            ng-options="medio as medio.nombrePago for medio in mediosPagos track by medio.idMedioPago"
+                                                            ng-model="mediosPago"></select>
+                                                </div>
+                                            </div>
+                                            <!-- Select Basic -->
+                                            <div class="form-group">
+                                                <label class="col-md-4 control-label" for="entidad">Entidad</label>
+                                                <div class="col-md-8" data-ng-init="listaEntidades()">
+                                                    <select ng-disabled="disableSelectEntidades"
+                                                            class="form-control"
+                                                            ng-options="entidad as entidad.nombreEntidad for entidad in entidades track by entidad.idEntidadMonetaria"
+                                                            ng-model="entidadPago"
+                                                            ng-change="busquedaTarjeta()"></select>
+                                                </div>
+                                            </div>
+                                            <!-- Select Basic -->
+                                            <div class="form-group">
+                                                <label class="col-md-4 control-label" for="tarjeta">Tarjeta</label>
+                                                <div class="col-md-8" data-ng-init="listaTarjetas()">
+                                                    <select ng-disabled="disableSelectTarjeta"
+                                                            class="form-control"
+                                                            ng-change="busquedaPlanByTarjeta()"
+                                                            ng-options="tarjeta as tarjeta.nombreTarjeta for tarjeta in tarjetas track by tarjeta.idTarjeta"
+                                                            ng-model="tarjetasPago"></select>
+                                                </div>
+                                            </div>
+                                            <!-- Select Basic -->
+                                            <div class="form-group">
+                                                <label class="col-md-4 control-label" for="metodoPago">Metodo de pago</label>
+                                                <div class="col-md-8" data-ng-init="listaPlanesPago()">
+                                                    <select ng-disabled="disableSelectMetodo"
+                                                            class="form-control"                                                            
+                                                            ng-options="plan as plan.nombrePlanesPago for plan in planesPago track by plan.idPlanesPago"
+                                                            ng-model="planPago"></select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-md-4 control-label">Comprobante</label>
+                                                <div class="col-md-8">                                                                                                            
+                                                    <input id="prependedtext"
+                                                           class="form-control"
+                                                           placeholder="Numero de comprobante"
+                                                           required type="text"
+                                                           maxlength="15"
+                                                           ng-disabled="!planPago"
+                                                           ng-model="comprobantePago">                                                    
+                                                </div>                                               
+                                            </div>
+                                            <div class="form-group" style="text-align: center;">
+                                                <button class="btn btn-warning"
+                                                        ng-click="seleccionarMetodoPago(montoPago, mediosPago, entidadPago, tarjetasPago, planPago, comprobantePago)"
+                                                        data-toggle="modal" data-target="#myModal"
+                                                        ng-disabled="factura.estado === 'CONFIRMADO'">Agregar</button>
+                                            </div>                                
+                                        </fieldset>
+                                    </form>
+                                </div>
+                                <div class="col-lg-6">
+                                    <h4 style="text-align: center;">Metodos cargados</h4>
+                                    <table class="table table-bordered table-condensed"
+                                           ng-table="tableMetodos"
+                                           data-ng-init="listaMetodoPagoFactura()">
+                                        <thead>
+                                            <tr>
+                                                <th>Metodo</th>
+                                                <th>Entidad</th>
+                                                <th>Tarjeta</th>
+                                                <th>Plan</th>
+                                                <th>Monto</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="metodo in $data">
+                                                <td>{{metodo.planPago.tarjeta.medioPago.nombrePago}}</td>
+                                                <td>{{metodo.planPago.tarjeta.entidadBancaria.nombreEntidad}}</td>
+                                                <td>{{metodo.planPago.tarjeta.nombreTarjeta}}</td>
+                                                <td>{{metodo.planPago.nombrePlanesPago}}</td>
+                                                <td style="text-align: center;">{{metodo.montoPago|currency}}</td>
+                                            </tr>
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <th>Total</th>
+                                                <th style="text-align: center;">{{totalPago|currency}}</th>
+                                            </tr>
+                                        </tfoot>
+                                    </table>                               
+                                </div>
+                            </md-content>
+                        </md-tab>
+                        <md-tab label="Datos del cliente" ng-disabled="false">
+                            <md-content class="md-padding">
+                                <uib-accordion close-others="oneAtATime">            
+                                    <uib-accordion-group
+                                        heading="Buscar cliente existente"
+                                        is-disabled="factura.estado === 'CONFIRMADO'"
+                                        is-open="clientElementSearch.open"
+                                        panel-class="panel-primary">
+                                        <label class="control-label">Buscar cliente</label>
+                                        <div class="input-group col-lg-5">                                            
+                                            <input type="text"
+                                                   ng-model="dynamicCliente"
+                                                   placeholder="Ingresa apellido del cliente" 
+                                                   uib-typeahead="cliente as cliente.nombreCliente +' '+ cliente.apellidoCliente for cliente in getCliente($viewValue)"
+                                                   typeahead-loading="loadingcliente" 
+                                                   typeahead-no-results="noResults"
+                                                   class="form-control">
+                                            <i ng-show="loadingcliente" class="glyphicon glyphicon-refresh"></i>
+                                            <div ng-show="noResults">
+                                                <i class="glyphicon glyphicon-remove"></i> No se encontraron resultados
+                                            </div>
+                                            <span class="input-group-btn">
+                                                <button class="btn btn-warning"                                                        
+                                                        ng-click="agregarClienteDynamic(dynamicCliente)"
+                                                        type="button">Añadir</button>
+                                            </span>
+                                        </div>
+                                    </uib-accordion-group>                     
+                                    <uib-accordion-group 
+                                        heading="Agregar nuevo cliente"
+                                        is-disabled="factura.estado === 'CONFIRMADO'"
+                                        is-open="clientElement.open"
+                                        panel-class="panel-primary">
+                                        <h4>Datos del Cliente</h4>
+                                        <form class="form-horizontal" name="clienteEncabezado">
+                                            <div class="row col-lg-6">
+                                                <div class="form-group">
+                                                    <label class="control-label">Documento *</label>
+                                                    <div class="">
+                                                        <input type="text" class="form-control" ng-model="clienteFactura.documento" name="documento" required
+                                                               data-ng-class='{error: clienteEncabezado.documento.$invalid && !clienteEncabezado.$pristine}'/>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label">Tipo de documento *</label>
+                                                    <div class="">
+                                                        <select class="form-control" ng-model="clienteFactura.tipoDocumento"
+                                                                required name="tipoDocumento">
+                                                            <option selected value="" disabled>Elegir una opcion</option>
+                                                            <option value="C">CUIT</option>
+                                                            <option value="0">Libreta de enrolamiento</option>
+                                                            <option value="1">Libreta civica</option>
+                                                            <option value="2">Documento Nacional de Identidad</option>
+                                                            <option value="3">Pasaporte</option>
+                                                            <option value="4">Cedula de identidad</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label">Nombre cliente/empresa *</label>
+                                                    <div class="">
+                                                        <input type="text" maxlength="45"
+                                                               class="form-control"
+                                                               ng-model="clienteFactura.nombreCliente"
+                                                               name="nombreCliente" required
+                                                               data-ng-class='{error: clienteEncabezado.nombreCliente.$invalid && !clienteEncabezado.$pristine}'/>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label">Domicilio *</label>
+                                                    <div class="">
+                                                        <input type="text" maxlength="45"
+                                                               class="form-control"
+                                                               ng-model="clienteFactura.domicilio"
+                                                               name="domicilioCliente" required
+                                                               data-ng-class='{error: clienteEncabezado.domicilioCliente.$invalid && !clienteEncabezado.$pristine}'/>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label">Responsabilidad frente al IVA *</label>
+                                                    <div class="">
+                                                        <select class="form-control" ng-model="clienteFactura.responsabilidadIva"
+                                                                required name="responsabilidad">
+                                                            <option selected value="" disabled>Elegir una opcion</option>
+                                                            <option value="I">Responsable inscripto</option>
+                                                            <option value="N">Responsable no inscripto</option>
+                                                            <option value="E">Exento</option>
+                                                            <option value="A">No responsible</option>
+                                                            <option value="C">Consumidor final</option>
+                                                            <option value="B">Responsable no inscripto, venta de bienes de uso</option>
+                                                            <option value="M">Responsable monotributo</option>
+                                                            <option value="T">No categorizado</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row col-lg-6">                                                
+                                                <div class="form-group">
+                                                    <label class="control-label">Telefono</label>
+                                                    <div class="">
+                                                        <input type="tel"
+                                                               class="form-control"
+                                                               ng-model="clienteFactura.telefono" name="telefonoCliente"
+                                                               data-ng-class='{error: clienteEncabezado.telefonoCliente.$invalid && !clienteEncabezado.$pristine}'/>
+                                                    </div>
+                                                </div>                                    
+                                                <div class="form-group">
+                                                    <label class="control-label">E-mail</label>
+                                                    <div class="">
+                                                        <input type="email"
+                                                               class="form-control"
+                                                               ng-model="clienteFactura.emailCliente" name="emailCliente"
+                                                               data-ng-class='{error: clienteEncabezado.emailCliente.$invalid && !clienteEncabezado.$pristine}'/>
+                                                    </div>
+                                                </div>                                    
+                                                <div class="form-group">
+                                                    <label class="control-label">Fecha de nacimiento</label>
+                                                    <div class="">
+                                                        <input type="date" 
+                                                               class="form-control" 
+                                                               ng-model="clienteFactura.fechaNacimiento"
+                                                               name="nacimientoCliente" 
+                                                               data-ng-class='{error: clienteEncabezado.nacimientoCliente.$invalid && !clienteEncabezado.$pristine}'/>
+                                                    </div>
+                                                    <button class="btn btn-block btn-warning"
+                                                            ng-disabled="clienteEncabezado.$invalid"
+                                                            ng-click="agregarCliente(clienteFactura)"
+                                                            style="margin-top: 10%;">Agregar cliente</button>
+                                                </div> 
+
+                                            </div>
+                                        </form>
+                                    </uib-accordion-group>                     
+                                </uib-accordion>
+                                <!-- DATOS CLIENTE-->
+                                <div id="clienteContainer">
+                                    <div class="row col-lg-5">
+                                        <div class="form-group">
+                                            <label class="control-label">Documento:</label>
+                                            <div class="pull-right">{{factura.cliente.documento}}</div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label">Tipo de documento</label>
+                                            <div class="pull-right" ng-if="factura.cliente.tipoDocumento === 'C'">CUIT</div>
+                                            <div class="pull-right" ng-if="factura.cliente.tipoDocumento === '0'">Libreta de enrolamiento</div>
+                                            <div class="pull-right" ng-if="factura.cliente.tipoDocumento === '1'">Libreta civica</div>
+                                            <div class="pull-right" ng-if="factura.cliente.tipoDocumento === '2'">DNI</div>
+                                            <div class="pull-right" ng-if="factura.cliente.tipoDocumento === '3'">Pasaporte</div>
+                                            <div class="pull-right" ng-if="factura.cliente.tipoDocumento === '4'">Cedula de identidad</div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label">Resp. IVA</label>
+                                            <div class="pull-right" ng-if="factura.cliente.responsabilidadIva === 'I'">Resp. inscripto</div>
+                                            <div class="pull-right" ng-if="factura.cliente.responsabilidadIva === 'N'">Resp. no inscripto</div>
+                                            <div class="pull-right" ng-if="factura.cliente.responsabilidadIva === 'E'">Exento</div>
+                                            <div class="pull-right" ng-if="factura.cliente.responsabilidadIva === 'A'">No responsible</div>
+                                            <div class="pull-right" ng-if="factura.cliente.responsabilidadIva === 'C'">Consumidor final</div>
+                                            <div class="pull-right" ng-if="factura.cliente.responsabilidadIva === 'B'">Resp. no inscripto, venta bienes</div>
+                                            <div class="pull-right" ng-if="factura.cliente.responsabilidadIva === 'M'">Resp. monotributo</div>
+                                            <div class="pull-right" ng-if="factura.cliente.responsabilidadIva === 'T'">No categorizado</div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label">Nombre cliente/empresa</label>
+                                            <div class="pull-right">{{factura.cliente.nombreCliente}}</div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label">Domicilio:</label>
+                                            <div class="pull-right">{{factura.cliente.domicilio}}</div>
+                                        </div>
+                                    </div>
+                                    <div class="row col-lg-6" style="margin-left: 10px;">
+                                        <div class="form-group">
+                                            <label class="control-label">Fecha de nacimiento:</label>
+                                            <div class="pull-right">{{factura.cliente.fechaNacimiento| date : 'yyyy/MM/dd'}}</div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label">Telefono:</label>
+                                            <div class="pull-right">{{factura.cliente.telefono}}</div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label">E-mail:</label>
+                                            <div class="pull-right">{{factura.cliente.emailCliente}}</div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label">Fecha de alta:</label>
+                                            <div class="pull-right">{{factura.cliente.fechaCreacion| date : 'yyyy/MM/dd'}}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </md-content>
+                        </md-tab>
+                    </md-tabs>
+                </md-content>
+            </div>
+        </div>
+    </div>
+</div>

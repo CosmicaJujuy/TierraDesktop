@@ -13,11 +13,32 @@ var miAppHome = angular.module('tierraDeColoresApp', [
     'ngTable',
     'ngDialog',
     'kendo.directives',
+    'ngSanitize',
+    'ui.mask',
     'angular-loading-bar'])
         .config(function ($stateProvider, $urlRouterProvider, $mdIconProvider, $mdThemingProvider) {
             $mdIconProvider
                     .iconSet('social', 'img/icons/sets/social-icons.svg', 24)
                     .defaultIconSet('styles/icons/sets/core-icons.svg', 24);
+            $mdThemingProvider.theme('default')
+                    .primaryPalette('purple')
+                    .warnPalette('red')
+                    .accentPalette('pink');
+
+            var neonRedMap = $mdThemingProvider.extendPalette('red', {
+                '500': 'rgb(218, 50, 45)',
+                'contrastDefaultColor': 'dark'
+            });
+            var whitestMap = $mdThemingProvider.extendPalette('green', {
+                '500': '#ffffff'
+            });
+            $mdThemingProvider.definePalette('neonRed', neonRedMap);
+            $mdThemingProvider.definePalette('whitest', whitestMap);
+            $mdThemingProvider.theme('greenTheme')
+                    .primaryPalette('neonRed')
+                    .warnPalette('blue')
+                    .accentPalette('green')
+                    .backgroundPalette('grey');
             $stateProvider
                     /*Login*/
                     .state('login', {
@@ -213,7 +234,7 @@ var miAppHome = angular.module('tierraDeColoresApp', [
                     })
                     .state('add_factura_producto', {
                         url: '/productos/factura',
-                        data: {pageTitle: 'Lista de Productos'},
+                        data: {pageTitle: 'Crear nueva factura.'},
                         views: {
                             'navbar': {
                                 templateProvider: function ($templateRequest, sessionProvider) {
@@ -233,7 +254,7 @@ var miAppHome = angular.module('tierraDeColoresApp', [
                     })
                     .state('panel_factura_producto', {
                         url: '/productos/factura/:idFactura',
-                        data: {pageTitle: 'Lista de Productos'},
+                        data: {pageTitle: 'Panel de productos'},
                         views: {
                             'navbar': {
                                 templateProvider: function ($templateRequest, sessionProvider) {
@@ -291,9 +312,9 @@ var miAppHome = angular.module('tierraDeColoresApp', [
                             }
                         }
                     })
-                    .state('distribuir_facturas', {
+                    .state('distribucion', {
                         url: '/distribuir',
-                        data: {pageTitle: 'Detalle de Producto'},
+                        data: {pageTitle: 'Panel de distribución.'},
                         views: {
                             'navbar': {
                                 templateProvider: function ($templateRequest, sessionProvider) {
@@ -308,6 +329,146 @@ var miAppHome = angular.module('tierraDeColoresApp', [
                             'body': {
                                 templateUrl: 'views/distribucion/distribucionPanel.html',
                                 controller: 'DistribucionController'
+                            }
+                        }
+                    })
+                    .state('distribuir_productos', {
+                        url: '/distribuir/:idFactura',
+                        data: {pageTitle: 'Distribuir factura.'},
+                        views: {
+                            'navbar': {
+                                templateProvider: function ($templateRequest, sessionProvider) {
+                                    var templateName;
+                                    if (sessionProvider.getPath() === "admin") {
+                                        templateName = 'views/navbar2.html';
+                                    }
+                                    return $templateRequest(templateName);
+                                },
+                                controller: null
+                            },
+                            'body': {
+                                templateUrl: 'views/distribucion/distribuir.html',
+                                controller: 'DistribucionController'
+                            }
+                        }
+                    })
+                    .state('categorias', {
+                        url: '/categorias',
+                        data: {pageTitle: 'Panel Categorias.'},
+                        views: {
+                            'navbar': {
+                                templateProvider: function ($templateRequest, sessionProvider) {
+                                    var templateName;
+                                    if (sessionProvider.getPath() === "admin") {
+                                        templateName = 'views/navbar2.html';
+                                    }
+                                    return $templateRequest(templateName);
+                                },
+                                controller: null
+                            },
+                            'body': {
+                                templateUrl: 'views/categoria/categoriaPanel.html',
+                                controller: 'CategoriaController'
+                            }
+                        }
+                    })
+                    .state('marcas', {
+                        url: '/marcas',
+                        data: {pageTitle: 'Panel Marcas.'},
+                        views: {
+                            'navbar': {
+                                templateProvider: function ($templateRequest, sessionProvider) {
+                                    var templateName;
+                                    if (sessionProvider.getPath() === "admin") {
+                                        templateName = 'views/navbar2.html';
+                                    }
+                                    return $templateRequest(templateName);
+                                },
+                                controller: null
+                            },
+                            'body': {
+                                templateUrl: 'views/marcas/marcasPanel.html',
+                                controller: 'MarcaController'
+                            }
+                        }
+                    })
+                    .state('tipos', {
+                        url: '/tipos',
+                        data: {pageTitle: 'Panel Tipo de Producto.'},
+                        views: {
+                            'navbar': {
+                                templateProvider: function ($templateRequest, sessionProvider) {
+                                    var templateName;
+                                    if (sessionProvider.getPath() === "admin") {
+                                        templateName = 'views/navbar2.html';
+                                    }
+                                    return $templateRequest(templateName);
+                                },
+                                controller: null
+                            },
+                            'body': {
+                                templateUrl: 'views/tipo/panelTipo.html',
+                                controller: 'TipoController'
+                            }
+                        }
+                    })
+                    .state('proveedores', {
+                        url: '/proveedores',
+                        data: {pageTitle: 'Panel Proovedores.'},
+                        views: {
+                            'navbar': {
+                                templateProvider: function ($templateRequest, sessionProvider) {
+                                    var templateName;
+                                    if (sessionProvider.getPath() === "admin") {
+                                        templateName = 'views/navbar2.html';
+                                    }
+                                    return $templateRequest(templateName);
+                                },
+                                controller: null
+                            },
+                            'body': {
+                                templateUrl: 'views/proveedor/proveedorPanel.html',
+                                controller: 'ProveedorController'
+                            }
+                        }
+                    })
+                    .state('proveedor_detalle', {
+                        url: '/proveedor/:idProveedor',
+                        data: {pageTitle: 'Detalle Proovedor.'},
+                        views: {
+                            'navbar': {
+                                templateProvider: function ($templateRequest, sessionProvider) {
+                                    var templateName;
+                                    if (sessionProvider.getPath() === "admin") {
+                                        templateName = 'views/navbar2.html';
+                                    }
+                                    return $templateRequest(templateName);
+                                },
+                                controller: null
+                            },
+                            'body': {
+                                templateUrl: 'views/proveedor/detalleProveedor.html',
+                                controller: 'ProveedorController'
+                            }
+                        }
+                    })
+                    .state('facturas', {
+                        url: '/facturas',
+                        data: {pageTitle: 'Panel facturas.'},
+                        views: {
+                            'navbar': {
+                                templateProvider: function ($templateRequest, sessionProvider) {
+                                    var templateName;
+                                    if (sessionProvider.getPath() === "admin") {
+                                        templateName = 'views/navbar2.html';
+                                    }
+                                    return $templateRequest(templateName);
+                                },
+                                controller: null
+                            },
+                            'body': {
+                                templateUrl: 'views/factura/lista.html',
+                                controller: 'FacturaController'
                             }
                         }
                     });

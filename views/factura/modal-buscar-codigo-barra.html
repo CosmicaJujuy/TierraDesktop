@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<div class="ngdialog-message">
+    <div class="modal-header">
+        <center>
+            <h3 class="modal-title">
+                <div ng-if="ngDialogData.stock[0].idSucursal === 1">Stock disponible en Tierra de colores.</div>
+                <div ng-if="ngDialogData.stock[0].idSucursal === 2">Stock disponible en Bebelandia.</div>
+                <div ng-if="ngDialogData.stock[0].idSucursal === 3">Stock disponible en Libertador</div>
+            </h3>
+        </center>
+    </div>
+    <div class="modal-body">
+        <div class="table-responsive" style="max-height: 300px; overflow-y: scroll;">
+            <table class="table table-bordered table-condensed">
+                <thead id="headTableProductos">
+                    <tr>
+                        <th style="text-align: center;">Codigo</th>
+                        <th style="text-align: center;">Clase</th>
+                        <th style="text-align: center;">Descripción</th>
+                        <th style="text-align: center;">Talla</th>
+                        <th style="text-align: center;">Color</th>
+                        <th style="text-align: center;">Precio</th>
+                        <th style="text-align: center;">Cantidad</th>
+                        <th style="text-align: center;">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody style="text-align:center;">
+                    <tr ng-repeat="item in ngDialogData.stock">
+                        <td>
+                            {{item.idProducto.codigoProducto}}
+                        </td>
+                        <td>
+                            {{item.idProducto.claseProducto}}
+                        </td>
+                        <td>
+                            {{item.idProducto.descripcion| uppercase}}
+                        </td>
+                        <td>
+                            {{item.idProducto.talla| uppercase}}
+                        </td>
+                        <td>
+                            {{item.idProducto.colorProducto| uppercase}}
+                        </td>
+                        <td>
+                            {{item.idProducto.precioVenta|currency}}
+                        </td>
+                        <td>
+                            {{item.cantidad}}
+                        </td>
+                        <td>                    
+                            <button ng-click="agregarItem(item)"
+                                    type="button"
+                                    class="btn btn-xs btn-success">
+                                <span class="glyphicon glyphicon-check"></span>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-md btn-danger"
+                ng-click="closeThisDialog('')">Cerrar</button>
+    </div>
+</div>

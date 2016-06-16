@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <div class="col-lg-1"></div>
-<div class="col-lg-10">
-    <div ng-show="user.nombre"
-         class="panel panel-info"
-         data-ng-init="detailUsuario()"
-         id="perfil"> 
-        <div class="panel panel-heading" style='margin-bottom: 0px;'># {{user.idUsuario}}: {{user.username}}
-            <a href='' ui-sref="modificar-perfil" style="color: #FFFFFF;float: right;">Editar</a>
-        </div>
-        <div class="panel-body" style=''>
+<div class="col-lg-10" style="margin-top: 200px;">
+    <div layout="column" ng-cloak data-ng-init="detailUsuario()" ng-show="user.nombre">
+        <md-toolbar class="md-warn" md-theme="greenTheme">
+            <div class="md-toolbar-tools">
+                <h4 class="md-flex" style="width:100%;"># {{user.idUsuario}}: {{user.username}}
+                    <a href='' ui-sref="modificar-perfil" style="color: #FFFFFF;float: right;">Editar</a>
+                </h4>
+            </div>
+        </md-toolbar>
+        <md-content flex layout-padding md-theme="greenTheme">
             <div class="row col-lg-8" style=''>
                 <form class="form-horizontal">
                     <div class='row col-lg-6'>
@@ -62,10 +63,9 @@
                     <img ng-src="data:image/JPEG;base64,{{user.imagen}}" id="foto-perfil">
                 </div>
             </div>
-        </div>        
+        </md-content>
     </div>
 </div>
 <div class="col-lg-1"></div>
 
 <toaster-container toaster-options="{'time-out': 3000, 'close-button':true, 'animation-class': 'toast-top-center'}"></toaster-container>
-      

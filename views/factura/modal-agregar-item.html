@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<div class="ngdialog-message">
+    <div class="modal-header">
+        <center>
+            <h3 class="modal-title">
+                <div>{{ngDialogData.item.idProducto.descripcion}}</div>
+            </h3>
+        </center>
+    </div>
+    <div class="modal-body">
+        <form name="agregarItemForm" class="form-horizontal" novalidate>
+            <fieldset>
+                <div class="form-group">
+                    <label class="control-label">Cantidad</label>
+                    <input type="number"
+                           focus-if
+                           ng-model="cantidad"
+                           maxlength="3"
+                           placeholder="Ingresa cantidad de items a comprar."
+                           name="cantidad" required
+                           class="form-control"/>
+                </div>
+                <div class="form-group" style="text-align: center;">
+                    <button type="button"
+                            ng-click="confirmarAgregarItem(ngDialogData.item, cantidad)"
+                            ng-disabled="agregarItemForm.$invalid"
+                            class="btn btn-success">Agregar</button>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-md btn-danger"
+                ng-click="closeThisDialog('')">Cerrar</button>
+    </div>
+</div>

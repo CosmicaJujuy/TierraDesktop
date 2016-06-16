@@ -36,8 +36,7 @@
                                             ng-repeat="facturaProducto in $data| filter:f as results">
                                             <td style="text-align: center">{{facturaProducto.idFacturaProducto}}</td>
                                             <td style="text-align: center">
-                                                <a ui-sref="^.agregar-producto-factura({idFactura: facturaProducto.idFacturaProducto})" target="_blank"
-                                                   ng-class="{disabled: facturaProducto.carga === false}">{{facturaProducto.numeroFactura}}</a>
+                                                <a ui-sref="panel_factura_producto({idFactura: facturaProducto.idFacturaProducto})" ng-class="{disabled: facturaProducto.carga === false}">{{facturaProducto.numeroFactura}}</a>
                                             </td>
                                             <td style="text-align: center">{{facturaProducto.proveedor.nombreProveedor}}</td>
                                             <td style="text-align: center">{{facturaProducto.monto|currency}}</td>

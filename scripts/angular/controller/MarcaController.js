@@ -40,7 +40,7 @@ miAppHome.controller('MarcaController', function ($scope, cookieService, $state,
             }
             $scope.tableMarcas = new NgTableParams({
                 page: 1,
-                count: 8
+                count: 13
             }, {
                 total: data.length,
                 getData: function (params) {

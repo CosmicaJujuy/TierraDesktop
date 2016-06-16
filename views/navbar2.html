@@ -3,8 +3,8 @@
     <md-toolbar class="md-menu-toolbar">
         <div layout="row">
             <center ng-bind="title" ng-cloak class="title-page">Titulo</center>
-            <button class="minimize" style="color: white; font-weight: bolder;">_</button>
-            <button class="maximize" ><md-icon class="material-icons">&#xE069;</md-icon></button>
+            <button class="minimize" ui-sref="home"><md-icon class="material-icons">&#xE88A;</md-icon></button>
+            <button class="maximize"><md-icon class="material-icons">&#xE8B8;</md-icon></button>
             <button class="quit"><md-icon class="material-icons">&#xE14C;</md-icon></button>
             <div>
                 <a style="padding-left: 45px;" class="navbar-brand" href="#/home" id="nav-titulo">Tierra de colores</a>
@@ -92,7 +92,9 @@
                                         </md-menu-item>
                                         <md-menu-item class="md-indent">
                                             <md-icon class="material-icons">&#xE0B6;</md-icon>
-                                            <md-button ui-sref="distribuir_facturas">Distribución</md-button>
+                                            <md-button ui-sref="distribucion">
+                                                Distribución
+                                            </md-button>
                                         </md-menu-item>
                                         <md-menu-item class="md-indent">
                                             <md-icon class="material-icons">&#xE8B6;</md-icon>
@@ -110,15 +112,21 @@
                                     <md-menu-content class="menu-content">
                                         <md-menu-item class="md-indent">
                                             <md-icon class="material-icons">&#xE86E;</md-icon>
-                                            <md-button>Categorias</md-button>
+                                            <md-button ui-sref="categorias">
+                                                Categorias
+                                            </md-button>
                                         </md-menu-item>
                                         <md-menu-item class="md-indent">
                                             <md-icon class="material-icons">&#xE06B;</md-icon>
-                                            <md-button>Marcas</md-button>
+                                            <md-button ui-sref="marcas">
+                                                Marcas
+                                            </md-button>
                                         </md-menu-item>
                                         <md-menu-item class="md-indent">
                                             <md-icon class="material-icons">&#xE252;</md-icon>
-                                            <md-button>Tipo de Productos</md-button>
+                                            <md-button ui-sref="tipos">
+                                                Tipo de Productos
+                                            </md-button>
                                         </md-menu-item>
                                     </md-menu-content>
                                 </md-menu>
@@ -126,7 +134,9 @@
                             <md-menu-divider style="background-color: rgb(250,250,250);"></md-menu-divider>
                             <md-menu-item class="md-indent">
                                 <md-icon class="material-icons">&#xE0AF;</md-icon>
-                                <md-button>Proveedores</md-button>
+                                <md-button ui-sref="proveedores">
+                                    Proveedores
+                                </md-button>
                             </md-menu-item>
                         </md-menu-content>
                     </md-menu>
@@ -136,16 +146,28 @@
                         </button>
                         <md-menu-content class="menu-content">
                             <md-menu-item class="md-indent">
-                                <md-button>Facturas</md-button>
+                                <md-icon class="material-icons">&#xE8CC;</md-icon>
+                                <md-button ui-sref="facturas">
+                                    Facturas
+                                </md-button>
                             </md-menu-item>
                             <md-menu-item class="md-indent">
-                                <md-button>Reservas</md-button>
+                                <md-icon class="material-icons">&#xE89C;</md-icon>
+                                <md-button>
+                                    Reservas
+                                </md-button>
                             </md-menu-item>
                             <md-menu-item class="md-indent">
-                                <md-button>Devoluciones</md-button>
+                                <md-icon class="material-icons">&#xE8B3;</md-icon>
+                                <md-button>
+                                    Devoluciones
+                                </md-button>
                             </md-menu-item>
                             <md-menu-item class="md-indent">
-                                <md-button>Transferencias</md-button>
+                                <md-icon class="material-icons">&#xE572;</md-icon>
+                                <md-button>
+                                    Transferencias
+                                </md-button>
                             </md-menu-item>
                         </md-menu-content>
                     </md-menu>
@@ -155,10 +177,16 @@
                         </button>
                         <md-menu-content class="menu-content">
                             <md-menu-item class="md-indent">
-                                <md-button>Tierra de colores</md-button>
+                                <md-icon class="material-icons">&#xE8E5;</md-icon>
+                                <md-button>
+                                    Tierra de colores
+                                </md-button>
                             </md-menu-item>                           
                             <md-menu-item class="md-indent">
-                                <md-button>Bebelandia</md-button>
+                                <md-icon class="material-icons">&#xE8E5;</md-icon>
+                                <md-button>
+                                    Bebelandia
+                                </md-button>
                             </md-menu-item>                           
                         </md-menu-content>
                     </md-menu>
@@ -183,8 +211,15 @@
     }
     a:focus, a:hover {
         color: rgb(255,128,171);
-        text-decoration: underline;
     }
+
+    .lighter{color:white!important;}
+    .lighter:hover{
+        font-weight: bold;
+        color: white !important;
+    }
+
+
     .menu-content{
         background-color: rgba(132, 0, 214, 0.73);
         color: white;        
@@ -207,7 +242,6 @@
     .md-button:not([disabled]):hover {
         background-color: rgba(63, 81, 181, 0.53);
         color: rgb(255,128,171);
-        text-decoration: underline;
     }
     md-toolbar.md-default-theme.md-menu-toolbar, md-toolbar.md-menu-toolbar {
         /*background-color: rgb(66,66,66);*/

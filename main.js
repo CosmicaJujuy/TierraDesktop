@@ -8,12 +8,12 @@ var path = require("path");
 let mainWindow;
 let workerWindow;
 
-function createWindow () {    
-  /*MAIN WINDOWS*/
+function createWindow() {
+    /*MAIN WINDOWS*/
     mainWindow = new BrowserWindow({
         transparent: false,
         frame: false,
-        fullscreen: false, 
+        fullscreen: false,
         width: 780,
         height: 350,
         resizable: false,
@@ -25,8 +25,8 @@ function createWindow () {
         workerWindow.close();
         workerWindow = null;
     });
-  /*WORKER WINDOW*/
-    workerWindow = new BrowserWindow({show:false});
+    /*WORKER WINDOW*/
+    workerWindow = new BrowserWindow({ show: false });
     workerWindow.loadURL(`file://${__dirname}/worker.html`);
     workerWindow.hide();
 }
@@ -43,13 +43,19 @@ app.on('activate', function () {
     }
 });
 
-ipcMain.on("printPDF", function (event, content){
+ipcMain.on("printPDF", function (event, content) {
     workerWindow.webContents.send("printPDF", content);
 });
 
-ipcMain.on("readyToPrintPDF", function (event){
+/*TRIGGER PRINT FUNCTION, NEED CALIBRATE*/
+ipcMain.on("printer", function (event) {
+    workerWindow.webContents.print();
+//    mainWindow.webContents.print();
+});
+
+ipcMain.on("readyToPrintPDF", function (event) {
     const pdfPath = path.join(os.tmpdir(), 'print.pdf');
-//    workerWindow.webContents.print({silent: true});
+    //    workerWindow.webContents.print({silent: true});
     workerWindow.webContents.printToPDF({}, function (error, data) {
         if (error) {
             throw error;

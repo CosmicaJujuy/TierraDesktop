@@ -4,7 +4,7 @@
  * @param {type} param1
  * @param {type} param2
  */
-miAppHome.controller('ProveedorController', function ($scope, cookieService, NgTableParams, toaster, $state, $stateParams, $rootScope, $http, $timeout, $cookies, _proveedorService) {
+miAppHome.controller('ProveedorController', function ($scope, cookieService, NgTableParams, toaster, $state, $stateParams, $http, $timeout, _proveedorService) {
 
     /**
      * Modelo de objeto Proveedor utilizado para agregar nuevos proveedores
@@ -42,7 +42,7 @@ miAppHome.controller('ProveedorController', function ($scope, cookieService, NgT
                 var data = datos;
                 $scope.tableProveedores = new NgTableParams({
                     page: 1,
-                    count: 10
+                    count: 13
                 }, {
                     total: data.length,
                     getData: function (params) {

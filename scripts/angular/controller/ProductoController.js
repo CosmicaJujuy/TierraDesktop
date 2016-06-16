@@ -139,15 +139,16 @@ miAppHome.controller('ProductoController', function ($scope, localStorageService
                 page: 1,
                 count: 12
             }, {
-                total: length,
-                getData: function (params) {
-                    var data = $scope.productos;
-                    params.total(length);
-                    if (params.total() <= ((params.page() - 1) * params.count())) {
-                        params.page(1);
+                    total: length,
+                    getData: function (params) {
+                        var data = $scope.productos;
+                        params.total(length);
+                        if (params.total() <= ((params.page() - 1) * params.count())) {
+                            params.page(1);
+                        }
+                        return data.slice((params.page() - 1) * params.count(), params.page() * params.count());
                     }
-                    return data.slice((params.page() - 1) * params.count(), params.page() * params.count());
-                }});
+                });
         }
         $promesa = _productoService.getAll();
         $promesa.then(function (datos) {
@@ -159,15 +160,16 @@ miAppHome.controller('ProductoController', function ($scope, localStorageService
                         page: 1,
                         count: 10
                     }, {
-                        total: $scope.productos.length,
-                        getData: function (params) {
-                            var data = $scope.productos;
-                            params.total(data.length);
-                            if (params.total() <= ((params.page() - 1) * params.count())) {
-                                params.page(1);
+                            total: $scope.productos.length,
+                            getData: function (params) {
+                                var data = $scope.productos;
+                                params.total(data.length);
+                                if (params.total() <= ((params.page() - 1) * params.count())) {
+                                    params.page(1);
+                                }
+                                return data.slice((params.page() - 1) * params.count(), params.page() * params.count());
                             }
-                            return data.slice((params.page() - 1) * params.count(), params.page() * params.count());
-                        }});
+                        });
                 } else {
                     $scope.productos = datos.data;
                     $scope.tableProductos.reload();
@@ -207,7 +209,7 @@ miAppHome.controller('ProductoController', function ($scope, localStorageService
                             body: 'Producto agregado correctamente.',
                             showCloseButton: false
                         });
-                        $state.go('panel_factura_producto', {"idFactura": idFacturaProducto});
+                        $state.go('panel_factura_producto', { "idFactura": idFacturaProducto });
                     }, 1000);
                 } else {
                     toaster.pop({
@@ -301,7 +303,7 @@ miAppHome.controller('ProductoController', function ($scope, localStorageService
                     showCloseButton: false
                 });
                 $timeout(function timer() {
-                    $state.go($state.current, {}, {reload: true});
+                    $state.go($state.current, {}, { reload: true });
                 }, 1000);
             } else {
                 toaster.pop({
@@ -350,6 +352,10 @@ miAppHome.controller('ProductoController', function ($scope, localStorageService
     $scope.printDiv = function (divName) {
         var printContents = document.getElementById(divName).innerHTML;
         sendCommandToWorker(printContents);
+        var electron = require('electron');
+        var window = electron.remote.getCurrentWindow();
+        console.log(electron.remote.BrowserWindow);
+//        window.webContents.print();
     };
     /**
      * configuracion para la busqueda dinamica de Productos para la directiva 
@@ -413,15 +419,16 @@ miAppHome.controller('ProductoController', function ($scope, localStorageService
                 page: 1,
                 count: 10
             }, {
-                total: data.length,
-                getData: function (params) {
-                    data = $scope.listaBusqueda;
-                    params.total(data.length);
-                    if (params.total() <= ((params.page() - 1) * params.count())) {
-                        params.page(1);
+                    total: data.length,
+                    getData: function (params) {
+                        data = $scope.listaBusqueda;
+                        params.total(data.length);
+                        if (params.total() <= ((params.page() - 1) * params.count())) {
+                            params.page(1);
+                        }
+                        return data.slice((params.page() - 1) * params.count(), params.page() * params.count());
                     }
-                    return data.slice((params.page() - 1) * params.count(), params.page() * params.count());
-                }});
+                });
             if ($scope.listaBusqueda.length === 0) {
                 $scope.hide = false;
                 toaster.pop({
@@ -588,15 +595,16 @@ miAppHome.controller('ProductoController', function ($scope, localStorageService
                 page: 1,
                 count: 8
             }, {
-                total: data.length,
-                getData: function (params) {
-                    data = $scope.productosFactura;
-                    params.total(data.length);
-                    if (params.total() <= ((params.page() - 1) * params.count())) {
-                        params.page(1);
+                    total: data.length,
+                    getData: function (params) {
+                        data = $scope.productosFactura;
+                        params.total(data.length);
+                        if (params.total() <= ((params.page() - 1) * params.count())) {
+                            params.page(1);
+                        }
+                        return data.slice((params.page() - 1) * params.count(), params.page() * params.count());
                     }
-                    return data.slice((params.page() - 1) * params.count(), params.page() * params.count());
-                }});
+                });
         });
     };
 

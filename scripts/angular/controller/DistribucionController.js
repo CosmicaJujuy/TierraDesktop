@@ -305,7 +305,7 @@ miAppHome.controller('DistribucionController', function ($scope, localStorageSer
                 closeByEscape: false
             });
         } else {
-            $state.go('^.distribuir-factura', {idFactura: facturaProducto.idFacturaProducto});
+            $state.go('distribuir_productos', {idFactura: facturaProducto.idFacturaProducto});
         }
 
     };

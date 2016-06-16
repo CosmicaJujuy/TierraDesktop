@@ -26,10 +26,11 @@ miAppHome.controller('LoginController',
                             var role = datos.data.role[0].authority;
                             if (role === 'ROLE_ADMIN') {
                                 $rootScope.navbar = 'views/navbar.html';
+                                window.hide();
+                                $state.go('home');
                                 $timeout(function timer() {
                                     window.maximize();
-                                    $state.go('home');
-                                }, 1000);
+                                }, 3000);
                             } else {
                                 if (role === 'ROLE_VENDEDOR') {
                                     $state.transitionTo('ventas');
@@ -42,7 +43,7 @@ miAppHome.controller('LoginController',
                                     body: 'Bienvenido',
                                     showCloseButton: false
                                 });
-                            }, 1000);
+                            }, 6000);
                             break;
                         case 401:
                             toaster.pop({

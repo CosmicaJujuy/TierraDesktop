@@ -132,9 +132,11 @@ var usuarioController = miAppHome.controller('UsuarioController',
                                 $scope.user = datos.data;
                             } else {
                                 $scope.user = datos.data;
+                                var stringDni = datos.data.dni;
                                 var splited = datos.data.fechaNacimiento.split("-");
                                 var date = new Date(splited[0], splited[1] - 1, splited[2]);
                                 $scope.user.fechaNacimiento = date;
+                                $scope.user.dni = stringDni.toString();
                             }
                             if ($scope.user.roles.idRol === 1) {
                                 $rootScope.edit = false;/*Falso para indicar que este en falso la directiva ng-hide*/
