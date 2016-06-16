@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<div class="col-lg-12">
+    <div class="distribucion-panel">
+        <div ng-cloak>
+            <md-content>
+                <md-tabs md-dynamic-height md-border-bottom>
+                    <md-tab label="Marcas">
+                        <md-content class="md-padding">
+                            <div class="table-responsive">
+                                <table data-ng-init="listaMarcas()"
+                                       ng-table="tableMarcas"
+                                       class="table table-striped table-hover table-condensed">
+                                    <thead id="headTableProductos">
+                                        <tr>
+                                            <th style="text-align: center">ID</th>
+                                            <th style="text-align: center">Nombre</th> 
+                                            <th style="text-align: center">Fecha de creación</th> 
+                                            <th style="text-align: center" ng-hide="edit">Acciones</th> 
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="marca in $data">
+                                            <th style="text-align: center">{{::marca.idMarca}}</th>
+                                            <th style="text-align: center">{{::marca.nombreMarca}}</th>                        
+                                            <th style="text-align: center">{{::marca.fechaCreacion}}</th>                        
+                                            <th style="text-align: center" ng-hide="edit">
+                                                <button type="button" class="btn btn-xs btn-info"
+                                                        data-toggle="modal"
+                                                        data-target="#myModal"
+                                                        uib-tooltip="Modificar marca"
+                                                        ng-click="seleccionarMarca(marca)"><span class="glyphicon glyphicon-pencil"></span></button>
+                                                <button type="button" 
+                                                        data-toggle="modal"
+                                                        data-target="#myModalDelete"
+                                                        uib-tooltip="Eliminar marca"
+                                                        class="btn btn-xs btn-danger"
+                                                        ng-click="seleccionarMarca(marca)"><span class="glyphicon glyphicon-trash"></span></button>
+                                            </th>                        
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </md-content>
+                    </md-tab>
+                    <md-tab label="Agregar nueva Marca">
+                        <md-content class="md-padding">
+                            <div class="col-lg-2"></div>
+                            <div class="col-lg-8">
+                                <form name="nuevaMarca" class="form-horizontal">
+                                    <fieldset>
+                                        <legend style="text-align: center;">Datos de la marca</legend>
+                                        <div class="form-group">                    
+                                            <label class="control-label">Nombre marca</label>
+                                            <input type="text" 
+                                                   placeholder="Ingrese nombre de la marca"
+                                                   class="form-control"
+                                                   maxlength="20"
+                                                   ng-model="_marca.nombreMarca" name="marca" required
+                                                   data-ng-class='{error: nuevaMarca.marca.$invalid && !nuevaMarca.$pristine}'/>
+                                        </div>    
+                                        <div class="form-group">
+                                            <center>
+                                                <button ng-click="agrearMarca(_marca)" 
+                                                        type="submit"
+                                                        class="btn btn-warning"
+                                                        id="btnAgregarCategoria"
+                                                        ng-disabled="nuevaMarca.$invalid">Agregar</button>  
+                                            </center>
+                                        </div>                                
+                                    </fieldset>
+                                </form>
+                            </div>                    
+                            <div class="col-lg-2"></div>
+                        </md-content>
+                    </md-tab>
+                </md-tabs>                    
+            </md-content>
+        </div>
+    </div>
+</div>
+<div class="col-lg-3"></div>
+
+
+
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Cambiar datos de la marca</h4>
+            </div>
+            <div class="modal-body">
+                <form name="modificarMarca" class="form-horizontal" id="newAfilidadoModal">    
+                    <div class="form-group">                    
+                        <label class="control-label">Id marca</label>
+                        <input type="number"
+                               class="form-control"
+                               ng-model="__marca.idMarca" name="idMarca" required  disabled
+                               data-ng-class='{ error: modificarMarca.idMarca.$invalid && !modificarMarca.$pristine }'/>
+                    </div>    
+                    <div class="form-group">                    
+                        <label class="control-label">Nombre de marca</label>
+                        <input type="text" 
+                               class="form-control"
+                               maxlength="20"
+                               ng-model="__marca.nombreMarca"
+                               name="nombreMarca" required placeholder="Ingrese nombre de categoria"
+                               data-ng-class='{ error: modificarMarca.nombreMarca.$invalid && !modificarMarca.$pristine }'/>
+                    </div>
+                    <div class="form-group">
+                        <center>                                
+                            <button class="btn btn-warning" 
+                                    data-dismiss="modal"
+                                    style="margin-top: 5%;"
+                                    ng-click="_modificarMarca(__marca)"
+                                    ng-disabled="modificarMarca.$invalid">Modificar</button>                                
+                        </center>
+                    </div>
+                </form>
+            </div>                   
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="myModalDelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Eliminar marca</h4>
+            </div>
+            <div class="modal-body">
+                <center>
+                    ¿Desea eliminar esta Marca?
+                    <br>
+                    <button class="btn btn-danger"
+                            ng-click="eliminarMarca()"
+                            data-dismiss="modal"
+                            >Eliminar</button>
+                </center>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
