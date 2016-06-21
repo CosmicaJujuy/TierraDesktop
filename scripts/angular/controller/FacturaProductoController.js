@@ -76,7 +76,7 @@ miAppHome.controller('FacturaProductoController', function ($scope, ngDialog, Ng
         $detail.then(function (datos) {
             if (datos.status === 200) {
                 if (datos.data.carga === false) {
-                    $state.go('^.producto-lista');
+                    $state.go('productos');
                 } else {
                     $scope.detalle = datos.data;
                     var splited = datos.data.fechaFactura.split("-");
@@ -87,10 +87,22 @@ miAppHome.controller('FacturaProductoController', function ($scope, ngDialog, Ng
         });
     };
 
+    $scope.confirmarFinalizarCargaFactura = function () {
+        ngDialog.open({
+            template: 'views/factura_producto/modal-confirmar-finalizar-carga-factura.html',
+            className: 'ngdialog-theme-advertencia',
+            showClose: false,
+            controller: 'FacturaProductoController',
+            closeByDocument: false,
+            closeByEscape: false
+        });
+    };
+
     $scope.finalizarCargaFactura = function () {
         var idFacturaProducto = parseInt($stateParams.idFactura);
         $finish = facturaProductoService.finish(idFacturaProducto);
         $finish.then(function (datos) {
+            ngDialog.closeAll();
             if (datos.status === 200) {
                 toaster.pop({
                     type: 'success',
