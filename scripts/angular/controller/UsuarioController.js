@@ -181,7 +181,7 @@ var usuarioController = miAppHome.controller('UsuarioController',
                     $promesa = UsuarioService.addUsuario($scope.newUser);
                     $promesa.then(function (datos) {
                         if (datos.status === 200) {
-                            $state.transitionTo('home.usuario-lista');
+                            $state.go('usuarios');
                             $timeout(function timer() {
                                 toaster.pop({
                                     type: 'success',
