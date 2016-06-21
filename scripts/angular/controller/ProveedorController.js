@@ -192,6 +192,7 @@ miAppHome.controller('ProveedorController', function ($scope, cookieService, NgT
         var token = cookieService.get('token');
         return token.then(function (data) {
             return $http({
+                ignoreLoadingBar: true,
                 url: uri,
                 method: 'post',
                 headers: {
@@ -202,7 +203,6 @@ miAppHome.controller('ProveedorController', function ($scope, cookieService, NgT
                 }
             }).then(function (response) {
                 return response.data.map(function (item) {
-                    console.log(item);
                     return item;
                 });
             });
