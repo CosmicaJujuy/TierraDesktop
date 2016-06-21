@@ -2,57 +2,57 @@
 <div class="col-lg-1"></div>
 <div class="col-lg-10" style="margin-top: 200px;">
     <div layout="column" ng-cloak data-ng-init="detailUsuario()" ng-show="user.nombre">
-        <md-toolbar class="md-warn" md-theme="greenTheme">
+        <md-toolbar class="md-warn" md-theme="docs-dark">
             <div class="md-toolbar-tools">
                 <h4 class="md-flex" style="width:100%;"># {{user.idUsuario}}: {{user.username}}
-                    <a href='' ui-sref="modificar-perfil" style="color: #FFFFFF;float: right;">Editar</a>
+                    <a href='' ui-sref="modificar-perfil" style="color: #000000;float: right;">Editar</a>
                 </h4>
             </div>
         </md-toolbar>
-        <md-content flex layout-padding md-theme="greenTheme">
+        <md-content flex layout-padding md-theme="docs-dark">
             <div class="row col-lg-8" style=''>
                 <form class="form-horizontal">
                     <div class='row col-lg-6'>
                         <div class="form-group">
-                            <label class="control-label">Nombre:</label>
+                            <label>Nombre:</label>
                             <div>{{user.nombre}}</div>                                
                         </div>
                         <div class="form-group">
-                            <label class="control-label">Apellido:</label>
+                            <label>Apellido:</label>
                             <div>{{user.apellido}}</div>  
                         </div>
                         <div class="form-group">
-                            <label class="control-label">D.N.I.:</label>
+                            <label>D.N.I.:</label>
                             <div>{{user.dni|number:0}}</div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label">Fecha de nacimiento:</label>
+                            <label>Fecha de nacimiento:</label>
                             <div>{{user.fechaNacimiento| date: 'fullDate'}}</div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label">Ciudad:</label>
+                            <label>Ciudad:</label>
                             <div>{{user.provincia}}</div>
                         </div>                        
                     </div>
                     <div class='row col-lg-6'>
                         <div class="form-group">
-                            <label class="control-label">Email:</label>
+                            <label>Email:</label>
                             <div>{{user.email}}</div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label">Telefono:</label>
+                            <label>Telefono:</label>
                             <div>{{user.telefono|tel}}</div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label">Rol:</label>
+                            <label>Rol:</label>
                             <div>{{user.roles.nombreRol}}</div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label">Estado:</label>
+                            <label>Estado:</label>
                             <div>{{user.estado}}</div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label">Sucursal:</label>
+                            <label>Sucursal:</label>
                             <div>{{user.usuarioSucursal.nombreSucursal}}</div>
                         </div>
                     </div>

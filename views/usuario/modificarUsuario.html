@@ -5,18 +5,19 @@
     <div class="distribucion-panel" ng-show="user.username" data-ng-init="detailUsuario()">
         <div ng-cloak>
             <!-- JUEGO DE TABS MODIFICAR USUARIO-->
-            <md-content>
+            <md-content md-theme="docs-dark" style="min-height: 598px;">
                 <md-tabs md-dynamic-height md-border-bottom>
                     <!-- TAB MODIFICAR USUARIO-->
                     <md-tab label="Perfil de {{user.username}}">
-                        <md-content class="md-padding">                            
+                        <md-content class="md-padding">
                             <div class="col-lg-2"></div>
                             <div layout="column" ng-cloak class="col-lg-8">
                                 <!-- FORMULARIO MODIFICAR DATOS USUARIO-->
                                 <form name="changePerfil">
                                     <!-- INPUT NOMBRE-->
-                                    <md-input-container class="md-block">
+                                    <md-input-container class="md-icon md-block">
                                         <label>Nombre</label>
+                                        <md-icon class="material-icons">&#xE8A6;</md-icon>
                                         <input minlength="4"
                                                md-maxlength="20"
                                                maxlength="25"
@@ -34,8 +35,9 @@
                                         <span ng-show="changePerfil.nombre.$dirty && changePerfil.nombre.$invalid" class="glyphicon glyphicon-remove  form-control-feedback"></span>
                                     </md-input-container><!--FIN INPUT NOMBRE-->
                                     <!-- INPUT APELLIDO-->
-                                    <md-input-container class="md-block">
+                                    <md-input-container class="md-icon md-block">
                                         <label>Apellido</label>
+                                        <md-icon class="material-icons">&#xE8A6;</md-icon>
                                         <!-- INPUT APELLIDO-->
                                         <input type="text" 
                                                minlength="4" 
@@ -55,9 +57,10 @@
                                         <span ng-show="changePerfil.apellido.$dirty && changePerfil.apellido.$invalid" class="glyphicon glyphicon-remove  form-control-feedback"></span>
                                     </md-input-container><!--FIN INPUT APELLIDO-->
                                     <!-- INPUT DNI-->
-                                    <md-input-container class="md-block">
+                                    <md-input-container class="md-icon md-block">
                                         <!-- LABEL DNI-->
                                         <label>D.N.I.</label>
+                                        <md-icon class="material-icons">&#xE90D;</md-icon>
                                         <!-- INPUT DNI-->
                                         <input type="text" 
                                                minlength="4" 
@@ -75,9 +78,10 @@
                                         <span ng-show="changePerfil.dni.$dirty && changePerfil.dni.$invalid" class="glyphicon glyphicon-remove  form-control-feedback"></span>
                                     </md-input-container><!-- FIN DNI-->
                                     <!--INPUT DOMICILIO -->
-                                    <md-input-container class="md-block">
+                                    <md-input-container class="md-icon md-block">
                                         <!-- LABEL DOMICILIO-->
                                         <label>Domicilio</label>
+                                        <md-icon class="material-icons">&#xE88A;</md-icon>
                                         <!-- INPUT DOMICILIO-->
                                         <input type="text" 
                                                class="form-control"
@@ -97,9 +101,10 @@
                                         <span ng-show="changePerfil.domicilio.$dirty && changePerfil.domicilio.$invalid" class="glyphicon glyphicon-remove  form-control-feedback"></span>
                                     </md-input-container><!-- FIN INPUT DOMICILIO-->                                        
                                     <!-- INPUT EMAIL-->
-                                    <md-input-container class="md-block">
+                                    <md-input-container class="md-icon md-block">
                                         <!-- LABEL EMAIL-->
                                         <label>E-mail</label>
+                                        <md-icon class="material-icons">&#xE0BE;</md-icon>
                                         <!-- INPUT EMAIL-->
                                         <input type="email"
                                                ng-minlength="8" 
@@ -122,9 +127,10 @@
                                     <!--INPUT TELEFONO -->
                                     <div layout="row">
                                         <!-- INPUT FECHA-->
-                                        <md-input-container class="md-block" flex>
+                                        <md-input-container class="md-icon md-block" flex>
                                             <!-- LABEL FECHA-->
                                             <label>Fecha de nacimiento</label>
+                                            <md-icon class="material-icons">&#xE916;</md-icon>
                                             <!-- INPUT FECHA-->
                                             <input ng-model="user.fechaNacimiento"
                                                    name="nacimiento" md-no-asterisk
@@ -141,9 +147,10 @@
                                             <span ng-show="changePerfil.nacimiento.$dirty && changePerfil.nacimiento.$invalid" class="glyphicon glyphicon-remove  form-control-feedback" style="padding-right: 65px;"></span>
                                         </md-input-container><!-- FIN INPUT FECHA-->
                                         <!-- INPUT TELEFONO-->
-                                        <md-input-container class="md-block" flex>
+                                        <md-input-container class="md-icon md-block" flex>
                                             <!-- LABEL TELEFONO-->
                                             <label>Telefono</label>
+                                            <md-icon class="material-icons">&#xE0CD;</md-icon>
                                             <!-- INPUT TELEFONO-->
                                             <input type="tel"
                                                    maxlength="10"
@@ -210,106 +217,83 @@
                     <!-- TAB ACTUALIZAR CONTRASEÑA -->
                     <md-tab label="Cambiar contraseña">
                         <md-content class="md-padding">
-                            <!-- FORMULARIO ACTUALIZAR CONTRASEÑA -->
-                            <form class="form-horizontal"
-                                  name="changePassword"
-                                  data-ng-init="detailUsuario()" style="margin-top: 7%;">
-
-                                <!-- INPUT CONTRASEÑA ACTUAL -->
-                                <div class="form-group"
-                                     data-ng-class="{'has-error has-feedback': changePassword.old.$invalid && !changePassword.$pristine && changePassword.old.$dirty,
-                     'has-warning has-feedback': changePassword.old.$invalid && changePassword.old.$touched,
-                 'has-success has-feedback': changePassword.old.$valid}">
-                                    <!-- LABEL CONTRASEÑA ACTUAL-->
-                                    <label class="control-label">Contraseña actual</label>                                        
-                                    <input type="password" 
-                                           class="form-control"
-                                           ng-minlength="8" 
-                                           placeholder="Ingresa contraseña actual"
-                                           ng-model="userPw.old" name="old" required/>
-                                    <!-- MENSAJES-->
-                                    <div class="pull-left" 
-                                         style="color: #a94442; margin-top: 1%;"
-                                         ng-messages="changePassword.old.$error"
-                                         ng-if='changePassword.old.$dirty || changePassword.old.$touched'>
-                                        <div ng-message="password">Contraseña invalida.</div>
-                                        <div ng-message="required" style="color: #8a6d3b;">Este campo no puede estar vacio.</div>                            
-                                    </div>
-                                    <!--ICONOS DE MENSAJE -->
-                                    <span ng-show="changePassword.old.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
-                                    <span ng-show="changePassword.old.$dirty && changePassword.old.$invalid" class="glyphicon glyphicon-remove  form-control-feedback"></span>
-                                </div><!-- FIN INPUT CONTRASEÑA ACTUAL -->
-                                <!------------------------------------------------------------------------------------------>
-
-
-                                <!-- INPUT CONTRASEÑA NUEVA -->
-                                <div class="form-group"
-                                     data-ng-class="{'has-error has-feedback': changePassword.new.$invalid && !changePassword.$pristine && changePassword.new.$dirty || ((userPw.new === userPw.old) && changePassword.new.$touched) ,
-                     'has-warning has-feedback': changePassword.new.$invalid && changePassword.new.$touched,
-                 'has-success has-feedback': changePassword.new.$valid && (userPw.new !== userPw.old)}">
-                                    <!-- LABEL CONTRASEÑA ACTUAL-->
-                                    <label class="control-label">Contraseña nueva</label>                                        
-                                    <input type="password" 
-                                           class="form-control"
-                                           ng-minlength="8"
-                                           ng-pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*$"
-                                           pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*$"
-                                           placeholder="Ingresa contraseña nueva"
-                                           ng-model="userPw.new" name="new" required/>
-                                    <!-- MENSAJES-->
-                                    <div class="pull-left" 
-                                         style="color: #a94442; margin-top: 1%;"
-                                         ng-messages="changePassword.new.$error"
-                                         ng-if='changePassword.new.$dirty || changePassword.new.$touched'>
-                                        <div ng-message="pattern">La contraseña debe contener al menos una mayuscula, una minuscula y un número.</div>
-                                        <div ng-message="minlength">Contraseña demasiado corta.</div>
-                                        <div ng-message="required" style="color: #8a6d3b;">Este campo no puede estar vacio.</div>                            
-                                    </div>
-                                    <!--ICONOS DE MENSAJE -->
-                                    <span ng-show="changePassword.new.$valid && (userPw.new !== userPw.old)" class="glyphicon glyphicon-ok form-control-feedback"></span>
-                                    <span ng-show="changePassword.new.$dirty && changePassword.new.$invalid || ((userPw.new === userPw.old) && changePassword.new.$touched)" class="glyphicon glyphicon-remove  form-control-feedback"></span>
-                                </div><!-- FIN INPUT CONTRASEÑA NUEVA-->
-                                <!------------------------------------------------------------------------------------------>
-
-                                <!-- INPUT REPETIR CONTRASEÑA NUEVA -->
-                                <div class="form-group"
-                                     data-ng-class="{'has-error has-feedback': changePassword.rep.$invalid && !changePassword.$pristine && changePassword.rep.$dirty || (userPw.new !== userPw.rep) ,
-                     'has-warning has-feedback': changePassword.rep.$invalid && changePassword.rep.$touched,
-                 'has-success has-feedback': changePassword.rep.$valid && (userPw.new === userPw.rep)}">
-                                    <!-- LABEL REPETIR CONTRASEÑA ACTUAL-->
-                                    <label class="control-label">Repetir contraseña</label>                                        
-                                    <input type="password" 
-                                           class="form-control"
-                                           ng-minlength="8"
-                                           placeholder="Repetir contraseña"
-                                           ng-model="userPw.rep" name="rep" required/>
-                                    <!-- MENSAJES-->
-                                    <div class="pull-left" 
-                                         style="color: #a94442; margin-top: 1%;"
-                                         ng-messages="changePassword.rep.$error"
-                                         ng-if='changePassword.rep.$dirty || changePassword.rep.$touched'>
-                                        <div ng-message="password">Contraseña invalida.</div>
-                                        <div ng-message="minlength">Contraseña demasiado corta.</div>
-                                        <div ng-message="required" style="color: #8a6d3b;">Este campo no puede estar vacio.</div>                            
-                                    </div>
-                                    <!--ICONOS DE MENSAJE -->
-                                    <span ng-show="changePassword.rep.$valid && (userPw.rep === userPw.new)" class="glyphicon glyphicon-ok form-control-feedback"></span>
-                                    <span ng-show="changePassword.rep.$dirty && changePassword.rep.$invalid" class="glyphicon glyphicon-remove form-control-feedback"></span>
-                                </div><!-- FIN INPUT REPETIR CONTRASEÑA NUEVA-->
-
-
-
-
-                                <center style="margin-top: 10%;">
-                                    <button ng-click="cambiarPassword()"
-                                            class="btn btn-success" 
-                                            style=""
-                                            ng-disabled="changePassword.$invalid">Guardar</button>
-                                    <button type="button"
-                                            class="btn btn-danger"
-                                            style=" width: 79px;"
-                                            ui-sref="perfil">Salir</button>
-                                </center>
+                            <div class="col-lg-2"></div>
+                            <div class="col-lg-8">
+                                <!-- FORMULARIO ACTUALIZAR CONTRASEÑA -->
+                                <form class="form-horizontal"
+                                      name="changePassword">
+                                    <!-- INPUT CONTRASEÑA ACTUAL -->
+                                    <md-input-container class="md-icon md-block">
+                                        <!-- LABEL CONTRASEÑA ACTUAL-->
+                                        <label>Contraseña actual</label>
+                                        <md-icon class="material-icons">&#xE0DA;</md-icon>                                        
+                                        <input type="password" 
+                                               ng-minlength="8" 
+                                               placeholder="Ingresa contraseña actual"
+                                               ng-model="userPw.old" name="old" required/>
+                                        <!-- MENSAJES-->
+                                        <div ng-messages="changePassword.old.$error"
+                                             ng-if='changePassword.old.$dirty || changePassword.old.$touched'>
+                                            <div ng-message="password">Contraseña invalida.</div>
+                                            <div ng-message="required">Este campo no puede estar vacio.</div>                            
+                                        </div>
+                                        <!--ICONOS DE MENSAJE -->
+                                        <span ng-show="changePassword.old.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
+                                        <span ng-show="changePassword.old.$dirty && changePassword.old.$invalid" class="glyphicon glyphicon-remove  form-control-feedback"></span>
+                                    </md-input-container><!-- FIN INPUT CONTRASEÑA ACTUAL -->
+                                    <!-- INPUT CONTRASEÑA NUEVA -->
+                                    <md-input-container class="md-icon md-block">
+                                        <label>Contraseña nueva</label>
+                                        <md-icon class="material-icons">&#xE0DA;</md-icon>
+                                        <input type="password"
+                                               ng-minlength="8"
+                                               ng-pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*$"
+                                               pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*$"
+                                               placeholder="Ingresa contraseña nueva"
+                                               ng-model="userPw.new" name="new" required/>
+                                        <!-- MENSAJES-->
+                                        <div ng-messages="changePassword.new.$error"
+                                             ng-if='changePassword.new.$dirty || changePassword.new.$touched'>
+                                            <div ng-message="pattern">La contraseña debe contener al menos una mayuscula, una minuscula y un número.</div>
+                                            <div ng-message="minlength">Contraseña demasiado corta.</div>
+                                            <div ng-message="required">Este campo no puede estar vacio.</div>                            
+                                        </div>
+                                        <!--ICONOS DE MENSAJE -->
+                                        <span ng-show="changePassword.new.$valid && (userPw.new !== userPw.old)" class="glyphicon glyphicon-ok form-control-feedback"></span>
+                                        <span ng-show="changePassword.new.$dirty && changePassword.new.$invalid || ((userPw.new === userPw.old) && changePassword.new.$touched)" class="glyphicon glyphicon-remove  form-control-feedback"></span>
+                                    </md-input-container><!-- FIN INPUT CONTRASEÑA NUEVA-->
+                                    <!-- INPUT REPETIR CONTRASEÑA NUEVA -->
+                                    <md-input-container class="md-icon md-block">
+                                        <!-- LABEL REPETIR CONTRASEÑA ACTUAL-->
+                                        <label>Repetir contraseña</label>
+                                        <md-icon class="material-icons">&#xE0DA;</md-icon>
+                                        <input type="password"
+                                               ng-minlength="8"
+                                               placeholder="Repetir contraseña"
+                                               ng-model="userPw.rep" name="rep" required/>
+                                        <!-- MENSAJES-->
+                                        <div ng-messages="changePassword.rep.$error"
+                                             ng-if='changePassword.rep.$dirty || changePassword.rep.$touched'>
+                                            <div ng-message="password">Contraseña invalida.</div>
+                                            <div ng-message="minlength">Contraseña demasiado corta.</div>
+                                            <div ng-message="required">Este campo no puede estar vacio.</div>                            
+                                        </div>
+                                        <!--ICONOS DE MENSAJE -->
+                                        <span ng-show="changePassword.rep.$valid && (userPw.rep === userPw.new)" class="glyphicon glyphicon-ok form-control-feedback"></span>
+                                        <span ng-show="changePassword.rep.$dirty && changePassword.rep.$invalid" class="glyphicon glyphicon-remove form-control-feedback"></span>
+                                    </md-input-container>
+                                    <center style="margin-top: 10%;">
+                                        <button ng-click="cambiarPassword()"
+                                                class="btn btn-success" 
+                                                style=""
+                                                ng-disabled="changePassword.$invalid">Guardar</button>
+                                        <button type="button"
+                                                class="btn btn-danger"
+                                                style=" width: 79px;"
+                                                ui-sref="perfil">Salir</button>
+                                    </center>
+                                </form>
+                            </div>                            
                             </form>
                         </md-content>
                     </md-tab>
