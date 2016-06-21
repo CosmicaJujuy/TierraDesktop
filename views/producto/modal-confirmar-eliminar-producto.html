@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<div class="ngdialog-message ngdialog-advertencia" style="width: 400px;">
+    <div class="modal-header">
+        <center>
+            <h3 class="modal-title" style="font-size: medium; text-transform:uppercase;">
+                {{ngDialogData.producto.descripcion}}
+            </h3>
+        </center>
+    </div>
+    <div class="modal-body">
+        <center class="well">
+            <p style="font-weight: bolder;">Esta acción es irreversible.</p>
+            <p>¿Desea eliminar este producto?</p>
+            <button class="btn btn-danger"
+                    style="margin-top: 20px;"
+                    data-dismiss="modal"
+                    ng-click="eliminarProductoFactura(ngDialogData.producto)">Eliminar</button>
+        </center>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-md btn-danger" ng-click="closeThisDialog(0)">Cerrar</button>
+    </div>
+</div>
