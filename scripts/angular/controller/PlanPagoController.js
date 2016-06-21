@@ -7,35 +7,7 @@ miAppHome.controller('PlanPagoController', function ($scope, $timeout, toaster, 
 
     $scope._planPago = {
         "idPlanesPago": null,
-        "tarjeta": {
-            "idTarjeta": null,
-            "entidadBancaria": {
-                "idEntidadMonetaria": null,
-                "nombreEntidad": "",
-                "direccionEntidad": "",
-                "telefonoEntidad": "",
-                "estadoEntidad": true,
-                "fechaCreaciion": "",
-                "fechaModificacion": null,
-                "usuarioCreacion": null,
-                "usuarioModificacion": null
-            },
-            "medioPago": {
-                "idMedioPago": null,
-                "nombrePago": "",
-                "estado": true,
-                "fechaCreacion": "",
-                "fechaModificacion": null,
-                "usuarioCreacion": null,
-                "usuarioModificacion": null
-            },
-            "nombreTarjeta": "",
-            "estadoTarjeta": true,
-            "fechaCreacion": "",
-            "fechaModificacion": null,
-            "usuarioCreacion": null,
-            "usuarioModificacion": null
-        },
+        "tarjeta": null,
         "nombrePlanesPago": "",
         "cuotasPlanesPago": null,
         "fechaInicioPlanes": "",
