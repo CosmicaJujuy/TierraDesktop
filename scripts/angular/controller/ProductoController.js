@@ -3,7 +3,20 @@
  * @param {type} param1
  * @param {type} param2
  */
-miAppHome.controller('ProductoController', function ($scope, localStorageService, $state, facturaProductoService, $stateParams, toaster, NgTableParams, $rootScope, $http, $timeout, $cookies, _productoService) {
+miAppHome.controller('ProductoController', function (
+        $scope,
+        ngDialog,
+        localStorageService,
+        $state,
+        facturaProductoService,
+        $stateParams,
+        toaster,
+        NgTableParams,
+        $rootScope,
+        $http,
+        $timeout,
+        $cookies,
+        _productoService) {
     /*
      * objeto type encargado de dar formato a los codigos de barra.
      */
@@ -28,6 +41,11 @@ miAppHome.controller('ProductoController', function ($scope, localStorageService
         'venta': ""
     };
 
+    $scope.classes = [
+        {value: 'A', name: 'Clase A'},
+        {value: 'B', name: 'Clase B'}
+    ];
+
     /**
      * objeto Producto encargado de dar formato al objeto Producto para agregar
      * nuevos Productos
@@ -36,50 +54,11 @@ miAppHome.controller('ProductoController', function ($scope, localStorageService
         "idProducto": null,
         "codigoProducto": null,
         "claseProducto": null,
-        "categoria": {
-            "idCategoria": null,
-            "nombreCategoria": "",
-            "usuarioCreacion": null,
-            "usuarioModificacion": null,
-            "fechaCreacion": "",
-            "fechaModificacion": null,
-            "estado": true,
-            "tipoCategoria": {
-                "idTipo": null,
-                "nombreTipo": "",
-                "usuarioCreacion": null,
-                "usuarioModificacion": null,
-                "fechaCreacion": "",
-                "fechaModificacion": null,
-                "estado": true
-            }
-        },
-        "marcas": {
-            "idMarca": null,
-            "nombreMarca": "",
-            "fechaCreacion": "",
-            "fechaModificacion": null,
-            "usuarioCreacion": null,
-            "usuarioModificacion": null,
-            "estado": true
-        },
+        "categoria": null,
+        "marcas": null,
         "facturaProducto": null,
-        "sexo": {
-            "idSexo": null,
-            "nombreSexo": "",
-            "fechaCreacion": "",
-            "fechaModificacion": null,
-            "usuarioCreacion": null,
-            "usuarioModificacion": null
-        },
-        "temporada": {
-            "idTemporada": null,
-            "nombreTemporada": "",
-            "usuarioCreacion": null,
-            "usuarioModificacion": null,
-            "fechaCreacion": "",
-            "fechaModificacion": null
-        },
+        "sexo": null,
+        "temporada": null,
         "descripcion": null,
         "colorProducto": null,
         "precioCosto": null,
@@ -139,16 +118,16 @@ miAppHome.controller('ProductoController', function ($scope, localStorageService
                 page: 1,
                 count: 12
             }, {
-                    total: length,
-                    getData: function (params) {
-                        var data = $scope.productos;
-                        params.total(length);
-                        if (params.total() <= ((params.page() - 1) * params.count())) {
-                            params.page(1);
-                        }
-                        return data.slice((params.page() - 1) * params.count(), params.page() * params.count());
+                total: length,
+                getData: function (params) {
+                    var data = $scope.productos;
+                    params.total(length);
+                    if (params.total() <= ((params.page() - 1) * params.count())) {
+                        params.page(1);
                     }
-                });
+                    return data.slice((params.page() - 1) * params.count(), params.page() * params.count());
+                }
+            });
         }
         $promesa = _productoService.getAll();
         $promesa.then(function (datos) {
@@ -160,16 +139,16 @@ miAppHome.controller('ProductoController', function ($scope, localStorageService
                         page: 1,
                         count: 10
                     }, {
-                            total: $scope.productos.length,
-                            getData: function (params) {
-                                var data = $scope.productos;
-                                params.total(data.length);
-                                if (params.total() <= ((params.page() - 1) * params.count())) {
-                                    params.page(1);
-                                }
-                                return data.slice((params.page() - 1) * params.count(), params.page() * params.count());
+                        total: $scope.productos.length,
+                        getData: function (params) {
+                            var data = $scope.productos;
+                            params.total(data.length);
+                            if (params.total() <= ((params.page() - 1) * params.count())) {
+                                params.page(1);
                             }
-                        });
+                            return data.slice((params.page() - 1) * params.count(), params.page() * params.count());
+                        }
+                    });
                 } else {
                     $scope.productos = datos.data;
                     $scope.tableProductos.reload();
@@ -200,6 +179,7 @@ miAppHome.controller('ProductoController', function ($scope, localStorageService
             $promesa = _productoService.add(producto);
             $promesa.then(function (datos) {
                 if (datos.status === 200) {
+                    ngDialog.closeAll();
                     /* directiva encargada de retrasar 1 segundo la redireccion a 
                      * la correspondiente location. */
                     $timeout(function timer() {
@@ -209,13 +189,14 @@ miAppHome.controller('ProductoController', function ($scope, localStorageService
                             body: 'Producto agregado correctamente.',
                             showCloseButton: false
                         });
-                        $state.go('panel_factura_producto', { "idFactura": idFacturaProducto });
+                        $state.go('panel_factura_producto', {"idFactura": idFacturaProducto});
                     }, 1000);
                 } else {
+                    ngDialog.closeAll();
                     toaster.pop({
                         type: 'error',
                         title: 'Error',
-                        body: "¡Op's algo paso!, comunicate con el administrador.",
+                        body: "¡Op's algo paso!, revisa los campos por favor.",
                         showCloseButton: false
                     });
                 }
@@ -232,7 +213,7 @@ miAppHome.controller('ProductoController', function ($scope, localStorageService
     $scope.randomCode = function (idCategoria, idMarca) {
         var codigo = Math.floor((Math.random() * 9999) + 1000);
         var barcode = "";
-        if (idMarca === null || idCategoria === null) {
+        if (idMarca === null || typeof idMarca === 'undefined' || idCategoria === null || typeof idCategoria === 'undefined') {
             toaster.pop({
                 type: 'error',
                 title: 'Error',
@@ -263,7 +244,7 @@ miAppHome.controller('ProductoController', function ($scope, localStorageService
                             body: 'Producto eliminado correctamente.',
                             showCloseButton: false
                         });
-                        $state.go('^.producto-lista');
+                        $state.go('productos');
                     } else {
                         toaster.pop({
                             type: 'error',
@@ -303,7 +284,7 @@ miAppHome.controller('ProductoController', function ($scope, localStorageService
                     showCloseButton: false
                 });
                 $timeout(function timer() {
-                    $state.go($state.current, {}, { reload: true });
+                    $state.go($state.current, {}, {reload: true});
                 }, 1000);
             } else {
                 toaster.pop({
@@ -336,7 +317,7 @@ miAppHome.controller('ProductoController', function ($scope, localStorageService
         $promesa = _productoService.searchById(idProducto);
         $promesa.then(function (datos) {
             if (datos.status !== 200) {
-                $state.go('^.producto-lista');
+                $state.go('productos');
             } else {
                 $scope.foundProducto = datos.data;
             }
@@ -354,7 +335,6 @@ miAppHome.controller('ProductoController', function ($scope, localStorageService
         sendCommandToWorker(printContents);
         var electron = require('electron');
         var window = electron.remote.getCurrentWindow();
-        console.log(electron.remote.BrowserWindow);
 //        window.webContents.print();
     };
     /**
@@ -410,6 +390,37 @@ miAppHome.controller('ProductoController', function ($scope, localStorageService
         });
     };
 
+
+    $scope.confirmarEliminarProducto = function (producto) {
+        ngDialog.open({
+            template: 'views/producto/modal-confirmar-eliminar-producto.html',
+            className: 'ngdialog-theme-advertencia',
+            showClose: false,
+            controller: 'ProductoController',
+            closeByDocument: false,
+            closeByEscape: false,
+            data: {producto: producto}
+        });
+    };
+
+    $scope.eliminarProductoFactura = function (producto) {
+        var idFacturaProducto = $stateParams.idFactura;
+        $eliminar = _productoService.delete(producto);
+        $eliminar.then(function (datos) {
+            if (datos.status === 200) {
+                ngDialog.closeAll();
+                $rootScope.$broadcast('updateTableProducto', {'idFactura': idFacturaProducto});
+                toaster.pop({
+                    type: 'success',
+                    title: 'Exito',
+                    body: 'El producto ha sido eliminado.',
+                    showCloseButton: false
+                });
+            }
+        });
+    };
+
+
     $scope.busquedaProducto = function (producto) {
         $busqueda = _productoService.advancedSearch(producto);
         $busqueda.then(function (datos) {
@@ -419,16 +430,16 @@ miAppHome.controller('ProductoController', function ($scope, localStorageService
                 page: 1,
                 count: 10
             }, {
-                    total: data.length,
-                    getData: function (params) {
-                        data = $scope.listaBusqueda;
-                        params.total(data.length);
-                        if (params.total() <= ((params.page() - 1) * params.count())) {
-                            params.page(1);
-                        }
-                        return data.slice((params.page() - 1) * params.count(), params.page() * params.count());
+                total: data.length,
+                getData: function (params) {
+                    data = $scope.listaBusqueda;
+                    params.total(data.length);
+                    if (params.total() <= ((params.page() - 1) * params.count())) {
+                        params.page(1);
                     }
-                });
+                    return data.slice((params.page() - 1) * params.count(), params.page() * params.count());
+                }
+            });
             if ($scope.listaBusqueda.length === 0) {
                 $scope.hide = false;
                 toaster.pop({
@@ -481,27 +492,8 @@ miAppHome.controller('ProductoController', function ($scope, localStorageService
             $add = _productoService.add(producto);
             $add.then(function (datos) {
                 if (datos.status === 200) {
-                    /*deshabilitamos campos que no deben cambiar*/
-                    $scope.descripcionProducto = true;
-                    $scope.marcaProducto = true;
-                    $scope.categoriaProducto = true;
-                    $scope.temporadaProducto = true;
-                    $scope.sexoProducto = true;
-                    $scope.tallaProducto = true;
-                    $scope.colorProducto = true;
-                    $scope.codigoProducto = true;
-                    $scope.facturaProducto = true;
-                    /*nos aseguramos que los campos posibles a cambiar esten habilitados*/
-                    $scope.claseProducto = false;
-                    $scope.stockProducto = false;
-                    $scope.minimoProducto = false;
-                    /*limpiamos campos*/
-                    $scope._producto.claseProducto = "";
-                    $scope._producto.precioCosto = "";
-                    $scope._producto.precioLista = "";
-                    $scope._producto.precioVenta = "";
-                    $scope._producto.cantidadMinima = "";
-                    $scope._producto.cantidadTotal = "";
+                    ngDialog.closeAll();
+                    $rootScope.$broadcast('recargarClase');
                     toaster.pop({
                         type: 'success',
                         title: 'Exito.',
@@ -526,6 +518,30 @@ miAppHome.controller('ProductoController', function ($scope, localStorageService
             });
         });
     };
+
+    $scope.$on('recargarClase', function (event) {
+        /*deshabilitamos campos que no deben cambiar*/
+        $scope.descripcionProducto = true;
+        $scope.marcaProducto = true;
+        $scope.categoriaProducto = true;
+        $scope.temporadaProducto = true;
+        $scope.sexoProducto = true;
+        $scope.tallaProducto = true;
+        $scope.colorProducto = true;
+        $scope.codigoProducto = true;
+        $scope.facturaProducto = true;
+        /*nos aseguramos que los campos posibles a cambiar esten habilitados*/
+        $scope.claseProducto = false;
+        $scope.stockProducto = false;
+        $scope.minimoProducto = false;
+        /*limpiamos campos*/
+        $scope._producto.claseProducto = "";
+        $scope._producto.precioCosto = "";
+        $scope._producto.precioLista = "";
+        $scope._producto.precioVenta = "";
+        $scope._producto.cantidadMinima = "";
+        $scope._producto.cantidadTotal = "";
+    });
 
     $scope.agregarCambiarTalla = function (producto) {
         var idFacturaProducto = parseInt($stateParams.idFactura);
@@ -537,29 +553,8 @@ miAppHome.controller('ProductoController', function ($scope, localStorageService
             $add = _productoService.add(producto);
             $add.then(function (datos) {
                 if (datos.status === 200) {
-                    /*deshabilitamos campos que no deben cambiar*/
-                    $scope.marcaProducto = true;
-                    $scope.categoriaProducto = true;
-                    $scope.temporadaProducto = true;
-                    $scope.sexoProducto = false;
-                    $scope.fechaProducto = true;
-                    /*nos aseguramos que los campos posibles a cambiar esten habilitados*/
-                    $scope.descripcionProducto = false;
-                    $scope.codigoProducto = false;
-                    $scope.colorProducto = false;
-                    $scope.stockProducto = false;
-                    $scope.minimoProducto = false;
-                    $scope.tallaProducto = false;
-                    $scope.claseProducto = false;
-                    /*limpiamos codigo para evitar repetir*/
-                    $scope._producto.codigoProducto = "";
-                    $scope._producto.claseProducto = "";
-                    $scope._producto.precioCosto = "";
-                    $scope._producto.precioLista = "";
-                    $scope._producto.precioVenta = "";
-                    $scope._producto.cantidadMinima = "";
-                    $scope._producto.cantidadTotal = "";
-                    $scope._producto.talla = "";
+                    ngDialog.closeAll();
+                    $rootScope.$broadcast('recargarTalla');
                     toaster.pop({
                         type: 'success',
                         title: 'Exito.',
@@ -585,6 +580,32 @@ miAppHome.controller('ProductoController', function ($scope, localStorageService
         });
     };
 
+    $scope.$on('recargarTalla', function (event) {
+        /*deshabilitamos campos que no deben cambiar*/
+        $scope.marcaProducto = true;
+        $scope.categoriaProducto = true;
+        $scope.temporadaProducto = true;
+        $scope.sexoProducto = false;
+        $scope.fechaProducto = true;
+        /*nos aseguramos que los campos posibles a cambiar esten habilitados*/
+        $scope.descripcionProducto = false;
+        $scope.codigoProducto = false;
+        $scope.colorProducto = false;
+        $scope.stockProducto = false;
+        $scope.minimoProducto = false;
+        $scope.tallaProducto = false;
+        $scope.claseProducto = false;
+        /*limpiamos codigo para evitar repetir*/
+        $scope._producto.codigoProducto = "";
+        $scope._producto.claseProducto = "";
+        $scope._producto.precioCosto = "";
+        $scope._producto.precioLista = "";
+        $scope._producto.precioVenta = "";
+        $scope._producto.cantidadMinima = "";
+        $scope._producto.cantidadTotal = "";
+        $scope._producto.talla = "";
+    });
+
     $scope.listaProductosFactura = function () {
         var idFacturaProducto = parseInt($stateParams.idFactura);
         $list = _productoService.searchByIdFactura(idFacturaProducto);
@@ -593,18 +614,18 @@ miAppHome.controller('ProductoController', function ($scope, localStorageService
             var data = datos;
             $scope.tableProductosFactura = new NgTableParams({
                 page: 1,
-                count: 8
+                count: 12
             }, {
-                    total: data.length,
-                    getData: function (params) {
-                        data = $scope.productosFactura;
-                        params.total(data.length);
-                        if (params.total() <= ((params.page() - 1) * params.count())) {
-                            params.page(1);
-                        }
-                        return data.slice((params.page() - 1) * params.count(), params.page() * params.count());
+                total: data.length,
+                getData: function (params) {
+                    data = $scope.productosFactura;
+                    params.total(data.length);
+                    if (params.total() <= ((params.page() - 1) * params.count())) {
+                        params.page(1);
                     }
-                });
+                    return data.slice((params.page() - 1) * params.count(), params.page() * params.count());
+                }
+            });
         });
     };
 
@@ -616,5 +637,17 @@ miAppHome.controller('ProductoController', function ($scope, localStorageService
             $scope.tableProductosFactura.reload();
         });
     });
+
+    $scope.elegirCarga = function (producto) {
+        ngDialog.open({
+            template: 'views/producto/modal-elegir-carga.html',
+            className: 'ngdialog-theme-advertencia',
+            showClose: false,
+            controller: 'ProductoController',
+            closeByDocument: false,
+            closeByEscape: false,
+            data: {producto: producto}
+        });
+    };
 });
 
