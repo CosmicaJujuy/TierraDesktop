@@ -46,11 +46,11 @@ miAppHome.controller('DistribucionController', function ($scope, localStorageSer
             "idSucursal": null
         }};
 
-    $scope.detallesFacturaProducto = function () {
+    $scope.detallesFacturaProductoDistribucion = function () {
         var idFacturaProducto = parseInt($stateParams.idFactura);
         $detail = facturaProductoService.detail(idFacturaProducto);
         $detail.then(function (datos) {
-            if (datos.status === 200) {
+            if (datos.status === 200) {                
                 $scope.detalle = datos.data;
             }
         });
