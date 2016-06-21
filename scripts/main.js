@@ -15,6 +15,7 @@ var miAppHome = angular.module('tierraDeColoresApp', [
     'kendo.directives',
     'ngSanitize',
     'ui.mask',
+    'material.svgAssetsCache',
     'angular-loading-bar'])
         .config(function ($stateProvider, $urlRouterProvider, $mdIconProvider, $mdThemingProvider) {
             $mdIconProvider
@@ -24,6 +25,14 @@ var miAppHome = angular.module('tierraDeColoresApp', [
                     .primaryPalette('purple')
                     .warnPalette('red')
                     .accentPalette('pink');
+
+            $mdThemingProvider.theme('docs-dark')
+                    .primaryPalette('blue')
+                    .warnPalette('yellow')
+                    .accentPalette('yellow')
+//                    .backgroundPalette('deep-purple')
+                    .dark()
+                    ;
 
             var neonRedMap = $mdThemingProvider.extendPalette('red', {
                 '500': 'rgb(218, 50, 45)',
@@ -63,7 +72,7 @@ var miAppHome = angular.module('tierraDeColoresApp', [
                             'navbar': {
                                 templateUrl: "views/navbar2.html",
                                 controller: function ($state) {
-                                    console.log($state.current);
+                                    
                                 }
                             },
                             'body': {
@@ -264,7 +273,7 @@ var miAppHome = angular.module('tierraDeColoresApp', [
                                     }
                                     return $templateRequest(templateName);
                                 },
-                                controller: null
+                                controller: 'FacturaProductoController'
                             },
                             'body': {
                                 templateUrl: "views/factura_producto/lista.html",
@@ -274,7 +283,7 @@ var miAppHome = angular.module('tierraDeColoresApp', [
                     })
                     .state('add_producto_factura', {
                         url: '/productos/factura/:idFactura/add',
-                        data: {pageTitle: 'Lista de Productos'},
+                        data: {pageTitle: 'Nuevo producto.'},
                         views: {
                             'navbar': {
                                 templateProvider: function ($templateRequest, sessionProvider) {
