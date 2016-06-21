@@ -1,69 +1,138 @@
 <!DOCTYPE html>
 <div class="col-lg-3"></div>
-<div class="col-lg-6" style="margin-top: 100px;">
-    <div class="panel" style="min-height: 440px; background-color: white;">
+<div class="col-lg-6">
+    <div layout="column" ng-cloak md-theme="docs-dark" class="distribucion-panel">
+        <md-toolbar class="md-warn">
+            <div class="md-toolbar-tools">
+                <h4 class="md-flex" style="width:100%; text-align: center;">Agregar nueva factura</h4>
+            </div>
+        </md-toolbar>
+        <md-content class="md-padding" style="min-height: 534px;">
+            <form name="newFactura">
+                <md-input-container class="md-icon md-block">
+                    <label>N° Factura</label>
+                    <input type="text"
+                           ng-model="_facturaProducto.numeroFactura"
+                           md-maxlength="12"
+                           maxlength="12"
+                           minlength="4"
+                           placeholder="N° de Factura"
+                           name="numeroFactura" required />
+                    <!-- MENSAJES-->
+                    <div ng-messages="newFactura.numeroFactura.$error"
+                         ng-if='newFactura.numeroFactura.$dirty || newFactura.numeroFactura.$touched'>
+                        <div ng-message="minlength">Numeracion demasiada corta.</div>
+                        <div ng-message="md-maxlength">Numeracion demasiada larga.</div>
+                        <div ng-message="required">Este campo no puede estar vacio.</div>
+                    </div>
+                    <!-- ICONOS DE MENSAJE-->
+                    <span ng-show="newFactura.numeroFactura.$dirty && newFactura.numeroFactura.$valid" class="glyphicon glyphicon-ok form-control-feedback" ></span>
+                    <span ng-show="newFactura.numeroFactura.$dirty && newFactura.numeroFactura.$invalid" class="glyphicon glyphicon-remove  form-control-feedback"></span>
+                    <span ng-show="newFactura.numeroFactura.$touched && newFactura.numeroFactura.$pristine" class="glyphicon glyphicon-warning-sign  form-control-feedback"></span>
+                </md-input-container>
+                <div style="max-height: 58px !important;"
+                     ng-controller="ProveedorController as ctrl">
+                    <md-autocomplete flex required
+                                     style="margin-top: 0px !important;"
+                                     placeholder="Buscar proveedor"
+                                     md-input-name="proveedor"
+                                     md-input-minlength="2"
+                                     md-min-length="2"
+                                     md-input-maxlength="40"
+                                     md-selected-item="_facturaProducto.proveedor"
+                                     md-search-text="searchText"
+                                     md-items="item in getProveedor(searchText)"
+                                     md-item-text="item.nombreProveedor"
+                                     md-floating-label="Proovedor">
+                        <md-item-template>
+                            <span md-highlight-text="searchText">{{item.nombreProveedor}}</span>
+                        </md-item-template>
+                        <md-not-found>
+                            No se encontraron resultados
+                        </md-not-found>
+                        <div ng-messages="newFactura.proveedor.$error"
+                             ng-if="newFactura.proveedor.$dirty || newFactura.proveedor.$touched">
+                            <div ng-message="required">Este campo no puede estar vacio.</div>
+                            <div ng-message="minlength">El termino de busqueda es demasiado corto.</div>
+                            <div ng-message="maxlength">El termino de busqueda es demasiado largo.</div>
+                        </div>
+                        <span ng-show="newFactura.proveedor.$dirty && newFactura.proveedor.$valid" class="glyphicon glyphicon-ok form-control-feedback" ></span>
+                        <span ng-show="newFactura.proveedor.$dirty && newFactura.proveedor.$invalid" class="glyphicon glyphicon-remove  form-control-feedback"></span>
+                        <span ng-show="newFactura.proveedor.$touched && newFactura.proveedor.$pristine" class="glyphicon glyphicon-warning-sign  form-control-feedback"></span>
+                    </md-autocomplete>
+                </div>
+                <md-input-container class="md-icon md-block" flex>
+                    <!-- LABEL FECHA-->
+                    <label>Fecha</label>
+                    <!-- INPUT FECHA-->
+                    <input ng-model="_facturaProducto.fechaFactura"
+                           name="fecha"
+                           type="date" placeholder="Fecha de nacimiento"
+                           required ng-pattern="/^([0-9]{4})+([-]{1})+([0-9]{2})+([-]{1})+([0-9]{2})$/">
+                    <!-- MENSAJES-->
+                    <div ng-messages="newFactura.fecha.$error"
+                         ng-if='newFactura.fecha.$dirty || newFactura.fecha.$touched'>
+                        <div ng-message="date">Fecha de nacimiento invalida.</div>                            
+                        <div ng-message="required">Este campo no puede estar vacio.</div>                            
+                    </div>
+                    <!--ICONOS DE MENSAJE -->
+                    <span ng-show="newFactura.fecha.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
+                    <span ng-show="newFactura.fecha.$dirty && newFactura.fecha.$invalid" class="glyphicon glyphicon-remove  form-control-feedback" style="padding-right: 65px;"></span>
+                </md-input-container>
+                <md-input-container class="md-icon md-block">
+                    <!-- LABEL FECHA-->
+                    <label>Monto</label>
+                    <!-- INPUT FECHA-->
+                    <input type="text"
+                           ng-model="_facturaProducto.monto"
+                           minlength="2"
+                           maxlength="10"
+                           md-maxlength="10"
+                           placeholder="Monto factura"
+                           name="monto" required
+                           class="form-control" />
+                    <!-- MENSAJES-->
+                    <div ng-messages="newFactura.monto.$error"
+                         ng-if='newFactura.monto.$dirty || newFactura.monto.$touched'>
+                        <div ng-message="md-maxlength">Monto demasiado grande.</div>                            
+                        <div ng-message="minlength">Monto demasiado pequeño.</div>                            
+                        <div ng-message="required">Este campo no puede estar vacio.</div>                            
+                    </div>
+                    <!--ICONOS DE MENSAJE -->
+                    <span ng-show="newFactura.monto.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
+                    <span ng-show="newFactura.monto.$dirty && newFactura.monto.$invalid" class="glyphicon glyphicon-remove  form-control-feedback" style="padding-right: 65px;"></span>
+                </md-input-container>
+                <md-input-container class="md-block">
+                    <label>Observaciones</label>
+                    <textarea ng-model="_facturaProducto.observaciones"
+                              md-maxlength="200"
+                              placeholder="Observaciones"
+                              rows="3" md-select-on-focus></textarea>
+                </md-input-container>
+                <div style="text-align: center;">
+                    <button class="btn btn-success"
+                            type="submit"
+                            ng-disabled="newFactura.$invalid"
+                            ng-click="agregarFacturaProducto(_facturaProducto)">Continuar</button>
+                </div>
+            </form>
+        </md-content>
+    </div>
+    <div class="panel" style="min-height: 440px; background-color: white;" ng-hide="true">
         <div class="panel-heading panel-warning" style="text-align: center; color: #8a6d3b">
-            <label>Agregar nueva factura</label>
+            <label></label>
         </div>
         <div class="panel-body">
             <form name="factura" class="form-horizontal">
                 <fieldset>
                     <legend style="text-align: center;">Datos de la compra</legend>
                     <div class="row col-lg-7">
-                        <div class="form-group">
-                            <label class="control-label">N° Factura</label>
-                            <input type="text"
-                                   ng-model="_facturaProducto.numeroFactura"
-                                   maxlength="12"
-                                   min="12"
-                                   placeholder="N° de Factura"
-                                   name="numeroFactura" required
-                                   class="form-control" />
-                        </div>
-                        <div class="form-group" ng-controller="ProveedorController">
-                            <label class="control-label">Proveedor</label>
-                            <input type="text" 
-                                   maxlength="20"
-                                   required
-                                   ng-disabled="proveedorProducto"
-                                   ng-model="_facturaProducto.proveedor"
-                                   placeholder="Buscar proveedor..."
-                                   typeahead-min-length="2"
-                                   uib-typeahead="proveedor as proveedor.nombreProveedor for proveedor in getProveedor($viewValue)"
-                                   typeahead-loading="loadingcliente"
-                                   typeahead-no-results="noResults" class="form-control">
-                            <i ng-show="loadingcliente" class="glyphicon glyphicon-refresh"></i>
-                            <div ng-show="noResults">
-                                <i class="glyphicon glyphicon-remove"></i> No se encontraron resultados
-                            </div>
-                        </div> 
                     </div>
                     <div class="row col-lg-5" style="padding-right: 0px;">                        
-                        <div class="form-group" style="height: 61px;">
-                            <label class="control-label">Fecha</label>                            
-                                <p class="input-group">
-                                    <input type="text" class="form-control"
-                                           uib-datepicker-popup ng-model="_facturaProducto.fechaFactura"
-                                           is-open="popup2.opened" 
-                                           placeholder="Fecha de la factura"
-                                           datepicker-options="dateOptions"
-                                           ng-required="true"
-                                           style="width: 172.5px;"
-                                           current-text="Hoy" clear-text="Limpiar" close-text="Cerrar"/>
-                                    <span class="input-group-btn">
-                                        <button type="button" class="btn btn-warning" ng-click="open2()"><i class="glyphicon glyphicon-calendar"></i></button>
-                                    </span>
-                                </p>                            
-                        </div>
-                         <div class="form-group" style="margin-right: 5px;">
+
+                        <div class="form-group" style="margin-right: 5px;">
                             <label class="control-label">Monto</label>
-                            <input type="text"
-                                   ng-model="_facturaProducto.monto"
-                                   min="2"
-                                   maxlength="8"
-                                   placeholder="Monto factura"
-                                   name="monto" required
-                                   class="form-control" />
+
                         </div>
                     </div>
                     <div class="row col-lg-12">
@@ -79,10 +148,7 @@
                                       class="form-control"></textarea>
                         </div>
                         <div class="form-group" style="text-align: center;">
-                            <button class="btn btn-warning"
-                                    type="submit"
-                                    ng-disabled="factura.$invalid"
-                                    ng-click="agregarFacturaProducto(_facturaProducto)">Continuar</button>
+
                         </div>
                     </div>                    
                 </fieldset>
@@ -92,3 +158,24 @@
 </div>
 <div class="col-lg-3"></div>
 <toaster-container toaster-options="{'time-out': 3000, 'close-button':true, 'animation-class': 'toast-top-center'}"></toaster-container>
+<style>
+    md-input-container:not(.md-input-has-value) input:not(:focus),
+    md-input-container:not(.md-input-has-value) input:not(:focus)::-webkit-datetime-edit-ampm-field,
+    md-input-container:not(.md-input-has-value) input:not(:focus)::-webkit-datetime-edit-day-field,
+    md-input-container:not(.md-input-has-value) input:not(:focus)::-webkit-datetime-edit-hour-field,
+    md-input-container:not(.md-input-has-value) input:not(:focus)::-webkit-datetime-edit-millisecond-field, 
+    md-input-container:not(.md-input-has-value) input:not(:focus)::-webkit-datetime-edit-minute-field,
+    md-input-container:not(.md-input-has-value) input:not(:focus)::-webkit-datetime-edit-month-field,
+    md-input-container:not(.md-input-has-value) input:not(:focus)::-webkit-datetime-edit-second-field,
+    md-input-container:not(.md-input-has-value) input:not(:focus)::-webkit-datetime-edit-text,
+    md-input-container:not(.md-input-has-value) input:not(:focus)::-webkit-datetime-edit-week-field,
+    md-input-container:not(.md-input-has-value) input:not(:focus)::-webkit-datetime-edit-year-field {
+        color: rgb(245, 245, 245);
+    }
+    md-autocomplete[md-floating-label] md-input-container {
+        padding-bottom: 0px!important;
+    }
+    md-autocomplete-wrap.layout-row, md-input-container.ng-scope.md-docs-dark-theme.flex{
+        margin-top: 0px !important;
+    }
+</style>
