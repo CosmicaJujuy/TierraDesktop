@@ -3,9 +3,11 @@
     <md-toolbar class="md-menu-toolbar">
         <div layout="row">
             <center ng-bind="title" ng-cloak class="title-page">Titulo</center>
-            <button class="minimize" ui-sref="home"><md-icon class="material-icons">&#xE88A;</md-icon></button>
-            <button class="maximize"><md-icon class="material-icons">&#xE8B8;</md-icon></button>
-            <button class="quit"><md-icon class="material-icons">&#xE14C;</md-icon></button>
+            <button class="back" id="back"><md-icon class="material-icons">&#xE166;</md-icon></button>
+            <button class="update" id="update" ui-sref="home"><md-icon class="material-icons">&#xE5D5;</md-icon></button>
+            <button class="homebtn" ui-sref="home"><md-icon class="material-icons">&#xE88A;</md-icon></button>
+            <button class="settingbtn"><md-icon class="material-icons">&#xE8B8;</md-icon></button>
+            <button class="quit" id="quit"><md-icon class="material-icons">&#xE14C;</md-icon></button>
             <div>
                 <a style="padding-left: 45px;" class="navbar-brand" href="#/home" id="nav-titulo">Tierra de colores</a>
                 <md-menu-bar>
@@ -124,7 +126,7 @@
                                         </md-menu-item>
                                         <md-menu-item class="md-indent">
                                             <md-icon class="material-icons">&#xE252;</md-icon>
-                                            <md-button ui-sref="tipos">
+                                            <md-button ui-sref="tipos">                                            
                                                 Tipo de Productos
                                             </md-button>
                                         </md-menu-item>
@@ -195,6 +197,21 @@
         </div>
     </md-toolbar>
 </div>
+<script>
+    var electron = require('electron');    
+    document.getElementById("update").addEventListener("click", function (e) {
+        var window = electron.remote.getCurrentWindow();        
+        window.reload();
+    });
+    document.getElementById("quit").addEventListener("click", function (e) {
+        var window = electron.remote.getCurrentWindow();        
+        window.close();
+    });
+    document.getElementById("back").addEventListener("click", function (e) {
+        var window = electron.remote.getCurrentWindow();        
+        window.webContents.goBack();
+    });
+</script>
 <style>
     .title-page{
         top: 5px;
@@ -211,6 +228,11 @@
     }
     a:focus, a:hover {
         color: rgb(255,128,171);
+    }
+
+    md-select-menu.md-docs-dark-theme md-option:focus:not([disabled]):not([selected]) {
+        background: rgb(238,238,238);
+        color: black;
     }
 
     .lighter{color:white!important;}
@@ -257,7 +279,7 @@
         right: 0;
         position: absolute;
     }
-    .maximize{
+    .settingbtn{
         background-color: transparent;
         border-color: transparent;
         color: black;
@@ -265,12 +287,28 @@
         right: 30px;
         position: absolute;
     }
-    .minimize{
+    .homebtn{
         background-color: transparent;
         border-color: transparent;
         color: black;
         top: 0px;
         right: 60px;
+        position: absolute;
+    }
+    .update{
+        background-color: transparent;
+        border-color: transparent;
+        color: black;
+        top: 0px;
+        right: 90px;
+        position: absolute;
+    }
+    .back{
+        background-color: transparent;
+        border-color: transparent;
+        color: black;
+        top: 0px;
+        right: 120px;
         position: absolute;
     }
     .menuBardemoBasicUsage .page-container {
