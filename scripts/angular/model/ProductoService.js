@@ -159,10 +159,13 @@ miAppHome.service('_productoService', function ($http, $q, cookieService, $rootS
     };
 
     this.searchByBarcode = function (barcode) {
+        var datosRecu = null;
+        var deferred = $q.defer();
         var uri = 'https://tierradecoloresapi.herokuapp.com/producto/stock';
         var token = cookieService.get('token');
+        var list;
         token.then(function (data) {
-            var list = $http({
+            $http({
                 url: uri,
                 method: 'post',
                 params: {
@@ -172,9 +175,15 @@ miAppHome.service('_productoService', function ($http, $q, cookieService, $rootS
                     'Authorization': 'Bearer ' + data,
                     'Content-type': 'application/json'
                 }
+            }).then(function successCallback(response) {
+                datosRecu = response;
+                deferred.resolve(datosRecu);
+            }, function errorCallback(response) {
+                datosRecu = response;
+                deferred.resolve(datosRecu);
             });
-            return list;
         });
+        return deferred.promise;
     };
 
     this.advancedSearch = function (item) {

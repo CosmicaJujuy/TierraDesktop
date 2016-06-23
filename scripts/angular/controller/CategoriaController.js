@@ -18,15 +18,7 @@ miAppHome.controller('CategoriaController',
             "fechaCreacion": "",
             "fechaModificacion": null,
             "estado": true,
-            "tipoCategoria": {
-                "idTipo": null,
-                "nombreTipo": "",
-                "usuarioCreacion": null,
-                "usuarioModificacion": null,
-                "fechaCreacion": "",
-                "fechaModificacion": null,
-                "estado": true
-            }
+            "tipoCategoria": null
         };
 
         /**

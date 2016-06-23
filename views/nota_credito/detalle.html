@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<div md-theme="docs-dark"
+     ng-controller="NotaCreditoController"
+     data-ng-init="detalleNotaCredito()"
+     ng-show="notaCreditoDetalle">
+    <div class="col-lg-3">
+        <div layout="column" ng-cloak
+             class="distribucion-panel">
+            <md-toolbar class="md-warn">
+                <div class="md-toolbar-tools">
+                    <h4 class="md-flex" style="width:100%; text-align: center;">
+                        <div>N° Nota credito {{notaCreditoDetalle.numero}}</div>
+                    </h4>
+                </div>
+            </md-toolbar>
+            <md-content flex layout="row">
+                <div class="md-padding" flex>
+                    <form style="text-align: center;">
+                        <div layout="column" flex class="padd">
+                            <label flex>Número de Nota </label>
+                            <div flex>{{notaCreditoDetalle.numero}}</div>                                
+                        </div>
+                        <div layout="column" flex class="padd">
+                            <label flex>Fecha de emisión</label>
+                            <div flex>{{notaCreditoDetalle.fechaCreacion|date :'medium'}}</div>                                
+                        </div>
+                        <div layout="column" flex class="padd">
+                            <label flex>Monto</label>
+                            <div flex>{{notaCreditoDetalle.montoTotal|currency}}</div>                                
+                        </div>
+                        <div layout="column" flex class="padd">
+                            <label flex>Estado de uso</label>
+                            <div flex>{{notaCreditoDetalle.estadoUso}}</div>                                
+                        </div>
+                        <div layout="column" flex class="padd">
+                            <label flex>Id Cliente</label>
+                            <div flex>
+                                <div ng-if="notaCreditoDetalle.idCliente === null">S/N</div>
+                                <div ng-if="notaCreditoDetalle.idCliente !== null">
+                                    {{notaCreditoDetalle.idCliene}}
+                                </div>
+                            </div>
+                        </div>
+                        <div layout="column" flex class="padd">
+                            <button class="btn btn-block btn-success"
+                                    style="margin-top: 50px; margin-bottom: 8px;"
+                                    ng-click="">Finalizar Carga</button>
+                        </div>
+                    </form>
+                </div>
+            </md-content>
+        </div>
+    </div>
+</div>

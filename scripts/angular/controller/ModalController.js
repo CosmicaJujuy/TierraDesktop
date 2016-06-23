@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-miAppHome.controller('ModalController', function ($scope, ngDialog, $stateParams, _productoService, toaster, facturaService, $routeParams, $timeout, $rootScope, facturaService) {
+miAppHome.controller('ModalController', function ($scope, ngDialog, $stateParams, _productoService, toaster, facturaService, $timeout, $rootScope, facturaService) {
 
     $scope._detalleFactura = {
         "idDetalleFactura": null,

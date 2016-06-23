@@ -6,7 +6,8 @@
             const ipcRenderer = require("electron").ipcRenderer;
             ipcRenderer.on("printPDF", function (event, content) {
                 document.body.innerHTML = content;
-                ipcRenderer.send("readyToPrintPDF");
+                //ipcRenderer.send("readyToPrintPDF");
+                ipcRenderer.send("printer");
             });
         </script>
     </body>

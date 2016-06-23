@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<div ng-controller="DemoBasicCtrl as ctrl" ng-cloak style="width: 100%; left: 0; right: 0; position: absolute;" onmousedown="return false">
+<div ng-cloak style="width: 100%;" onmousedown="return false">
     <md-toolbar class="md-menu-toolbar">
         <div layout="row">
             <center ng-bind="title" ng-cloak class="title-page">Titulo</center>
@@ -150,19 +150,13 @@
                             <md-menu-item class="md-indent">
                                 <md-icon class="material-icons">&#xE8CC;</md-icon>
                                 <md-button ui-sref="facturas">
-                                    Facturas
-                                </md-button>
-                            </md-menu-item>
-                            <md-menu-item class="md-indent">
-                                <md-icon class="material-icons">&#xE89C;</md-icon>
-                                <md-button>
-                                    Reservas
+                                    Facturas / Reservas
                                 </md-button>
                             </md-menu-item>
                             <md-menu-item class="md-indent">
                                 <md-icon class="material-icons">&#xE8B3;</md-icon>
-                                <md-button>
-                                    Devoluciones
+                                <md-button ui-sref="nota_credito">
+                                    Notas de credito
                                 </md-button>
                             </md-menu-item>
                             <md-menu-item class="md-indent">
@@ -197,6 +191,7 @@
         </div>
     </md-toolbar>
 </div>
+<toaster-container toaster-options="{'time-out': 3000, 'close-button':true, 'animation-class': 'toast-top-center'}"></toaster-container>
 <script>
     var electron = require('electron');    
     document.getElementById("update").addEventListener("click", function (e) {

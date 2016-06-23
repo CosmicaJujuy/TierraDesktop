@@ -747,7 +747,6 @@ body {
 #tituloInicio{
     font-family: kaufmann-bold;
     font-size: 50pt;
-    margin-top: 10%;
     text-shadow: 2px 0 0 #fff;
 }
 #tallaCodigo{
@@ -830,14 +829,8 @@ body {
     cursor: not-allowed;
     pointer-events: none;
 }
-.panel-factura{
-    min-height: 525px;
-    height: fit-content;
-    background-color: white;
-    border: 1px solid #8a6d3b;
-}
 .distribucion-panel{
-    margin-top: 100px;
+    margin-top: 20px;
     min-height: 600px;
     height: fit-content;
     background-color: white;
@@ -914,6 +907,6 @@ body {
     margin: 0px 0 !important;
 }
 .padd{
-    margin-top: 8px;
-    margin-bottom: 8px;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }

@@ -4,8 +4,8 @@
  * and open the template in the editor.
  */
 miAppHome.controller('FacturaController',
-        ['$scope', 'ngDialog', '$state', '$stateParams', 'clienteService', 'toaster', '$rootScope', 'NgTableParams', '_productoService', '$http', '$timeout', '$uibModal', '$cookies', 'facturaService', 'metodoPagoFacturaService', 'medioPagoService', 'entidadBancariaService', 'planPagoService', 'tarjetaService',
-            function ($scope, ngDialog, $state, $stateParams, clienteService, toaster, $rootScope, NgTableParams, _productoService, $http, $timeout, $uibModal, $cookies, facturaService, metodoPagoFacturaService, medioPagoService, entidadBancariaService, planPagoService, tarjetaService) {
+        ['$scope', 'cookieService', 'ngDialog', '$state', '$stateParams', 'clienteService', 'toaster', '$rootScope', 'NgTableParams', '_productoService', '$http', '$timeout', '$uibModal', '$cookies', 'facturaService', 'metodoPagoFacturaService', 'medioPagoService', 'entidadBancariaService', 'planPagoService', 'tarjetaService',
+            function ($scope, cookieService, ngDialog, $state, $stateParams, clienteService, toaster, $rootScope, NgTableParams, _productoService, $http, $timeout, $uibModal, $cookies, facturaService, metodoPagoFacturaService, medioPagoService, entidadBancariaService, planPagoService, tarjetaService) {
 
                 $scope.oneAtATime = true;
                 $scope.clientElement = {
@@ -61,7 +61,7 @@ miAppHome.controller('FacturaController',
                 $scope.planPago = null;
                 $scope.comprobantePago = "";
                 $scope.tarjetasPago = "";
-                $scope.mediosPago = "";
+                $scope.mediosPago = null;
                 $scope.disableSelectEntidades = true;
                 $scope.disableSelectTarjeta = true;
                 $scope.disableSelectMetodo = true;
@@ -86,7 +86,7 @@ miAppHome.controller('FacturaController',
                     $promesa = facturaService.add(factura);
                     $promesa.then(function (datos) {
                         if (datos.status === 200) {
-                            $state.transitionTo('home.factura', {idFactura: datos.data.msg});
+                            $state.transitionTo('factura', {idFactura: datos.data.msg});
                         }
                     });
                 };
@@ -169,7 +169,7 @@ miAppHome.controller('FacturaController',
                         $scope.planPago = null;
                         $scope.tarjetasPago = "";
                         $scope.entidadPago = "";
-                        $scope.mediosPago = "";
+                        $scope.mediosPago = null;
                         $scope.comprobantePago = "";
                         $scope.disableSelectEntidades = true;
                         $scope.disableSelectTarjeta = true;
@@ -181,20 +181,22 @@ miAppHome.controller('FacturaController',
                 });
 
                 $scope.getCliente = function (val) {
-                    var token = $cookies.getObject('token');
                     var uri = 'https://tierradecoloresapi.herokuapp.com/cliente/searchApellido';
-                    return $http({
-                        url: uri,
-                        method: 'post',
-                        headers: {
-                            'Authorization': 'Bearer ' + token.data.access_token
-                        },
-                        params: {
-                            'apellidoCliente': val
-                        }
-                    }).then(function (response) {
-                        return response.data.map(function (item) {
-                            return item;
+                    var token = cookieService.get('token');
+                    return token.then(function (data) {
+                        return $http({
+                            url: uri,
+                            method: 'post',
+                            headers: {
+                                'Authorization': 'Bearer ' + data
+                            },
+                            params: {
+                                'apellidoCliente': val
+                            }
+                        }).then(function (response) {
+                            return response.data.map(function (item) {
+                                return item;
+                            });
                         });
                     });
                 };
@@ -256,17 +258,19 @@ miAppHome.controller('FacturaController',
                 };
 
                 $scope.$watch('mediosPago', function (newValue, oldValue) {
-                    if (newValue.nombrePago === 'CONTADO') {
-                        $scope.disableSelectEntidades = true;
-                        $scope.disableSelectTarjeta = true;
-                        $scope.disableSelectMetodo = true;
-                        $scope.entidadPago = "";
-                        $scope.planPago = "";
-                        $scope.tarjetasPago = "";
-                    }
-                    if (newValue.nombrePago === 'CREDITO' || newValue.nombrePago === 'DEBITO') {
-                        $scope.disableSelectEntidades = false;
+                    if (newValue !== null) {
+                        if (newValue.nombrePago === 'CONTADO') {
+                            $scope.disableSelectEntidades = true;
+                            $scope.disableSelectTarjeta = true;
+                            $scope.disableSelectMetodo = true;
+                            $scope.entidadPago = "";
+                            $scope.planPago = "";
+                            $scope.tarjetasPago = "";
+                        }
+                        if (newValue.nombrePago === 'CREDITO' || newValue.nombrePago === 'DEBITO') {
+                            $scope.disableSelectEntidades = false;
 
+                        }
                     }
                 });
 
@@ -303,6 +307,8 @@ miAppHome.controller('FacturaController',
                     $promesa.then(function (datos) {
                         /* suma monto a pagar y total para controlar que no exceda a la factura*/
                         var compare = parseFloat($scope.totalPago) + parseFloat($rootScope.metodo.montoPago);
+                        console.log(compare);
+                        console.log(datos.data.total);
                         if (datos.data.total >= compare) {
                             $scope._metodoPago.factura = datos.data;
                             /* control para separar pago contado y otros metodos*/
@@ -334,6 +340,7 @@ miAppHome.controller('FacturaController',
                                     $scope._metodoPago.comprobante = $rootScope.metodo.comprobantePago;
                                     $prom = metodoPagoFacturaService.addMetodoPago($scope._metodoPago);
                                     $prom.then(function (datos) {
+                                        console.log(datos);
                                         if (datos.status === 200) {
                                             $timeout(function timer() {
                                                 toaster.pop({
@@ -344,6 +351,17 @@ miAppHome.controller('FacturaController',
                                                 });
                                             }, 1000);
                                             $rootScope.$emit('reloadMetodo', {});
+                                        } else {
+                                            if (datos.status === 400) {
+                                                $timeout(function timer() {
+                                                    toaster.pop({
+                                                        type: 'warning',
+                                                        title: 'Advertencia',
+                                                        body: 'El monto de pago supera al saldo',
+                                                        showCloseButton: false
+                                                    });
+                                                }, 1000);
+                                            }
                                         }
                                     }).catch(function (fallback) {
                                         toaster.pop({
@@ -602,38 +620,40 @@ miAppHome.controller('FacturaController',
                 };
 
                 $scope.buscarCodigoBarra = function (codigo) {
-                    $promesa = _productoService.searchByBarcode(codigo);
-                    $promesa.then(function (datos) {
-                        toaster.pop({
-                            type: 'success',
-                            title: 'Encontrado/s',
-                            body: 'Se encontraron productos',
-                            showCloseButton: false
-                        });
-                        $scope.stock = datos.data;
-                        var initial = "";
-                        $scope.codigo = angular.copy(initial);
-                        $scope.codigoBarras.$setPristine();
-                        $scope.codigoBarras.$setValidity();
-                        $scope.codigoBarras.$setUntouched();
-                        ngDialog.open({
-                            template: 'views/factura/modal-buscar-codigo-barra.html',
-                            className: 'ngdialog-theme-lg ngdialog-theme-custom',
-                            showClose: false,
-                            controller: 'ModalController',
-                            closeByDocument: false,
-                            closeByEscape: false,
-                            data: {
-                                stock: $scope.stock
-                            }
-                        });
-                    }).catch(function (fallback) {
-                        toaster.pop({
-                            type: 'error',
-                            title: 'Error',
-                            body: 'No se han encontrado productos',
-                            showCloseButton: false
-                        });
+                    $listBarcode = _productoService.searchByBarcode(codigo);
+                    $listBarcode.then(function (datos) {
+                        if (datos.status === 200) {
+                            toaster.pop({
+                                type: 'success',
+                                title: 'Encontrado/s',
+                                body: 'Se encontraron productos',
+                                showCloseButton: false
+                            });
+                            $scope.stock = datos.data;
+                            var initial = "";
+                            $scope.codigo = angular.copy(initial);
+                            $scope.codigoBarras.$setPristine();
+                            $scope.codigoBarras.$setValidity();
+                            $scope.codigoBarras.$setUntouched();
+                            ngDialog.open({
+                                template: 'views/factura/modal-buscar-codigo-barra.html',
+                                className: 'ngdialog-theme-lg ngdialog-theme-custom',
+                                showClose: false,
+                                controller: 'ModalController',
+                                closeByDocument: false,
+                                closeByEscape: false,
+                                data: {
+                                    stock: $scope.stock
+                                }
+                            });
+                        } else {
+                            toaster.pop({
+                                type: 'error',
+                                title: 'Error',
+                                body: 'No se han encontrado productos',
+                                showCloseButton: false
+                            });
+                        }
                     });
                 };
 

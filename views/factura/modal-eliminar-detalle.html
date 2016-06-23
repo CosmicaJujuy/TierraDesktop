@@ -1,39 +1,56 @@
 <!DOCTYPE html>
-<div class="ngdialog-message ngdialog-advertencia">
-    <div class="modal-header">
-        <center>
-            <h4 class="modal-title">ELIMINAR {{ngDialogData.detalleFactura.producto.descripcion|uppercase}}</h4>
-        </center>
-    </div>
-    <div class="modal-body">
-        <div class="well" style="text-align: center;">
-            <p style="font-weight: bolder; color: red;">Para realizar esta acción necesitas permiso de un Administrador o un Encargado</p>
-            <p>Ingresa el usuario y contraseña correspondiente para continuar</p>
-            <form class="form-horizontal" name="eliminarDetalle" novalidate autocomplete="off">
-                <div class="form-group">
-                    <div class="input-group">
-                        <div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
-                        <input type="number"
-                               required
-                               autocomplete="off"
-                               class="form-control"
-                               name="dni"
-                               ng-model="dni"
-                               placeholder="Ingresar número de D.N.I.">
-                    </div> 
-                </div>
-                <div class="form-group">
-                    <div class="input-group">
-                        <div class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></div>
-                        <input type="password"
-                               required minlength="8"
-                               class="form-control"
-                               name="password"
-                               ng-model="password"
-                               placeholder="Ingresa contraseña">
-                    </div> 
-                </div>
-                <div class="form-group">
+<div class="ngdialog-message ngdialog-advertencia" md-theme="docs-dark">
+    <md-toolbar class="md-warn">
+        <div class="md-toolbar-tools">
+            <h3 class="modal-title" style="width: 100%; text-align: center;">
+                <div>ELIMINAR  {{ngDialogData.detalleFactura.producto.descripcion|uppercase}}</div>
+            </h3>
+        </div>
+    </md-toolbar>
+    <md-content flex>
+        <md-content class="md-padding" flex>
+            <div layout="column" layout layout-align="center center" style="text-align: center;">
+                <p style="font-weight: bolder; color: white;">Para realizar esta acción necesitas permiso de un Administrador o un Encargado</p>
+                <p>Ingresa el usuario y contraseña correspondiente para continuar</p>            
+            </div>
+            <form name="eliminarDetalle">
+                <md-input-container flex class="md-block md-icon">
+                    <label>D.N.I.</label>
+                    <md-icon class="material-icons">&#xE90D;</md-icon>
+                    <input type="number"
+                           required
+                           name="dni"
+                           min="0"
+                           ng-model="dni"
+                           placeholder="Ingresar número de D.N.I.">
+                    <!-- MENSAJES -->
+                    <div ng-messages="eliminarDetalle.dni.$error"
+                         ng-if='eliminarDetalle.dni.$dirty || eliminarDetalle.dni.$touched'>
+                        <div ng-message="required">Este campo no puede estar vacio.</div>
+                    </div>
+                    <!--ICONOS DE MENSAJE -->
+                    <span ng-show="eliminarDetalle.dni.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
+                    <span ng-show="eliminarDetalle.dni.$dirty && eliminarDetalle.dni.$invalid" class="glyphicon glyphicon-remove  form-control-feedback"></span>
+                </md-input-container>
+                <md-input-container flex class="md-block md-icon">
+                    <label>Contraseña</label>
+                    <md-icon class="material-icons">&#xE0DA;</md-icon>
+                    <input type="password"
+                           required minlength="8"
+                           name="password"
+                           ng-model="password"
+                           placeholder="Ingresa contraseña">
+                    <!-- MENSAJES -->
+                    <div ng-messages="eliminarDetalle.password.$error"
+                         ng-if='eliminarDetalle.password.$dirty || eliminarDetalle.password.$touched'>
+                        <div ng-message="required">Este campo no puede estar vacio.</div>
+                        <div ng-message="minlength">Contraseña demasiado corta.</div>
+                    </div>
+                    <!--ICONOS DE MENSAJE -->
+                    <span ng-show="eliminarDetalle.password.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
+                    <span ng-show="eliminarDetalle.password.$dirty && eliminarDetalle.dni.$invalid" class="glyphicon glyphicon-remove  form-control-feedback"></span>
+                </md-input-container>
+                <div layout layout-align="center center">
                     <button 
                         type="button"
                         ng-click="finalizarEliminarDetalleFactura(ngDialogData.detalleFactura, dni, password)"
@@ -41,9 +58,10 @@
                         class="btn btn-danger">Eliminar</button>
                 </div>
             </form>
-        </div>
-    </div>
-    <div class="modal-footer">
-        <button class="btn btn-md btn-danger" ng-click="closeThisDialog(0)">Cerrar</button>
-    </div>
+        </md-content>
+    </md-content>
+    <md-content flex class="md-padding">
+        <button class="btn btn-md btn-danger pull-right"
+                ng-click="closeThisDialog('')">Cerrar</button>
+    </md-content>
 </div> 

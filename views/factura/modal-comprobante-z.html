@@ -1,18 +1,26 @@
 <!DOCTYPE html>
-<div class="ngdialog-message ngdialog-advertencia" style="width: 400px;">
-    <div class="modal-header">
-        <center>
-            <h3 class="modal-title">¡Advertencia!</h3>
-        </center>
-    </div>
-    <div class="modal-body" style="margin-bottom: 50px;">
-        <div class="well">            
-            <center>
-                <p style="font-weight: bolder; color: red;">Este comprobante debe ser impreso una sola vez al día.</p>
-                <h3>¿Estas seguro de que quieres continuar?</h3>
-                <button class="btn btn-md btn-danger" style="width: 50px;" ng-click="finalizarComprobanteZ()">Si</button>
-                <button class="btn btn-md btn-warning" style="width: 50px;" ng-click="closeThisDialog(0)">No</button>
-            </center>
-        </div>        
-    </div>
+<div class="ngdialog-message ngdialog-advertencia" md-theme="docs-dark">
+    <md-toolbar class="md-warn" md-theme="docs-dark">
+        <div class="md-toolbar-tools">
+            <h3 class="modal-title" style="width: 100%; text-align: center;">¡Advertencia!</h3>
+        </div>
+    </md-toolbar>
+    <md-content flex>
+        <md-content class="md-padding" flex>
+            <md-whiteframe class="md-whiteframe-24dp"
+                           style="min-height: 250px;"                           
+                           layout layout-align="center center">
+                <form style="text-align: center;">
+                    <div flex class="md-padding">
+                        <p style="font-weight: bolder; color: white;">Este comprobante debe ser impreso una sola vez al día.</p>
+                        <span style="font-size: medium;">¿Estas seguro de que quieres continuar?</span>
+                    </div>
+                    <div flex class="md-padding">
+                        <button class="btn btn-md btn-success" style="width: 50px;" ng-click="finalizarComprobanteZ()">Si</button>
+                        <button class="btn btn-md btn-danger" style="width: 50px;" ng-click="closeThisDialog(0)">No</button>
+                    </div>
+                </form>
+            </md-whiteframe>
+        </md-content>
+    </md-content> 
 </div> 

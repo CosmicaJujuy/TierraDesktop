@@ -1,15 +1,14 @@
 <!DOCTYPE html>
 <div class="col-lg-12">
-
     <div class="distribucion-panel">
         <div ng-cloak>
-            <md-content>
+            <md-content md-theme="docs-dark" style="min-height: 598px;">
                 <md-tabs md-dynamic-height md-border-bottom>
                     <md-tab label="Proveedores">
                         <md-content class="md-padding">
                             <div class="table-responsive">
                                 <table data-ng-init="listaProveedores()"
-                                       class="table table-striped table-condensed table-hover"
+                                       class="table table-striped table-condensed table-hover light-table"
                                        ng-table="tableProveedores">
                                     <thead id="headTableProductos">
                                         <tr>
@@ -47,99 +46,208 @@
                         </md-content>
                     </md-tab>
                     <md-tab label="Agregar nuevo Proveedor">
-                        <md-content class="md-padding">
-                            <form name="nuevoProveedor" class="form-horizontal">
-                                <fieldset>
-                                    <legend style="text-align: center;">Datos del proveedor</legend>
-                                    <div class="form-group">
-                                        <label class="control-label col-lg-4">Nombre Proovedor</label>
-                                        <div class="col-lg-8">
+                        <md-content class="md-padding" layout="row">
+                            <div flex="25"></div>
+                            <div flex="50">
+                                <form name="nuevoProveedor">
+                                    <md-input-container class="md-block" flex>
+                                        <label>Nombre proveedor</label>
+                                        <input type="text"
+                                               placeholder="Nombre del proveedor"
+                                               minlength="4"
+                                               maxlength="30"
+                                               md-maxlength="30"
+                                               ng-model="_proveedor.nombreProveedor"
+                                               name="nombreProveedor" required/>
+                                        <!-- MENSAJES-->
+                                        <div ng-messages="nuevoProveedor.nombreProveedor.$error"
+                                             ng-if='nuevoProveedor.nombreProveedor.$dirty || nuevoProveedor.nombreProveedor.$touched'>
+                                            <div ng-message="minlength">Nombre demasiado corto.</div>
+                                            <div ng-message="md-maxlength">Nombre demasiado largo.</div>
+                                            <div ng-message="required">Este campo no puede estar vacio.</div>
+                                        </div>
+                                        <!-- ICONOS DE MENSAJE-->
+                                        <span ng-show="nuevoProveedor.nombreProveedor.$dirty && nuevoProveedor.nombreProveedor.$valid" class="glyphicon glyphicon-ok form-control-feedback" ></span>
+                                        <span ng-show="nuevoProveedor.nombreProveedor.$dirty && nuevoProveedor.nombreProveedor.$invalid" class="glyphicon glyphicon-remove  form-control-feedback"></span>
+                                    </md-input-container>
+                                    <div layout="row" flex>
+                                        <md-input-container class="md-block" flex>
+                                            <label>C.U.I.T. Proovedor</label>
                                             <input type="text"
-                                                   class="form-control"
-                                                   ng-model="_proveedor.nombreProveedor"
-                                                   name="nombreProveedor" required
-                                                   data-ng-class='{error: nuevoProveedor.nombreProveedor.$invalid && !nuevoProveedor.$pristine}'/>
-                                        </div>     
-                                    </div>              
-                                    <div class="form-group">
-                                        <label class="control-label col-lg-4">C.U.I.T. Proovedor</label>
-                                        <div class="col-lg-8">
-                                            <input type="text"
-                                                   class="form-control"
+                                                   placeholder="C.U.I.T. del proveedor"
+                                                   minlength="10"
+                                                   maxlength="11"
+                                                   md-maxlength="11"
                                                    ng-model="_proveedor.cuitProveedor"
-                                                   name="cuitProveedor" required
-                                                   data-ng-class='{error: nuevoProveedor.cuitProveedor.$invalid && !nuevoProveedor.$pristine}'/>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="control-label col-lg-4">Direccion Proovedor</label>
-                                        <div class="col-lg-8">
-                                            <input type="text" 
-                                                   class="form-control" 
+                                                   name="cuitProveedor" required/>
+                                            <!-- MENSAJES-->
+                                            <div ng-messages="nuevoProveedor.cuitProveedor.$error"
+                                                 ng-if='nuevoProveedor.cuitProveedor.$dirty || nuevoProveedor.cuitProveedor.$touched'>
+                                                <div ng-message="minlength">C.U.I.T. demasiado corto.</div>
+                                                <div ng-message="md-maxlength">C.U.I.T. demasiado largo.</div>
+                                                <div ng-message="required">Este campo no puede estar vacio.</div>
+                                            </div>
+                                            <!-- ICONOS DE MENSAJE-->
+                                            <span ng-show="nuevoProveedor.cuitProveedor.$dirty && nuevoProveedor.cuitProveedor.$valid" class="glyphicon glyphicon-ok form-control-feedback" ></span>
+                                            <span ng-show="nuevoProveedor.cuitProveedor.$dirty && nuevoProveedor.cuitProveedor.$invalid" class="glyphicon glyphicon-remove  form-control-feedback"></span>
+                                        </md-input-container>
+                                        <md-input-container class="md-block" flex>
+                                            <label>Dirección</label>
+                                            <input type="text"
+                                                   placeholder="Dirección del proveedor"
+                                                   minlength="4"
+                                                   maxlength="30"
+                                                   md-maxlength="30"
                                                    ng-model="_proveedor.direccionProveedor"
-                                                   name="direccionProveedor" required
-                                                   data-ng-class='{error: nuevoProveedor.direccionProveedor.$invalid && !nuevoProveedor.$pristine}'/>
-                                        </div>
+                                                   name="direccionProveedor" required/>
+                                            <!-- MENSAJES-->
+                                            <div ng-messages="nuevoProveedor.direccionProveedor.$error"
+                                                 ng-if='nuevoProveedor.direccionProveedor.$dirty || nuevoProveedor.direccionProveedor.$touched'>
+                                                <div ng-message="minlength">Dirección demasiado corta.</div>
+                                                <div ng-message="md-maxlength">Dirección demasiado larga.</div>
+                                                <div ng-message="required">Este campo no puede estar vacio.</div>
+                                            </div>
+                                            <!-- ICONOS DE MENSAJE-->
+                                            <span ng-show="nuevoProveedor.direccionProveedor.$dirty && nuevoProveedor.direccionProveedor.$valid" class="glyphicon glyphicon-ok form-control-feedback" ></span>
+                                            <span ng-show="nuevoProveedor.direccionProveedor.$dirty && nuevoProveedor.direccionProveedor.$invalid" class="glyphicon glyphicon-remove  form-control-feedback"></span>
+                                        </md-input-container>
                                     </div>
-                                    <div class="form-group">
-                                        <label class="control-label col-lg-4">Pais</label>
-                                        <div class="col-lg-8">
+                                    <div layout="row" flex>
+                                        <md-input-container class="md-block" flex>
+                                            <label>País</label>
                                             <input type="text"
-                                                   class="form-control"
+                                                   minlength="4"
+                                                   maxlength="20"
+                                                   md-maxlength="20"
+                                                   placeholder="País del proveedor"
                                                    ng-model="_proveedor.paisProveedor"
-                                                   name="paisProveedor" required
-                                                   data-ng-class='{error: nuevoProveedor.paisProveedor.$invalid && !nuevoProveedor.$pristine}'/>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="control-label col-lg-4">Provincia</label>
-                                        <div class="col-lg-8">
-                                            <input type="text" 
-                                                   class="form-control"
+                                                   name="paisProveedor" required/>
+                                            <!-- MENSAJES-->
+                                            <div ng-messages="nuevoProveedor.paisProveedor.$error"
+                                                 ng-if='nuevoProveedor.paisProveedor.$dirty || nuevoProveedor.paisProveedor.$touched'>
+                                                <div ng-message="minlength">Nombre de país demasiado corto.</div>
+                                                <div ng-message="md-maxlength">Nombre de país demasiado largo.</div>
+                                                <div ng-message="required">Este campo no puede estar vacio.</div>
+                                            </div>
+                                            <!-- ICONOS DE MENSAJE-->
+                                            <span ng-show="nuevoProveedor.paisProveedor.$dirty && nuevoProveedor.paisProveedor.$valid" class="glyphicon glyphicon-ok form-control-feedback" ></span>
+                                            <span ng-show="nuevoProveedor.paisProveedor.$dirty && nuevoProveedor.paisProveedor.$invalid" class="glyphicon glyphicon-remove  form-control-feedback"></span>
+                                        </md-input-container>
+                                        <md-input-container class="md-block" flex>
+                                            <label>Provincia</label>
+                                            <input type="text"
+                                                   minlength="4"
+                                                   maxlength="20"
+                                                   md-maxlength="20"
+                                                   placeholder="Provincia del proveedor"
                                                    ng-model="_proveedor.provinciaProveedor"
-                                                   name="provinciaProveedor" required
-                                                   data-ng-class='{error: nuevoProveedor.provinciaProveedor.$invalid && !nuevoProveedor.$pristine}'/>
-                                        </div>
+                                                   name="provinciaProveedor" required/>
+                                            <!-- MENSAJES-->
+                                            <div ng-messages="nuevoProveedor.provinciaProveedor.$error"
+                                                 ng-if='nuevoProveedor.provinciaProveedor.$dirty || nuevoProveedor.provinciaProveedor.$touched'>
+                                                <div ng-message="minlength">Nombre de país demasiado corto.</div>
+                                                <div ng-message="md-maxlength">Nombre de país demasiado largo.</div>
+                                                <div ng-message="required">Este campo no puede estar vacio.</div>
+                                            </div>
+                                            <!-- ICONOS DE MENSAJE-->
+                                            <span ng-show="nuevoProveedor.provinciaProveedor.$dirty && nuevoProveedor.provinciaProveedor.$valid" class="glyphicon glyphicon-ok form-control-feedback" ></span>
+                                            <span ng-show="nuevoProveedor.provinciaProveedor.$dirty && nuevoProveedor.provinciaProveedor.$invalid" class="glyphicon glyphicon-remove  form-control-feedback"></span>
+                                        </md-input-container>
                                     </div>
-                                    <div class="form-group">
-                                        <label class="control-label col-lg-4">Localidad</label>
-                                        <div class="col-lg-8">
+                                    <div layout="row" flex>
+                                        <md-input-container class="md-block" flex>
+                                            <label>Localidad</label>
                                             <input type="text"
-                                                   class="form-control"
+                                                   minlength="4"
+                                                   maxlength="20"
+                                                   md-maxlength="20"
+                                                   placeholder="Localidad del proveedor"
                                                    ng-model="_proveedor.localidadProveedor" 
-                                                   name="localidadProveedor" required
-                                                   data-ng-class='{error: nuevoProveedor.localidadProveedor.$invalid && !nuevoProveedor.$pristine}'/>
-                                        </div>                
-                                    </div>                
-                                    <div class="form-group">
-                                        <label class="control-label col-lg-4">Codigo Postal</label>
-                                        <div class="col-lg-8">
+                                                   name="localidadProveedor" required/>
+                                            <!-- MENSAJES-->
+                                            <div ng-messages="nuevoProveedor.localidadProveedor.$error"
+                                                 ng-if='nuevoProveedor.localidadProveedor.$dirty || nuevoProveedor.localidadProveedor.$touched'>
+                                                <div ng-message="minlength">Nombre de país demasiado corto.</div>
+                                                <div ng-message="md-maxlength">Nombre de país demasiado largo.</div>
+                                                <div ng-message="required">Este campo no puede estar vacio.</div>
+                                            </div>
+                                            <!-- ICONOS DE MENSAJE-->
+                                            <span ng-show="nuevoProveedor.localidadProveedor.$dirty && nuevoProveedor.localidadProveedor.$valid" class="glyphicon glyphicon-ok form-control-feedback" ></span>
+                                            <span ng-show="nuevoProveedor.localidadProveedor.$dirty && nuevoProveedor.localidadProveedor.$invalid" class="glyphicon glyphicon-remove  form-control-feedback"></span>
+                                        </md-input-container>
+                                        <md-input-container class="md-block" flex>
+                                            <label>Codigo Postal</label>
                                             <input type="text"
-                                                   class="form-control" 
+                                                   minlength="4"
+                                                   maxlength="15"
+                                                   md-maxlength="15"
+                                                   placeholder="Codigo postal del proveedor"
                                                    ng-model="_proveedor.codigoPostal"
-                                                   name="codigoPostal" required
-                                                   data-ng-class='{error: nuevoProveedor.codigoPostal.$invalid && !nuevoProveedor.$pristine}'/>
-                                        </div>
+                                                   name="codigoPostal" required/>
+                                            <!-- MENSAJES-->
+                                            <div ng-messages="nuevoProveedor.codigoPostal.$error"
+                                                 ng-if='nuevoProveedor.codigoPostal.$dirty || nuevoProveedor.codigoPostal.$touched'>
+                                                <div ng-message="minlength">Codigo postal demasiado corto.</div>
+                                                <div ng-message="md-maxlength">Codigo postal demasiado largo.</div>
+                                                <div ng-message="required">Este campo no puede estar vacio.</div>
+                                            </div>
+                                            <!-- ICONOS DE MENSAJE-->
+                                            <span ng-show="nuevoProveedor.codigoPostal.$dirty && nuevoProveedor.codigoPostal.$valid" class="glyphicon glyphicon-ok form-control-feedback" ></span>
+                                            <span ng-show="nuevoProveedor.codigoPostal.$dirty && nuevoProveedor.codigoPostal.$invalid" class="glyphicon glyphicon-remove  form-control-feedback"></span>
+                                        </md-input-container>
                                     </div>
-                                    <div class="form-group">
-                                        <label class="control-label col-lg-4">Telefono</label>
-                                        <div class="col-lg-8">
-                                            <input type="text" class="form-control" ng-model="_proveedor.telefonoProveedor" name="telefonoProveedor" required
-                                                   data-ng-class='{error: nuevoProveedor.telefonoProveedor.$invalid && !nuevoProveedor.$pristine
-                                       }'/>
-                                        </div>
+                                    <div layout="row" flex>
+                                        <md-input-container class="md-block" flex>
+                                            <label>Telefono</label>
+                                            <input type="tel"
+                                                   minlength="8"
+                                                   maxlength="20"
+                                                   md-maxlength="20"
+                                                   placeholder="Número de telefono del proveedor"
+                                                   ng-model="_proveedor.telefonoProveedor"
+                                                   name="telefonoProveedor" required/>
+                                            <!-- MENSAJES-->
+                                            <div ng-messages="nuevoProveedor.telefonoProveedor.$error"
+                                                 ng-if='nuevoProveedor.telefonoProveedor.$dirty || nuevoProveedor.telefonoProveedor.$touched'>
+                                                <div ng-message="minlength">Número de telefono demasiado corto.</div>
+                                                <div ng-message="md-maxlength">Número de telefono demasiado largo.</div>
+                                                <div ng-message="required">Este campo no puede estar vacio.</div>
+                                                <div ng-message="tel">Número de telefono invalido</div>
+                                            </div>
+                                            <!-- ICONOS DE MENSAJE-->
+                                            <span ng-show="nuevoProveedor.telefonoProveedor.$dirty && nuevoProveedor.telefonoProveedor.$valid" class="glyphicon glyphicon-ok form-control-feedback" ></span>
+                                            <span ng-show="nuevoProveedor.telefonoProveedor.$dirty && nuevoProveedor.telefonoProveedor.$invalid" class="glyphicon glyphicon-remove  form-control-feedback"></span>
+                                        </md-input-container>
+                                        <md-input-container class="md-block" flex>
+                                            <label>E-mail</label>
+                                            <input type="email"
+                                                   minlength="8"
+                                                   maxlength="30"
+                                                   md-maxlength="30"
+                                                   placeholder="E-mail del proveedor"
+                                                   ng-model="_proveedor.emailProveedor"
+                                                   name="emailProveedor" required/>
+                                            <!-- MENSAJES-->
+                                            <div ng-messages="nuevoProveedor.emailProveedor.$error"
+                                                 ng-if='nuevoProveedor.emailProveedor.$dirty || nuevoProveedor.emailProveedor.$touched'>
+                                                <div ng-message="minlength">E-mail demasiado corto.</div>
+                                                <div ng-message="md-maxlength">E-mail demasiado largo.</div>
+                                                <div ng-message="required">Este campo no puede estar vacio.</div>
+                                                <div ng-message="email">Dirección E-mail invalida.</div>
+                                            </div>
+                                            <!-- ICONOS DE MENSAJE-->
+                                            <span ng-show="nuevoProveedor.emailProveedor.$dirty && nuevoProveedor.emailProveedor.$valid" class="glyphicon glyphicon-ok form-control-feedback" ></span>
+                                            <span ng-show="nuevoProveedor.emailProveedor.$dirty && nuevoProveedor.emailProveedor.$invalid" class="glyphicon glyphicon-remove  form-control-feedback"></span>
+                                        </md-input-container>
                                     </div>
-                                    <div class="form-group">
-                                        <label class="control-label col-lg-4">E-mail</label>
-                                        <div class="col-lg-8">
-                                            <input type="text" class="form-control" ng-model="_proveedor.emailProveedor" name="emailProveedor" required
-                                                   data-ng-class='{error: nuevoProveedor.emailProveedor.$invalid && !nuevoProveedor.$pristine
-                                       }'/>
-                                        </div>
+                                    <div flex style="text-align: center;">
+                                        <button ng-click="agrearProveedor(_proveedor)"
+                                                type="submit"
+                                                class="btn btn-success"
+                                                ng-disabled="nuevoProveedor.$invalid">Agregar</button>
                                     </div>
-                                    <button ng-click="agrearProveedor(_proveedor)" type="submit" class="btn btn-warning" ng-disabled="nuevoProveedor.$invalid" style="margin-left: 40%;">Agregar</button>
-                                </fieldset>
-                            </form>
+                                </form>
+                            </div>                           
                         </md-content>
                     </md-tab>
                 </md-tabs>                    

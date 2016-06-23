@@ -47,6 +47,10 @@ ipcMain.on("printPDF", function (event, content) {
     workerWindow.webContents.send("printPDF", content);
 });
 
+app.on("open-url", function (event, content) {
+    event.preventDefault();
+});
+
 /*TRIGGER PRINT FUNCTION, NEED CALIBRATE*/
 ipcMain.on("printer", function (event) {
     workerWindow.webContents.print();

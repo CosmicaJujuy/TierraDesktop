@@ -3,7 +3,7 @@
 <div class="col-lg-10">
     <div layout="column" ng-cloak 
          data-ng-init="buscarProducto()"
-         style="margin-top: 100px;"
+         style="margin-top: 20px;"
          ng-show="foundProducto">
         <md-toolbar class="md-warn" md-theme="docs-dark">
             <div class="md-toolbar-tools">
@@ -96,8 +96,8 @@
                             <div ng-bind="foundProducto.descripcion" class="etiqueta" style="font-size: 10pt; font-family: monospace"></div>
                         </center>
                     </div>
-                    <!-- CODIGO 34 X 38 CON TALLE
-                    <div id="printable2" class="etiqueta-box" ng-hide="true">
+                    <!-- CODIGO 34 X 38 CON TALLE-->
+                    <div id="printable" class="etiqueta-box" ng-hide="true">
                         <center>
                             <div ng-bind="'Talla/edad: '+foundProducto.talla" class="etiqueta"></div>
                             <span kendo-barcode
@@ -107,7 +107,7 @@
                             </span>
                             <div ng-bind="foundProducto.descripcion" class="etiqueta" style="font-size: 8pt; font-family: monospace"></div>
                         </center>
-                    </div>-->
+                    </div>
                     <!-- BOTON 20 X 30  -->
                     <button ng-click="printDiv('printable');"
                             style='margin-top: 10%;'
@@ -353,7 +353,7 @@
 <script>
     var ipcRenderer = require("electron").ipcRenderer;
     function sendCommandToWorker(content) {
-        //ipcRenderer.send("printPDF", content);
-        ipcRenderer.send("printer");
+        ipcRenderer.send("printPDF", content);
+        //ipcRenderer.send("printer");
     }
 </script>

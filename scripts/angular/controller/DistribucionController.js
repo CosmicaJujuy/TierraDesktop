@@ -50,7 +50,7 @@ miAppHome.controller('DistribucionController', function ($scope, localStorageSer
         var idFacturaProducto = parseInt($stateParams.idFactura);
         $detail = facturaProductoService.detail(idFacturaProducto);
         $detail.then(function (datos) {
-            if (datos.status === 200) {                
+            if (datos.status === 200) {
                 $scope.detalle = datos.data;
             }
         });
@@ -226,9 +226,11 @@ miAppHome.controller('DistribucionController', function ($scope, localStorageSer
                 }
             });
         } else {
-            $scope.alerts.push({
-                type: 'danger',
-                msg: 'La cantidad total de productos a distribuir debe ser igual a la cantidad total de productos en almacen.'
+            toaster.pop({
+                type: 'warning',
+                title: '¡Atention!',
+                body: 'La cantidad total de productos a distribuir debe ser igual a la cantidad total de productos en almacen.',
+                showCloseButton: false
             });
         }
     };
@@ -340,6 +342,6 @@ miAppHome.controller('DistribucionController', function ($scope, localStorageSer
 
     $scope.closeAlert = function (index) {
         $scope.alerts.splice(index, 1);
-    };   
+    };
 
 });

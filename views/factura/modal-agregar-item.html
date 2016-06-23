@@ -1,36 +1,47 @@
 <!DOCTYPE html>
-<div class="ngdialog-message">
-    <div class="modal-header">
-        <center>
-            <h3 class="modal-title">
-                <div>{{ngDialogData.item.idProducto.descripcion}}</div>
+<div class="ngdialog-message" md-theme="docs-dark">
+    <md-toolbar class="md-warn">
+        <div class="md-toolbar-tools">
+            <h3 class="modal-title" style="width: 100%; text-align: center;">
+                <div>{{ngDialogData.item.idProducto.descripcion}}</div>    
             </h3>
-        </center>
-    </div>
-    <div class="modal-body">
-        <form name="agregarItemForm" class="form-horizontal" novalidate>
-            <fieldset>
-                <div class="form-group">
-                    <label class="control-label">Cantidad</label>
-                    <input type="number"
-                           focus-if
-                           ng-model="cantidad"
-                           maxlength="3"
-                           placeholder="Ingresa cantidad de items a comprar."
-                           name="cantidad" required
-                           class="form-control"/>
-                </div>
-                <div class="form-group" style="text-align: center;">
-                    <button type="button"
-                            ng-click="confirmarAgregarItem(ngDialogData.item, cantidad)"
-                            ng-disabled="agregarItemForm.$invalid"
-                            class="btn btn-success">Agregar</button>
-                </div>
-            </fieldset>
-        </form>
-    </div>
-    <div class="modal-footer">
-        <button class="btn btn-md btn-danger"
+        </div>
+    </md-toolbar>
+    <md-content flex>
+        <md-content class="md-padding" flex>
+            <div layout="column" class="md-padding">
+                <form name="agregarItemForm">
+                    <md-input-container class="md-block" flex>
+                        <label>Cantidad</label>
+                        <input type="number"
+                               focus-if
+                               ng-model="cantidad"
+                               max="999"
+                               min="0"
+                               placeholder="Ingresa cantidad de items a comprar."
+                               name="cantidad" required/>
+                        <div ng-messages="agregarItemForm.cantidad.$error"
+                             ng-if='agregarItemForm.cantidad.$dirty || agregarItemForm.cantidad.$touched'>
+                            <div ng-message="min">Cantidad demasiado baja.</div>
+                            <div ng-message="max">Cantidad demasiado grande.</div>
+                            <div ng-message="required">Este campo no puede estar vacio.</div>
+                        </div>
+                        <!-- ICONOS DE MENSAJE-->
+                        <span ng-show="agregarItemForm.cantidad.$dirty && agregarItemForm.cantidad.$valid" class="glyphicon glyphicon-ok form-control-feedback" ></span>
+                        <span ng-show="agregarItemForm.cantidad.$dirty && agregarItemForm.cantidad.$invalid" class="glyphicon glyphicon-remove  form-control-feedback"></span>
+                    </md-input-container>
+                    <div flex style="text-align: center;">
+                        <button type="button"
+                                ng-click="confirmarAgregarItem(ngDialogData.item, cantidad)"
+                                ng-disabled="agregarItemForm.$invalid"
+                                class="btn btn-success">Agregar</button>
+                    </div>
+                </form>
+            </div>
+        </md-content>
+    </md-content>
+    <md-content flex class="md-padding">
+        <button class="btn btn-md btn-danger pull-right"
                 ng-click="closeThisDialog('')">Cerrar</button>
-    </div>
+    </md-content>
 </div>

@@ -2,12 +2,12 @@
 <div class="col-lg-12">
     <div class="distribucion-panel">
         <div ng-cloak>
-            <md-content>
+            <md-content md-theme="docs-dark" style="min-height: 598px;">
                 <md-tabs md-dynamic-height md-border-bottom>
                     <md-tab label="Tipos de producto">
                         <md-content class="md-padding">
                             <div class="table-responsive">
-                                <table data-ng-init="listaTipo()" class="table table-hover table-condensed table-striped">
+                                <table data-ng-init="listaTipo()" class="table table-hover table-condensed table-striped light-table">
                                     <thead id="headTableProductos">
                                         <tr>
                                             <th style="text-align: center">ID</th>
@@ -42,32 +42,40 @@
                         </md-content>
                     </md-tab>
                     <md-tab label="Agregar nuevo Tipo de producto">
-                        <md-content class="md-padding">
-                            <div class="col-lg-2"></div>
-                            <div class="col-lg-8">
+                        <md-content class="md-padding" layout="row">
+                            <div flex="20"></div>
+                            <div flex="60">
                                 <form name="nuevoTipo" class="form-horizontal">
-                                    <fieldset>
-                                        <legend style="text-align: center;">Datos del tipo de producto</legend>
-                                        <div class="form-group">                    
-                                            <label class="control-label">Nombre del tipo de producto</label>
-                                            <input type="text"
-                                                   maxlength="20"
-                                                   placeholder="Ingrese nombre del tipo de producto"
-                                                   class="form-control"
-                                                   ng-model="_tipo.nombreTipo" name="tipo" required
-                                                   data-ng-class='{error: nuevoTipo.tipo.$invalid && !nuevoTipo.$pristine}'/>
+                                    <md-input-container class="md-block" flex>
+                                        <label>Nombre tipo de producto</label>
+                                        <input type="text"
+                                               maxlength="20"
+                                               md-maxlength="20"
+                                               minlength="4"
+                                               placeholder="Ingrese nombre del tipo de producto"
+                                               class="form-control"
+                                               ng-model="_tipo.nombreTipo" name="tipo" required/>
+                                        <!-- MENSAJES-->
+                                        <div ng-messages="nuevoTipo.tipo.$error"
+                                             ng-if='nuevoTipo.tipo.$dirty || nuevoTipo.tipo.$touched'>
+                                            <div ng-message="minlength">Nombre demasiado corto.</div>
+                                            <div ng-message="md-maxlength">Nombre demasiado largo.</div>
+                                            <div ng-message="required">Este campo no puede estar vacio.</div>
                                         </div>
-                                        <div class="form-group">
-                                            <center>
-                                                <button ng-click="agregarTipo(_tipo)"
-                                                        type="submit" class="btn btn-warning"
-                                                        ng-disabled="nuevoTipo.$invalid" style="margin-top: 5%;">Agregar</button>
-                                            </center>                                    
-                                        </div>                            
-                                    </fieldset>
+                                        <!-- ICONOS DE MENSAJE-->
+                                        <span ng-show="nuevoTipo.tipo.$dirty && nuevoTipo.tipo.$valid" class="glyphicon glyphicon-ok form-control-feedback" ></span>
+                                        <span ng-show="nuevoTipo.tipo.$dirty && nuevoTipo.tipo.$invalid" class="glyphicon glyphicon-remove  form-control-feedback"></span>
+                                    </md-input-container>
+                                    <div class="md-block" flex>
+                                        <center>
+                                            <button ng-click="agregarTipo(_tipo)"
+                                                    type="submit" class="btn btn-success"
+                                                    ng-disabled="nuevoTipo.$invalid" style="margin-top: 5%;">Agregar</button>
+                                        </center>                                    
+                                    </div>                            
+
                                 </form>
-                            </div>
-                            <div class="col-lg-2"></div>   
+                            </div>   
                         </md-content>
                     </md-tab>
                 </md-tabs>                    
