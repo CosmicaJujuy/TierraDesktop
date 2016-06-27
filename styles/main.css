@@ -879,14 +879,11 @@ body {
     margin-bottom: 0px;
     padding-bottom: 0px;
 }
-.animate-repeat{
-    
-}
 .animate-repeat.ng-move,
 .animate-repeat.ng-enter,
 .animate-repeat.ng-leave {
-/*    transition:all linear 0.5s;*/
-    /*backface-visibility: hidden;*/
+   transition:all linear 0.5s;
+   backface-visibility: hidden;
     
 }
 .animate-repeat.ng-leave.ng-leave-active,

@@ -578,13 +578,39 @@ var miAppHome = angular.module('tierraDeColoresApp', [
                         }
                     });
         })
-        .run(function ($state, $stateParams, $location, $cookies, sessionProvider) {
+        .run(function ($state, $stateParams, $location, $cookies, sessionProvider,$rootScope) {
             var session = require('electron').remote.session;
             var ses = session.fromPartition('persist:name');
             ses.cookies.get({name: 'token'}, function (error, cookies) {
                 console.log(cookies);
                 console.log(cookies[0].value);
             });
+            $rootScope.navbar2 = false;
+            $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
+//                console.log(toState.name);
+                if (toState.name === 'home') {
+                    $rootScope.navbar2 = false;
+                } else {
+                    $rootScope.navbar2 = true;
+                }
+            });
+//            var fs = require('fs');
+//            var date = new Date().getTime().toString();
+//            console.log(date);
+//            fs.writeFile("file" + date + ".200", "9" + String.fromCharCode(28) + "Z\n"
+//                    + "9" + String.fromCharCode(28) + "Z"
+//                    , function (err) {
+//                        if (err) {
+//                            return console.log(err);
+//                        }
+//                    });
+//            var exec = require('child_process').exec;
+//            var child = exec('type file' + date + '.200', function (err, stdout, stderr) {
+//                console.log(stdout);
+//                console.log(stderr);
+//                console.log(err);
+//            });
+//            console.log(child);
         })
         .filter('keyboardShortcut', function ($window) {
             return function (str) {
