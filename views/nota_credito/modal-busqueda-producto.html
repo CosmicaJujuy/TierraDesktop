@@ -3,54 +3,64 @@
     <md-toolbar class="md-warn">
         <div class="md-toolbar-tools">
             <h3 class="modal-title" style="width: 100%; text-align: center;">
-                <p ng-if="ngDialogData.stock[0].idSucursal === 1">Stock disponible en Tierra de colores.</p>
-                <p ng-if="ngDialogData.stock[0].idSucursal === 2">Stock disponible en Bebelandia.</p>
-                <p ng-if="ngDialogData.stock[0].idSucursal === 3">Stock disponible en Libertador</p>                
-            </h3>            
+                Busqueda de productos vendidos
+            </h3>
         </div>
     </md-toolbar>
     <md-content flex>
         <md-content class="md-padding" flex>
-            <p style="width: 100%; text-align: center;">Cantidad de resultados: {{ngDialogData.stock.length}}</p>
             <div class="table-responsive" style="max-height: 300px; overflow-y: scroll; overflow-y: visible !important;">
+                <p style="width: 100%; text-align: center;">Cantidad de resultados: {{ngDialogData.productos.length}}</p>
                 <table class="table table-striped table-hover table-condensed light-table">
                     <thead id="headTableProductos">
                         <tr>
+                            <th style="text-align: center;">ID</th>
                             <th style="text-align: center;">Codigo</th>
-                            <th style="text-align: center;">Clase</th>
-                            <th style="text-align: center;">Descripción</th>
+                            <th style="text-align: center;">Factura</th>
+                            <th style="text-align: center;">Cliente</th>
                             <th style="text-align: center;">Talla</th>
-                            <th style="text-align: center;">Color</th>
-                            <th style="text-align: center;">Precio</th>
                             <th style="text-align: center;">Cantidad</th>
+                            <th style="text-align: center;">Precio</th>
+                            <th style="text-align: center;">Desc.</th>
+                            <th style="text-align: center;">Monto</th>
+                            <th style="text-align: center;">Fecha</th>
                             <th style="text-align: center;">Acciones</th>
                         </tr>
                     </thead>
                     <tbody style="text-align:center;">
-                        <tr ng-repeat="item in ngDialogData.stock">
+                        <tr ng-repeat="item in ngDialogData.productos">
                             <td>
-                                {{item.idProducto.codigoProducto}}
+                                {{item.idDetalleFactura}}
                             </td>
                             <td>
-                                {{item.idProducto.claseProducto}}
+                                {{item.producto.codigoProducto}}
                             </td>
                             <td>
-                                {{item.idProducto.descripcion| uppercase}}
+                                {{item.factura.idFactura}}
                             </td>
                             <td>
-                                {{item.idProducto.talla| uppercase}}
+                                {{item.factura.cliente.idCliente}}
                             </td>
                             <td>
-                                {{item.idProducto.colorProducto| uppercase}}
+                                {{item.producto.talla| uppercase}}
                             </td>
                             <td>
-                                {{item.idProducto.precioVenta|currency}}
+                                {{item.cantidadDetalle}}
                             </td>
                             <td>
-                                {{item.cantidad}}
+                                {{item.producto.precioVenta|currency}}
+                            </td>
+                            <td>
+                                {{item.descuentoDetalle|currency}}
+                            </td>
+                            <td>
+                                {{item.totalDetalle|currency}}
+                            </td>
+                            <td style="font-size: small;">
+                                {{item.fechaCreacion|date:'medium'}}
                             </td>
                             <td>                    
-                                <button ng-click="agregarItem(item)"
+                                <button ng-click="panelDevolverItem(item)"
                                         type="button"
                                         class="btn btn-xs btn-success">
                                     <span class="glyphicon glyphicon-check"></span>

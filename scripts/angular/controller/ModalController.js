@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-miAppHome.controller('ModalController', function ($scope, ngDialog, $stateParams, _productoService, toaster, facturaService, $timeout, $rootScope, facturaService) {
+miAppHome.controller('ModalController', function ($scope, notaCreditoService, detalleNotaCreditoService, $state, ngDialog, $stateParams, _productoService, toaster, facturaService, $timeout, $rootScope, facturaService) {
 
     $scope._detalleFactura = {
         "idDetalleFactura": null,
@@ -19,6 +19,19 @@ miAppHome.controller('ModalController', function ($scope, ngDialog, $stateParams
         "fechaModificacion": null,
         "idStock": null
     };
+
+    $scope._detalleNotaCredito = {
+        cantidad: null,
+        detalleFactura: null,
+        fechaCreacion: null,
+        fechaModificacion: null,
+        idDetalleNotaCredito: null,
+        monto: null,
+        notaCredito: null,
+        usuarioCreacion: null,
+        usuarioModificacion: null
+    };
+    
     $scope.toUpdateFactura = "";
     $scope.modalBarcode = "";
     $scope.percent = null;
@@ -277,6 +290,44 @@ miAppHome.controller('ModalController', function ($scope, ngDialog, $stateParams
                 });
             }
         });
+    };
+
+    $scope.confirarPanelDevolverItem = function (cantidad, detalle) {
+        var idNota = $stateParams.idNota;
+        if (cantidad > detalle.cantidadDetalle) {
+            toaster.pop({
+                type: 'error',
+                title: '¡Error!',
+                body: 'La cantidad supera al detalle.',
+                showCloseButton: false
+            });
+        } else {
+            $nota = notaCreditoService.getById(idNota);
+            $nota.then(function (datos) {
+                if (datos.status === 200) {
+                    $scope._detalleNotaCredito.notaCredito = datos.data;
+                    $scope._detalleNotaCredito.cantidad = cantidad;
+                    $scope._detalleNotaCredito.detalleFactura = detalle;
+                    var desc = detalle.descuentoDetalle / detalle.cantidadDetalle;
+                    var monto = (detalle.producto.precioVenta * cantidad) - (desc * cantidad);
+                    $scope._detalleNotaCredito.monto = monto;
+                    $add = detalleNotaCreditoService.add($scope._detalleNotaCredito);
+                    $add.then(function (datos) {
+                        if (datos.status === 200) {
+                            ngDialog.closeAll();
+                            toaster.pop({
+                                type: 'success',
+                                title: '¡Exito!',
+                                body: 'Detalle agregado con exito.',
+                                showCloseButton: false
+                            });
+                            $rootScope.$broadcast('updateMontoNota', {});
+                            $rootScope.$emit('updateDetalleNotaCredito', {});
+                        }
+                    });
+                }
+            });
+        }
     };
 
 });

@@ -1,4 +1,4 @@
-miAppHome.controller('NotaCreditoController', function (toaster, $scope, $state, $stateParams, notaCreditoService, NgTableParams) {
+miAppHome.controller('NotaCreditoController', function (toaster, $rootScope, detalleNotaCreditoService, $scope, $state, $stateParams, notaCreditoService, NgTableParams) {
 
     $scope._notaCredito = {
         estadoUso: null,
@@ -62,4 +62,34 @@ miAppHome.controller('NotaCreditoController', function (toaster, $scope, $state,
             }
         });
     };
+
+
+    $scope.$on('updateMontoNota', function () {
+        var idNota = $stateParams.idNota;
+        $list = detalleNotaCreditoService.getNotaCreditoDetail(idNota);
+        $list.then(function (datos) {
+            if (datos.status === 200) {
+                var monto = 0;
+                angular.forEach(datos.data, function (value, key) {
+                    monto = parseFloat(monto) + parseFloat(value.monto);
+                });
+                $scope.detalleNotaCredito();
+                $scope.notaCreditoDetalle.montoTotal = monto;
+                console.log($scope.notaCreditoDetalle);
+                $update = notaCreditoService.update($scope.notaCreditoDetalle);
+                $update.then(function (datos) {
+                    if (datos.status === 200) {
+                        var idNota = $stateParams.idNota;
+                        $detalle = notaCreditoService.getById(idNota);
+                        $detalle.then(function (datos) {
+                            if (datos.status === 200) {
+//                                $rootScope.$broadcast('updateDetalleNotaCredito', {});
+                                $scope.notaCreditoDetalle = datos.data;
+                            }
+                        });
+                    }
+                });
+            }
+        });
+    });
 });

@@ -580,7 +580,7 @@ miAppHome.controller('FacturaController',
                                     $update = facturaService.update($rootScope.factura);
                                     $update.then(function (datos) {
                                         if (datos.status === 200) {
-                                            $state.transitionTo('home.facturacion');
+                                            $state.transitionTo('facturas');
                                         } else {
                                             toaster.pop({
                                                 type: 'error',
