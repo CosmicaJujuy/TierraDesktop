@@ -112,29 +112,24 @@
                                                 <td>{{detalle.detalleFactura.idDetalleFactura}}</td>
                                                 <td>{{detalle.detalleFactura.producto.codigoProducto}}</td>
                                                 <td>{{detalle.monto|currency}}</td>
-                                                <td>{{detalle.cantidad}}</td>
+                                                <td>{{::detalle.cantidad}}</td>
                                                 <td>{{detalle.fechaCreacion| date: 'medium'}}</td>
                                                 <td>
                                                     <button type="button"
-                                                            ng-disabled="factura.estado === 'CONFIRMADO'"
-                                                            ng-click="eliminarDetalleFactura(detalleFactura)"
+                                                            ng-disabled=""
+                                                            ng-click="eliminarDetalleNota(detalle)"
                                                             class="btn btn-xs btn-danger">
                                                         <span class="glyphicon glyphicon-remove"></span>
+                                                    </button>
+                                                    <button type="button"
+                                                            ng-disabled=""
+                                                            ng-click="modificarDetalleNota(detalle)"
+                                                            class="btn btn-xs btn-warning">
+                                                        <span class="glyphicon glyphicon-cog"></span>
                                                     </button>
                                                 </td>
                                             </tr>
                                         </tbody>
-                                        <tfoot ng-if="detallesNotaCredito.length === ''">
-                                            <tr>
-                                                <th></th>
-                                                <th></th>
-                                                <th></th>
-                                                <th></th>
-                                                <th>SIN RESULTADOS</th>
-                                                <th></th>
-                                                <th></th>
-                                            </tr>
-                                        </tfoot>
                                     </table>
                                 </div>                                
                             </md-content>

@@ -65,15 +65,43 @@ miAppHome.controller('DetalleNotaCreditoController', function ($scope, $timeout,
         });
     };
 
-    $rootScope.$on('updateDetalleNotaCredito', function () {
+
+    $scope.$on('updateDetalleNotaCredito2', function (event, object) {
         var idNota = $stateParams.idNota;
         $list = detalleNotaCreditoService.getNotaCreditoDetail(idNota);
         $list.then(function (datos) {
-            console.log(datos);
             $scope.detallesNotaCredito = datos.data;
             $scope.tableDetallesNotaCredito.reload();
+            $rootScope.$broadcast('updateMontoNota', {});
         });
     });
 
+    $scope.$on('updateDetalleNotaCredito', function (event, object) {
+        $scope.listaDetalleNotaCredito();
+    });
+
+    $scope.eliminarDetalleNota = function (detalle) {
+        ngDialog.open({
+            template: 'views/nota_credito/modal-eliminar-detalle-nota.html',
+            className: 'ngdialog-theme-sm ngdialog-theme-custom',
+            showClose: false,
+            controller: 'ModalController',
+            closeByDocument: false,
+            closeByEscape: false,
+            data: {detalle: detalle}
+        });
+    };
+
+    $scope.modificarDetalleNota = function (detalle) {        
+        ngDialog.open({
+            template: 'views/nota_credito/modal-modificar-detalle-nota.html',
+            className: 'ngdialog-theme-sm ngdialog-theme-custom',
+            showClose: false,
+            controller: 'ModalController',
+            closeByDocument: false,
+            closeByEscape: false,
+            data: {detalle: detalle}
+        });
+    };
 
 });

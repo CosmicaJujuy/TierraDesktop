@@ -31,7 +31,7 @@ miAppHome.controller('ModalController', function ($scope, notaCreditoService, de
         usuarioCreacion: null,
         usuarioModificacion: null
     };
-    
+
     $scope.toUpdateFactura = "";
     $scope.modalBarcode = "";
     $scope.percent = null;
@@ -86,7 +86,6 @@ miAppHome.controller('ModalController', function ($scope, notaCreditoService, de
                         $scope.toUpdateFactura = datos.data;
                         $listDetalles = facturaService.getDetalleFacturaList(idFactura);
                         $listDetalles.then(function (datos) {
-                            console.log(datos);
                             var totalUpdate = 0;
                             angular.forEach(datos.data, function (value, key) {
                                 totalUpdate = parseFloat(totalUpdate) + parseFloat(value.totalDetalle);
@@ -121,14 +120,6 @@ miAppHome.controller('ModalController', function ($scope, notaCreditoService, de
             });
         }
     };
-
-
-    $rootScope.$on('ReloadTable', function () {
-        $timeout(function timer() {
-            //                        $uibModalInstance.close();
-        }, 1000);
-    });
-
 
     $scope.agregarItem = function (item) {
         ngDialog.open({
@@ -267,7 +258,6 @@ miAppHome.controller('ModalController', function ($scope, notaCreditoService, de
         var idFactura = $stateParams.idFactura;
         $delete = facturaService.deleteDetalleFactura(obj, dni, pw);
         $delete.then(function (datos) {
-            console.log(datos);
             if (datos.status === 200) {
                 ngDialog.closeAll();
                 $updated = facturaService.searchById(idFactura);
@@ -322,7 +312,14 @@ miAppHome.controller('ModalController', function ($scope, notaCreditoService, de
                                 showCloseButton: false
                             });
                             $rootScope.$broadcast('updateMontoNota', {});
-                            $rootScope.$emit('updateDetalleNotaCredito', {});
+                            $rootScope.$broadcast('updateDetalleNotaCredito', {});
+                        } else {
+                            toaster.pop({
+                                type: 'error',
+                                title: '¡Error!',
+                                body: 'Este detalle ya ha sido registrado previamente.',
+                                showCloseButton: false
+                            });
                         }
                     });
                 }
@@ -330,5 +327,61 @@ miAppHome.controller('ModalController', function ($scope, notaCreditoService, de
         }
     };
 
-});
+    $scope.confirmarEliminarDetalleNota = function (detalle) {
+        $delete = detalleNotaCreditoService.delete(detalle);
+        $delete.then(function (datos) {
+            if (datos.status === 200) {
+                ngDialog.closeAll();
+                toaster.pop({
+                    type: 'success',
+                    title: '¡Exito!',
+                    body: 'Detalle eliminado con exito.',
+                    showCloseButton: false
+                });
+                $rootScope.$broadcast('updateDetalleNotaCredito2', {});
+                $rootScope.$broadcast('updateMontoNota', {});
+            }
+        });
+    };
 
+    $scope.confirmarModificarDetalleNota = function (detalle) {
+        if (detalle.cantidad > detalle.detalleFactura.cantidadDetalle) {
+            toaster.pop({
+                type: 'error',
+                title: '¡Error!',
+                body: 'La cantidad supera al detalle.',
+                showCloseButton: false
+            });
+        } else {
+            var desc = detalle.detalleFactura.descuentoDetalle / detalle.detalleFactura.cantidadDetalle;
+            var monto = (detalle.detalleFactura.producto.precioVenta * detalle.cantidad) - (desc * detalle.cantidad);
+            detalle.monto = monto;
+            ngDialog.open({
+                template: 'views/nota_credito/modal-confirmar-modificar-detalle-nota.html',
+                className: 'ngdialog-theme-sm ngdialog-theme-custom',
+                showClose: false,
+                controller: 'ModalController',
+                closeByDocument: false,
+                closeByEscape: false,
+                data: {detalle: detalle}
+            });
+        }
+    };
+
+    $scope.finalizarModificarDetalleNota = function (detalle) {
+        $update = detalleNotaCreditoService.update(detalle);
+        $update.then(function (datos) {
+            if (datos.status === 200) {
+                ngDialog.closeAll();
+                toaster.pop({
+                    type: 'success',
+                    title: '¡Exito!',
+                    body: 'Detalle modificado con exito.',
+                    showCloseButton: false
+                });
+                $rootScope.$broadcast('updateDetalleNotaCredito2', {});
+                $rootScope.$broadcast('updateMontoNota', {});
+            }
+        });
+    };
+});

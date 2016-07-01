@@ -3,37 +3,36 @@
     <md-toolbar class="md-warn">
         <div class="md-toolbar-tools">
             <h3 class="modal-title" style="width: 100%; text-align: center;">
-                <p>{{ngDialogData.detalle.producto.descripcion}}</p>
+                <p>{{ngDialogData.detalle.idDetalleNotaCredito}} - {{ngDialogData.detalle.detalleFactura.producto.descripcion}}</p>
             </h3>
         </div>
     </md-toolbar>
     <md-content flex>
         <md-content class="md-padding" flex>
             <div layout="column" class="md-padding">
-                <form name="devolverItem">
+                <form name="modificarDetalle">
                     <md-input-container class="md-block" flex>
                         <label>Cantidad</label>
                         <input type="number"
-                               focus-if
-                               ng-model="cantidad"
+                               ng-model="ngDialogData.detalle.cantidad"
                                max="999"
                                min="0"
                                placeholder="Ingresa cantidad de items a devolver."
                                name="cantidad" required/>
-                        <div ng-messages="devolverItem.cantidad.$error"
-                             ng-if='devolverItem.cantidad.$dirty || devolverItem.cantidad.$touched'>
+                        <div ng-messages="modificarDetalle.cantidad.$error"
+                             ng-if='modificarDetalle.cantidad.$dirty || modificarDetalle.cantidad.$touched'>
                             <div ng-message="min">Cantidad demasiado baja.</div>
                             <div ng-message="max">Cantidad demasiado grande.</div>
                             <div ng-message="required">Este campo no puede estar vacio.</div>
                         </div>
                         <!-- ICONOS DE MENSAJE-->
-                        <span ng-show="devolverItem.cantidad.$dirty && devolverItem.cantidad.$valid" class="glyphicon glyphicon-ok form-control-feedback" ></span>
-                        <span ng-show="devolverItem.cantidad.$dirty && devolverItem.cantidad.$invalid" class="glyphicon glyphicon-remove  form-control-feedback"></span>
+                        <span ng-show="modificarDetalle.cantidad.$dirty && modificarDetalle.cantidad.$valid" class="glyphicon glyphicon-ok form-control-feedback" ></span>
+                        <span ng-show="modificarDetalle.cantidad.$dirty && modificarDetalle.cantidad.$invalid" class="glyphicon glyphicon-remove  form-control-feedback"></span>
                     </md-input-container>
                     <div flex style="text-align: center;">
                         <button type="button"
-                                ng-click="confirarPanelDevolverItem(cantidad, ngDialogData.detalle)"
-                                ng-disabled="devolverItem.$invalid"
+                                ng-click="confirmarModificarDetalleNota(ngDialogData.detalle)"
+                                ng-disabled="modificarDetalle.$invalid"
                                 class="btn btn-success">Devolver</button>
                     </div>
                 </form>

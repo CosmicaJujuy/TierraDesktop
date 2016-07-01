@@ -1,4 +1,4 @@
-miAppHome.controller('NotaCreditoController', function (toaster, $rootScope, detalleNotaCreditoService, $scope, $state, $stateParams, notaCreditoService, NgTableParams) {
+miAppHome.controller('NotaCreditoController', function (toaster, $timeout, $rootScope, detalleNotaCreditoService, $scope, $state, $stateParams, notaCreditoService, NgTableParams) {
 
     $scope._notaCredito = {
         estadoUso: null,
@@ -16,7 +16,6 @@ miAppHome.controller('NotaCreditoController', function (toaster, $rootScope, det
         $notas = notaCreditoService.getAll();
         $notas.then(function (datos) {
             if (datos.status === 200) {
-                console.log(datos);
                 $scope.notasCredito = datos.data;
                 var data = datos;
                 $scope.tableNotaCredito = new NgTableParams({
@@ -41,7 +40,7 @@ miAppHome.controller('NotaCreditoController', function (toaster, $rootScope, det
         $detalle = notaCreditoService.getById(idNota);
         $detalle.then(function (datos) {
             if (datos.status === 200) {
-                $scope.notaCreditoDetalle = datos.data;
+                $rootScope.notaCreditoDetalle = datos.data;
             }
         });
     };
@@ -74,17 +73,30 @@ miAppHome.controller('NotaCreditoController', function (toaster, $rootScope, det
                     monto = parseFloat(monto) + parseFloat(value.monto);
                 });
                 $scope.detalleNotaCredito();
-                $scope.notaCreditoDetalle.montoTotal = monto;
-                console.log($scope.notaCreditoDetalle);
-                $update = notaCreditoService.update($scope.notaCreditoDetalle);
+                $rootScope.notaCreditoDetalle.montoTotal = monto;
+                $update = notaCreditoService.update($rootScope.notaCreditoDetalle);
                 $update.then(function (datos) {
                     if (datos.status === 200) {
                         var idNota = $stateParams.idNota;
                         $detalle = notaCreditoService.getById(idNota);
                         $detalle.then(function (datos) {
                             if (datos.status === 200) {
-//                                $rootScope.$broadcast('updateDetalleNotaCredito', {});
-                                $scope.notaCreditoDetalle = datos.data;
+                                $rootScope.notaCreditoDetalle = datos.data;
+                            }
+                        });
+                    }
+                });
+            } else {
+                var montoError = 0;
+                $rootScope.notaCreditoDetalle.montoTotal = montoError;
+                $update = notaCreditoService.update($rootScope.notaCreditoDetalle);
+                $update.then(function (datos) {
+                    if (datos.status === 200) {
+                        var idNota = $stateParams.idNota;
+                        $detalle = notaCreditoService.getById(idNota);
+                        $detalle.then(function (datos) {
+                            if (datos.status === 200) {
+                                $rootScope.notaCreditoDetalle = datos.data;
                             }
                         });
                     }

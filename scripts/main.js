@@ -581,6 +581,9 @@ var miAppHome = angular.module('tierraDeColoresApp', [
         .run(function ($state, $stateParams, $location, $cookies, sessionProvider,$rootScope) {
             var session = require('electron').remote.session;
             var ses = session.fromPartition('persist:name');
+            ses.clearCache(function(response){
+                console.log(response);
+            });
             ses.cookies.get({name: 'token'}, function (error, cookies) {
                 console.log(cookies);
                 console.log(cookies[0].value);

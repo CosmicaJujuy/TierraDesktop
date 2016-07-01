@@ -3,15 +3,9 @@
   "description": "A minimal Electron application",
   "main": "main.js",
   "authors": [
-    "GitHub"
+    "Paulogaldo"
   ],
-  "license": "CC0-1.0",
-  "keywords": [
-    "Electron",
-    "quick",
-    "start",
-    "tutorial"
-  ],
+  "license": "MIT",
   "homepage": "https://github.com/electron/electron-quick-start",
   "moduleType": [],
   "ignore": [
