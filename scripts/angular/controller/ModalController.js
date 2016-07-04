@@ -384,4 +384,32 @@ miAppHome.controller('ModalController', function ($scope, notaCreditoService, de
             }
         });
     };
+
+    $scope.finalizarNotaCredito = function (cli) {
+        var idNota = $stateParams.idNota;
+        $nota = notaCreditoService.getById(idNota);
+        $nota.then(function (datos) {
+            if (datos.status === 200) {
+                if (typeof cli.idCliente !== 'undefined') {
+                    datos.data.idCliente = cli.idCliente;
+                }
+                datos.data.estadoUso = "SIN USO";
+                $update = notaCreditoService.update(datos.data);
+                $update.then(function (datos) {
+                    if (datos.status === 200) {
+                        toaster.pop({
+                            type: 'success',
+                            title: '¡Exito!',
+                            body: 'Detalle agregado con exito.',
+                            showCloseButton: false
+                        });
+                        ngDialog.closeAll();
+                        $timeout(function timer() {
+                            $state.go('nota_credito');
+                        }, 2000);
+                    }
+                });
+            }
+        });
+    };
 });

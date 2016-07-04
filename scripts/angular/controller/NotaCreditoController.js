@@ -1,4 +1,4 @@
-miAppHome.controller('NotaCreditoController', function (toaster, $timeout, $rootScope, detalleNotaCreditoService, $scope, $state, $stateParams, notaCreditoService, NgTableParams) {
+miAppHome.controller('NotaCreditoController', function (toaster, $mdDialog, ngDialog, $rootScope, detalleNotaCreditoService, $scope, $state, $stateParams, notaCreditoService, NgTableParams) {
 
     $scope._notaCredito = {
         estadoUso: null,
@@ -12,19 +12,58 @@ miAppHome.controller('NotaCreditoController', function (toaster, $timeout, $root
         usuarioModificacion: null
     };
 
-    $scope.listaNotaCredito = function () {
-        $notas = notaCreditoService.getAll();
+    $scope.listaHoyNotaCredito = function () {
+        $scope.totalNota = 0;
+        $scope.countNotas = 0;
+        $notas = notaCreditoService.getDaily();
         $notas.then(function (datos) {
             if (datos.status === 200) {
                 $scope.notasCredito = datos.data;
-                var data = datos;
+                var data = datos.data;
+                angular.forEach(data, function (value, key) {
+                    if (value.estadoUso !== 'CARGANDO') {
+                        $scope.countNotas = $scope.countNotas + 1;
+                        $scope.totalNota = parseFloat($scope.totalNota) + parseFloat(value.montoTotal);
+                    }
+                });
                 $scope.tableNotaCredito = new NgTableParams({
                     page: 1,
-                    count: 13
+                    count: 12
                 }, {
                     total: data.length,
                     getData: function (params) {
                         data = $scope.notasCredito;
+                        params.total(data.length);
+                        if (params.total() <= ((params.page() - 1) * params.count())) {
+                            params.page(1);
+                        }
+                        return data.slice((params.page() - 1) * params.count(), params.page() * params.count());
+                    }});
+            }
+        });
+    };
+    
+    $scope.listaMesNotaCredito = function () {
+        $scope.totalNotaMonth = 0;
+        $scope.countNotasMonth = 0;
+        $notas = notaCreditoService.getMonth();
+        $notas.then(function (datos) {
+            if (datos.status === 200) {
+                $scope.notasCreditoMes = datos.data;
+                var data = datos.data;
+                angular.forEach(data, function (value, key) {
+                    if (value.estadoUso !== 'CARGANDO') {
+                        $scope.countNotasMonth = $scope.countNotasMonth + 1;
+                        $scope.totalNotaMonth = parseFloat($scope.totalNotaMonth) + parseFloat(value.montoTotal);
+                    }
+                });
+                $scope.tableNotaCreditoMes = new NgTableParams({
+                    page: 1,
+                    count: 12
+                }, {
+                    total: data.length,
+                    getData: function (params) {
+                        data = $scope.notasCreditoMes;
                         params.total(data.length);
                         if (params.total() <= ((params.page() - 1) * params.count())) {
                             params.page(1);
@@ -104,4 +143,16 @@ miAppHome.controller('NotaCreditoController', function (toaster, $timeout, $root
             }
         });
     });
+
+    $scope.finalizarNotaCredito = function (cli) {
+        ngDialog.open({
+            template: 'views/nota_credito/modal-confirmar-cerrar-nota.html',
+            className: 'ngdialog-theme-advertencia ngdialog-theme-custom',
+            showClose: false,
+            controller: 'ModalController',
+            closeByDocument: false,
+            closeByEscape: false,
+            data: {cliente: cli}
+        });
+    };
 });

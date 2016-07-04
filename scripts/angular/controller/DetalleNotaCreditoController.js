@@ -1,6 +1,11 @@
 miAppHome.controller('DetalleNotaCreditoController', function ($scope, $timeout, $rootScope, notaCreditoService, ngDialog, toaster, $state, $stateParams, detalleNotaCreditoService, NgTableParams) {
 
     $scope.busq = null;
+    
+    $scope.backToNota = function(){
+        var idNota = $stateParams.idNota;
+        $state.go('detalle_nota_credito',{idNota:idNota});
+    };
 
     $scope.buscarProductoOnFactura = function (barcode) {
         $busq = detalleNotaCreditoService.getProductoOnFactura(barcode);

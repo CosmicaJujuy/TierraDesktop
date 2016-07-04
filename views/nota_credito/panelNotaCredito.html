@@ -24,12 +24,20 @@
                         </div>                    
                         <div layout="column" flex class="padd">
                             <label style="margin-bottom: 0px;">Notas de credito hoy</label>
-                            <div>{{0}}</div>
+                            <div>{{countNotas}}</div>
                         </div>
                         <div layout="column" flex class="padd" data-ng-init="">
                             <label style="margin-bottom: 0px;">Notas emitidas hoy</label>
-                            <div>{{0|currency}}</div>
-                        </div>    
+                            <div>{{totalNota|currency}}</div>
+                        </div>
+                        <div layout="column" flex class="padd">
+                            <label style="margin-bottom: 0px;">Notas de credito del mes</label>
+                            <div>{{countNotasMonth}}</div>
+                        </div>
+                        <div layout="column" flex class="padd" data-ng-init="">
+                            <label style="margin-bottom: 0px;">Notas emitidas los ultimos 30 días</label>
+                            <div>{{totalNotaMonth|currency}}</div>
+                        </div>
                         <div layout="column" flex class="padd">
                             <button class="btn btn-block btn-success"
                                     style="margin-top: 50px; margin-bottom: 8px;"
@@ -45,11 +53,11 @@
             <div ng-cloak>
                 <md-content md-theme="docs-dark" style="min-height: 598px;">
                     <md-tabs md-dynamic-height md-border-bottom>
-                        <md-tab label="Notas de credito">
+                        <md-tab label="Notas de hoy">
                             <md-content class="md-padding">
                                 <table class="table table-striped table-hover table-condensed light-table"
                                        ng-table="tableNotaCredito"
-                                       data-ng-init="listaNotaCredito()">
+                                       data-ng-init="listaHoyNotaCredito()">
                                     <thead id="headTableProductos">
                                         <tr>
                                             <th style="text-align: center;">N°</th>
@@ -66,14 +74,62 @@
                                             <td style="text-align: center;">{{nota.numero}}</td>
                                             <td style="text-align: center">{{nota.estadoUso}}</td>
                                             <td style="text-align: center">{{nota.fechaCreacion| date:'medium'}}</td>
-                                            <td style="text-align: center">{{nota.idCliente}}</td>
+                                            <td style="text-align: center">
+                                                <div ng-hide="nota.idCliente">S/N</div>
+                                                <div ng-show="nota.idCliente">
+                                                    {{nota.idCliente}}
+                                                </div>
+                                            </td>
                                             <td style="text-align: center">{{nota.montoTotal|currency}}</td>
                                         </tr>
                                     </tbody>
                                     <tfoot>
                                         <tr>
                                             <th>Total</th>
-                                            <th uib-tooltip="Este es un estimado del total entre las facturas CONFIRMADAS"></th>
+                                            <th>
+                                                {{totalNota|currency}}
+                                            </th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </md-content>
+                        </md-tab>
+                        <md-tab label="Notas de los ultimos 30 días">
+                            <md-content class="md-padding">
+                                <table class="table table-striped table-hover table-condensed light-table"
+                                       ng-table="tableNotaCreditoMes"
+                                       data-ng-init="listaMesNotaCredito()">
+                                    <thead id="headTableProductos">
+                                        <tr>
+                                            <th style="text-align: center;">N°</th>
+                                            <th style="text-align: center;">Numeración</th>
+                                            <th style="text-align: center;">Estado uso</th>
+                                            <th style="text-align: center;">Fecha emision</th>
+                                            <th style="text-align: center;">N° Cliente</th>
+                                            <th style="text-align: center;">Monto</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="nota in $data">
+                                            <td style="text-align: center;"><a href="" ui-sref="detalle_nota_credito({idNota:{{nota.idNotaCredito}}})">{{nota.idNotaCredito}}</a></td>
+                                            <td style="text-align: center;">{{nota.numero}}</td>
+                                            <td style="text-align: center">{{nota.estadoUso}}</td>
+                                            <td style="text-align: center">{{nota.fechaCreacion| date:'medium'}}</td>
+                                            <td style="text-align: center">
+                                                <div ng-hide="nota.idCliente">S/N</div>
+                                                <div ng-show="nota.idCliente">
+                                                    {{nota.idCliente}}
+                                                </div>
+                                            </td>
+                                            <td style="text-align: center">{{nota.montoTotal|currency}}</td>
+                                        </tr>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <th>Total</th>
+                                            <th>
+                                                {{totalNotaMonth|currency}}
+                                            </th>
                                         </tr>
                                     </tfoot>
                                 </table>

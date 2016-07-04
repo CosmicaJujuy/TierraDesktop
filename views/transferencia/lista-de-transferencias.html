@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<div md-theme="docs-dark">
+    <div class="col-lg-3">
+        <div layout="column" ng-cloak
+             data-ng-init="listaTransferencias()"
+             class="distribucion-panel">
+            <md-toolbar class="md-warn">
+                <div class="md-toolbar-tools">
+                    <h4 class="md-flex" style="width:100%; text-align: center;">
+                        Datos de transferencias
+                    </h4>
+                </div>
+            </md-toolbar>
+            <md-content flex layout="row">
+                <div class="md-padding" flex>
+                    <form style="text-align: center;">
+                        <div layout="column" flex style="margin-bottom: 0px;" ng-controller="FacturaController">
+                            <p style="font-weight: bolder;">
+                                {{ clock | date:'medium'}}
+                            </p>
+                        </div>                    
+                        <div layout="column" flex class="padd">
+                            <label style="margin-bottom: 0px;">Transferencias hoy</label>
+                            <div>{{0}}</div>
+                        </div>
+                        <div layout="column" flex class="padd" data-ng-init="">
+                            <label style="margin-bottom: 0px;">Resueltas hoy</label>
+                            <div>{{0}}</div>
+                        </div>
+                        <div layout="column" flex class="padd">
+                            <button class="btn btn-block btn-success"
+                                    style="margin-top: 50px; margin-bottom: 8px;"
+                                    ng-click="">Nueva transferencia</button>
+                        </div>
+                    </form>
+                </div>
+            </md-content>
+        </div>
+    </div>
+    <div class="col-lg-9">
+        <div class="distribucion-panel">
+            <div ng-cloak>
+                <md-content md-theme="docs-dark" style="min-height: 598px;">
+                    <md-tabs md-dynamic-height md-border-bottom>                    
+                        <md-tab label="Transferencias de hoy">
+                            <md-content class="md-padding">
+                                <div class="table-responsive"s>
+                                    <table class="table table-striped table-hover table-condensed light-table"
+                                           ng-table="tableHoyTransferencias"
+                                           data-ng-init="listaHoyTransferencias()">
+                                        <thead id="headTableProductos">
+                                            <tr>
+                                                <th style="text-align: center">ID</th>
+                                                <th style="text-align: center">Suc. Pedido</th> 
+                                                <th style="text-align: center">Suc. Respuesta</th>
+                                                <th style="text-align: center">Estado</th> 
+                                                <th style="text-align: center">Fecha creación</th> 
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="trans in $data"
+                                                ng-class="{ success: trans.estadoPedido === true }">
+                                                <td style="text-align: center">{{trans.idTransferencia}}</td>
+                                                <td style="text-align: center">
+                                                    <div ng-if="trans.sucursalPedido === 1">Tierra de Colores</div>
+                                                    <div ng-if="trans.sucursalPedido === 2">Bebelandia</div>
+                                                    <div ng-if="trans.sucursalPedido === 3">Libertador</div>
+                                                </td>
+                                                <td style="text-align: center">
+                                                    <div ng-if="trans.sucursalRespuesta === 1">Tierra de Colores</div>
+                                                    <div ng-if="trans.sucursalRespuesta === 2">Bebelandia</div>
+                                                    <div ng-if="trans.sucursalRespuesta === 3">Libertador</div>
+                                                </td>                                                
+                                                <td style="text-align: center">
+                                                    <div ng-if="trans.estadoPedido === true">Resuelto</div>
+                                                    <div ng-if="trans.estadoPedido === false">Sin resolver</div>
+                                                </td>
+                                                <td style="text-align: center">{{trans.fechaCreacion| date:'medium'}}</td>                                                           
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </md-content>
+                        </md-tab>
+                        <md-tab label="Transferencias de los ultimos 30 días">
+                            <md-content class="md-padding">
+                                <div class="table-responsive"s>
+                                    <table class="table table-striped table-hover table-condensed light-table"
+                                           ng-table="tableMesTransferencias"
+                                           data-ng-init="listaMesTransferencias()">
+                                        <thead id="headTableProductos">
+                                            <tr>
+                                                <th style="text-align: center">ID</th>
+                                                <th style="text-align: center">Suc. Pedido</th> 
+                                                <th style="text-align: center">Suc. Respuesta</th>
+                                                <th style="text-align: center">Estado</th> 
+                                                <th style="text-align: center">Fecha creación</th> 
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="trans in $data"
+                                                ng-class="{ success: trans.estadoPedido === true }">
+                                                <td style="text-align: center">{{trans.idTransferencia}}</td>
+                                                <td style="text-align: center">
+                                                    <div ng-if="trans.sucursalPedido === 1">Tierra de Colores</div>
+                                                    <div ng-if="trans.sucursalPedido === 2">Bebelandia</div>
+                                                    <div ng-if="trans.sucursalPedido === 3">Libertador</div>
+                                                </td>
+                                                <td style="text-align: center">
+                                                    <div ng-if="trans.sucursalRespuesta === 1">Tierra de Colores</div>
+                                                    <div ng-if="trans.sucursalRespuesta === 2">Bebelandia</div>
+                                                    <div ng-if="trans.sucursalRespuesta === 3">Libertador</div>
+                                                </td>                                                
+                                                <td style="text-align: center">
+                                                    <div ng-if="trans.estadoPedido === true">Resuelto</div>
+                                                    <div ng-if="trans.estadoPedido === false">Sin resolver</div>
+                                                </td>
+                                                <td style="text-align: center">{{trans.fechaCreacion| date:'medium'}}</td>                                                           
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </md-content>
+                        </md-tab>
+                    </md-tabs>
+                </md-content>
+            </div>
+        </div>
+    </div>    
+</div>

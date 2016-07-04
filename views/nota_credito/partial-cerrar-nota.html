@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<div class="distribucion-panel">
+    <div ng-cloak>
+        <md-content md-theme="docs-dark" style="min-height: 598px;">
+            <md-toolbar class="md-warn">
+                <div class="md-toolbar-tools">
+                    <h3 class="modal-title" style="width: 100%;">
+                        <a href="" ng-click="backToNota()" class="pull-right">Volver</a>
+                        Por favor seleccione un cliente.
+                    </h3>
+                </div>
+            </md-toolbar>
+            <md-content flex layout="row">
+                <div flex="20" flex-order="0"></div>
+                <md-content class="md-padding" flex="60" flex-order="1">
+                    <div layout="column" class="md-padding">
+                        <p flex style="text-align: center; font-weight: bold;">Una vez finalizada esta acción no podras deshacerla.</p>
+                        <p flex style="text-align: center;">No es necesario seleccionar un cliente si no dispone de uno registrado.</p>
+                        <form name="cerrarNota" 
+                              ng-controller="ClienteController"
+                              data-ng-init="listaClientes()">
+                            <md-input-container class="md-block md-icon" flex>
+                                <label>Seleccione un cliente</label>
+                                <md-icon class="material-icons">&#xE7EF;</md-icon>
+                                <md-select ng-model="cli"
+                                           ng-model-options="{trackBy: '$value.idCliente'}"
+                                           required name="cliente">                                            
+                                    <md-option ng-value="cliente" 
+                                               ng-repeat="cliente in clientes">{{cliente.nombreCliente}}</md-option>                                            
+                                </md-select>
+                            </md-input-container>
+                            <div flex style="text-align: center;">
+                                <button type="button"
+                                        ng-click="finalizarNotaCredito(cli)"
+                                        class="btn btn-success">Finalizar</button>
+                            </div>
+                        </form>
+                    </div>
+                </md-content>
+            </md-content>
+        </md-content>
+    </div>
+</div>

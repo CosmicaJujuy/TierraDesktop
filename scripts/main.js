@@ -576,12 +576,40 @@ var miAppHome = angular.module('tierraDeColoresApp', [
                                 controller: "DetalleNotaCreditoController"
                             }
                         }
+                    })
+                    .state('detalle_nota_credito.finalizar', {
+                        url: '/nota/:idNota/finalizar',
+                        data: {pageTitle: 'Finalizar detalle nota de credito.'},
+                        resolve: {auth: auth},
+                        templateUrl: "views/nota_credito/partial-cerrar-nota.html",
+                        controller: "DetalleNotaCreditoController"
+                    })
+                    .state('transferencias', {
+                        url: '/transferencias',
+                        data: {pageTitle: 'Panel de transferencias.'},
+                        resolve: {auth: auth},
+                        views: {
+                            'navbar': {
+                                templateProvider: function ($templateRequest, sessionProvider) {
+                                    var templateName;
+                                    if (sessionProvider.getPath() === "admin") {
+                                        templateName = 'views/navbar2.html';
+                                    }
+                                    return $templateRequest(templateName);
+                                },
+                                controller: null
+                            },
+                            'body': {
+                                templateUrl: "views/transferencia/lista-de-transferencias.html",
+                                controller: "TransferenciaController"
+                            }
+                        }
                     });
         })
-        .run(function ($state, $stateParams, $location, $cookies, sessionProvider,$rootScope) {
+        .run(function ($state, $stateParams, $location, $cookies, sessionProvider, $rootScope) {
             var session = require('electron').remote.session;
             var ses = session.fromPartition('persist:name');
-            ses.clearCache(function(response){
+            ses.clearCache(function (response) {
                 console.log(response);
             });
             ses.cookies.get({name: 'token'}, function (error, cookies) {

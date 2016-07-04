@@ -124,6 +124,7 @@ miAppHome.controller('FacturaController',
                     $scope.detalleFacturas = "";
                     $promesa = facturaService.getDetalleFacturaList(idFacturaDetalle);
                     $promesa.then(function (datos) {
+                        console.log(datos);
                         $scope.detalleFacturas = datos.data;
                         var data = datos.data;
                         angular.forEach(data, function (value, key) {
