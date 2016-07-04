@@ -604,6 +604,27 @@ var miAppHome = angular.module('tierraDeColoresApp', [
                                 controller: "TransferenciaController"
                             }
                         }
+                    })
+                    .state('transferencias_detalle', {
+                        url: '/transferencia/:idTransferencia',
+                        data: {pageTitle: 'Detalles de transferencias.'},
+                        resolve: {auth: auth},
+                        views: {
+                            'navbar': {
+                                templateProvider: function ($templateRequest, sessionProvider) {
+                                    var templateName;
+                                    if (sessionProvider.getPath() === "admin") {
+                                        templateName = 'views/navbar2.html';
+                                    }
+                                    return $templateRequest(templateName);
+                                },
+                                controller: null
+                            },
+                            'body': {
+                                templateUrl: "views/transferencia/detalle.html",
+                                controller: "TransferenciaController"
+                            }
+                        }
                     });
         })
         .run(function ($state, $stateParams, $location, $cookies, sessionProvider, $rootScope) {

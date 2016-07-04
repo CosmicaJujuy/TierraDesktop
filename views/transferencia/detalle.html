@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<div md-theme="docs-dark">
+     <div class="col-lg-3">
+        <div layout="column" ng-cloak
+             data-ng-init="datosTransferencia()"
+             class="distribucion-panel">
+            <md-toolbar class="md-warn">
+                <div class="md-toolbar-tools">
+                    <h4 class="md-flex" style="width:100%; text-align: center;">
+                        Datos de transferencias
+                    </h4>
+                </div>
+            </md-toolbar>
+            <md-content flex layout="row">
+                <div class="md-padding" flex>
+                    <form style="text-align: center;">
+                        <div layout="column" flex style="margin-bottom: 0px;" ng-controller="FacturaController">
+                            <p style="font-weight: bolder;">
+                                {{ clock | date:'medium'}}
+                            </p>
+                        </div>                    
+                        <div layout="column" flex class="padd">
+                            <label style="margin-bottom: 0px;">Transferencias hoy</label>
+                            <div>{{0}}</div>
+                        </div>
+                        <div layout="column" flex class="padd" data-ng-init="">
+                            <label style="margin-bottom: 0px;">Resueltas hoy</label>
+                            <div>{{0}}</div>
+                        </div>
+                        <div layout="column" flex class="padd">
+                            <button class="btn btn-block btn-success"
+                                    style="margin-top: 50px; margin-bottom: 8px;"
+                                    ng-click="agregarTransferencia()">Nueva transferencia</button>
+                        </div>
+                    </form>
+                </div>
+            </md-content>
+        </div>
+    </div>
+</div>
