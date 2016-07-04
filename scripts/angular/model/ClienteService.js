@@ -8,7 +8,6 @@ miAppHome.service('clienteService', function ($http, cookieService, $q) {
     this.getAll = function () {
         var datosRecu = null;
         var deferred = $q.defer();
-        var token = $cookies.getObject('token');
         var uri = 'https://tierradecoloresapi.herokuapp.com/cliente/list';
         var token = cookieService.get('token');
         token.then(function (data) {
