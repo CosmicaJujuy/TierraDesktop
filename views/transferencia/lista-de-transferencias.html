@@ -60,7 +60,9 @@
                                         <tbody>
                                             <tr ng-repeat="trans in $data"
                                                 ng-class="{ success: trans.estadoPedido === true }">
-                                                <td style="text-align: center">{{trans.idTransferencia}}</td>
+                                                <td style="text-align: center">
+                                                    <a href="" ui-sref="transferencias_detalle({idTransferencia:{{trans.idTransferencia}}})">{{trans.idTransferencia}}</a>
+                                                </td>
                                                 <td style="text-align: center">
                                                     <div ng-if="trans.sucursalPedido === 1">Tierra de Colores</div>
                                                     <div ng-if="trans.sucursalPedido === 2">Bebelandia</div>
