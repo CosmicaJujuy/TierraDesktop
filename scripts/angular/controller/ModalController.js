@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-miAppHome.controller('ModalController', function ($scope, notaCreditoService, detalleNotaCreditoService, $state, ngDialog, $stateParams, _productoService, toaster, facturaService, $timeout, $rootScope, facturaService) {
+miAppHome.controller('ModalController', function ($scope, detalleTransferenciaService, transferenciaService, notaCreditoService, detalleNotaCreditoService, $state, ngDialog, $stateParams, _productoService, toaster, facturaService, $timeout, $rootScope, facturaService) {
 
     $scope._detalleFactura = {
         "idDetalleFactura": null,
@@ -30,6 +30,14 @@ miAppHome.controller('ModalController', function ($scope, notaCreditoService, de
         notaCredito: null,
         usuarioCreacion: null,
         usuarioModificacion: null
+    };
+
+    $scope.detalleTransferencia = {
+        idTransferencia: null,
+        producto: null,
+        idStock: null,
+        idSucursal: null,
+        cantidad: null
     };
 
     $scope.toUpdateFactura = "";
@@ -129,9 +137,7 @@ miAppHome.controller('ModalController', function ($scope, notaCreditoService, de
             controller: 'ModalController',
             closeByDocument: false,
             closeByEscape: false,
-            data: {
-                item: item
-            }
+            data: {item: item}
         });
     };
 
@@ -412,4 +418,139 @@ miAppHome.controller('ModalController', function ($scope, notaCreditoService, de
             }
         });
     };
+
+    $scope.transferirItem = function (item) {
+        ngDialog.open({
+            template: 'views/transferencia/modal-transferir-item.html',
+            className: 'ngdialog-theme-sm',
+            showClose: false,
+            controller: 'ModalController',
+            closeByDocument: false,
+            closeByEscape: false,
+            data: {item: item}
+        });
+    };
+
+    $scope.confirmarTransferirItem = function (item, cantidad) {
+        if (cantidad <= item.cantidad) {
+            ngDialog.open({
+                template: 'views/transferencia/modal-confirmar-transferir-item.html',
+                className: 'ngdialog-theme-sm',
+                showClose: false,
+                controller: 'ModalController',
+                closeByDocument: false,
+                closeByEscape: false,
+                data: {item: item, cantidad: cantidad}
+            });
+        } else {
+            toaster.pop({
+                type: 'warning',
+                title: '¡Advertencia!',
+                body: 'La cantidad no puede superar al stock actual.',
+                showCloseButton: false
+            });
+        }
+    };
+
+    $scope.finalizarTransferirItem = function (item, cantidad) {
+        $transf = transferenciaService.getById($stateParams.idTransferencia);
+        $transf.then(function (datos) {
+            if (datos.status === 200) {
+                $scope.detalleTransferencia.idTransferencia = datos.data;
+                $scope.detalleTransferencia.producto = item.idProducto;
+                $scope.detalleTransferencia.idStock = item.idStock;
+                $scope.detalleTransferencia.idSucursal = item.idSucursal;
+                $scope.detalleTransferencia.cantidad = cantidad;
+                $add = detalleTransferenciaService.add($scope.detalleTransferencia);
+                $add.then(function (datos) {
+                    if (datos.status === 200) {
+                        ngDialog.closeAll();
+                        $rootScope.$broadcast('reloadTransferencias', {});
+                        toaster.pop({
+                            type: 'success',
+                            title: '¡Exito!',
+                            body: 'Detalle agregado con exito.',
+                            showCloseButton: false
+                        });
+                    } else {
+                        if (datos.status === 500) {
+                            toaster.pop({
+                                type: 'warning',
+                                title: '¡Advertencia!',
+                                body: 'Posiblemente el item ya existe.',
+                                showCloseButton: false
+                            });
+                        }
+                    }
+                });
+            }
+        });
+    };
+
+    $scope.confirmarEliminarDetalleTransferencia = function (detalle) {
+        $delete = detalleTransferenciaService.delete(detalle);
+        $delete.then(function (datos) {
+            if (datos.status === 200) {
+                ngDialog.closeAll();
+                $rootScope.$broadcast('reloadTransferencias', {});
+                toaster.pop({
+                    type: 'success',
+                    title: '¡Exito!',
+                    body: 'Detalle eliminado con exito.',
+                    showCloseButton: false
+                });
+            }
+        });
+    };
+
+    $scope.confirmarModificarDetalleTransferencia = function (detalle) {
+        console.log(detalle);
+        $update = detalleTransferenciaService.update(detalle);
+        $update.then(function (datos) {
+            if (datos.status === 200) {
+                ngDialog.closeAll();
+                $rootScope.$broadcast('reloadTransferencias', {});
+                toaster.pop({
+                    type: 'success',
+                    title: '¡Exito!',
+                    body: 'Detalle modificado con exito.',
+                    showCloseButton: false
+                });
+            } else {
+                ngDialog.closeAll();
+                toaster.pop({
+                    type: 'warning',
+                    title: '¡Advertencia!',
+                    body: datos.data.msg,
+                    showCloseButton: false
+                });
+            }
+        });
+    };
+
+    $scope.confirmarAceptarTransferencia = function () {
+        $approve = transferenciaService.approve($stateParams.idTransferencia);
+        $approve.then(function (datos) {
+            console.log(datos);
+            if (datos.status === 200) {
+                ngDialog.closeAll();
+                $rootScope.$broadcast('reloadTransferenciaDatos', {});
+                toaster.pop({
+                    type: 'success',
+                    title: '¡Exito!',
+                    body: datos.data.msg,
+                    showCloseButton: false
+                });
+            } else {
+                ngDialog.closeAll();
+                toaster.pop({
+                    type: 'warning',
+                    title: '¡Advertencia!',
+                    body: datos.data.msg,
+                    showCloseButton: false
+                });
+            }
+        });
+    };
+
 });

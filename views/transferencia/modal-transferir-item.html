@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<div class="ngdialog-message" md-theme="docs-dark">
+    <md-toolbar class="md-warn">
+        <div class="md-toolbar-tools">
+            <h3 class="modal-title" style="width: 100%; text-align: center;">
+                <div>{{ngDialogData.item.idProducto.descripcion}}</div>    
+            </h3>
+        </div>
+    </md-toolbar>
+    <md-content flex>
+        <md-content class="md-padding" flex>
+            <div layout="column" class="md-padding">
+                <form name="transferirItem">
+                    <md-input-container class="md-block" flex>
+                        <label>Cantidad</label>
+                        <input type="number"
+                               focus-if
+                               ng-model="cantidad"
+                               max="999"
+                               min="0"
+                               placeholder="Ingresa cantidad de items a transferir."
+                               name="cantidad" required/>
+                        <div ng-messages="transferirItem.cantidad.$error"
+                             ng-if='transferirItem.cantidad.$dirty || transferirItem.cantidad.$touched'>
+                            <div ng-message="min">Cantidad demasiado baja.</div>
+                            <div ng-message="max">Cantidad demasiado grande.</div>
+                            <div ng-message="required">Este campo no puede estar vacio.</div>
+                        </div>
+                        <!-- ICONOS DE MENSAJE-->
+                        <span ng-show="transferirItem.cantidad.$dirty && transferirItem.cantidad.$valid" class="glyphicon glyphicon-ok form-control-feedback" ></span>
+                        <span ng-show="transferirItem.cantidad.$dirty && transferirItem.cantidad.$invalid" class="glyphicon glyphicon-remove  form-control-feedback"></span>
+                    </md-input-container>
+                    <div flex style="text-align: center;">
+                        <button type="button"
+                                ng-click="confirmarTransferirItem(ngDialogData.item, cantidad)"
+                                ng-disabled="transferirItem.$invalid"
+                                class="btn btn-success">Transferir</button>
+                    </div>
+                </form>
+            </div>
+        </md-content>
+    </md-content>
+    <md-content flex class="md-padding">
+        <button class="btn btn-md btn-danger pull-right"
+                ng-click="closeThisDialog('')">Cerrar</button>
+    </md-content>
+</div>

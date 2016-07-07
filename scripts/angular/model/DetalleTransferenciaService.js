@@ -27,6 +27,81 @@ miAppHome.service('detalleTransferenciaService', function ($q, $http, cookieServ
         return deferred.promise;
     };
 
+    this.add = function (item) {
+        var datosRecu = null;
+        var deferred = $q.defer();
+        var uri = 'https://tierradecoloresapi.herokuapp.com/transferencia/detalle/add';
+        var token = cookieService.get('token');
+        token.then(function (data) {
+            $http({
+                url: uri,
+                method: 'post',
+                data: angular.toJson(item),
+                headers: {
+                    'Authorization': 'Bearer ' + data,
+                    'Content-type': 'application/json'
+                }
+            }).then(function successCallback(response) {
+                datosRecu = response;
+                deferred.resolve(datosRecu);
+            }, function errorCallback(response) {
+                datosRecu = response;
+                deferred.resolve(datosRecu);
+            });
+        });
+        return deferred.promise;
+    };
+    
+    this.update = function (item) {
+        var datosRecu = null;
+        var deferred = $q.defer();
+        var uri = 'https://tierradecoloresapi.herokuapp.com/transferencia/detalle/update';
+        var token = cookieService.get('token');
+        token.then(function (data) {
+            $http({
+                url: uri,
+                method: 'post',
+                data: angular.toJson(item),
+                headers: {
+                    'Authorization': 'Bearer ' + data,
+                    'Content-type': 'application/json'
+                }
+            }).then(function successCallback(response) {
+                datosRecu = response;
+                deferred.resolve(datosRecu);
+            }, function errorCallback(response) {
+                datosRecu = response;
+                deferred.resolve(datosRecu);
+            });
+        });
+        return deferred.promise;
+    };
+    
+    this.delete = function (item) {
+        var datosRecu = null;
+        var deferred = $q.defer();
+        var uri = 'https://tierradecoloresapi.herokuapp.com/transferencia/detalle/delete';
+        var token = cookieService.get('token');
+        token.then(function (data) {
+            $http({
+                url: uri,
+                method: 'post',
+                data: angular.toJson(item),
+                headers: {
+                    'Authorization': 'Bearer ' + data,
+                    'Content-type': 'application/json'
+                }
+            }).then(function successCallback(response) {
+                datosRecu = response;
+                deferred.resolve(datosRecu);
+            }, function errorCallback(response) {
+                datosRecu = response;
+                deferred.resolve(datosRecu);
+            });
+        });
+        return deferred.promise;
+    };
+
     this.findByParams = function (params) {
         var datosRecu = null;
         var deferred = $q.defer();

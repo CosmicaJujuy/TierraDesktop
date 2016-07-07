@@ -3,6 +3,7 @@
     <div class="col-lg-3">
         <div layout="column" ng-cloak
              data-ng-init="datosTransferencia()"
+             ng-show="transferencia"
              class="distribucion-panel">
             <md-toolbar class="md-warn">
                 <div class="md-toolbar-tools">
@@ -17,6 +18,16 @@
                         <div layout="column" flex style="margin-bottom: 0px;" ng-controller="FacturaController">
                             <p style="font-weight: bolder;">
                                 {{ clock | date:'medium'}}
+                            </p>
+                        </div>
+                        <div layout="column" flex style="margin-bottom: 0px;"
+                             ng-controller="UsuarioController"
+                             data-ng-init="detailUsuario()">
+                            <p style="font-weight: bolder;">
+                                {{user.nombre}} {{user.apellido}}
+                            </p>
+                            <p style="font-weight: bolder;">
+                                {{user.usuarioSucursal.nombreSucursal}}
                             </p>
                         </div>
                         <div layout="column" flex class="padd">
@@ -41,19 +52,21 @@
                             <div ng-if="transferencia.sucursalRespuesta === 1">Tierra de colores</div>
                             <div ng-if="transferencia.sucursalRespuesta === 2">Bebelandia</div>
                             <div ng-if="transferencia.sucursalRespuesta === 3">Libertador</div>
+                            <div ng-if="transferencia.sucursalRespuesta === 4">Aprobado por administrador</div>
                             <div ng-if="transferencia.sucursalRespuesta === 0">En espera</div>
                         </div>
                         <div layout="column" flex class="padd">
                             <button class="btn btn-block btn-success"
+                                    ng-disabled="transferencia.estadoPedido === true"
                                     style="margin-top: 50px; margin-bottom: 8px;"
-                                    ng-click="">Aceptar transferencia</button>
+                                    ng-click="aceptarTransferencia()">Aceptar transferencia</button>
                         </div>
                     </form>
                 </div>
             </md-content>
         </div>
     </div>
-    <div class="col-lg-9">
+    <div class="col-lg-9" ng-show="transferencia">
         <div class="distribucion-panel">
             <div ng-cloak>
                 <md-content md-theme="docs-dark" style="min-height: 598px;">
@@ -61,6 +74,7 @@
                         <div class="md-toolbar-tools" layout="row" flex>                            
                             <h3 flex class="modal-title">Lista de productos solicitados</h3>                        
                             <md-switch ng-model="oculto" flex="20"
+                                       ng-change="cleanBusqAvanzada()"
                                        aria-label="Switch"
                                        class="md-primary">
                                 <div ng-if="oculto === false">Busq. normal</div>
@@ -86,11 +100,13 @@
                                                            md-maxlength="40"
                                                            maxlength="40"
                                                            name="descripcion"
+                                                           ng-disabled="transferencia.estadoPedido === true"
                                                            ng-model="busq.descripcion"
                                                            placeholder="Ingresa una descripción"/>
                                                 </md-input-container>
                                                 <div>
                                                     <md-button class="md-raised"
+                                                               ng-disabled="transferencia.estadoPedido === true"
                                                                ng-click="buscarStock(busq)"
                                                                type="search">
                                                         Buscar <span class="glyphicon glyphicon-search"></span>
@@ -111,6 +127,7 @@
                                                 <th>Cantidad</th>
                                                 <th ng-hide="oculto">Talla</th>
                                                 <th>Color</th>
+                                                <th ng-hide="oculto">Sucursal</th>
                                                 <th ng-hide="oculto">Acciones</th>
                                             </tr>
                                         </thead>
@@ -122,8 +139,20 @@
                                                 <td ng-hide="oculto">{{detalle.producto.talla}}</td>
                                                 <td>{{detalle.producto.colorProducto}}</td>
                                                 <td ng-hide="oculto">
-                                                    <button class="btn btn-xs btn-danger">
+                                                    <div ng-if="detalle.idSucursal === 1">Tierra de colores</div>
+                                                    <div ng-if="detalle.idSucursal === 2">Bebelandia</div>
+                                                    <div ng-if="detalle.idSucursal === 3">Libertador</div>
+                                                </td>
+                                                <td ng-hide="oculto">
+                                                    <button class="btn btn-xs btn-danger"
+                                                            ng-disabled="transferencia.estadoPedido === true"
+                                                            ng-click="eliminarDetalleTransferencia(detalle)">
                                                         <span class="glyphicon glyphicon-remove"></span>
+                                                    </button>
+                                                    <button class="btn btn-xs btn-warning"
+                                                            ng-disabled="transferencia.estadoPedido === true"
+                                                            ng-click="modificarDetalleTransferencia(detalle)">
+                                                        <span class="glyphicon glyphicon-cog"></span>
                                                     </button>
                                                 </td>                                                                                              
                                             </tr>
@@ -198,6 +227,7 @@
                                             </md-radio-group>
                                             <div>
                                                 <md-button class="md-raised"
+                                                           ng-disabled="transferencia.estadoPedido === true"
                                                            ng-click="buscarStock(busq)"
                                                            type="search">
                                                     Buscar <span class="glyphicon glyphicon-search"></span>
