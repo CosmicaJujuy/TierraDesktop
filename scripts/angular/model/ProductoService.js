@@ -163,7 +163,6 @@ miAppHome.service('_productoService', function ($http, $q, cookieService, $rootS
         var deferred = $q.defer();
         var uri = 'https://tierradecoloresapi.herokuapp.com/producto/stock';
         var token = cookieService.get('token');
-        var list;
         token.then(function (data) {
             $http({
                 url: uri,

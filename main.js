@@ -17,8 +17,11 @@ function createWindow() {
         width: 780,
         height: 350,
         resizable: false,
-        movable: false
+        movable: false,
+        icon: __dirname + '/styles/images/app.png'
     });
+    //mainWindow.setIcon( __dirname + '/styles/images/appIcon.png');
+    
     mainWindow.loadURL(`file://${__dirname}/index.html`);
     mainWindow.on('closed', function () {
         mainWindow = null;
