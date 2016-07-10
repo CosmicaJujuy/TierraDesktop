@@ -1,8 +1,0 @@
-{
-	"version": "0.1.0",
-	"command": "electron",
-	"isShellCommand": true,
-	"args": [
-		"main.js", "--debug-brk=48736", "--debug=5858"
-	]
-}
