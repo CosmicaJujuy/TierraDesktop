@@ -3,8 +3,7 @@
  * @param {type} param1
  * @param {type} param2
  */
-miAppHome.controller('ProductoController', function (
-        $scope,
+miAppHome.controller('ProductoController', function ($scope,
         ngDialog,
         localStorageService,
         $state,
@@ -105,7 +104,7 @@ miAppHome.controller('ProductoController', function (
     };
 
     /**
-     * Funcion encargada de enlistar los Productos disponibles en la base de 
+     * Funcion encargada de enlistar los Productos disponibles en la base de
      * datos
      * @returns {undefined}
      */
@@ -131,6 +130,7 @@ miAppHome.controller('ProductoController', function (
         }
         $promesa = _productoService.getAll();
         $promesa.then(function (datos) {
+            console.log(datos);
             if (datos.status === 200) {
                 localStorageService.set('localStorageProductos', datos.data);
                 if ($scope.productos === null) {
@@ -205,7 +205,7 @@ miAppHome.controller('ProductoController', function (
     };
 
     /**
-     * 
+     *
      * @param {type} idCategoria
      * @param {type} idMarca
      * @returns {undefined}
@@ -227,32 +227,41 @@ miAppHome.controller('ProductoController', function (
     };
 
     /**
-     * Funcion eliminar Producto 
+     * Funcion eliminar Producto
+     * @param {object} producto objeto producto a modificar
      * @returns {undefined}
      */
-    $scope.eliminarProducto = function () {
-        var idProducto = $stateParams.idProducto;
-        $producto = _productoService.searchById(idProducto);
-        $producto.then(function (datos) {
+    $scope.eliminarProductoDetalle = function (producto) {
+        ngDialog.open({
+            template: 'views/producto/modal-confirmar-eliminar-producto-detalle.html',
+            className: 'ngdialog-theme-sm',
+            showClose: false,
+            controller: 'ProductoController',
+            closeByDocument: false,
+            closeByEscape: false,
+            data: {producto: producto}
+        });
+    };
+
+    $scope.confirmarEliminarProductoDetalle = function (producto) {
+        $promesa = _productoService.delete(producto);
+        $promesa.then(function (datos) {
+            console.log(datos);
+            ngDialog.closeAll();
             if (datos.status === 200) {
-                $promesa = _productoService.delete(datos.data);
-                $promesa.then(function (datos) {
-                    if (datos.status === 200) {
-                        toaster.pop({
-                            type: 'success',
-                            title: 'Exito',
-                            body: 'Producto eliminado correctamente.',
-                            showCloseButton: false
-                        });
-                        $state.go('productos');
-                    } else {
-                        toaster.pop({
-                            type: 'error',
-                            title: 'Error',
-                            body: "¡Op's algo paso!, comunicate con el administrador.",
-                            showCloseButton: false
-                        });
-                    }
+                toaster.pop({
+                    type: 'success',
+                    title: 'Exito',
+                    body: 'Producto eliminado correctamente.',
+                    showCloseButton: false
+                });
+                $state.go('productos');
+            } else {
+                toaster.pop({
+                    type: 'error',
+                    title: 'Error',
+                    body: "Este producto ya ha sido usado y/o distribuido.",
+                    showCloseButton: false
                 });
             }
         });
@@ -268,14 +277,33 @@ miAppHome.controller('ProductoController', function (
         $scope.__producto.fechaProducto = new Date(producto.fechaProducto);
     };
 
+    $scope.editarProducto = true;
+    $scope.hidePanelProducto = function (producto) {
+        $scope.productoEdit = producto;
+        $scope.editarProducto = false;
+    };
+
     /**
      * Funcion modificar Producto existente en la base de datos.
-     * @param {type} producto objeto producto recibido desde la vista 
+     * @param {type} producto objeto producto recibido desde la vista
      * @returns {undefined}
      */
-    $scope._modificarProducto = function (producto) {
+    $scope.modificarProducto = function (producto) {
+        ngDialog.open({
+            template: 'views/producto/modal-modificar-producto.html',
+            className: 'ngdialog-theme-sm',
+            showClose: false,
+            controller: 'ProductoController',
+            closeByDocument: false,
+            closeByEscape: false,
+            data: {producto: producto}
+        });
+    };
+
+    $scope.confirmarModificarProducto = function (producto) {
         $promesa = _productoService.update(producto);
         $promesa.then(function (datos) {
+            ngDialog.closeAll();
             if (datos.status === 200) {
                 toaster.pop({
                     type: 'success',
@@ -316,6 +344,7 @@ miAppHome.controller('ProductoController', function (
         var idProducto = $stateParams.idProducto;
         $promesa = _productoService.searchById(idProducto);
         $promesa.then(function (datos) {
+            console.log(datos);
             if (datos.status !== 200) {
                 $state.go('productos');
             } else {
@@ -325,7 +354,7 @@ miAppHome.controller('ProductoController', function (
     };
 
     /**
-     * Funcion encargada de mandar a imprimir un div que contiene el codigo de 
+     * Funcion encargada de mandar a imprimir un div que contiene el codigo de
      * barra de un Producto.
      * @param {type} divName id del div a imprimir
      * @returns {undefined}
@@ -338,8 +367,8 @@ miAppHome.controller('ProductoController', function (
 //        window.webContents.print();
     };
     /**
-     * configuracion para la busqueda dinamica de Productos para la directiva 
-     * select 
+     * configuracion para la busqueda dinamica de Productos para la directiva
+     * select
      */
     $scope.select2Config = {
         mode: 'object',

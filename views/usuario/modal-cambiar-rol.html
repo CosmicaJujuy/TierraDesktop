@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<div class="ngdialog-message ngdialog-sm" md-theme="docs-dark">
+    <md-toolbar class="md-warn">
+        <div class="md-toolbar-tools">
+            <h3 class="modal-title" style="width: 100%; text-align: center;">
+                {{items.nombre}} {{items.apellido}}
+            </h3>
+        </div>
+    </md-toolbar>
+    <md-content flex style="width: 400px; height: 250px">
+        <md-content class="md-padding" flex>
+            <p flex style="text-align: center; font-weight: bold;">Cambiar rol de usuario.</p>
+            <form name="changeRol" style="margin-top: 40px;">
+                <md-input-container style="min-height: 58px;" class="md-icon md-block"
+                                    flex ng-controller="UsuarioController" data-ng-init="listaRol()">
+                    <label>Roles</label>
+                    <md-select ng-model="items.roles"
+                               placeholder="Sucursales"
+                               ng-model-options="{trackBy: '$value.idRol'}"
+                               data-ng-init="items.roles"
+                               required name="rol">                                            
+                        <md-option ng-value="rol"
+                                   ng-repeat="rol in roles">{{rol.nombreRol}}</md-option>                                            
+                    </md-select>
+                </md-input-container>
+                <div flex style="text-align: center;">
+                    <button ng-click="confirmarCambiarRol(items.idUsuario, items.roles)"
+                            class="btn btn-success">Cambiar</button>
+                </div>
+            </form>
+        </md-content>
+    </md-content>
+    <md-content flex class="md-padding">
+        <button class="btn btn-md btn-danger pull-right"
+                ng-click="closeDialog()">Cerrar</button>
+    </md-content>
+</div> 

@@ -395,6 +395,7 @@ miAppHome.controller('FacturaController',
                     });
                 };
 
+                $scope.panelCliente = true;
                 $scope.agregarCliente = function (cliente) {
                     console.log(cliente);
                     $addCliente = clienteService.add(cliente);
@@ -419,7 +420,7 @@ miAppHome.controller('FacturaController',
                                         showCloseButton: false
                                     });
                                     $timeout(function timer() {
-                                        $scope.clientElement.open = !$scope.clientElement.open;
+                                        $scope.panelCliente = true;
                                     }, 2000);
                                 }
                             });

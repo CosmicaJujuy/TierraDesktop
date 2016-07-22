@@ -4,7 +4,7 @@
  * @param {type} param1
  * @param {type} param2
  */
-miAppHome.controller('ProveedorController', function ($scope, cookieService, NgTableParams, toaster, $state, $stateParams, $http, $timeout, _proveedorService) {
+miAppHome.controller('ProveedorController', function ($scope, ngDialog, cookieService, NgTableParams, toaster, $state, $stateParams, $http, $timeout, _proveedorService) {
 
     /**
      * Modelo de objeto Proveedor utilizado para agregar nuevos proveedores
@@ -97,30 +97,18 @@ miAppHome.controller('ProveedorController', function ($scope, cookieService, NgT
     /**
      * Funcion eliminar Proveedor, encargada de deshabilitar un proveedor en la 
      * base de datos.
-     * 
+     * @param {obj} proveedor description
      * @returns {undefined}
      */
-    $scope.eliminarProveedor = function () {
-        $promesa = _proveedorService.delete($scope.__proveedor);
-        $promesa.then(function (datos) {
-            if (datos.status === 200) {
-                toaster.pop({
-                    type: 'success',
-                    title: 'Exito',
-                    body: 'Proveedor eliminado exitosamente',
-                    showCloseButton: false
-                });
-                $timeout(function timer() {
-                    $state.go($state.current, {}, {reload: true});
-                }, 1000);
-            } else {
-                toaster.pop({
-                    type: 'error',
-                    title: 'Error',
-                    body: "¡Op's algo paso!, comunicate con el administrador.",
-                    showCloseButton: false
-                });
-            }
+    $scope.eliminarProveedor = function (proveedor) {
+        ngDialog.open({
+            template: 'views/proveedor/modal-confirmar-eliminar-proveedor.html',
+            className: 'ngdialog-theme-sm',
+            showClose: false,
+            controller: 'ModalController',
+            closeByDocument: false,
+            closeByEscape: false,
+            data: {proveedor: proveedor}
         });
     };
 
@@ -140,29 +128,33 @@ miAppHome.controller('ProveedorController', function ($scope, cookieService, NgT
      * @param {type} proveedor
      * @returns {undefined}
      */
-    $scope._modificarProveedor = function (proveedor) {
-        $promesa = _proveedorService.update(proveedor);
-        $promesa.then(function (datos) {
-            if (datos.status === 200) {
-                toaster.pop({
-                    type: 'success',
-                    title: 'Exito',
-                    body: 'Proveedor modificado exitosamente',
-                    showCloseButton: false
-                });
-                $timeout(function timer() {
-                    $state.go($state.current, {}, {reload: true});
-                }, 1000);
-            } else {
-                toaster.pop({
-                    type: 'error',
-                    title: 'Error',
-                    body: "¡Op's algo paso!, comunicate con el administrador.",
-                    showCloseButton: false
-                });
-            }
+    $scope.modificarProveedor = function (proveedor) {
+        ngDialog.open({
+            template: 'views/proveedor/modal-modificar-proveedor.html',
+            className: 'ngdialog-theme-flat',
+            showClose: false,
+            controller: 'ModalController',
+            closeByDocument: false,
+            closeByEscape: false,
+            data: {proveedor: proveedor}
         });
     };
+
+    $scope.$on('reloadProveedores', function () {
+        if ($state.current.name === 'proveedor_detalle') {
+            $timeout(function timer() {
+                $state.go($state.current, {}, {reload: true});
+            }, 1000);
+        } else {
+            $promesa = _proveedorService.getAll();
+            $promesa.then(function (datos) {
+                if (datos.status === 200) {
+                    $scope.proveedores = datos.data;
+                    $scope.tableProveedores.reload();
+                }
+            });
+        }
+    });
 
     /**
      * Funcion buscar proveedor, busca un proveedor apartir del id del proveedor

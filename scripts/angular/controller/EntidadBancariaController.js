@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-miAppHome.controller('EntidadBancariaController', function ($scope, $timeout, $state, NgTableParams, toaster, entidadBancariaService) {
+miAppHome.controller('EntidadBancariaController', function ($scope, ngDialog, $timeout, $state, NgTableParams, toaster, entidadBancariaService) {
 
     /**
      * Objeto modelo para entidad bancaria
@@ -90,58 +90,42 @@ miAppHome.controller('EntidadBancariaController', function ($scope, $timeout, $s
      * @returns {undefined}
      */
     $scope.modificarEntidad = function (entidad) {
-        $promesa = entidadBancariaService.update(entidad);
-        $promesa.then(function (datos) {
-            if (datos.status === 200) {
-                entidadBancariaService.getAll().then(function (datos) {
-                    $scope.entidadBancarias = datos.data;
-                    $scope.tableEntidades.reload();
-                });
-                toaster.pop({
-                    type: 'success',
-                    title: 'Exito',
-                    body: 'Entidad modificada con exito.',
-                    showCloseButton: false
-                });
-            } else {
-                toaster.pop({
-                    type: 'error',
-                    title: 'Error',
-                    body: "¡Op's algo paso!, comunicate con el administrador.",
-                    showCloseButton: false
-                });
-            }
+        ngDialog.open({
+            template: 'views/banco/modal-modificar-entidad.html',
+            className: 'ngdialog-theme-flat',
+            showClose: false,
+            controller: 'ModalController',
+            closeByDocument: false,
+            closeByEscape: false,
+            data: {entidad: entidad}
         });
+
     };
 
     /**
      * funcion eliminar entidad bancaria, pasa a estado "false" en la base de
      *  datos (borrado logico)
+     * @param {type} entidad
      * @returns {undefined}
      */
-    $scope.eliminarEntidad = function () {
-        $promesa = entidadBancariaService.delete($scope.entidadSeleccionada);
-        $promesa.then(function (datos) {
-            if (datos.status === 200) {
-                entidadBancariaService.getAll().then(function (datos) {
-                    $scope.entidadBancarias = datos.data;
-                    $scope.tableEntidades.reload();
-                });
-                toaster.pop({
-                    type: 'success',
-                    title: 'Exito',
-                    body: 'Entidad eliminada con exito.',
-                    showCloseButton: false
-                });
-            } else {
-                toaster.pop({
-                    type: 'error',
-                    title: 'Error',
-                    body: "¡Op's algo paso!, comunicate con el administrador.",
-                    showCloseButton: false
-                });
-            }
-        });
+    $scope.eliminarEntidad = function (entidad) {
+        ngDialog.open({
+            template: 'views/banco/modal-eliminar-entidad.html',
+            className: 'ngdialog-theme-sm',
+            showClose: false,
+            controller: 'ModalController',
+            closeByDocument: false,
+            closeByEscape: false,
+            data: {entidad: entidad}
+        });        
     };
+
+    $scope.$on('reloadEntidades', function () {
+        $update = entidadBancariaService.getAll();
+        $update.then(function (datos) {
+            $scope.entidadBancarias = datos.data;
+            $scope.tableEntidades.reload();
+        });
+    });
 });
 

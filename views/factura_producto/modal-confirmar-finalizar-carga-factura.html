@@ -1,25 +1,26 @@
 <!DOCTYPE html>
-<div class="ngdialog-message ngdialog-advertencia" style="width: 400px;">
-    <div class="modal-header">
-        <center>
-            <h3 class="modal-title" style="font-size: medium;">FINALIZAR CARGA</h3>
-        </center>
-    </div>
-    <div class="modal-body">        
-        <center>
-            <div class="well">
-                <p style="font-size: small; text-transform: uppercase; color: #c12e2a;">Una vez finalizada esta acción no podras deshacer los cambios.</p>
-                <form class="form-horizontal">
-                    <div class="form-group">
-                        <span class="control-label" style="font-size: medium;">¿Estas seguro de que quieres continuar?</span>
+<div class="ngdialog-message ngdialog-advertencia" md-theme="docs-dark">
+    <md-toolbar class="md-warn">
+        <div class="md-toolbar-tools">
+            <h3 class="modal-title" style="width: 100%; text-align: center;">FINALIZAR CARGA</h3>
+        </div>
+    </md-toolbar>
+    <md-content flex>
+        <md-content class="md-padding" flex>
+            <md-whiteframe class="md-whiteframe-24dp"
+                           style="min-height: 250px;"                           
+                           layout layout-align="center center">
+                <form style="text-align: center;">
+                    <div flex class="md-padding">
+                        <span style="font-size: medium; font-weight: bold;">¿Estas seguro de que quieres finalizar?</span>
+                        <p style="font-size: small;">Una vez finalizada esta acción no podras deshacer los cambios.</p>
                     </div>
-                    <button class="btn btn-md btn-success" style="width: 50px;" ng-click="finalizarCargaFactura()">Si</button>
-                    <button class="btn btn-md btn-danger" style="width: 50px;" ng-click="closeThisDialog(0)">No</button>
+                    <div flex class="md-padding">
+                        <button class="btn btn-md btn-success" style="width: 50px;" ng-click="finalizarCargaFactura()">Si</button>
+                        <button class="btn btn-md btn-danger" style="width: 50px;" ng-click="closeThisDialog(0)">No</button>
+                    </div>
                 </form>
-            </div>
-        </center>        
-    </div>
-    <div class="modal-footer">
-
-    </div>
+            </md-whiteframe>
+        </md-content>
+    </md-content>
 </div>

@@ -4,7 +4,7 @@
  * @param {type} param1
  * @param {type} param2
  */
-miAppHome.controller('MarcaController', function ($scope, cookieService, $state, toaster, $http, NgTableParams, $timeout, $cookies, _marcaService, $rootScope) {
+miAppHome.controller('MarcaController', function ($scope, ngDialog, cookieService, $state, toaster, $http, NgTableParams, $timeout, $cookies, _marcaService, $rootScope) {
 
     /**
      * Modelo de objecto Marca usado en la vista para agregar nuevas Marcas.
@@ -84,31 +84,20 @@ miAppHome.controller('MarcaController', function ($scope, cookieService, $state,
     };
 
     /**
-     * Funcion eliminar Marca     
+     * Funcion eliminar Marca  
+     * @param marca    
      * @returns {undefined}
      */
-    $scope.eliminarMarca = function () {
-        $promesa = _marcaService.deleteMarca($scope.__marca);
-        $promesa.then(function (datos) {
-            if (datos.status === 200) {
-                toaster.pop({
-                    type: 'success',
-                    title: 'Exito',
-                    body: 'Marca eliminada con exito.',
-                    showCloseButton: false
-                });
-                $timeout(function timer() {
-                    $state.go($state.current, {}, {reload: true});
-                }, 1000);
-            } else {
-                toaster.pop({
-                    type: 'error',
-                    title: 'Error',
-                    body: "¡Op's algo paso!, comunicate con el administrador.",
-                    showCloseButton: false
-                });
-            }
-        });
+    $scope.eliminarMarca = function (marca) {
+        ngDialog.open({
+            template: 'views/marcas/modal-confirmar-eliminar-marca.html',
+            className: 'ngdialog-theme-sm',
+            showClose: false,
+            controller: 'ModalController',
+            closeByDocument: false,
+            closeByEscape: false,
+            data: {marca: marca}
+        });        
     };
 
     /**
@@ -120,35 +109,37 @@ miAppHome.controller('MarcaController', function ($scope, cookieService, $state,
         $scope.__marca = marca;
     };
 
+    $scope.panelMarcaEdit = true;
+    $scope.hidePanelMarca = function (marca) {
+        $scope.editMarca = marca;
+        $scope.panelMarcaEdit = false;
+    };
+
     /**
      * Funcion modificar Marca
      * @param {type} marca objeto Marca recibido desde la vista.
      * @returns {undefined}
      */
-    $scope._modificarMarca = function (marca) {
-        $promesa = _marcaService.updateMarca(marca);
-        $promesa.then(function (datos) {
-            if (datos.status === 200) {
-                toaster.pop({
-                    type: 'success',
-                    title: 'Exito',
-                    body: 'Marca modificada con exito.',
-                    showCloseButton: false
-                });
-                $timeout(function timer() {
-                    $state.go($state.current, {}, {reload: true});
-                }, 1000);
-            } else {
-                toaster.pop({
-                    type: 'error',
-                    title: 'Error',
-                    body: "¡Op's algo paso!, comunicate con el administrador.",
-                    showCloseButton: false
-                });
-            }
+    $scope.modificarMarca = function (marca) {    
+        ngDialog.open({
+            template: 'views/marcas/modal-confirmar-modificar-marca.html',
+            className: 'ngdialog-theme-sm',
+            showClose: false,
+            controller: 'ModalController',
+            closeByDocument: false,
+            closeByEscape: false,
+            data: {marca: marca}
         });
     };
 
+    $scope.$on('reloadMarcas', function () {
+        $scope.panelMarcaEdit = true;
+        $reload = _marcaService.getListaMarcas();
+        $reload.then(function (datos) {
+            $scope.marcas = datos.data;
+            $scope.tableMarcas.reload();
+        });
+    });
 
     /**
      * Configuraciones del objeto select en la vista, encargado de buscar 

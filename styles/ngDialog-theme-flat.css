@@ -62,8 +62,8 @@
 
 .ngdialog.ngdialog-theme-flat {
     /*font-size: 1.5em;*/
-    padding-bottom: 100px;
-    padding-top: 100px;
+    padding-bottom: 50px;
+    padding-top: 50px;
     -webkit-perspective: 1300px;
     -ms-perspective: 1300px;
     perspective: 1300px;
@@ -146,7 +146,7 @@
     animation: ngdialog-flipin-horizontal .5s;
     background: #fff;
     color: #444;
-    border: 2px solid rgb(63,81,181);
+    border: 2px solid purple;
     font-family: "Helvetica Neue",sans-serif;
     line-height: 1.5em;
     margin: 0 auto;
@@ -157,6 +157,7 @@
     -ms-transform-style: preserve-3d;
     transform-style: preserve-3d;
     width: 600px;
+    box-shadow: 0 7px 8px -4px rgba(0,0,0,.2),0 13px 19px 2px rgba(0,0,0,.14),0 5px 24px 4px rgba(0,0,0,.12);
 }
 
 .ngdialog.ngdialog-theme-advertencia .ngdialog-content {
@@ -164,7 +165,7 @@
     animation: ngdialog-flipin-horizontal .5s;
     background: #fff;
     color: #444;
-    border: 2px solid rgb(63,81,181);
+    border: 2px solid purple;
     font-family: "Helvetica Neue",sans-serif;
     line-height: 1.5em;
     margin: 0 auto;
@@ -175,6 +176,7 @@
     -ms-transform-style: preserve-3d;
     transform-style: preserve-3d;
     width: 400px;
+    box-shadow: 0 7px 8px -4px rgba(0,0,0,.2),0 13px 19px 2px rgba(0,0,0,.14),0 5px 24px 4px rgba(0,0,0,.12);
 }
 /*LARGE*/
 .ngdialog.ngdialog-theme-lg .ngdialog-content {
@@ -182,7 +184,7 @@
     animation: ngdialog-flipin-horizontal .5s;
     background: #fff;
     color: #444;
-    border: 2px solid rgb(63,81,181);
+    border: 2px solid purple;
     font-family: "Helvetica Neue",sans-serif;
     line-height: 1.5em;
     margin: 0 auto;
@@ -193,6 +195,7 @@
     -ms-transform-style: preserve-3d;
     transform-style: preserve-3d;
     width: 900px;
+    box-shadow: 0 7px 8px -4px rgba(0,0,0,.2),0 13px 19px 2px rgba(0,0,0,.14),0 5px 24px 4px rgba(0,0,0,.12);
 }
 /*SMALL*/
 .ngdialog.ngdialog-theme-sm .ngdialog-content {
@@ -211,6 +214,7 @@
     -ms-transform-style: preserve-3d;
     transform-style: preserve-3d;
     width: 400px;
+    box-shadow: 0 7px 8px -4px rgba(0,0,0,.2),0 13px 19px 2px rgba(0,0,0,.14),0 5px 24px 4px rgba(0,0,0,.12);
 }
 
 .ngdialog.ngdialog-theme-flat .ngdialog-close {

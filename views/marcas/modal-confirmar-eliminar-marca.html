@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<div class="ngdialog-message ngdialog-advertencia" md-theme="docs-dark">
+    <md-toolbar class="md-warn">
+        <div class="md-toolbar-tools">
+            <h3 class="modal-title" style="width: 100%; text-align: center;">ELIMINAR</h3>
+        </div>
+    </md-toolbar>
+    <md-content flex>
+        <md-content class="md-padding" flex>
+            <md-whiteframe class="md-whiteframe-24dp"
+                           style="min-height: 250px;"                           
+                           layout layout-align="center center">
+                <form style="text-align: center;">
+                    <div flex class="md-padding">
+                        <span style="font-size: medium; font-weight: bold;">¿Estas seguro de que quieres eliminar esta marca?</span>
+                    </div>
+                    <div flex class="md-padding">
+                        <button class="btn btn-md btn-success" style="width: 50px;" ng-click="confirmarEliminarMarca(ngDialogData.marca)">Si</button>
+                        <button class="btn btn-md btn-danger" style="width: 50px;" ng-click="closeThisDialog(0)">No</button>
+                    </div>
+                </form>
+            </md-whiteframe>
+        </md-content>
+    </md-content>    
+</div>

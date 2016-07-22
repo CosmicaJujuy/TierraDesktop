@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<div class="ngdialog-message ngdialog-sm" md-theme="docs-dark">
+    <md-toolbar class="md-warn">
+        <div class="md-toolbar-tools">
+            <h3 class="modal-title" style="width: 100%; text-align: center;">
+                {{items.nombre}} {{items.apellido}}
+            </h3>
+        </div>
+    </md-toolbar>
+    <md-content flex style="width: 400px; height: 250px">
+        <md-content class="md-padding" flex>
+            <p flex style="text-align: center; font-weight: bold;">Transferir de sucursal</p>
+            <form name="changeSucursal" style="margin-top: 40px;">
+                <md-input-container style="min-height: 58px;" class="md-icon md-block" flex ng-controller="UsuarioController" data-ng-init="listaSucursales()">
+                    <label>Sucursales</label>
+                    <md-select ng-model="items.usuarioSucursal"
+                               placeholder="Sucursales"
+                               ng-model-options="{trackBy: '$value.idSucursal'}"
+                               data-ng-init="items.usuarioSucursal"
+                               required name="sucursal">                                            
+                        <md-option ng-value="sucursal"
+                                   ng-repeat="sucursal in sucursales">{{sucursal.nombreSucursal}}</md-option>                                            
+                    </md-select>
+                </md-input-container>
+                <div flex style="text-align: center;">
+                    <button ng-click="confirmarCambiarSucursal(items.idUsuario, items.usuarioSucursal)"
+                            class="btn btn-success">Transferir</button>
+                </div>
+            </form>
+        </md-content>
+    </md-content>
+    <md-content flex class="md-padding">
+        <button class="btn btn-md btn-danger pull-right"
+                ng-click="closeDialog()">Cerrar</button>
+    </md-content>
+</div> 

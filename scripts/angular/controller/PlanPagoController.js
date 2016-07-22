@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-miAppHome.controller('PlanPagoController', function ($scope, $timeout, toaster, $state, NgTableParams, planPagoService) {
+miAppHome.controller('PlanPagoController', function ($scope, ngDialog, $timeout, toaster, $state, NgTableParams, planPagoService) {
 
     $scope._planPago = {
         "idPlanesPago": null,
@@ -70,6 +70,23 @@ miAppHome.controller('PlanPagoController', function ($scope, $timeout, toaster, 
         $scope.planSeleccionado.fechaInicioPlanes = new Date(planPago.fechaInicioPlanes);
     };
 
+    $scope.panelPlanEdit = true;
+    $scope.hidePanelPlan = function (planes) {
+        if (angular.isDate(planes.fechaInicioPlanes) && angular.isDate(planes.fechaFinalizacionPlanes)) {
+            $scope.editPlanPago = planes;
+            $scope.panelPlanEdit = false;
+        } else {
+            var splited = planes.fechaInicioPlanes.split("-");
+            var splited2 = planes.fechaFinalizacionPlanes.split("-");
+            var dateInicio = new Date(splited[0], splited[1] - 1, splited[2]);
+            var dateFinalizacion = new Date(splited2[0], splited2[1] - 1, splited2[2]);
+            $scope.editPlanPago = planes;
+            $scope.editPlanPago.fechaInicioPlanes = dateInicio;
+            $scope.editPlanPago.fechaFinalizacionPlanes = dateFinalizacion;
+            $scope.panelPlanEdit = false;
+        }
+    };
+
     $scope.agregarPlan = function (planPago) {
         $promesa = planPagoService.add(planPago);
         $promesa.then(function (datos) {
@@ -95,54 +112,36 @@ miAppHome.controller('PlanPagoController', function ($scope, $timeout, toaster, 
     };
 
     $scope.modificarPlan = function (planPago) {
-        $promesa = planPagoService.update(planPago);
-        $promesa.then(function (datos) {
-            if (datos.status === 200) {
-                planPagoService.getAll().then(function (datos) {
-                    $scope.planes = datos.data;
-                    $scope.tablePlanes.reload();
-                });
-                toaster.pop({
-                    type: 'success',
-                    title: 'Exito',
-                    body: 'Plan de pago modificado exitosamente',
-                    showCloseButton: false
-                });
-            } else {
-                toaster.pop({
-                    type: 'error',
-                    title: 'Error',
-                    body: "¡Op's algo paso!, comunicate con el administrador.",
-                    showCloseButton: false
-                });
-            }
+        ngDialog.open({
+            template: 'views/planes/modal-confirmar-modificar-plan.html',
+            className: 'ngdialog-theme-sm',
+            showClose: false,
+            controller: 'ModalController',
+            closeByDocument: false,
+            closeByEscape: false,
+            data: {planPago: planPago}
         });
     };
 
-    $scope.eliminarPlan = function () {
-        $promesa = planPagoService.delete($scope.planSeleccionado);
-        $promesa.then(function (datos) {
-            if (datos.status === 200) {
-                planPagoService.getAll().then(function (datos) {
-                    $scope.planes = datos.data;
-                    $scope.tablePlanes.reload();
-                });
-                toaster.pop({
-                    type: 'success',
-                    title: 'Exito',
-                    body: 'Plan de pago eliminado exitosamente',
-                    showCloseButton: false
-                });
-            } else {
-                toaster.pop({
-                    type: 'error',
-                    title: 'Error',
-                    body: "¡Op's algo paso!, comunicate con el administrador.",
-                    showCloseButton: false
-                });
-            }
+    $scope.eliminarPlan = function (planPago) {
+        ngDialog.open({
+            template: 'views/planes/modal-confirmar-eliminar-plan.html',
+            className: 'ngdialog-theme-sm',
+            showClose: false,
+            controller: 'ModalController',
+            closeByDocument: false,
+            closeByEscape: false,
+            data: {planPago: planPago}
         });
     };
 
+    $scope.$on('reloadPlanes', function () {
+        $reload = planPagoService.getAll();
+        $reload.then(function (datos) {
+            $scope.panelPlanEdit = true;
+            $scope.planes = datos.data;
+            $scope.tablePlanes.reload();
+        });
+    });
 });
 

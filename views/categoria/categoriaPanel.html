@@ -5,8 +5,8 @@
             <md-content md-theme="docs-dark" style="min-height: 598px;">
                 <md-tabs md-dynamic-height md-border-bottom>
                     <md-tab label="Categorias">
-                        <md-content class="md-padding">
-                            <div class="table-responsive">
+                        <md-content class="md-padding" layout="row" flex>
+                            <div class="table-responsive" flex>
                                 <table data-ng-init="listaCategorias()"
                                        ng-table="tableCategorias"
                                        class="table table-striped table-hover table-condensed light-table">
@@ -28,23 +28,79 @@
                                             <th style="text-align: center" ng-hide="edit">
                                                 <button type="button"                                     
                                                         class="btn btn-xs btn-info"
-                                                        data-toggle="modal"
-                                                        data-target="#myModal"
-                                                        uib-tooltip="Modificar categoria"
-                                                        ng-click="seleccionarCategoria(categoria)">
-                                                    <span class="glyphicon glyphicon-pencil"></span></button>
-                                                <button type="button"   
-                                                        data-toggle="modal"
-                                                        data-target="#myModalDelete"
-                                                        uib-tooltip="Eliminar categoria"
+                                                        ng-click="hidePanelCategoria(categoria)">
+                                                    <span class="glyphicon glyphicon-pencil"></span>
+                                                </button>
+                                                <button type="button"
                                                         class="btn btn-xs btn-danger" 
-                                                        ng-click="seleccionarCategoria(categoria)">
+                                                        ng-click="eliminarCategoria(categoria)">
                                                     <span class="glyphicon glyphicon-trash"></span></button>
                                             </th>                        
                                         </tr>
                                     </tbody>
                                 </table>
-                            </div>      
+                            </div>
+                            <div flex="45" ng-hide="panelCategoriaEdit" class="show-hide">
+                                <p flex style="text-align: center; font-weight: bold">
+                                    Modificar Categoria #{{editCategoria.idCategoria}}
+                                    <button class="pull-right"
+                                            ng-click="panelCategoriaEdit = true"
+                                            style="background: transparent; border: none;">
+                                        <md-icon class="material-icons">&#xE14C;</md-icon>
+                                    </button>
+                                </p>
+                                <md-content class="md-padding">
+                                    <form name="updateCategoria" style="margin-top: 30px;">
+                                        <md-input-container class="md-block" flex>
+                                            <label>Nombre categoria</label>
+                                            <input type="text"
+                                                   minlength="4"
+                                                   maxlength="30"
+                                                   md-maxlength="30"
+                                                   placeholder="Ingrese nombre de categoria"
+                                                   ng-model="editCategoria.nombreCategoria"
+                                                   name="categoria" required/>
+                                            <!-- MENSAJES-->
+                                            <div ng-messages="updateCategoria.categoria.$error"
+                                                 ng-if='updateCategoria.categoria.$dirty || updateCategoria.categoria.$touched'>
+                                                <div ng-message="minlength">Nombre demasiado corto.</div>
+                                                <div ng-message="md-maxlength">Nombre demasiado largo.</div>
+                                                <div ng-message="required">Este campo no puede estar vacio.</div>
+                                            </div>
+                                            <!-- ICONOS DE MENSAJE-->
+                                            <span ng-show="updateCategoria.categoria.$dirty && updateCategoria.categoria.$valid" class="glyphicon glyphicon-ok form-control-feedback" ></span>
+                                            <span ng-show="updateCategoria.categoria.$dirty && updateCategoria.categoria.$invalid" class="glyphicon glyphicon-remove  form-control-feedback"></span>
+                                        </md-input-container>
+                                        <md-input-container class="md-block" flex ng-controller="TipoController" data-ng-init="listaTipo()">
+                                            <label>Tipo de producto</label>
+                                            <md-select ng-model="editCategoria.tipoCategoria"
+                                                       ng-model-options="{trackBy: '$value.idTipo'}"
+                                                       data-ng-init="editCategoria.tipoCategoria"
+                                                       required name="tipos">                                            
+                                                <md-option ng-value="tipo" 
+                                                           ng-repeat="tipo in tipos">{{tipo.nombreTipo}}</md-option>                                            
+                                            </md-select>
+                                            <!-- MENSAJES-->
+                                            <div ng-messages="updateCategoria.tipos.$error"
+                                                 ng-if='updateCategoria.tipos.$touched'>
+                                                <div ng-message="required">Este campo no puede estar vacio.</div>
+                                            </div>
+                                            <!-- ICONOS DE MENSAJE-->
+                                            <span ng-show="updateCategoria.tipos.$touched && updateCategoria.tipos.$valid" class="glyphicon glyphicon-ok form-control-feedback" ></span>
+                                            <span ng-show="updateCategoria.tipos.$touched && updateCategoria.tipos.$invalid" class="glyphicon glyphicon-remove  form-control-feedback"></span>
+                                        </md-input-container>
+                                        <div class="form-group">
+                                            <center>
+                                                <button ng-click="modificarCategoria(editCategoria)"
+                                                        type="submit"
+                                                        id="btnAgregarCategoria"
+                                                        class="btn btn-success"
+                                                        ng-disabled="updateCategoria.$invalid">Modificar</button>
+                                            </center>                                
+                                        </div>
+                                    </form>
+                                </md-content>
+                            </div>
                         </md-content>
                     </md-tab>
                     <md-tab label="Agregar nueva Categoria">
@@ -98,7 +154,6 @@
                                                         ng-disabled="newCategoria.$invalid">Agregar</button>
                                             </center>                                
                                         </div>
-
                                     </form>
                                 </md-content>
                             </div>
@@ -110,79 +165,3 @@
     </div>
 </div>
 
-
-<div id="myModal" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title" id="myModalLabel">Cambiar datos de la Categoria</h4>
-            </div>
-            <div class="modal-body">
-                <form name="modificarCategoria" class="form-horizontal" id="newAfilidadoModal">    
-                    <div class="form-group">                    
-                        <label class="control-label">Id de categoria</label>                            
-                        <input type="number" class="form-control" ng-model="__categoria.idCategoria" name="idCategoria" required  disabled
-                               data-ng-class='{ error: modificarCategoria.idCategoria.$invalid && !modificarCategoria.$pristine }'/> 
-                    </div>    
-                    <div class="form-group">                    
-                        <label class="control-label">Nombre categoria</label>                            
-                        <input type="text" class="form-control" ng-model="__categoria.nombreCategoria" name="nombreCategoria" required placeholder="Ingrese nombre de categoria"
-                               data-ng-class='{ error: modificarCategoria.nombreCategoria.$invalid && !modificarCategoria.$pristine }'/>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label">Tipo Producto</label>                            
-                        <select name="tipo"
-                                class="form-control"
-                                ng-controller="TipoController"
-                                data-ng-init="listaTipo()"                                        
-                                ng-options="tipo as tipo.nombreTipo for tipo in tipos track by tipo.idTipo"
-                                ng-model="__categoria.tipoCategoria" required
-                                data-ng-class='{error: newCategoria.tipo.$invalid && !newCategoria.$pristine}'>
-                            <option value="" disabled selected>Seleccionar tipo de producto</option>   
-                        </select>
-                    </div>                    
-                    <center>
-                        <div>
-                            <button class="btn btn-warning" 
-                                    data-dismiss="modal"
-                                    style="margin-top: 5%;"
-                                    ng-click="_modificarCategoria(__categoria)"
-                                    ng-disabled="modificarCategoria.$invalid">Modificar</button>
-                        </div>
-                    </center>
-                </form>
-            </div>                    
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" id="myModalDelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog modal-sm" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">Eliminar categoria</h4>
-            </div>
-            <div class="modal-body">
-                <center>
-                    ¿Desea eliminar esta Categoria?
-                    <br>
-                    <button class="btn btn-danger"
-                            ng-click="eliminarCategoria()"
-                            data-dismiss="modal"
-                            >Eliminar</button>
-                </center>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
-            </div>
-        </div>
-    </div>
-</div>
-</body>
-</html>

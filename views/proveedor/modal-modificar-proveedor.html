@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<div class="ngdialog-message ngdialog-theme-flat"  md-theme="docs-dark">
+    <md-toolbar class="md-warn" md-theme="docs-dark">
+        <div class="md-toolbar-tools">
+            <h3 class="modal-title" style="width: 100%; text-align: center;">
+                Proveedor #{{ngDialogData.proveedor.idProveedor}}
+            </h3>
+        </div>
+    </md-toolbar>
+    <md-content flex>
+        <md-content class="md-padding" flex>
+            <form name="updateProveedor">
+                <md-input-container class="md-block" flex>
+                    <label>Nombre proveedor</label>
+                    <input type="text"
+                           placeholder="Nombre del proveedor"
+                           minlength="4"
+                           maxlength="30"
+                           md-maxlength="30"
+                           ng-model="ngDialogData.proveedor.nombreProveedor"
+                           name="nombreProveedor" required/>
+                    <!-- MENSAJES-->
+                    <div ng-messages="updateProveedor.nombreProveedor.$error"
+                         ng-if='updateProveedor.nombreProveedor.$dirty || updateProveedor.nombreProveedor.$touched'>
+                        <div ng-message="minlength">Nombre demasiado corto.</div>
+                        <div ng-message="md-maxlength">Nombre demasiado largo.</div>
+                        <div ng-message="required">Este campo no puede estar vacio.</div>
+                    </div>
+                    <!-- ICONOS DE MENSAJE-->
+                    <span ng-show="updateProveedor.nombreProveedor.$dirty && updateProveedor.nombreProveedor.$valid" class="glyphicon glyphicon-ok form-control-feedback" ></span>
+                    <span ng-show="updateProveedor.nombreProveedor.$dirty && updateProveedor.nombreProveedor.$invalid" class="glyphicon glyphicon-remove  form-control-feedback"></span>
+                </md-input-container>
+                <div layout="row" flex>
+                    <md-input-container class="md-block" flex>
+                        <label>C.U.I.T. Proovedor</label>
+                        <input type="text"
+                               placeholder="C.U.I.T. del proveedor"
+                               minlength="10"
+                               maxlength="11"
+                               md-maxlength="11"
+                               ng-model="ngDialogData.proveedor.cuitProveedor"
+                               name="cuitProveedor" required/>
+                        <!-- MENSAJES-->
+                        <div ng-messages="updateProveedor.cuitProveedor.$error"
+                             ng-if='updateProveedor.cuitProveedor.$dirty || updateProveedor.cuitProveedor.$touched'>
+                            <div ng-message="minlength">C.U.I.T. demasiado corto.</div>
+                            <div ng-message="md-maxlength">C.U.I.T. demasiado largo.</div>
+                            <div ng-message="required">Este campo no puede estar vacio.</div>
+                        </div>
+                        <!-- ICONOS DE MENSAJE-->
+                        <span ng-show="updateProveedor.cuitProveedor.$dirty && updateProveedor.cuitProveedor.$valid" class="glyphicon glyphicon-ok form-control-feedback" ></span>
+                        <span ng-show="updateProveedor.cuitProveedor.$dirty && updateProveedor.cuitProveedor.$invalid" class="glyphicon glyphicon-remove  form-control-feedback"></span>
+                    </md-input-container>
+                    <md-input-container class="md-block" flex>
+                        <label>Dirección</label>
+                        <input type="text"
+                               placeholder="Dirección del proveedor"
+                               minlength="4"
+                               maxlength="30"
+                               md-maxlength="30"
+                               ng-model="ngDialogData.proveedor.direccionProveedor"
+                               name="direccionProveedor" required/>
+                        <!-- MENSAJES-->
+                        <div ng-messages="updateProveedor.direccionProveedor.$error"
+                             ng-if='updateProveedor.direccionProveedor.$dirty || updateProveedor.direccionProveedor.$touched'>
+                            <div ng-message="minlength">Dirección demasiado corta.</div>
+                            <div ng-message="md-maxlength">Dirección demasiado larga.</div>
+                            <div ng-message="required">Este campo no puede estar vacio.</div>
+                        </div>
+                        <!-- ICONOS DE MENSAJE-->
+                        <span ng-show="updateProveedor.direccionProveedor.$dirty && updateProveedor.direccionProveedor.$valid" class="glyphicon glyphicon-ok form-control-feedback" ></span>
+                        <span ng-show="updateProveedor.direccionProveedor.$dirty && updateProveedor.direccionProveedor.$invalid" class="glyphicon glyphicon-remove  form-control-feedback"></span>
+                    </md-input-container>
+                </div>
+                <div layout="row" flex>
+                    <md-input-container class="md-block" flex>
+                        <label>País</label>
+                        <input type="text"
+                               minlength="4"
+                               maxlength="20"
+                               md-maxlength="20"
+                               placeholder="País del proveedor"
+                               ng-model="ngDialogData.proveedor.paisProveedor"
+                               name="paisProveedor" required/>
+                        <!-- MENSAJES-->
+                        <div ng-messages="updateProveedor.paisProveedor.$error"
+                             ng-if='updateProveedor.paisProveedor.$dirty || updateProveedor.paisProveedor.$touched'>
+                            <div ng-message="minlength">Nombre de país demasiado corto.</div>
+                            <div ng-message="md-maxlength">Nombre de país demasiado largo.</div>
+                            <div ng-message="required">Este campo no puede estar vacio.</div>
+                        </div>
+                        <!-- ICONOS DE MENSAJE-->
+                        <span ng-show="updateProveedor.paisProveedor.$dirty && updateProveedor.paisProveedor.$valid" class="glyphicon glyphicon-ok form-control-feedback" ></span>
+                        <span ng-show="updateProveedor.paisProveedor.$dirty && updateProveedor.paisProveedor.$invalid" class="glyphicon glyphicon-remove  form-control-feedback"></span>
+                    </md-input-container>
+                    <md-input-container class="md-block" flex>
+                        <label>Provincia</label>
+                        <input type="text"
+                               minlength="4"
+                               maxlength="20"
+                               md-maxlength="20"
+                               placeholder="Provincia del proveedor"
+                               ng-model="ngDialogData.proveedor.provinciaProveedor"
+                               name="provinciaProveedor" required/>
+                        <!-- MENSAJES-->
+                        <div ng-messages="updateProveedor.provinciaProveedor.$error"
+                             ng-if='updateProveedor.provinciaProveedor.$dirty || updateProveedor.provinciaProveedor.$touched'>
+                            <div ng-message="minlength">Nombre de país demasiado corto.</div>
+                            <div ng-message="md-maxlength">Nombre de país demasiado largo.</div>
+                            <div ng-message="required">Este campo no puede estar vacio.</div>
+                        </div>
+                        <!-- ICONOS DE MENSAJE-->
+                        <span ng-show="updateProveedor.provinciaProveedor.$dirty && updateProveedor.provinciaProveedor.$valid" class="glyphicon glyphicon-ok form-control-feedback" ></span>
+                        <span ng-show="updateProveedor.provinciaProveedor.$dirty && updateProveedor.provinciaProveedor.$invalid" class="glyphicon glyphicon-remove  form-control-feedback"></span>
+                    </md-input-container>
+                </div>
+                <div layout="row" flex>
+                    <md-input-container class="md-block" flex>
+                        <label>Localidad</label>
+                        <input type="text"
+                               minlength="4"
+                               maxlength="20"
+                               md-maxlength="20"
+                               placeholder="Localidad del proveedor"
+                               ng-model="ngDialogData.proveedor.localidadProveedor" 
+                               name="localidadProveedor" required/>
+                        <!-- MENSAJES-->
+                        <div ng-messages="updateProveedor.localidadProveedor.$error"
+                             ng-if='updateProveedor.localidadProveedor.$dirty || updateProveedor.localidadProveedor.$touched'>
+                            <div ng-message="minlength">Nombre de país demasiado corto.</div>
+                            <div ng-message="md-maxlength">Nombre de país demasiado largo.</div>
+                            <div ng-message="required">Este campo no puede estar vacio.</div>
+                        </div>
+                        <!-- ICONOS DE MENSAJE-->
+                        <span ng-show="updateProveedor.localidadProveedor.$dirty && updateProveedor.localidadProveedor.$valid" class="glyphicon glyphicon-ok form-control-feedback" ></span>
+                        <span ng-show="updateProveedor.localidadProveedor.$dirty && updateProveedor.localidadProveedor.$invalid" class="glyphicon glyphicon-remove  form-control-feedback"></span>
+                    </md-input-container>
+                    <md-input-container class="md-block" flex>
+                        <label>Codigo Postal</label>
+                        <input type="text"
+                               minlength="4"
+                               maxlength="15"
+                               md-maxlength="15"
+                               placeholder="Codigo postal del proveedor"
+                               ng-model="ngDialogData.proveedor.codigoPostal"
+                               name="codigoPostal" required/>
+                        <!-- MENSAJES-->
+                        <div ng-messages="updateProveedor.codigoPostal.$error"
+                             ng-if='updateProveedor.codigoPostal.$dirty || updateProveedor.codigoPostal.$touched'>
+                            <div ng-message="minlength">Codigo postal demasiado corto.</div>
+                            <div ng-message="md-maxlength">Codigo postal demasiado largo.</div>
+                            <div ng-message="required">Este campo no puede estar vacio.</div>
+                        </div>
+                        <!-- ICONOS DE MENSAJE-->
+                        <span ng-show="updateProveedor.codigoPostal.$dirty && updateProveedor.codigoPostal.$valid" class="glyphicon glyphicon-ok form-control-feedback" ></span>
+                        <span ng-show="updateProveedor.codigoPostal.$dirty && updateProveedor.codigoPostal.$invalid" class="glyphicon glyphicon-remove  form-control-feedback"></span>
+                    </md-input-container>
+                </div>
+                <div layout="row" flex>
+                    <md-input-container class="md-block" flex>
+                        <label>Telefono</label>
+                        <input type="tel"
+                               minlength="8"
+                               maxlength="20"
+                               md-maxlength="20"
+                               placeholder="Número de telefono del proveedor"
+                               ng-model="ngDialogData.proveedor.telefonoProveedor"
+                               name="telefonoProveedor" required/>
+                        <!-- MENSAJES-->
+                        <div ng-messages="updateProveedor.telefonoProveedor.$error"
+                             ng-if='updateProveedor.telefonoProveedor.$dirty || updateProveedor.telefonoProveedor.$touched'>
+                            <div ng-message="minlength">Número de telefono demasiado corto.</div>
+                            <div ng-message="md-maxlength">Número de telefono demasiado largo.</div>
+                            <div ng-message="required">Este campo no puede estar vacio.</div>
+                            <div ng-message="tel">Número de telefono invalido</div>
+                        </div>
+                        <!-- ICONOS DE MENSAJE-->
+                        <span ng-show="updateProveedor.telefonoProveedor.$dirty && updateProveedor.telefonoProveedor.$valid" class="glyphicon glyphicon-ok form-control-feedback" ></span>
+                        <span ng-show="updateProveedor.telefonoProveedor.$dirty && updateProveedor.telefonoProveedor.$invalid" class="glyphicon glyphicon-remove  form-control-feedback"></span>
+                    </md-input-container>
+                    <md-input-container class="md-block" flex>
+                        <label>E-mail</label>
+                        <input type="email"
+                               minlength="8"
+                               maxlength="30"
+                               md-maxlength="30"
+                               placeholder="E-mail del proveedor"
+                               ng-model="ngDialogData.proveedor.emailProveedor"
+                               name="emailProveedor" required/>
+                        <!-- MENSAJES-->
+                        <div ng-messages="updateProveedor.emailProveedor.$error"
+                             ng-if='updateProveedor.emailProveedor.$dirty || updateProveedor.emailProveedor.$touched'>
+                            <div ng-message="minlength">E-mail demasiado corto.</div>
+                            <div ng-message="md-maxlength">E-mail demasiado largo.</div>
+                            <div ng-message="required">Este campo no puede estar vacio.</div>
+                            <div ng-message="email">Dirección E-mail invalida.</div>
+                        </div>
+                        <!-- ICONOS DE MENSAJE-->
+                        <span ng-show="updateProveedor.emailProveedor.$dirty && updateProveedor.emailProveedor.$valid" class="glyphicon glyphicon-ok form-control-feedback" ></span>
+                        <span ng-show="updateProveedor.emailProveedor.$dirty && updateProveedor.emailProveedor.$invalid" class="glyphicon glyphicon-remove  form-control-feedback"></span>
+                    </md-input-container>
+                </div>
+                <div flex style="text-align: center;">
+                    <button ng-click="confirmarModificarProveedor(ngDialogData.proveedor)"
+                            type="submit"
+                            class="btn btn-success"
+                            ng-disabled="updateProveedor.$invalid">Modificar</button>
+                    <button class="btn btn-md btn-danger"
+                            style="width: 84px;"
+                            ng-click="closeThisDialog('')">Cerrar</button>
+                </div>
+            </form>
+        </md-content>
+    </md-content>
+</div>

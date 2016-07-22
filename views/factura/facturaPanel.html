@@ -38,7 +38,6 @@
                                     data-toggle="modal" data-target="#finalizarModal"
                                     style="float: bottom;">Finalizar</button>
 
-                            <button class="btn btn-block btn-warning" flex>Anular</button>
                             <!-- reactivar funcion accesoFiscal()-->
                             <div data-ng-init="">
                                 <h2>
@@ -317,192 +316,273 @@
                         </md-tab>
                         <md-tab label="Datos del cliente" ng-disabled="false">
                             <md-content class="md-padding">
-                                <uib-accordion close-others="oneAtATime">            
-                                    <uib-accordion-group
-                                        heading="Buscar cliente existente"
-                                        is-disabled="factura.estado === 'CONFIRMADO'"
-                                        is-open="clientElementSearch.open"
-                                        panel-class="panel-primary">
-                                        <label class="control-label">Buscar cliente</label>
-                                        <div class="input-group col-lg-5">                                            
-                                            <input type="text"
-                                                   ng-model="dynamicCliente"
-                                                   placeholder="Ingresa apellido del cliente" 
-                                                   uib-typeahead="cliente as cliente.nombreCliente +' '+ cliente.apellidoCliente for cliente in getCliente($viewValue)"
-                                                   typeahead-loading="loadingcliente" 
-                                                   typeahead-no-results="noResults"
-                                                   class="form-control">
-                                            <i ng-show="loadingcliente" class="glyphicon glyphicon-refresh"></i>
-                                            <div ng-show="noResults">
-                                                <i class="glyphicon glyphicon-remove"></i> No se encontraron resultados
+                                <md-content layout-padding>
+                                    <form name="clienteBusq">
+                                        <div layout="row" flex style="max-height: 58px;">
+                                            <md-autocomplete flex md-input-name="clientes"
+                                                             md-input-minlength="2"
+                                                             md-min-length="2"
+                                                             md-input-maxlength="40"
+                                                             md-selected-item="dynamicCliente"
+                                                             md-search-text="searchText"
+                                                             md-items="item in getCliente(searchText)"
+                                                             md-item-text="item.nombreCliente"
+                                                             md-floating-label="Cliente">
+                                                <md-item-template>
+                                                    <span>
+                                                        <md-icon class="material-icons" style="color: #000;">&#xE150;</md-icon>
+                                                        <strong>Nombre:</strong>
+                                                        <span> {{item.nombreCliente}} </span>
+                                                    </span>
+                                                    <span>
+                                                        <strong>Documento:</strong>
+                                                        <span> {{item.documento}} </span>
+                                                    </span>
+                                                </md-item-template>
+                                                <md-not-found>
+                                                    No se encontraron resultados
+                                                </md-not-found>
+                                            </md-autocomplete>
+                                            <div>
+                                                <md-button class="md-raised"
+                                                           type="search"
+                                                           ng-click="agregarClienteDynamic(dynamicCliente)">
+                                                    Añadir
+                                                </md-button>
+                                                <md-button class="md-raised"
+                                                           type="search"
+                                                           ng-disabled="factura.cliente"
+                                                           ng-click="panelCliente = false">
+                                                    Nuevo
+                                                </md-button>
                                             </div>
-                                            <span class="input-group-btn">
-                                                <button class="btn btn-warning"                                                        
-                                                        ng-click="agregarClienteDynamic(dynamicCliente)"
-                                                        type="button">Añadir</button>
-                                            </span>
                                         </div>
-                                    </uib-accordion-group>                     
-                                    <uib-accordion-group 
-                                        heading="Agregar nuevo cliente"
-                                        is-disabled="factura.estado === 'CONFIRMADO'"
-                                        is-open="clientElement.open"
-                                        panel-class="panel-primary">
-                                        <h4>Datos del Cliente</h4>
-                                        <form class="form-horizontal" name="clienteEncabezado">
-                                            <div class="row col-lg-6">
-                                                <div class="form-group">
-                                                    <label class="control-label">Documento *</label>
-                                                    <div class="">
-                                                        <input type="text" class="form-control" ng-model="clienteFactura.documento" name="documento" required
-                                                               data-ng-class='{error: clienteEncabezado.documento.$invalid && !clienteEncabezado.$pristine}'/>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label class="control-label">Tipo de documento *</label>
-                                                    <div class="">
-                                                        <select class="form-control" ng-model="clienteFactura.tipoDocumento"
-                                                                required name="tipoDocumento">
-                                                            <option selected value="" disabled>Elegir una opcion</option>
-                                                            <option value="C">CUIT</option>
-                                                            <option value="0">Libreta de enrolamiento</option>
-                                                            <option value="1">Libreta civica</option>
-                                                            <option value="2">Documento Nacional de Identidad</option>
-                                                            <option value="3">Pasaporte</option>
-                                                            <option value="4">Cedula de identidad</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label class="control-label">Nombre cliente/empresa *</label>
-                                                    <div class="">
-                                                        <input type="text" maxlength="45"
-                                                               class="form-control"
-                                                               ng-model="clienteFactura.nombreCliente"
-                                                               name="nombreCliente" required
-                                                               data-ng-class='{error: clienteEncabezado.nombreCliente.$invalid && !clienteEncabezado.$pristine}'/>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label class="control-label">Domicilio *</label>
-                                                    <div class="">
-                                                        <input type="text" maxlength="45"
-                                                               class="form-control"
-                                                               ng-model="clienteFactura.domicilio"
-                                                               name="domicilioCliente" required
-                                                               data-ng-class='{error: clienteEncabezado.domicilioCliente.$invalid && !clienteEncabezado.$pristine}'/>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label class="control-label">Responsabilidad frente al IVA *</label>
-                                                    <div class="">
-                                                        <select class="form-control" ng-model="clienteFactura.responsabilidadIva"
-                                                                required name="responsabilidad">
-                                                            <option selected value="" disabled>Elegir una opcion</option>
-                                                            <option value="I">Responsable inscripto</option>
-                                                            <option value="N">Responsable no inscripto</option>
-                                                            <option value="E">Exento</option>
-                                                            <option value="A">No responsible</option>
-                                                            <option value="C">Consumidor final</option>
-                                                            <option value="B">Responsable no inscripto, venta de bienes de uso</option>
-                                                            <option value="M">Responsable monotributo</option>
-                                                            <option value="T">No categorizado</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
+                                    </form>
+                                </md-content>
+                                <!-- DATOS CLIENTE-->                                
+                                <div ng-show="panelCliente">
+                                    <md-content layout-padding layout="column">
+                                        <p flex style="text-align: center; font-weight: bold">
+                                            Datos del cliente
+                                        </p>
+                                        <div layout="row">
+                                            <div flex layout="row" class="padd">
+                                                <label flex class="padd">Documento:</label>
+                                                <div flex class="padd">{{factura.cliente.documento}}</div>
                                             </div>
-                                            <div class="row col-lg-6">                                                
-                                                <div class="form-group">
-                                                    <label class="control-label">Telefono</label>
-                                                    <div class="">
-                                                        <input type="tel"
-                                                               class="form-control"
-                                                               ng-model="clienteFactura.telefono" name="telefonoCliente"
-                                                               data-ng-class='{error: clienteEncabezado.telefonoCliente.$invalid && !clienteEncabezado.$pristine}'/>
+                                            <div flex layout="row" class="padd">
+                                                <label flex class="padd">Tipo de documento</label>
+                                                <div class="padd" flex ng-if="factura.cliente.tipoDocumento === 'C'">CUIT</div>
+                                                <div class="padd" flex ng-if="factura.cliente.tipoDocumento === '0'">Libreta de enrolamiento</div>
+                                                <div class="padd" flex ng-if="factura.cliente.tipoDocumento === '1'">Libreta civica</div>
+                                                <div class="padd" flex ng-if="factura.cliente.tipoDocumento === '2'">DNI</div>
+                                                <div class="padd" flex ng-if="factura.cliente.tipoDocumento === '3'">Pasaporte</div>
+                                                <div class="padd" flex ng-if="factura.cliente.tipoDocumento === '4'">Cedula de identidad</div>
+                                            </div>
+                                        </div>
+                                        <div layout="row">
+                                            <div flex layout="row" class="padd">
+                                                <label flex class="padd">Resp. IVA</label>
+                                                <div class="padd" flex ng-if="factura.cliente.responsabilidadIva === 'I'">Resp. inscripto</div>
+                                                <div class="padd" flex ng-if="factura.cliente.responsabilidadIva === 'N'">Resp. no inscripto</div>
+                                                <div class="padd" flex ng-if="factura.cliente.responsabilidadIva === 'E'">Exento</div>
+                                                <div class="padd" flex ng-if="factura.cliente.responsabilidadIva === 'A'">No responsible</div>
+                                                <div class="padd" flex ng-if="factura.cliente.responsabilidadIva === 'C'">Consumidor final</div>
+                                                <div class="padd" flex ng-if="factura.cliente.responsabilidadIva === 'B'">Resp. no inscripto, venta bienes</div>
+                                                <div class="padd" flex ng-if="factura.cliente.responsabilidadIva === 'M'">Resp. monotributo</div>
+                                                <div class="padd" flex ng-if="factura.cliente.responsabilidadIva === 'T'">No categorizado</div>
+                                            </div>
+                                            <div flex layout="row" class="padd">
+                                                <label flex class="padd">Nombre cliente/empresa</label>
+                                                <div flex class="padd">{{factura.cliente.nombreCliente}}</div>
+                                            </div>
+                                        </div>
+                                        <div layout="row">
+                                            <div flex layout="row" class="padd">
+                                                <label flex class="padd">Domicilio</label>
+                                                <div flex class="padd">{{factura.cliente.domicilio}}</div>
+                                            </div>
+                                            <div flex layout="row" class="padd">
+                                                <label flex class="padd">Fecha de nacimiento</label>
+                                                <div flex class="padd">{{factura.cliente.fechaNacimiento| date : 'yyyy/MM/dd'}}</div>
+                                            </div>
+                                        </div>
+                                        <div layout="row">
+                                            <div flex layout="row" class="padd">
+                                                <label flex class="padd">Teléfono</label>
+                                                <div flex class="padd">{{factura.cliente.telefono}}</div>
+                                            </div>
+                                            <div flex layout="row" class="padd">
+                                                <label flex class="padd">E-mail</label>
+                                                <div flex class="padd">{{factura.cliente.emailCliente}}</div>
+                                            </div>
+                                        </div>
+                                    </md-content>
+                                </div>
+                                <div ng-hide="panelCliente" flex>
+                                    <md-content class="md-padding" flex style="padding-top: 0px;">
+                                        <p flex style="text-align: center; font-weight: bold">
+                                            Agregar nuevo cliente
+                                            <button class="pull-right"
+                                                    ng-click="panelCliente = true"
+                                                    style="background: transparent; border: none;">
+                                                <md-icon class="material-icons">&#xE14C;</md-icon>
+                                            </button>
+                                        </p>
+                                        <form name="newCliente">
+                                            <div layout="row" flex>
+                                                <md-input-container flex class="md-block md-icon">
+                                                    <label>Documento</label>
+                                                    <md-icon class="material-icons">&#xE150;</md-icon>
+                                                    <input type="text" 
+                                                           ng-model="clienteFactura.documento"
+                                                           name="documento" required
+                                                           placeholder="N° de documento del cliente o empresa"
+                                                           maxlength="11"
+                                                           minlength="8"
+                                                           md-maxlength="11"/>
+                                                    <div ng-messages="newCliente.documento.$error"
+                                                         ng-if='newCliente.documento.$dirty || newCliente.documento.$touched'>
+                                                        <div ng-message="minlength">Documento demasiado corto.</div>
+                                                        <div ng-message="md-maxlength">Documento demasiado largo.</div>
+                                                        <div ng-message="required">Este campo no puede estar vacio.</div>
                                                     </div>
-                                                </div>                                    
-                                                <div class="form-group">
-                                                    <label class="control-label">E-mail</label>
-                                                    <div class="">
-                                                        <input type="email"
-                                                               class="form-control"
-                                                               ng-model="clienteFactura.emailCliente" name="emailCliente"
-                                                               data-ng-class='{error: clienteEncabezado.emailCliente.$invalid && !clienteEncabezado.$pristine}'/>
+                                                </md-input-container>
+                                                <md-input-container class="md-block" flex>
+                                                    <label>Tipo de documento</label>
+                                                    <md-icon class="material-icons">&#xE150;</md-icon>
+                                                    <md-select ng-model="clienteFactura.tipoDocumento"
+                                                               placeholder="Elige un tipo de documento"
+                                                               required name="tipo">
+                                                        <md-option value="C">CUIT</md-option>
+                                                        <md-option value="0">Libreta de enrolamiento</md-option>
+                                                        <md-option value="1">Libreta civica</md-option>
+                                                        <md-option value="2">Documento Nacional de Identidad</md-option>
+                                                        <md-option value="3">Pasaporte</md-option>
+                                                        <md-option value="4">Cedula de identidad</md-option>
+                                                    </md-select>
+                                                    <div ng-messages="newCliente.tipo.$error"
+                                                         ng-if="newCliente.tipo.$touched">
+                                                        <div ng-message="required">Este campo no puede estar vacio.</div>
                                                     </div>
-                                                </div>                                    
-                                                <div class="form-group">
-                                                    <label class="control-label">Fecha de nacimiento</label>
-                                                    <div class="">
-                                                        <input type="date" 
-                                                               class="form-control" 
-                                                               ng-model="clienteFactura.fechaNacimiento"
-                                                               name="nacimientoCliente" 
-                                                               data-ng-class='{error: clienteEncabezado.nacimientoCliente.$invalid && !clienteEncabezado.$pristine}'/>
+                                                </md-input-container>
+                                            </div>
+                                            <div layout="row" flex>
+                                                <md-input-container flex class="md-block md-icon">
+                                                    <label>Nombre cliente/empresa</label>
+                                                    <md-icon class="material-icons">&#xE150;</md-icon>
+                                                    <input type="text" 
+                                                           ng-model="clienteFactura.nombreCliente"
+                                                           name="nombre" required
+                                                           placeholder="Nombre del cliente o empresa"
+                                                           maxlength="45"
+                                                           minlength="8"
+                                                           md-maxlength="45"/>
+                                                    <div ng-messages="newCliente.nombre.$error"
+                                                         ng-if='newCliente.nombre.$dirty || newCliente.nombre.$touched'>
+                                                        <div ng-message="minlength">Nombre demasiado corto.</div>
+                                                        <div ng-message="md-maxlength">Nombre demasiado largo.</div>
+                                                        <div ng-message="required">Este campo no puede estar vacio.</div>
                                                     </div>
-                                                    <button class="btn btn-block btn-warning"
-                                                            ng-disabled="clienteEncabezado.$invalid"
+                                                </md-input-container>
+                                                <md-input-container flex class="md-block md-icon">
+                                                    <label>Domicilio</label>
+                                                    <md-icon class="material-icons">&#xE150;</md-icon>
+                                                    <input type="text" 
+                                                           ng-model="clienteFactura.domicilio"
+                                                           name="domicilio" required
+                                                           placeholder="Dirección del domicilio"
+                                                           maxlength="45"
+                                                           minlength="8"
+                                                           md-maxlength="45"/>
+                                                    <div ng-messages="newCliente.domicilio.$error"
+                                                         ng-if='newCliente.domicilio.$dirty || newCliente.domicilio.$touched'>
+                                                        <div ng-message="minlength">Domicilio demasiado corto.</div>
+                                                        <div ng-message="md-maxlength">Domicilio demasiado largo.</div>
+                                                        <div ng-message="required">Este campo no puede estar vacio.</div>
+                                                    </div>
+                                                </md-input-container>
+                                            </div>
+                                            <div layout="row" flex>
+                                                <md-input-container class="md-block" flex>
+                                                    <label>Tipo de documento</label>
+                                                    <md-icon class="material-icons">&#xE150;</md-icon>
+                                                    <md-select ng-model="clienteFactura.responsabilidadIva"
+                                                               placeholder="Elige la responsabilidad frente al IVA."
+                                                               required name="iva">
+                                                        <md-option value="I">Responsable inscripto</md-option>
+                                                        <md-option value="N">Responsable no inscripto</md-option>
+                                                        <md-option value="E">Exento</md-option>
+                                                        <md-option value="A">No responsible</md-option>
+                                                        <md-option value="C">Consumidor final</md-option>
+                                                        <md-option value="B">Responsable no inscripto, venta de bienes de uso</md-option>
+                                                        <md-option value="M">Responsable monotributo</md-option>
+                                                        <md-option value="T">No categorizado</md-option>
+                                                    </md-select>
+                                                    <div ng-messages="newCliente.iva.$error"
+                                                         ng-if="newCliente.iva.$touched">
+                                                        <div ng-message="required">Este campo no puede estar vacio.</div>
+                                                    </div>
+                                                </md-input-container>
+                                                <md-input-container flex class="md-block md-icon">
+                                                    <label>Teléfono</label>
+                                                    <md-icon class="material-icons">&#xE150;</md-icon>
+                                                    <input type="tel" 
+                                                           ng-model="clienteFactura.telefono"
+                                                           name="telefono"
+                                                           placeholder="Teléfono del cliente"
+                                                           maxlength="20"
+                                                           minlength="8"
+                                                           md-maxlength="20"/>
+                                                    <div ng-messages="newCliente.telefono.$error"
+                                                         ng-if='newCliente.telefono.$dirty || newCliente.telefono.$touched'>
+                                                        <div ng-message="minlength">Teléfono demasiado corto.</div>
+                                                        <div ng-message="md-maxlength">Teléfono demasiado largo.</div>
+                                                        <div ng-message="tel">Teléfono invalido.</div>
+                                                    </div>
+                                                </md-input-container>
+                                            </div>
+                                            <div layout="row" flex>                                   
+                                                <md-input-container flex class="md-block md-icon">
+                                                    <label>E-mail</label>
+                                                    <md-icon class="material-icons">&#xE150;</md-icon>
+                                                    <input type="email" 
+                                                           ng-model="clienteFactura.emailCliente"
+                                                           name="email" 
+                                                           placeholder="Dirección de e-mail"
+                                                           maxlength="30"
+                                                           minlength="8"
+                                                           md-maxlength="30"/>
+                                                    <div ng-messages="newCliente.email.$error"
+                                                         ng-if='newCliente.email.$dirty || newCliente.email.$touched'>
+                                                        <div ng-message="minlength">E-mail demasiado corto.</div>
+                                                        <div ng-message="md-maxlength">E-mail demasiado largo.</div>
+                                                        <div ng-message="email">E-mail invalido.</div>
+                                                    </div>
+                                                </md-input-container>
+                                                <md-input-container flex class="md-block md-icon">
+                                                    <label>Fecha de Nacimiento</label>
+                                                    <md-icon class="material-icons">&#xE150;</md-icon>
+                                                    <input type="date" 
+                                                           ng-model="clienteFactura.fechaNacimiento"
+                                                           name="fecha"
+                                                           placeholder="Fecha de nacimiento del cliente"/>
+                                                    <div ng-messages="newCliente.fecha.$error"
+                                                         ng-if='newCliente.fecha.$dirty || newCliente.fecha.$touched'>
+                                                        <div ng-message="date">Fecha invalida.</div>
+                                                    </div>
+                                                </md-input-container>
+                                                <div flex="50" style="text-align: center;">
+                                                    <button type="submit"
+                                                            ng-disabled="newCliente.$invalid"
                                                             ng-click="agregarCliente(clienteFactura)"
-                                                            style="margin-top: 10%;">Agregar cliente</button>
-                                                </div> 
-
+                                                            class="btn btn-success">
+                                                        Agregar
+                                                    </button>
+                                                </div>
                                             </div>
                                         </form>
-                                    </uib-accordion-group>                     
-                                </uib-accordion>
-                                <!-- DATOS CLIENTE-->
-                                <div id="clienteContainer">
-                                    <div class="row col-lg-5">
-                                        <div class="form-group">
-                                            <label class="control-label">Documento:</label>
-                                            <div class="pull-right">{{factura.cliente.documento}}</div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="control-label">Tipo de documento</label>
-                                            <div class="pull-right" ng-if="factura.cliente.tipoDocumento === 'C'">CUIT</div>
-                                            <div class="pull-right" ng-if="factura.cliente.tipoDocumento === '0'">Libreta de enrolamiento</div>
-                                            <div class="pull-right" ng-if="factura.cliente.tipoDocumento === '1'">Libreta civica</div>
-                                            <div class="pull-right" ng-if="factura.cliente.tipoDocumento === '2'">DNI</div>
-                                            <div class="pull-right" ng-if="factura.cliente.tipoDocumento === '3'">Pasaporte</div>
-                                            <div class="pull-right" ng-if="factura.cliente.tipoDocumento === '4'">Cedula de identidad</div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="control-label">Resp. IVA</label>
-                                            <div class="pull-right" ng-if="factura.cliente.responsabilidadIva === 'I'">Resp. inscripto</div>
-                                            <div class="pull-right" ng-if="factura.cliente.responsabilidadIva === 'N'">Resp. no inscripto</div>
-                                            <div class="pull-right" ng-if="factura.cliente.responsabilidadIva === 'E'">Exento</div>
-                                            <div class="pull-right" ng-if="factura.cliente.responsabilidadIva === 'A'">No responsible</div>
-                                            <div class="pull-right" ng-if="factura.cliente.responsabilidadIva === 'C'">Consumidor final</div>
-                                            <div class="pull-right" ng-if="factura.cliente.responsabilidadIva === 'B'">Resp. no inscripto, venta bienes</div>
-                                            <div class="pull-right" ng-if="factura.cliente.responsabilidadIva === 'M'">Resp. monotributo</div>
-                                            <div class="pull-right" ng-if="factura.cliente.responsabilidadIva === 'T'">No categorizado</div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="control-label">Nombre cliente/empresa</label>
-                                            <div class="pull-right">{{factura.cliente.nombreCliente}}</div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="control-label">Domicilio:</label>
-                                            <div class="pull-right">{{factura.cliente.domicilio}}</div>
-                                        </div>
-                                    </div>
-                                    <div class="row col-lg-6" style="margin-left: 10px;">
-                                        <div class="form-group">
-                                            <label class="control-label">Fecha de nacimiento:</label>
-                                            <div class="pull-right">{{factura.cliente.fechaNacimiento| date : 'yyyy/MM/dd'}}</div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="control-label">Telefono:</label>
-                                            <div class="pull-right">{{factura.cliente.telefono}}</div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="control-label">E-mail:</label>
-                                            <div class="pull-right">{{factura.cliente.emailCliente}}</div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="control-label">Fecha de alta:</label>
-                                            <div class="pull-right">{{factura.cliente.fechaCreacion| date : 'yyyy/MM/dd'}}</div>
-                                        </div>
-                                    </div>
+                                    </md-content>
                                 </div>
                             </md-content>
                         </md-tab>

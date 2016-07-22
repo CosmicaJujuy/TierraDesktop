@@ -1,48 +1,44 @@
 <!DOCTYPE html>
-<div class="ngdialog-message ngdialog-advertencia" style="width: 400px;">
-    <div class="modal-header">
-        <center>
-            <h3 class="modal-title" style="font-size: medium; text-transform:uppercase;">
+<div class="ngdialog-message ngdialog-advertencia" md-theme="docs-dark">
+    <md-toolbar class="md-warn">
+        <div class="md-toolbar-tools">
+            <h3 class="modal-title" style="width: 100%; text-align: center; font-size: medium; text-transform:uppercase;">
                 {{ngDialogData.producto.descripcion}}
             </h3>
-        </center>
-    </div>
-    <div class="modal-body">
-        <div class="well">
-            <center>
-                <form class="form-horizontal">
-                    <div class="form-group">
-                        <label>Agregar producto y finalizar.</label>
-                        <button class="btn btn-success"
-                                style="width: 180px;"
-                                uib-tooltip="Finaliza la accion y te redirige a la lista de productos"
-                                ng-click="agregarProducto(ngDialogData.producto)"
-                                data-dismiss="modal"
-                                >Finalizar</button>
-                    </div>
-                    <div class="form-group">
-                        <label>Agregar producto y cargar otra clase.</label>
-                        <button class="btn btn-success"
-                                style="width: 180px;"
-                                uib-tooltip="Agrega el producto actual y te permite agregar una clase diferente del mismo producto"
-                                ng-click="agregarRepetirClase(ngDialogData.producto)"
-                                data-dismiss="modal"
-                                >Clase</button>
-                    </div>
-                    <div class="form-group">
-                        <label>Agregar producto y cargar otra talla.</label>
-                        <button class="btn btn-success"
-                                uib-tooltip="Agrega el producto actual y te permite agregar una talla diferente del mismo producto"
-                                style="width: 180px;"
-                                ng-click="agregarCambiarTalla(ngDialogData.producto)"
-                                data-dismiss="modal"
-                                >Talla</button>
-                    </div>
-                </form>
-            </center>
         </div>
-    </div>
-    <div class="modal-footer">
-        <button class="btn btn-md btn-danger" ng-click="closeThisDialog(0)">Cerrar</button>
-    </div>
+    </md-toolbar>
+    <md-content flex>
+        <md-content class="md-padding" flex>
+            <form flex style="text-align: center;" layout="column">
+                <div flex class="padd">
+                    <label>Agregar producto y finalizar.</label>
+                    <button class="btn btn-success"
+                            style="width: 180px;"
+                            uib-tooltip="Finaliza la accion y te redirige a la lista de productos"
+                            ng-click="agregarProducto(ngDialogData.producto)"
+                            >Finalizar</button>
+                </div>
+                <div flex class="padd">
+                    <label>Agregar producto y cargar otra clase.</label>
+                    <button class="btn btn-success"
+                            style="width: 180px;"
+                            uib-tooltip="Agrega el producto actual y te permite agregar una clase diferente del mismo producto"
+                            ng-click="agregarRepetirClase(ngDialogData.producto)"
+                            >Clase</button>
+                </div>
+                <div flex class="padd">
+                    <label>Agregar producto y cargar otra talla.</label>
+                    <button class="btn btn-success"
+                            uib-tooltip="Agrega el producto actual y te permite agregar una talla diferente del mismo producto"
+                            style="width: 180px;"
+                            ng-click="agregarCambiarTalla(ngDialogData.producto)"
+                            >Talla</button>
+                </div>
+            </form>
+        </md-content>
+    </md-content>
+    <md-content flex class="md-padding">
+        <button class="btn btn-md btn-danger pull-right"
+                ng-click="closeThisDialog('')">Cerrar</button>
+    </md-content>
 </div>

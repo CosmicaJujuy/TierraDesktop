@@ -28,16 +28,10 @@
                                             <th style="text-align: center">
                                                 <button type="button"
                                                         class="btn btn-xs btn-info"
-                                                        data-toggle="modal" 
-                                                        uib-tooltip="Modificar entidad"
-                                                        data-target="#myModal"
-                                                        ng-click="seleccionarEntidad(entidad)"><span class="glyphicon glyphicon-pencil"></span></button>
+                                                        ng-click="modificarEntidad(entidad)"><span class="glyphicon glyphicon-pencil"></span></button>
                                                 <button type="button" 
                                                         class="btn btn-xs btn-danger"
-                                                        data-toggle="modal" 
-                                                        uib-tooltip="Eliminar entidad"
-                                                        data-target="#myModalDelete"
-                                                        ng-click="seleccionarEntidad(entidad)"><span class="glyphicon glyphicon-trash"></span></button>
+                                                        ng-click="eliminarEntidad(entidad)"><span class="glyphicon glyphicon-trash"></span></button>
                                             </th>                        
                                         </tr>
                                     </tbody>
@@ -84,8 +78,8 @@
                                         <!-- MENSAJES-->
                                         <div ng-messages="newEntidad.direccionEntidad.$error"
                                              ng-if='newEntidad.direccionEntidad.$dirty || newEntidad.direccionEntidad.$touched'>
-                                            <div ng-message="minlength">Nombre demasiado corto.</div>
-                                            <div ng-message="md-maxlength">Nombre demasiado largo.</div>
+                                            <div ng-message="minlength">Dirección demasiado corta.</div>
+                                            <div ng-message="md-maxlength">Dirección demasiado larga.</div>
                                             <div ng-message="required">Este campo no puede estar vacio.</div>
                                         </div>
                                         <!-- ICONOS DE MENSAJE-->
@@ -105,15 +99,14 @@
                                         <!-- MENSAJES-->
                                         <div ng-messages="newEntidad.entidadTelefono.$error"
                                              ng-if='newEntidad.entidadTelefono.$dirty || newEntidad.entidadTelefono.$touched'>
-                                            <div ng-message="minlength">Nombre demasiado corto.</div>
-                                            <div ng-message="md-maxlength">Nombre demasiado largo.</div>
+                                            <div ng-message="minlength">Teléfono demasiado corto.</div>
+                                            <div ng-message="md-maxlength">Teléfono demasiado largo.</div>
                                             <div ng-message="required">Este campo no puede estar vacio.</div>
                                             <div ng-message="tel">Número de telefono invalido.</div>
                                         </div>
                                         <!-- ICONOS DE MENSAJE-->
                                         <span ng-show="newEntidad.entidadTelefono.$valid" class="glyphicon glyphicon-ok form-control-feedback" ></span>
                                         <span ng-show="newEntidad.entidadTelefono.$dirty && newEntidad.entidadTelefono.$invalid" class="glyphicon glyphicon-remove  form-control-feedback"></span>
-
                                     </md-input-container>        
                                     <div class="form-group">
                                         <center>
@@ -134,80 +127,3 @@
         </div>
     </div>
 </div>
-
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">Cambiar datos de la entidad</h4>
-            </div>
-            <div class="modal-body">
-                <form name="updateEntidad" class="form-horizontal">
-                    <div class="form-group">                    
-                        <label class="control-label">Nombre</label>                                
-                        <input type="text"
-                               class="form-control"
-                               ng-model="entidadSeleccionada.nombreEntidad"
-                               maxlength="20"x
-                               name="nombreEntidad" required
-                               data-ng-class='{error: updateEntidad.nombreEntidad.$invalid && !updateEntidad.$pristine}'/>
-                    </div>
-                    <div class="form-group">                    
-                        <label class="control-label">Direccion</label>                                
-                        <input type="text" 
-                               class="form-control"
-                               ng-model="entidadSeleccionada.direccionEntidad"
-                               maxlength="30"
-                               name="direccionEntidad" required
-                               data-ng-class='{error: updateEntidad.direccionEntidad.$invalid && !updateEntidad.$pristine}'/>
-                    </div>
-                    <div class="form-group">                    
-                        <label class="control-label">Telefono</label>                                
-                        <input type="tel" 
-                               class="form-control"
-                               ng-model="entidadSeleccionada.telefonoEntidad" name="entidadTelefono" required
-                               data-ng-class='{error: updateEntidad.entidadTelefono.$invalid && !updateEntidad.$pristine}'/>
-                    </div>               
-                    <div class="form-group">
-                        <center>
-                            <button ng-click="modificarEntidad(entidadSeleccionada)"
-                                    type="submit"
-                                    class="btn btn-warning"
-                                    data-dismiss="modal"
-                                    ng-disabled="updateEntidad.$invalid">Modificar</button>
-                        </center>                                
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="modal fade" id="myModalDelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog modal-sm" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">Eliminar entidad</h4>
-            </div>
-            <div class="modal-body">
-                <center>
-                    ¿Desea eliminar esta entidad?
-                    <br>
-                    <button class="btn btn-danger"
-                            ng-click="eliminarEntidad()"
-                            data-dismiss="modal"
-                            >Eliminar</button>
-                </center>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
-            </div>
-        </div>
-    </div>
-</div>
-<toaster-container toaster-options="{'time-out': 3000, 'close-button':true, 'animation-class': 'toast-top-center'}"></toaster-container>
-

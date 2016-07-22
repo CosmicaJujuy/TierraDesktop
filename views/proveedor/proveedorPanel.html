@@ -24,20 +24,20 @@
                                         <tr ng-repeat="proveedor in $data">
                                             <th style="text-align: center">{{::proveedor.idProveedor}}</th>
                                             <th style="text-align: center">{{::proveedor.cuitProveedor}}</th> 
-                                            <th style="text-align: center"><a href="" ui-sref="proveedor_detalle({idProveedor:{{::proveedor.idProveedor}}})">{{proveedor.nombreProveedor}}</a></th>                        
+                                            <th style="text-align: center"><a href="" ui-sref="proveedor_detalle({idProveedor:{{::proveedor.idProveedor}}})">{{::proveedor.nombreProveedor}}</a></th>                        
                                             <th style="text-align: center">{{::proveedor.direccionProveedor}}</th>                        
                                             <th style="text-align: center">{{::proveedor.telefonoProveedor}}</th>                        
-                                            <th style="text-align: center">
+                                            <th style="text-align: center" ng-controller="ProveedorController">
                                                 <button type="button"
                                                         class="btn btn-xs btn-info"
-                                                        data-toggle="modal"
-                                                        data-target="#myModal"
-                                                        ng-click="seleccionarProveedor(proveedor)"><span class="glyphicon glyphicon-pencil"></span></button>
+                                                        ng-click="modificarProveedor(proveedor)">
+                                                    <span class="glyphicon glyphicon-pencil"></span>
+                                                </button>
                                                 <button type="button"
-                                                        data-toggle="modal"
-                                                        data-target="#myModalDelete"
                                                         class="btn btn-xs btn-danger"
-                                                        ng-click="seleccionarProveedor(proveedor)"><span class="glyphicon glyphicon-trash"></span></button>
+                                                        ng-click="eliminarProveedor(proveedor)">
+                                                    <span class="glyphicon glyphicon-trash"></span>
+                                                </button>
                                             </th>                        
                                         </tr>
                                     </tbody>
@@ -255,120 +255,3 @@
         </div>
     </div>
 </div>
-
-
-
-
-<div id="myModal" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Modificar Proveedor</h4>
-            </div>
-            <form name="modificarProveedor" class="form-horizontal" style="width: 90%; margin-left: 5%; margin-top: 2%;">
-                <div class="form-group">
-                    <label class="col-xs-4">Id Proveedor</label>
-                    <input type="text" class="col-xs-7" ng-model="__proveedor.idProveedor" name="idProveedor" required disabled
-                           data-ng-class='{
-                                           error: modificarProveedor.idProveedor.$invalid && !nuevoProveedor.$pristine
-                                       }'/>
-                </div>  
-                <div class="form-group">
-                    <label class="col-xs-4">Nombre Proovedor</label>
-                    <input type="text" class="col-xs-7" ng-model="__proveedor.nombreProveedor" name="nombreProveedor" required
-                           data-ng-class='{
-                                           error: modificarProveedor.nombreProveedor.$invalid && !nuevoProveedor.$pristine
-                                       }'/>
-                </div>                    
-                <div class="form-group">
-                    <label class="col-xs-4">C.U.I.T. Proovedor</label>
-                    <input type="text" class="col-xs-7" ng-model="__proveedor.cuitProveedor" name="cuitProveedor" required
-                           data-ng-class='{
-                                           error: modificarProveedor.cuitProveedor.$invalid && !nuevoProveedor.$pristine
-                                       }'/>
-                </div>
-                <div class="form-group">
-                    <label class="col-xs-4">Direccion Proovedor</label>
-                    <input type="text" class="col-xs-7" ng-model="__proveedor.direccionProveedor" name="direccionProveedor" required
-                           data-ng-class='{
-                                           error: modificarProveedor.direccionProveedor.$invalid && !nuevoProveedor.$pristine
-                                       }'/>
-                </div>
-                <div class="form-group">
-                    <label class="col-xs-4">Pais</label>
-                    <input type="text" class="col-xs-7" ng-model="__proveedor.paisProveedor" name="paisProveedor" required
-                           data-ng-class='{
-                                           error: modificarProveedor.paisProveedor.$invalid && !nuevoProveedor.$pristine
-                                       }'/>
-                </div>
-                <div class="form-group">
-                    <label class="col-xs-4">Provincia</label>
-                    <input type="text" class="col-xs-7" ng-model="__proveedor.provinciaProveedor" name="provinciaProveedor" required
-                           data-ng-class='{
-                                           error: modificarProveedor.provinciaProveedor.$invalid && !nuevoProveedor.$pristine
-                                       }'/>
-                </div>
-                <div class="form-group">
-                    <label class="col-xs-4">Localidad</label>
-                    <input type="text" class="col-xs-7" ng-model="__proveedor.localidadProveedor" name="localidadProveedor" required
-                           data-ng-class='{
-                                           error: modificarProveedor.localidadProveedor.$invalid && !nuevoProveedor.$pristine
-                                       }'/>
-                </div>                
-                <div class="form-group">
-                    <label class="col-xs-4">Codigo Postal</label>
-                    <input type="text" class="col-xs-7" ng-model="__proveedor.codigoPostal" name="codigoPostal" required
-                           data-ng-class='{
-                                           error: modificarProveedor.codigoPostal.$invalid && !nuevoProveedor.$pristine
-                                       }'/>
-                </div>
-                <div class="form-group">
-                    <label class="col-xs-4">Telefono</label>
-                    <input type="text" class="col-xs-7" ng-model="__proveedor.telefonoProveedor" name="telefonoProveedor" required
-                           data-ng-class='{
-                                           error: modificarProveedor.telefonoProveedor.$invalid && !nuevoProveedor.$pristine
-                                       }'/>
-                </div>
-                <div class="form-group">
-                    <label class="col-xs-4">E-mail</label>
-                    <input type="text" class="col-xs-7" ng-model="__proveedor.emailProveedor" name="emailProveedor" required
-                           data-ng-class='{
-                                           error: modificarProveedor.emailProveedor.$invalid && !nuevoProveedor.$pristine
-                                       }'/>
-                </div>
-                <button ng-click="_modificarProveedor(__proveedor)" data-dismiss="modal" type="submit" class="btn btn-success" ng-disabled="modificarProveedor.$invalid" style="margin-left: 40%;">Modificar</button>
-            </form>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" id="myModalDelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog modal-sm" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">Eliminar proveedor</h4>
-            </div>
-            <div class="modal-body">
-                <center>
-                    ¿Desea eliminar este Proveedor?
-                    <br>
-                    <button class="btn btn-danger"
-                            ng-click="eliminarProveedor()"
-                            data-dismiss="modal"
-                            >Eliminar</button>
-                </center>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
-            </div>
-        </div>
-    </div>
-</div>
-</body>
-</html>

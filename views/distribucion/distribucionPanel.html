@@ -83,7 +83,6 @@
                                             <th>Talla</th>
                                             <th>N° Factura</th>
                                             <th>Precio U.</th>
-                                            <th>Acciones</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -100,9 +99,6 @@
                                             <td style="text-align: center">{{producto.idProducto.talla}}</td>
                                             <td style="text-align: center">{{producto.idProducto.facturaProducto.numeroFactura}}</td>
                                             <td style="text-align: center">{{producto.idProducto.precioVenta|currency}}</td>
-                                            <td style="text-align: center">
-                                                <button class="btn btn-xs btn-danger"><span class="glyphicon glyphicon-remove-sign"></span></button>
-                                            </td>
                                         </tr>
                                         <tr ng-if="results.length === 0">
                                             <td style="text-align: center"></td>
@@ -142,7 +138,6 @@
                                             <th>Talla</th>
                                             <th>N° Factura</th>
                                             <th>Precio U.</th>
-                                            <th>Acciones</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -160,9 +155,6 @@
                                             <td style="text-align: center">{{bebelandia.idProducto.talla}}</td>
                                             <td style="text-align: center">{{bebelandia.idProducto.facturaProducto.numeroFactura}}</td>
                                             <td style="text-align: center">{{bebelandia.idProducto.precioVenta|currency}}</td>
-                                            <td style="text-align: center">
-                                                <button class="btn btn-xs btn-danger"><span class="glyphicon glyphicon-remove-sign"></span></button>
-                                            </td>
                                         </tr>
                                         <tr ng-if="results.length === 0">
                                             <td style="text-align: center"></td>
@@ -202,7 +194,6 @@
                                             <th>Talla</th>
                                             <th>N° Factura</th>
                                             <th>Precio U.</th>
-                                            <th>Acciones</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -220,9 +211,6 @@
                                             <td style="text-align: center">{{libertador.idProducto.talla}}</td>
                                             <td style="text-align: center">{{libertador.idProducto.facturaProducto.numeroFactura}}</td>
                                             <td style="text-align: center">{{libertador.idProducto.precioVenta|currency}}</td>
-                                            <td style="text-align: center">
-                                                <button class="btn btn-xs btn-danger"><span class="glyphicon glyphicon-remove-sign"></span></button>
-                                            </td>
                                         </tr>
                                         <tr ng-if="results.length === 0">
                                             <td style="text-align: center"></td>

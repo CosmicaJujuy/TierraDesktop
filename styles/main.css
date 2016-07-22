@@ -907,3 +907,13 @@ body {
     margin-top: 10px;
     margin-bottom: 10px;
 }
+.md-scroll-mask {
+    /*background-color: rgba(74, 11, 144, 0.5) !important;*/
+}
+md-backdrop.md-opaque.md-default-theme, md-backdrop.md-opaque {
+     /*background-color: rgba(33,33,33,0);*/ 
+     background-color: rgba(74, 11, 144, 1);
+}
+md-dialog.md-transition-in {
+    border: 2px solid purple;
+}

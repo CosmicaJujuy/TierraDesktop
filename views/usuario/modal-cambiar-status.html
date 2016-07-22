@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<div class="ngdialog-message ngdialog-sm" md-theme="docs-dark">
+    <md-toolbar class="md-warn">
+        <div class="md-toolbar-tools">
+            <h3 class="modal-title" style="width: 100%; text-align: center;">
+                {{ngDialogData.usuario.nombre}} {{ngDialogData.usuario.apellido}}
+            </h3>
+        </div>
+    </md-toolbar>
+    <md-content flex>
+        <md-content class="md-padding" flex>
+            <md-whiteframe class="md-whiteframe-24dp"
+                           style="min-height: 200px;"                           
+                           layout layout-align="center center">
+                <form style="text-align: center;">
+                    <div flex class="md-padding">
+                        <p style="font-size: medium;">¿Deseas cambiar el estado del usuario?</p>
+                    </div>
+                    <div flex class="md-padding">
+                        <button class="btn btn-success"
+                                type="button"
+                                ng-hide="ngDialogData.usuario.estado"
+                                ng-click="confirmarCambiarEstado(true, ngDialogData.usuario.idUsuario)">Activar</button>
+                        <button class="btn btn-danger"
+                                type="button"
+                                ng-show="ngDialogData.usuario.estado"
+                                ng-click="confirmarCambiarEstado(false, ngDialogData.usuario.idUsuario)">Desactivar</button>
+                    </div>
+                </form>
+            </md-whiteframe>
+        </md-content>
+    </md-content>
+    <md-content flex class="md-padding">
+        <button class="btn btn-md btn-danger pull-right"
+                ng-click="closeThisDialog('')">Cerrar</button>
+    </md-content>
+</div> 

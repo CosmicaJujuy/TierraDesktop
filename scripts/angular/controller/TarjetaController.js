@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 miAppHome.controller('TarjetaController',
-        function ($scope, $state, NgTableParams, tarjetaService, $timeout, toaster) {
+        function ($scope, ngDialog, $state, NgTableParams, tarjetaService, $timeout, toaster) {
 
             $scope._tarjeta = {
                 "idTarjeta": null,
@@ -44,6 +44,12 @@ miAppHome.controller('TarjetaController',
                 $scope.tarjetaSeleccionada = tarjeta;
             };
 
+            $scope.panelTarjetaEdit = true;
+            $scope.hidePanel = function (tarjeta) {
+                $scope.editTarjeta = tarjeta;
+                $scope.panelTarjetaEdit = false;
+            };
+
             $scope.agregarTarjeta = function (tarjeta) {
                 $promesa = tarjetaService.add(tarjeta);
                 $promesa.then(function (datos) {
@@ -70,59 +76,37 @@ miAppHome.controller('TarjetaController',
 
 
             $scope.modificarTarjeta = function (tarjeta) {
-                $promesa = tarjetaService.update(tarjeta);
-                $promesa.then(function (datos) {
-                    if (datos.status === 200) {
-                        $timeout(function timer() {
-                            tarjetaService.getAll().then(function (datos) {
-                                $scope.tarjetas = datos.data;
-                                $scope.tableTarjetas.reload();
-                            });
-                            toaster.pop({
-                                type: 'success',
-                                title: 'Exito',
-                                body: 'Tarjeta modificada existosamente.',
-                                showCloseButton: false
-                            });
-                        }, 1000);
-                    } else {
-                        toaster.pop({
-                            type: 'error',
-                            title: 'Error',
-                            body: "¡Op's algo paso!, comunicate con el administrador.",
-                            showCloseButton: false
-                        });
-                    }
-                });
-
-            };
-
-            $scope.eliminarTarjeta = function () {
-                $promesa = tarjetaService.delete($scope.tarjetaSeleccionada);
-                $promesa.then(function (datos) {
-                    if (datos.status === 200) {
-                        $timeout(function timer() {
-                            tarjetaService.getAll().then(function (datos) {
-                                $scope.tarjetas = datos.data;
-                                $scope.tableTarjetas.reload();
-                            });
-                            toaster.pop({
-                                type: 'success',
-                                title: 'Exito',
-                                body: 'Tarjeta eliminada existosamente.',
-                                showCloseButton: false
-                            });
-                        }, 1000);
-                    } else {
-                        toaster.pop({
-                            type: 'error',
-                            title: 'Error',
-                            body: "¡Op's algo paso!, comunicate con el administrador.",
-                            showCloseButton: false
-                        });
-                    }
+                ngDialog.open({
+                    template: 'views/tarjeta/modal-confirmar-modificar-tarjeta.html',
+                    className: 'ngdialog-theme-sm',
+                    showClose: false,
+                    controller: 'ModalController',
+                    closeByDocument: false,
+                    closeByEscape: false,
+                    data: {tarjeta: tarjeta}
                 });
             };
+
+            $scope.eliminarTarjeta = function (tarjeta) {
+                ngDialog.open({
+                    template: 'views/tarjeta/modal-confirmar-eliminar-tarjeta.html',
+                    className: 'ngdialog-theme-sm',
+                    showClose: false,
+                    controller: 'ModalController',
+                    closeByDocument: false,
+                    closeByEscape: false,
+                    data: {tarjeta: tarjeta}
+                });
+            };
+
+            $scope.$on('reloadTarjetas', function () {
+                $scope.panelTarjetaEdit = true;
+                $reload = tarjetaService.getAll();
+                $reload.then(function (datos) {
+                    $scope.tarjetas = datos.data;
+                    $scope.tableTarjetas.reload();
+                });
+            });
 
 
         });

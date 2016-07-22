@@ -30,7 +30,7 @@ var miAppHome = angular.module('tierraDeColoresApp', [
                     .warnPalette('yellow')
                     .accentPalette('yellow')
 //                    .backgroundPalette('deep-purple')
-                    .dark();
+                    .dark(true);
 
             var uri = 'https://tierradecoloresapi.herokuapp.com/usuarios/logged';
             var auth = function ($rootScope, $http, $state, $timeout, cookieService) {
@@ -138,7 +138,7 @@ var miAppHome = angular.module('tierraDeColoresApp', [
                     })
                     .state('usuarios', {
                         url: '/usuarios',
-                        data: {pageTitle: 'Modificar perfil de usuario.'},
+                        data: {pageTitle: 'Lista de usuarios.'},
                         resolve: {auth: auth},
                         views: {
                             'navbar': {
@@ -627,7 +627,7 @@ var miAppHome = angular.module('tierraDeColoresApp', [
                         }
                     });
         })
-        .run(function ($state, $stateParams, $location, $cookies, sessionProvider, $rootScope) {
+        .run(function ($state, $stateParams, $location, $cookies, sessionProvider, $rootScope, settingService) {
             var session = require('electron').remote.session;
             var ses = session.fromPartition('persist:name');
             ses.clearCache(function (response) {

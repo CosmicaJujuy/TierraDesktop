@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-miAppHome.controller('ModalController', function ($scope, detalleTransferenciaService, transferenciaService, notaCreditoService, detalleNotaCreditoService, $state, ngDialog, $stateParams, _productoService, toaster, facturaService, $timeout, $rootScope, facturaService) {
+miAppHome.controller('ModalController', function ($scope, _proveedorService, _tipoService, _marcaService, categoriaService, planPagoService, tarjetaService, entidadBancariaService, detalleTransferenciaService, transferenciaService, notaCreditoService, detalleNotaCreditoService, $state, ngDialog, $stateParams, _productoService, toaster, facturaService, $timeout, $rootScope, facturaService) {
 
     $scope._detalleFactura = {
         "idDetalleFactura": null,
@@ -547,6 +547,355 @@ miAppHome.controller('ModalController', function ($scope, detalleTransferenciaSe
                     type: 'warning',
                     title: '¡Advertencia!',
                     body: datos.data.msg,
+                    showCloseButton: false
+                });
+            }
+        });
+    };
+
+    $scope.confirmarModificarEntidad = function (entidad) {
+        ngDialog.open({
+            template: 'views/banco/modal-confirmar-modificar-entidad.html',
+            className: 'ngdialog-theme-sm',
+            showClose: false,
+            controller: 'ModalController',
+            closeByDocument: false,
+            closeByEscape: false,
+            data: {entidad: entidad}
+        });
+    };
+
+    $scope.finalizarModificarEntidad = function (entidad) {
+        $promesa = entidadBancariaService.update(entidad);
+        $promesa.then(function (datos) {
+            ngDialog.closeAll();
+            if (datos.status === 200) {
+                $rootScope.$broadcast('reloadEntidades', {});
+                toaster.pop({
+                    type: 'success',
+                    title: 'Exito',
+                    body: 'Entidad modificada con exito.',
+                    showCloseButton: false
+                });
+            } else {
+                toaster.pop({
+                    type: 'error',
+                    title: 'Error',
+                    body: "¡Op's algo paso!, comunicate con el administrador.",
+                    showCloseButton: false
+                });
+            }
+        });
+    };
+
+    $scope.confirmarEliminarEntidad = function (entidad) {
+        $promesa = entidadBancariaService.delete(entidad);
+        $promesa.then(function (datos) {
+            ngDialog.closeAll();
+            if (datos.status === 200) {
+                $rootScope.$broadcast('reloadEntidades', {});
+                toaster.pop({
+                    type: 'success',
+                    title: 'Exito',
+                    body: 'Entidad eliminada con exito.',
+                    showCloseButton: false
+                });
+            } else {
+                toaster.pop({
+                    type: 'error',
+                    title: 'Error',
+                    body: "¡Op's algo paso!, comunicate con el administrador.",
+                    showCloseButton: false
+                });
+            }
+        });
+    };
+
+    $scope.confirmarModificarTarjeta = function (tarjeta) {
+        $promesa = tarjetaService.update(tarjeta);
+        $promesa.then(function (datos) {
+            ngDialog.closeAll();
+            if (datos.status === 200) {
+                $timeout(function timer() {
+                    $rootScope.$broadcast('reloadTarjetas', {});
+                    toaster.pop({
+                        type: 'success',
+                        title: 'Exito',
+                        body: 'Tarjeta modificada existosamente.',
+                        showCloseButton: false
+                    });
+                }, 1000);
+            } else {
+                toaster.pop({
+                    type: 'error',
+                    title: 'Error',
+                    body: "¡Op's algo paso!, comunicate con el administrador.",
+                    showCloseButton: false
+                });
+            }
+        });
+    };
+
+    $scope.confirmarEliminarTarjeta = function (tarjeta) {
+        $promesa = tarjetaService.delete(tarjeta);
+        $promesa.then(function (datos) {
+            ngDialog.closeAll();
+            if (datos.status === 200) {
+                $timeout(function timer() {
+                    $rootScope.$broadcast('reloadTarjetas', {});
+                    toaster.pop({
+                        type: 'success',
+                        title: 'Exito',
+                        body: 'Tarjeta eliminada existosamente.',
+                        showCloseButton: false
+                    });
+                }, 1000);
+            } else {
+                toaster.pop({
+                    type: 'error',
+                    title: 'Error',
+                    body: "¡Op's algo paso!, comunicate con el administrador.",
+                    showCloseButton: false
+                });
+            }
+        });
+    };
+
+    $scope.confirmarModificarPlan = function (planPago) {
+        $promesa = planPagoService.update(planPago);
+        $promesa.then(function (datos) {
+            ngDialog.closeAll();
+            if (datos.status === 200) {
+                $rootScope.$broadcast('reloadPlanes', {});
+                toaster.pop({
+                    type: 'success',
+                    title: 'Exito',
+                    body: 'Plan de pago modificado exitosamente',
+                    showCloseButton: false
+                });
+            } else {
+                toaster.pop({
+                    type: 'error',
+                    title: 'Error',
+                    body: "¡Op's algo paso!, comunicate con el administrador.",
+                    showCloseButton: false
+                });
+            }
+        });
+    };
+
+    $scope.confirmarEliminarPlan = function (planPago) {
+        $promesa = planPagoService.delete(planPago);
+        $promesa.then(function (datos) {
+            ngDialog.closeAll();
+            if (datos.status === 200) {
+                $rootScope.$broadcast('reloadPlanes', {});
+                toaster.pop({
+                    type: 'success',
+                    title: 'Exito',
+                    body: 'Plan de pago eliminado exitosamente',
+                    showCloseButton: false
+                });
+            } else {
+                toaster.pop({
+                    type: 'error',
+                    title: 'Error',
+                    body: "¡Op's algo paso!, comunicate con el administrador.",
+                    showCloseButton: false
+                });
+            }
+        });
+    };
+
+    $scope.confirmarModificarCategoria = function (categoria) {
+        $promesa = categoriaService.updateCategoria(categoria);
+        $promesa.then(function (datos) {
+            ngDialog.closeAll();
+            if (datos.status === 200) {
+                $rootScope.$broadcast('reloadCategorias', {});
+                toaster.pop({
+                    type: 'success',
+                    title: 'Exito',
+                    body: 'Categoria modificada con exito.',
+                    showCloseButton: false
+                });
+            } else {
+                toaster.pop({
+                    type: 'error',
+                    title: 'Error',
+                    body: "¡Op's algo paso!, comunicate con el administrador.",
+                    showCloseButton: false
+                });
+            }
+        });
+    };
+
+    $scope.confirmarEliminarCategoria = function (categoria) {
+        $promesa = categoriaService.deleteCategoria(categoria);
+        $promesa.then(function (datos) {
+            ngDialog.closeAll();
+            if (datos.status === 200) {
+                $rootScope.$broadcast('reloadCategorias', {});
+                toaster.pop({
+                    type: 'success',
+                    title: 'Exito',
+                    body: 'Categoria eliminada con exito.',
+                    showCloseButton: false
+                });
+            } else {
+                toaster.pop({
+                    type: 'error',
+                    title: 'Error',
+                    body: "¡Op's algo paso!, comunicate con el administrador.",
+                    showCloseButton: false
+                });
+            }
+        });
+    };
+
+    $scope.confirmarModificarMarca = function (marca) {
+        $promesa = _marcaService.updateMarca(marca);
+        $promesa.then(function (datos) {
+            ngDialog.closeAll();
+            if (datos.status === 200) {
+                $rootScope.$broadcast('reloadMarcas', {});
+                toaster.pop({
+                    type: 'success',
+                    title: 'Exito',
+                    body: 'Marca modificada con exito.',
+                    showCloseButton: false
+                });
+            } else {
+                toaster.pop({
+                    type: 'error',
+                    title: 'Error',
+                    body: "¡Op's algo paso!, comunicate con el administrador.",
+                    showCloseButton: false
+                });
+            }
+        });
+    };
+
+    $scope.confirmarEliminarMarca = function (marca) {
+        $promesa = _marcaService.deleteMarca(marca);
+        $promesa.then(function (datos) {
+            ngDialog.closeAll();
+            if (datos.status === 200) {
+                $rootScope.$broadcast('reloadMarcas', {});
+                toaster.pop({
+                    type: 'success',
+                    title: 'Exito',
+                    body: 'Marca eliminada con exito.',
+                    showCloseButton: false
+                });
+            } else {
+                toaster.pop({
+                    type: 'error',
+                    title: 'Error',
+                    body: "¡Op's algo paso!, comunicate con el administrador.",
+                    showCloseButton: false
+                });
+            }
+        });
+    };
+
+    $scope.confirmarModificarTipo = function (tipo) {
+        $promesa = _tipoService.updateTipo(tipo);
+        $promesa.then(function (datos) {
+            ngDialog.closeAll();
+            if (datos.status === 200) {
+                $rootScope.$broadcast('reloadTipos', {});
+                toaster.pop({
+                    type: 'success',
+                    title: 'Exito',
+                    body: 'Tipo modificado con exito.',
+                    showCloseButton: false
+                });
+            } else {
+                toaster.pop({
+                    type: 'error',
+                    title: 'Error',
+                    body: "¡Op's algo paso!, comunicate con el administrador.",
+                    showCloseButton: false
+                });
+            }
+        });
+    };
+
+    $scope.confirmarEliminarTipo = function (tipo) {
+        $promesa = _tipoService.deleteTipo(tipo);
+        $promesa.then(function (datos) {
+            ngDialog.closeAll();
+            if (datos.status === 200) {
+                $rootScope.$broadcast('reloadTipos', {});
+                toaster.pop({
+                    type: 'success',
+                    title: 'Exito',
+                    body: 'Tipo eliminado con exito.',
+                    showCloseButton: false
+                });
+            } else {
+                toaster.pop({
+                    type: 'error',
+                    title: 'Error',
+                    body: "¡Op's algo paso!, comunicate con el administrador.",
+                    showCloseButton: false
+                });
+            }
+        });
+    };
+
+    $scope.confirmarModificarProveedor = function (proveedor) {
+        ngDialog.open({
+            template: 'views/proveedor/modal-confirmar-modificar-proveedor.html',
+            className: 'ngdialog-theme-sm',
+            showClose: false,
+            controller: 'ModalController',
+            closeByDocument: false,
+            closeByEscape: false,
+            data: {proveedor: proveedor}
+        });
+    };
+    $scope.finalizarModificarProveedor = function (proveedor) {
+        $promesa = _proveedorService.update(proveedor);
+        $promesa.then(function (datos) {
+            ngDialog.closeAll();
+            if (datos.status === 200) {
+                $rootScope.$broadcast('reloadProveedores',{});
+                toaster.pop({
+                    type: 'success',
+                    title: 'Exito',
+                    body: 'Proveedor modificado exitosamente',
+                    showCloseButton: false
+                });
+            } else {
+                toaster.pop({
+                    type: 'error',
+                    title: 'Error',
+                    body: "¡Op's algo paso!, comunicate con el administrador.",
+                    showCloseButton: false
+                });
+            }
+        });
+    };
+
+    $scope.confirmarEliminarProveedor = function(proveedor){
+        $promesa = _proveedorService.delete(proveedor);
+        $promesa.then(function (datos) {
+            ngDialog.closeAll();
+            if (datos.status === 200) {
+                $rootScope.$broadcast('reloadProveedores',{});
+                toaster.pop({
+                    type: 'success',
+                    title: 'Exito',
+                    body: 'Proveedor eliminado exitosamente',
+                    showCloseButton: false
+                });
+            } else {
+                toaster.pop({
+                    type: 'error',
+                    title: 'Error',
+                    body: "¡Op's algo paso!, comunicate con el administrador.",
                     showCloseButton: false
                 });
             }

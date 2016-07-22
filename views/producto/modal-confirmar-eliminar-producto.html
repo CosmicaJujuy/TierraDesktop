@@ -1,23 +1,28 @@
 <!DOCTYPE html>
-<div class="ngdialog-message ngdialog-advertencia" style="width: 400px;">
-    <div class="modal-header">
-        <center>
-            <h3 class="modal-title" style="font-size: medium; text-transform:uppercase;">
+<div class="ngdialog-message ngdialog-advertencia" md-theme="docs-dark">
+    <md-toolbar class="md-warn">
+        <div class="md-toolbar-tools">
+            <h3 class="modal-title" style="width: 100%; text-align: center; font-size: medium; text-transform:uppercase;">
                 {{ngDialogData.producto.descripcion}}
             </h3>
-        </center>
-    </div>
-    <div class="modal-body">
-        <center class="well">
-            <p style="font-weight: bolder;">Esta acción es irreversible.</p>
-            <p>¿Desea eliminar este producto?</p>
-            <button class="btn btn-danger"
-                    style="margin-top: 20px;"
-                    data-dismiss="modal"
-                    ng-click="eliminarProductoFactura(ngDialogData.producto)">Eliminar</button>
-        </center>
-    </div>
-    <div class="modal-footer">
-        <button class="btn btn-md btn-danger" ng-click="closeThisDialog(0)">Cerrar</button>
-    </div>
+        </div>
+    </md-toolbar>
+    <md-content flex>
+        <md-content class="md-padding" flex>
+            <md-whiteframe class="md-whiteframe-24dp"
+                           style="min-height: 250px;"                           
+                           layout layout-align="center center">
+                <form style="text-align: center;">
+                    <div flex class="md-padding">
+                        <span style="font-size: medium; font-weight: bold;">¿Desea eliminar este producto?</span>
+                        <p style="font-size: small;">Esta acción es irreversible.</p>
+                    </div>
+                    <div flex class="md-padding">
+                        <button class="btn btn-md btn-success" style="width: 50px;" ng-click="eliminarProductoFactura(ngDialogData.producto)"">Si</button>
+                        <button class="btn btn-md btn-danger" style="width: 50px;" ng-click="closeThisDialog(0)">No</button>
+                    </div>
+                </form>
+            </md-whiteframe>
+        </md-content>
+    </md-content>
 </div>

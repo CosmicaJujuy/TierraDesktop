@@ -6,13 +6,12 @@
          flex="70" layout="column" md-theme="docs-dark"
          data-ng-init="buscarProveedor()"
          style="margin-top: 30px;">
-        <md-toolbar class="md-warn" md-theme="docs-dark">
+        <md-toolbar class="md-warn" md-theme="docs-dark" ng-controller="ProveedorController">
             <div class="md-toolbar-tools">
                 <h4 class="md-flex" style="width:100%;">
                     Detalles de Proveedor # {{foundProveedor.idProveedor}}                
                     <a href=""
-                       ng-click="seleccionarProveedor(foundProveedor)"
-                       data-toggle="modal" data-target="#myModal"
+                       ng-click="modificarProveedor(foundProveedor)"
                        style="color: #000; float: right;">Editar</a>
                 </h4>
             </div>
