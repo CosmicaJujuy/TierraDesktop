@@ -35,7 +35,7 @@
 
                             <button class="btn btn-block btn-success" flex
                                     ng-disabled="factura.estado === 'CONFIRMADO'"
-                                    data-toggle="modal" data-target="#finalizarModal"
+                                    ng-click="cerrarFactura($event)"
                                     style="float: bottom;">Finalizar</button>
 
                             <!-- reactivar funcion accesoFiscal()-->
@@ -152,13 +152,12 @@
                                         <md-input-container class="md-block md-icon">
                                             <label>Monto</label>
                                             <md-icon class="material-icons">&#xE227;</md-icon>
-                                            <input id="prependedtext"
-                                                   name="monto"
+                                            <input name="monto"
                                                    min="0"
                                                    max="9999"
                                                    placeholder="Monto a pagar"
                                                    required type="number"
-                                                   ng-model="montoPago">
+                                                   ng-model="cargarMetodo.montoPago">
                                             <div ng-messages="metodoPago.monto.$error"
                                                  ng-if='metodoPago.monto.$dirty || metodoPago.monto.$touched'>
                                                 <div ng-message="min">Monto demasiado bajo.</div>
@@ -174,10 +173,10 @@
                                                             data-ng-init="listaMedioPago()">
                                             <label>Medio Pago</label>
                                             <md-icon class="material-icons">&#xE8B0;</md-icon>
-                                            <md-select ng-model="mediosPago"
+                                            <md-select ng-model="cargarMetodo.mediosPago"
                                                        placeholder="Elegir medio de pago"
                                                        ng-model-options="{trackBy: '$value.idMedioPago'}"
-                                                       data-ng-init="mediosPago"
+                                                       data-ng-init="cargarMetodo.mediosPago"
                                                        required name="medios">                                            
                                                 <md-option ng-value="medio"
                                                            ng-repeat="medio in mediosPagos">{{medio.nombrePago}}</md-option>                                            
@@ -194,11 +193,11 @@
                                                             data-ng-init="listaEntidades()">
                                             <label>Entidad</label>
                                             <md-icon class="material-icons">&#xE84F;</md-icon>
-                                            <md-select ng-model="entidadPago"
+                                            <md-select ng-model="cargarMetodo.entidadPago"
                                                        ng-disabled="disableSelectEntidades"
                                                        placeholder="Elegir entidad financiera"
                                                        ng-model-options="{trackBy: '$value.idEntidadMonetaria'}"
-                                                       data-ng-init="entidadPago"
+                                                       data-ng-init="cargarMetodo.entidadPago"
                                                        ng-change="busquedaTarjeta()"
                                                        required name="entidades">                                            
                                                 <md-option ng-value="entidad"
@@ -216,11 +215,11 @@
                                                             data-ng-init="listaTarjetas()">
                                             <label>Tarjeta</label>
                                             <md-icon class="material-icons">&#xE870;</md-icon>
-                                            <md-select ng-model="tarjetasPago"
+                                            <md-select ng-model="cargarMetodo.tarjetasPago"
                                                        ng-disabled="disableSelectTarjeta"
                                                        placeholder="Elegir tarjeta"
                                                        ng-model-options="{trackBy: '$value.idTarjeta'}"
-                                                       data-ng-init="tarjetasPago"
+                                                       data-ng-init="cargarMetodo.tarjetasPago"
                                                        ng-change="busquedaPlanByTarjeta()"
                                                        required name="tarjetas">
                                                 <md-option ng-value="tarjeta"
@@ -238,11 +237,11 @@
                                                             data-ng-init="listaPlanesPago()">
                                             <label>Plan de pago</label>
                                             <md-icon class="material-icons">&#xE870;</md-icon>
-                                            <md-select ng-model="planPago"
+                                            <md-select ng-model="cargarMetodo.planPago"
                                                        ng-disabled="disableSelectMetodo"
                                                        placeholder="Elegir plan de pago"
                                                        ng-model-options="{trackBy: '$value.idPlanesPago'}"
-                                                       data-ng-init="planPago"
+                                                       data-ng-init="cargarMetodo.planPago"
                                                        required name="planes">
                                                 <md-option ng-value="plan"
                                                            ng-repeat="plan in planesPago">{{plan.nombrePlanesPago}}</md-option>                                            
@@ -262,8 +261,8 @@
                                                    maxlength="20"
                                                    minlength="5"
                                                    md-maxlength="20"
-                                                   ng-disabled="!planPago" name="comprobante"
-                                                   ng-model="comprobantePago">
+                                                   ng-disabled="!cargarMetodo.planPago" name="comprobante"
+                                                   ng-model="cargarMetodo.comprobantePago">
                                             <div ng-messages="metodoPago.comprobante.$error"
                                                  ng-if="metodoPago.comprobante.$dirty || metodoPago.comprobante.$touched">
                                                 <div ng-message="required">Este campo no puede estar vacio.</div>
@@ -275,9 +274,10 @@
                                         </md-input-container>
                                         <div flex style="text-align: center;">
                                             <button class="btn btn-success"
-                                                    ng-click="seleccionarMetodoPago(montoPago, mediosPago, entidadPago, tarjetasPago, planPago, comprobantePago)"
-                                                    data-toggle="modal" data-target="#myModal"
-                                                    ng-disabled="factura.estado === 'CONFIRMADO'">Agregar</button>
+                                                    ng-click="agregarMetodoPago(cargarMetodo)"
+                                                    ng-disabled="factura.estado === 'CONFIRMADO'">
+                                                Agregar
+                                            </button>
                                         </div>
                                     </form>
                                 </div>
@@ -637,34 +637,6 @@
             </div>
         </div>
     </div>
-    <!-- Modal agregar metodo pago a factura-->
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog modal-sm" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">¿Finalizar operación?</h4>
-                </div>
-                <div class="modal-body" ng-controller="FacturaController">
-                    <center>
-                        <label class="control-label">
-                            ¿Continuar?
-                        </label>
-                        <br>
-                        <button class="btn btn-success"
-                                style=""
-                                data-dismiss="modal"
-                                ng-disabled="factura.estado === 'CONFIRMADO'"
-                                ng-click="agregarMetodoPago()">Agregar</button>
-                    </center>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>                    
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
 
 

@@ -20,11 +20,6 @@ var miAppHome = angular.module('tierraDeColoresApp', [
             $mdIconProvider
                     .iconSet('social', 'img/icons/sets/social-icons.svg', 24)
                     .defaultIconSet('styles/icons/sets/core-icons.svg', 24);
-            $mdThemingProvider.theme('default')
-                    .primaryPalette('purple')
-                    .warnPalette('red')
-                    .accentPalette('pink');
-
             $mdThemingProvider.theme('docs-dark')
                     .primaryPalette('blue')
                     .warnPalette('yellow')
@@ -33,7 +28,7 @@ var miAppHome = angular.module('tierraDeColoresApp', [
                     .dark(true);
 
             var uri = 'https://tierradecoloresapi.herokuapp.com/usuarios/logged';
-            var auth = function ($rootScope, $http, $state, $timeout, cookieService) {
+            var auth = function ($http, $state, $timeout, cookieService) {
                 var electron = require('electron');
                 var window = electron.remote.getCurrentWindow();
                 var token = cookieService.get('token');
@@ -83,7 +78,10 @@ var miAppHome = angular.module('tierraDeColoresApp', [
                         resolve: {auth: auth},
                         views: {
                             'navbar': {
-                                templateUrl: "views/navbar2.html",
+                                templateProvider: function ($templateRequest, sessionProvider) {
+                                    var templateName = sessionProvider.getPath();
+                                    return $templateRequest(templateName);
+                                },
                                 controller: function ($state) {
 
                                 }
@@ -101,10 +99,7 @@ var miAppHome = angular.module('tierraDeColoresApp', [
                         views: {
                             'navbar': {
                                 templateProvider: function ($templateRequest, sessionProvider) {
-                                    var templateName;
-                                    if (sessionProvider.getPath() === "admin") {
-                                        templateName = 'views/navbar2.html';
-                                    }
+                                    var templateName = sessionProvider.getPath();
                                     return $templateRequest(templateName);
                                 },
                                 controller: null
@@ -122,10 +117,7 @@ var miAppHome = angular.module('tierraDeColoresApp', [
                         views: {
                             'navbar': {
                                 templateProvider: function ($templateRequest, sessionProvider) {
-                                    var templateName;
-                                    if (sessionProvider.getPath() === "admin") {
-                                        templateName = 'views/navbar2.html';
-                                    }
+                                    var templateName = sessionProvider.getPath();
                                     return $templateRequest(templateName);
                                 },
                                 controller: null
@@ -143,10 +135,7 @@ var miAppHome = angular.module('tierraDeColoresApp', [
                         views: {
                             'navbar': {
                                 templateProvider: function ($templateRequest, sessionProvider) {
-                                    var templateName;
-                                    if (sessionProvider.getPath() === "admin") {
-                                        templateName = 'views/navbar2.html';
-                                    }
+                                    var templateName = sessionProvider.getPath();
                                     return $templateRequest(templateName);
                                 },
                                 controller: null
@@ -164,10 +153,7 @@ var miAppHome = angular.module('tierraDeColoresApp', [
                         views: {
                             'navbar': {
                                 templateProvider: function ($templateRequest, sessionProvider) {
-                                    var templateName;
-                                    if (sessionProvider.getPath() === "admin") {
-                                        templateName = 'views/navbar2.html';
-                                    }
+                                    var templateName = sessionProvider.getPath();
                                     return $templateRequest(templateName);
                                 },
                                 controller: null
@@ -185,10 +171,7 @@ var miAppHome = angular.module('tierraDeColoresApp', [
                         views: {
                             'navbar': {
                                 templateProvider: function ($templateRequest, sessionProvider) {
-                                    var templateName;
-                                    if (sessionProvider.getPath() === "admin") {
-                                        templateName = 'views/navbar2.html';
-                                    }
+                                    var templateName = sessionProvider.getPath();
                                     return $templateRequest(templateName);
                                 },
                                 controller: null
@@ -206,10 +189,7 @@ var miAppHome = angular.module('tierraDeColoresApp', [
                         views: {
                             'navbar': {
                                 templateProvider: function ($templateRequest, sessionProvider) {
-                                    var templateName;
-                                    if (sessionProvider.getPath() === "admin") {
-                                        templateName = 'views/navbar2.html';
-                                    }
+                                    var templateName = sessionProvider.getPath();
                                     return $templateRequest(templateName);
                                 },
                                 controller: null
@@ -227,10 +207,7 @@ var miAppHome = angular.module('tierraDeColoresApp', [
                         views: {
                             'navbar': {
                                 templateProvider: function ($templateRequest, sessionProvider) {
-                                    var templateName;
-                                    if (sessionProvider.getPath() === "admin") {
-                                        templateName = 'views/navbar2.html';
-                                    }
+                                    var templateName = sessionProvider.getPath();
                                     return $templateRequest(templateName);
                                 },
                                 controller: null
@@ -248,10 +225,7 @@ var miAppHome = angular.module('tierraDeColoresApp', [
                         views: {
                             'navbar': {
                                 templateProvider: function ($templateRequest, sessionProvider) {
-                                    var templateName;
-                                    if (sessionProvider.getPath() === "admin") {
-                                        templateName = 'views/navbar2.html';
-                                    }
+                                    var templateName = sessionProvider.getPath();
                                     return $templateRequest(templateName);
                                 },
                                 controller: null
@@ -269,10 +243,7 @@ var miAppHome = angular.module('tierraDeColoresApp', [
                         views: {
                             'navbar': {
                                 templateProvider: function ($templateRequest, sessionProvider) {
-                                    var templateName;
-                                    if (sessionProvider.getPath() === "admin") {
-                                        templateName = 'views/navbar2.html';
-                                    }
+                                    var templateName = sessionProvider.getPath();
                                     return $templateRequest(templateName);
                                 },
                                 controller: null
@@ -290,10 +261,7 @@ var miAppHome = angular.module('tierraDeColoresApp', [
                         views: {
                             'navbar': {
                                 templateProvider: function ($templateRequest, sessionProvider) {
-                                    var templateName;
-                                    if (sessionProvider.getPath() === "admin") {
-                                        templateName = 'views/navbar2.html';
-                                    }
+                                    var templateName = sessionProvider.getPath();
                                     return $templateRequest(templateName);
                                 },
                                 controller: 'FacturaProductoController'
@@ -311,10 +279,7 @@ var miAppHome = angular.module('tierraDeColoresApp', [
                         views: {
                             'navbar': {
                                 templateProvider: function ($templateRequest, sessionProvider) {
-                                    var templateName;
-                                    if (sessionProvider.getPath() === "admin") {
-                                        templateName = 'views/navbar2.html';
-                                    }
+                                    var templateName = sessionProvider.getPath();
                                     return $templateRequest(templateName);
                                 },
                                 controller: null
@@ -332,10 +297,7 @@ var miAppHome = angular.module('tierraDeColoresApp', [
                         views: {
                             'navbar': {
                                 templateProvider: function ($templateRequest, sessionProvider) {
-                                    var templateName;
-                                    if (sessionProvider.getPath() === "admin") {
-                                        templateName = 'views/navbar2.html';
-                                    }
+                                    var templateName = sessionProvider.getPath();
                                     return $templateRequest(templateName);
                                 },
                                 controller: null
@@ -353,10 +315,7 @@ var miAppHome = angular.module('tierraDeColoresApp', [
                         views: {
                             'navbar': {
                                 templateProvider: function ($templateRequest, sessionProvider) {
-                                    var templateName;
-                                    if (sessionProvider.getPath() === "admin") {
-                                        templateName = 'views/navbar2.html';
-                                    }
+                                    var templateName = sessionProvider.getPath();
                                     return $templateRequest(templateName);
                                 },
                                 controller: null
@@ -374,10 +333,7 @@ var miAppHome = angular.module('tierraDeColoresApp', [
                         views: {
                             'navbar': {
                                 templateProvider: function ($templateRequest, sessionProvider) {
-                                    var templateName;
-                                    if (sessionProvider.getPath() === "admin") {
-                                        templateName = 'views/navbar2.html';
-                                    }
+                                    var templateName = sessionProvider.getPath();
                                     return $templateRequest(templateName);
                                 },
                                 controller: null
@@ -395,10 +351,7 @@ var miAppHome = angular.module('tierraDeColoresApp', [
                         views: {
                             'navbar': {
                                 templateProvider: function ($templateRequest, sessionProvider) {
-                                    var templateName;
-                                    if (sessionProvider.getPath() === "admin") {
-                                        templateName = 'views/navbar2.html';
-                                    }
+                                    var templateName = sessionProvider.getPath();
                                     return $templateRequest(templateName);
                                 },
                                 controller: null
@@ -416,10 +369,7 @@ var miAppHome = angular.module('tierraDeColoresApp', [
                         views: {
                             'navbar': {
                                 templateProvider: function ($templateRequest, sessionProvider) {
-                                    var templateName;
-                                    if (sessionProvider.getPath() === "admin") {
-                                        templateName = 'views/navbar2.html';
-                                    }
+                                    var templateName = sessionProvider.getPath();
                                     return $templateRequest(templateName);
                                 },
                                 controller: null
@@ -437,10 +387,7 @@ var miAppHome = angular.module('tierraDeColoresApp', [
                         views: {
                             'navbar': {
                                 templateProvider: function ($templateRequest, sessionProvider) {
-                                    var templateName;
-                                    if (sessionProvider.getPath() === "admin") {
-                                        templateName = 'views/navbar2.html';
-                                    }
+                                    var templateName = sessionProvider.getPath();
                                     return $templateRequest(templateName);
                                 },
                                 controller: null
@@ -458,10 +405,7 @@ var miAppHome = angular.module('tierraDeColoresApp', [
                         views: {
                             'navbar': {
                                 templateProvider: function ($templateRequest, sessionProvider) {
-                                    var templateName;
-                                    if (sessionProvider.getPath() === "admin") {
-                                        templateName = 'views/navbar2.html';
-                                    }
+                                    var templateName = sessionProvider.getPath();
                                     return $templateRequest(templateName);
                                 },
                                 controller: null
@@ -479,10 +423,7 @@ var miAppHome = angular.module('tierraDeColoresApp', [
                         views: {
                             'navbar': {
                                 templateProvider: function ($templateRequest, sessionProvider) {
-                                    var templateName;
-                                    if (sessionProvider.getPath() === "admin") {
-                                        templateName = 'views/navbar2.html';
-                                    }
+                                    var templateName = sessionProvider.getPath();
                                     return $templateRequest(templateName);
                                 },
                                 controller: null
@@ -500,10 +441,7 @@ var miAppHome = angular.module('tierraDeColoresApp', [
                         views: {
                             'navbar': {
                                 templateProvider: function ($templateRequest, sessionProvider) {
-                                    var templateName;
-                                    if (sessionProvider.getPath() === "admin") {
-                                        templateName = 'views/navbar2.html';
-                                    }
+                                    var templateName = sessionProvider.getPath();
                                     return $templateRequest(templateName);
                                 },
                                 controller: null
@@ -521,10 +459,7 @@ var miAppHome = angular.module('tierraDeColoresApp', [
                         views: {
                             'navbar': {
                                 templateProvider: function ($templateRequest, sessionProvider) {
-                                    var templateName;
-                                    if (sessionProvider.getPath() === "admin") {
-                                        templateName = 'views/navbar2.html';
-                                    }
+                                    var templateName = sessionProvider.getPath();
                                     return $templateRequest(templateName);
                                 },
                                 controller: null
@@ -542,10 +477,7 @@ var miAppHome = angular.module('tierraDeColoresApp', [
                         views: {
                             'navbar': {
                                 templateProvider: function ($templateRequest, sessionProvider) {
-                                    var templateName;
-                                    if (sessionProvider.getPath() === "admin") {
-                                        templateName = 'views/navbar2.html';
-                                    }
+                                    var templateName = sessionProvider.getPath();
                                     return $templateRequest(templateName);
                                 },
                                 controller: null
@@ -563,10 +495,7 @@ var miAppHome = angular.module('tierraDeColoresApp', [
                         views: {
                             'navbar': {
                                 templateProvider: function ($templateRequest, sessionProvider) {
-                                    var templateName;
-                                    if (sessionProvider.getPath() === "admin") {
-                                        templateName = 'views/navbar2.html';
-                                    }
+                                    var templateName = sessionProvider.getPath();
                                     return $templateRequest(templateName);
                                 },
                                 controller: null
@@ -591,10 +520,7 @@ var miAppHome = angular.module('tierraDeColoresApp', [
                         views: {
                             'navbar': {
                                 templateProvider: function ($templateRequest, sessionProvider) {
-                                    var templateName;
-                                    if (sessionProvider.getPath() === "admin") {
-                                        templateName = 'views/navbar2.html';
-                                    }
+                                    var templateName = sessionProvider.getPath();
                                     return $templateRequest(templateName);
                                 },
                                 controller: null
@@ -612,10 +538,7 @@ var miAppHome = angular.module('tierraDeColoresApp', [
                         views: {
                             'navbar': {
                                 templateProvider: function ($templateRequest, sessionProvider) {
-                                    var templateName;
-                                    if (sessionProvider.getPath() === "admin") {
-                                        templateName = 'views/navbar2.html';
-                                    }
+                                    var templateName = sessionProvider.getPath();
                                     return $templateRequest(templateName);
                                 },
                                 controller: null

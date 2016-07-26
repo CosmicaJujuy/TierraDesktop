@@ -3,7 +3,41 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-miAppHome.controller('ModalController', function ($scope, _proveedorService, _tipoService, _marcaService, categoriaService, planPagoService, tarjetaService, entidadBancariaService, detalleTransferenciaService, transferenciaService, notaCreditoService, detalleNotaCreditoService, $state, ngDialog, $stateParams, _productoService, toaster, facturaService, $timeout, $rootScope, facturaService) {
+miAppHome.controller('ModalController', function (
+        $scope,
+        metodoPagoFacturaService,
+        _proveedorService,
+        _tipoService,
+        _marcaService,
+        categoriaService,
+        planPagoService,
+        tarjetaService,
+        entidadBancariaService,
+        detalleTransferenciaService,
+        transferenciaService,
+        notaCreditoService,
+        detalleNotaCreditoService,
+        $state,
+        ngDialog,
+        $stateParams,
+        _productoService,
+        toaster,
+        facturaService,
+        $timeout,
+        $rootScope,
+        facturaService) {
+
+    $scope._metodoPago = {
+        "idMetodoPagoFactura": null,
+        "planPago": null,
+        "factura": null,
+        "montoPago": null,
+        "estado": true,
+        "fechaCreacion": null,
+        "fechaModificacion": null,
+        "usuarioCreacion": null,
+        "usuarioModificacion": null
+    };
 
     $scope._detalleFactura = {
         "idDetalleFactura": null,
@@ -38,6 +72,22 @@ miAppHome.controller('ModalController', function ($scope, _proveedorService, _ti
         idStock: null,
         idSucursal: null,
         cantidad: null
+    };
+
+    $scope._planPago = {
+        "idPlanesPago": null,
+        "tarjeta": null,
+        "nombrePlanesPago": "",
+        "cuotasPlanesPago": null,
+        "fechaInicioPlanes": "",
+        "fechaFinalizacionPlanes": null,
+        "porcentajeInterez": null,
+        "fechaCierre": "",
+        "estadoPlanes": true,
+        "fechaCreacion": "",
+        "fechaModificacion": "",
+        "usuarioCreacion": null,
+        "usuarioMoficacion": null
     };
 
     $scope.toUpdateFactura = "";
@@ -856,12 +906,13 @@ miAppHome.controller('ModalController', function ($scope, _proveedorService, _ti
             data: {proveedor: proveedor}
         });
     };
+
     $scope.finalizarModificarProveedor = function (proveedor) {
         $promesa = _proveedorService.update(proveedor);
         $promesa.then(function (datos) {
             ngDialog.closeAll();
             if (datos.status === 200) {
-                $rootScope.$broadcast('reloadProveedores',{});
+                $rootScope.$broadcast('reloadProveedores', {});
                 toaster.pop({
                     type: 'success',
                     title: 'Exito',
@@ -879,12 +930,12 @@ miAppHome.controller('ModalController', function ($scope, _proveedorService, _ti
         });
     };
 
-    $scope.confirmarEliminarProveedor = function(proveedor){
+    $scope.confirmarEliminarProveedor = function (proveedor) {
         $promesa = _proveedorService.delete(proveedor);
         $promesa.then(function (datos) {
             ngDialog.closeAll();
             if (datos.status === 200) {
-                $rootScope.$broadcast('reloadProveedores',{});
+                $rootScope.$broadcast('reloadProveedores', {});
                 toaster.pop({
                     type: 'success',
                     title: 'Exito',
@@ -898,6 +949,55 @@ miAppHome.controller('ModalController', function ($scope, _proveedorService, _ti
                     body: "¡Op's algo paso!, comunicate con el administrador.",
                     showCloseButton: false
                 });
+            }
+        });
+    };
+
+    $scope.confirmarAgregarMetodoPago = function (metodo, factura) {
+        switch (metodo.mediosPago.idMedioPago) {
+            case 1:
+                $scope._planPago.idPlanesPago = 1;
+                $scope._metodoPago.planPago = $scope._planPago;
+                break;
+            case 2:
+                $scope._metodoPago.planPago = metodo.planPago;
+                break;
+            case 3:
+                $scope._metodoPago.planPago = metodo.planPago;
+                break;
+            case 4:
+                $scope._planPago.idPlanesPago = 4;
+                $scope._metodoPago.planPago = $scope._planPago;
+                break;
+        }
+        $scope._metodoPago.montoPago = metodo.montoPago;
+        $scope._metodoPago.comprobante = metodo.comprobantePago;
+        $scope._metodoPago.factura = factura;
+        $metodo = metodoPagoFacturaService.addMetodoPago($scope._metodoPago);
+        $metodo.then(function (datos) {
+            ngDialog.closeAll();
+            console.log(datos, $scope._metodoPago);
+            if (datos.status === 200) {
+                $timeout(function timer() {
+                    toaster.pop({
+                        type: 'success',
+                        title: 'Exito',
+                        body: 'Metodo de pago agregado.',
+                        showCloseButton: false
+                    });
+                }, 1000);
+                $rootScope.$broadcast('reloadMetodo', {});
+            } else {
+                if (datos.status === 400) {
+                    $timeout(function timer() {
+                        toaster.pop({
+                            type: 'warning',
+                            title: 'Advertencia',
+                            body: datos.data.msg,
+                            showCloseButton: false
+                        });
+                    }, 1000);
+                }
             }
         });
     };

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<div class="ngdialog-message ngdialog-sm" md-theme="docs-dark">
+    <md-toolbar class="md-warn">
+        <div class="md-toolbar-tools">
+            <h3 class="modal-title" style="width: 100%; text-align: center;">
+                CERRAR FACTURA
+            </h3>
+        </div>
+    </md-toolbar>
+    <md-content flex style="width: 400px; height: 250px">
+        <md-content class="md-padding" flex>
+            <p flex style="text-align: center; font-weight: bold;">Elige un vendedor por favor.</p>
+            <p flex style="width: 100%; text-align: center; font-size: small;">Una vez finalizada esta acción no podras deshacerla.</p>
+            <form name="cerrarFactura" style="margin-top: 40px;">
+                <md-input-container style="min-height: 58px;" class="md-icon md-block"
+                                    flex ng-controller="FiscalController" data-ng-init="listaVendedores()">
+                    <label>Vendedores</label>
+                    <md-select ng-model="facturaToUpdate.idVendedor"
+                               placeholder="Vendedores"
+                               ng-model-options="{trackBy: '$value.idUsuario'}"
+                               data-ng-init="facturaToUpdate.idVendedor"
+                               required name="vendedor">                                            
+                        <md-option ng-value="vendedor"
+                                   ng-repeat="vendedor in vendedores">{{vendedor.nombre}} {{vendedor.apellido}}</md-option>                                            
+                    </md-select>
+                </md-input-container>
+                <div flex style="text-align: center;">
+                    <button ng-click="finalizarFactura()"
+                            class="btn btn-success">Finalizar</button>
+                </div>
+            </form>
+        </md-content>
+    </md-content>
+    <md-content flex class="md-padding">
+        <button class="btn btn-md btn-danger pull-right"
+                ng-click="closeDialog()">Cerrar</button>
+    </md-content>
+</div> 

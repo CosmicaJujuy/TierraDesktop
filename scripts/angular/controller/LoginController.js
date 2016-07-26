@@ -24,18 +24,31 @@ miAppHome.controller('LoginController',
                             window.setResizable(true);
                             window.setMaximizable(true);
                             var role = datos.data.role[0].authority;
-                            if (role === 'ROLE_ADMIN') {
-                                $rootScope.navbar = 'views/navbar.html';
-                                window.hide();
-                                $state.go('home');
-                                $timeout(function timer() {
-                                    window.maximize();
-                                }, 3000);
-                            } else {
-                                if (role === 'ROLE_VENDEDOR') {
-                                    $state.transitionTo('ventas');
-                                }
+                            switch (role) {
+                                case 'ROLE_ADMIN':
+                                    localStorageService.set('path', 'admin');
+                                    break;
+                                case 'ROLE_VENDOR':
+                                    localStorageService.set('path', 'vendedor');
+                                    break;
+                                case "ROLE_CAJERO":
+                                    localStorageService.set('path', 'cajero');
+                                    break;
+                                case "ROLE_CONTADOR":
+                                    localStorageService.set('path', 'contador');
+                                    break;
+                                case "ROLE_REPOSITOR":
+                                    localStorageService.set('path', 'repositor');
+                                    break;
+                                case "ROLE_ENCARGADO/VENDEDOR":
+                                    localStorageService.set('path', 'encargado/vendedor');
+                                    break;
                             }
+                            window.hide();
+                            $state.go('home');
+                            $timeout(function timer() {
+                                window.maximize();
+                            }, 3000);
                             $timeout(function timer() {
                                 toaster.pop({
                                     type: 'success',
