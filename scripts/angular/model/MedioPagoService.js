@@ -1,33 +1,35 @@
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-miAppHome.service('medioPagoService', function ($http, $q, cookieService, $rootScope) {
+(function () {
+    'use strict';
+    angular
+            .module('tierraDeColoresApp')
+            .service('medioPagoService', medioPagoService);
+    medioPagoService.$inject = ['$q', '$http', 'cookieService', 'BaseURL'];
 
-    this.getAll = function () {
-        var datosRecu = null;
-        var deferred = $q.defer();
-        var uri = 'https://tierradecoloresapi.herokuapp.com/medio/list';
-        var token = cookieService.get('token');
-        token.then(function (data) {
-            $http({
-                url: uri,
-                method: 'get',
-                headers: {
-                    'Authorization': 'Bearer ' + data,
-                    'Content-type': 'application/json'
-                }
-            }).then(function successCallback(response) {
-                datosRecu = response;
-                deferred.resolve(datosRecu);
-            }, function errorCallback(response) {
-                datosRecu = response;
-                deferred.resolve(datosRecu);
+    function medioPagoService($q, $http, cookieService, BaseURL) {
+
+        this.getAll = function () {
+            var datosRecu = null;
+            var deferred = $q.defer();
+            var uri = BaseURL + 'medio/list';
+            var token = cookieService.get('token');
+            token.then(function (data) {
+                $http({
+                    url: uri,
+                    method: 'get',
+                    headers: {
+                        'Authorization': 'Bearer ' + data,
+                        'Content-type': 'application/json'
+                    }
+                }).then(function successCallback(response) {
+                    datosRecu = response;
+                    deferred.resolve(datosRecu);
+                }, function errorCallback(response) {
+                    datosRecu = response;
+                    deferred.resolve(datosRecu);
+                });
             });
-        });
-        return deferred.promise;
-    };
+            return deferred.promise;
+        };
 
-});
-
+    }
+})();
