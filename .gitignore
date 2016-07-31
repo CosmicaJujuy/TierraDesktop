@@ -1,3 +1,6 @@
 node_modules
 /nbproject/private/
 /bower_components/
+/Installer
+/TierraDesktop-win32-ia32
+/TierraDesktop-win32-x64
