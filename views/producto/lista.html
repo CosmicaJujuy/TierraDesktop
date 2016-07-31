@@ -19,7 +19,6 @@
                                             <th style="text-align: center">Cantidad</th> 
                                             <th style="text-align: center">Talla</th> 
                                             <th style="text-align: center">Color</th> 
-                                            <th style="text-align: center">Acciones</th> 
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -32,28 +31,20 @@
                                             <td style="text-align: center">{{producto.cantidadTotal}}</td>
                                             <td style="text-align: center">{{producto.talla| uppercase}}</td>
                                             <td style="text-align: center">{{producto.colorProducto| uppercase}}</td>                
-                                            <td style="text-align: center">
-                                                <button class="btn btn-xs btn-info"
-                                                        type="button"                            
-                                                        data-toggle="modal" data-target="#myModal"
-                                                        uib-tooltip="Ocultar producto."
-                                                        ng-click="seleccionarProducto(producto)"
-                                                        ><span class="glyphicon glyphicon-eye-close"></span></button>
-                                            </td>                
                                         </tr>
                                     </tbody>
-                                    <tfoot>
-                                        <tr>
-                                            <th id="btnAgregarProducto">
-                                                <button class="btn btn-warning" 
-                                                        type="button"
-                                                        uib-tooltip="Agregar nuevo producto"
-                                                        ui-sref="add_factura_producto">Iniciar Carga</button>
-                                            </th>
-                                        </tr>
-                                    </tfoot>
                                 </table>
-                            </div>
+                                <div flex>
+                                    <button class="btn btn-success pull-right" 
+                                            type="button"
+                                            ui-sref="add_factura_producto">
+                                        <md-tooltip md-direction="top" md-theme="default">
+                                            Agregar nuevos productos.
+                                        </md-tooltip>
+                                        Iniciar Carga
+                                    </button>
+                                </div>
+                            </div>                            
                         </md-content>
                     </md-tab>
                     <md-tab label="Listado de facturas">
@@ -99,32 +90,3 @@
         </div>
     </div>          
 </div>
-
-
-<!-- Modal eliminar producto-->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog modal-sm" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <center><h4 class="modal-title" id="myModalLabel">Ocultar producto</h4></center>
-            </div>
-            <div class="modal-body">
-                <center class="well">                        
-                    <p style="font-weight: bolder">Estas a punto de ocultar este producto.</p>                       
-                    <p>¿Deseas continuar?</p> 
-                    <button class="btn btn-info"
-                            style="margin-top: 20px;"
-                            data-dismiss="modal"
-                            uib-tooltip="Esta acción no elimina el producto y es totalmente reversible."
-                            tooltip-placement="bottom"
-                            ng-click="removerProducto()">Ocultar</button>
-                </center>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>                    
-            </div>
-        </div>
-    </div>
-</div>
-<toaster-container toaster-options="{'time-out': 3000, 'close-button':true, 'animation-class': 'toast-top-center'}"></toaster-container>

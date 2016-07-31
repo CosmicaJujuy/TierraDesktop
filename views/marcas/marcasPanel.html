@@ -27,11 +27,17 @@
                                                 <button type="button" class="btn btn-xs btn-info"
                                                         ng-click="hidePanelMarca(marca)"
                                                         ng-click="seleccionarMarca(marca)">
+                                                    <md-tooltip md-direction="top" md-theme="default">
+                                                        Modificar
+                                                    </md-tooltip>
                                                     <span class="glyphicon glyphicon-pencil"></span>
                                                 </button>
                                                 <button type="button"
                                                         class="btn btn-xs btn-danger"
                                                         ng-click="eliminarMarca(marca)">
+                                                    <md-tooltip md-direction="top" md-theme="default">
+                                                        Eliminar
+                                                    </md-tooltip>
                                                     <span class="glyphicon glyphicon-trash"></span>
                                                 </button>
                                             </th>                        
@@ -41,43 +47,46 @@
                             </div>
                             <div flex="45" ng-hide="panelMarcaEdit" class="show-hide">
                                 <p flex style="text-align: center; font-weight: bold">
-                                    Modificar Categoria #{{editMarca.idMarca}}
+                                    Modificar Marca #{{editMarca.idMarca}}
                                     <button class="pull-right"
                                             ng-click="panelMarcaEdit = true"
                                             style="background: transparent; border: none;">
+                                        <md-tooltip md-direction="top" md-theme="default">
+                                            Cerrar panel
+                                        </md-tooltip>
                                         <md-icon class="material-icons">&#xE14C;</md-icon>
                                     </button>
                                 </p>
                                 <md-content class="md-padding">
                                     <form name="updateMarca" style="margin-top: 30px;">
                                         <md-input-container class="md-block md-icon" flex>
-                                        <label>Nombre marca</label>
-                                        <md-icon class="material-icons">&#xE150;</md-icon>
-                                        <input type="text" 
-                                               placeholder="Ingrese nombre de la marca"
-                                               class="form-control"
-                                               maxlength="20"
-                                               minlength="4"
-                                               ng-model="editMarca.nombreMarca" name="marca" required/>
-                                        <div ng-messages="updateMarca.marca.$error"
-                                             ng-if='updateMarca.marca.$dirty || updateMarca.marca.$touched'>
-                                            <div ng-message="minlength">Nombre demasiado corto.</div>
-                                            <div ng-message="md-maxlength">Nombre demasiado largo.</div>
-                                            <div ng-message="required">Este campo no puede estar vacio.</div>
-                                        </div>
-                                        <!-- ICONOS DE MENSAJE-->
-                                        <span ng-show="updateMarca.marca.$dirty && updateMarca.marca.$valid" class="glyphicon glyphicon-ok form-control-feedback" ></span>
-                                        <span ng-show="updateMarca.marca.$dirty && updateMarca.marca.$invalid" class="glyphicon glyphicon-remove  form-control-feedback"></span>
-                                    </md-input-container>                                   
-                                    <div class="md-block" flex>
-                                        <center ng-controller="MarcaController">
-                                            <button ng-click="modificarMarca(editMarca)" 
-                                                    type="submit"
-                                                    class="btn btn-success"
-                                                    id="btnAgregarCategoria"
-                                                    ng-disabled="updateMarca.$invalid">Modificar</button>  
-                                        </center>
-                                    </div> 
+                                            <label>Nombre marca</label>
+                                            <md-icon class="material-icons">&#xE150;</md-icon>
+                                            <input type="text" 
+                                                   placeholder="Ingrese nombre de la marca"
+                                                   class="form-control"
+                                                   maxlength="20"
+                                                   minlength="4"
+                                                   ng-model="editMarca.nombreMarca" name="marca" required/>
+                                            <div ng-messages="updateMarca.marca.$error"
+                                                 ng-if='updateMarca.marca.$dirty || updateMarca.marca.$touched'>
+                                                <div ng-message="minlength">Nombre demasiado corto.</div>
+                                                <div ng-message="md-maxlength">Nombre demasiado largo.</div>
+                                                <div ng-message="required">Este campo no puede estar vacio.</div>
+                                            </div>
+                                            <!-- ICONOS DE MENSAJE-->
+                                            <span ng-show="updateMarca.marca.$dirty && updateMarca.marca.$valid" class="glyphicon glyphicon-ok form-control-feedback" ></span>
+                                            <span ng-show="updateMarca.marca.$dirty && updateMarca.marca.$invalid" class="glyphicon glyphicon-remove  form-control-feedback"></span>
+                                        </md-input-container>                                   
+                                        <div class="md-block" flex>
+                                            <center ng-controller="MarcaController">
+                                                <button ng-click="modificarMarca(editMarca)" 
+                                                        type="submit"
+                                                        class="btn btn-success"
+                                                        id="btnAgregarCategoria"
+                                                        ng-disabled="updateMarca.$invalid">Modificar</button>  
+                                            </center>
+                                        </div> 
                                     </form>
                                 </md-content>
                             </div>

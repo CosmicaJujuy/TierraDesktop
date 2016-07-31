@@ -33,8 +33,8 @@
                                             <th style="text-align: center" ng-show="panelPlanEdit">{{::plan.tarjeta.nombreTarjeta}}</th>                        
                                             <th style="text-align: center">{{::plan.tarjeta.medioPago.nombrePago}}</th>                       
                                             <th style="text-align: center">{{::plan.cuotasPlanesPago}}</th>                       
-                                            <th style="text-align: center" ng-show="panelPlanEdit">{{::plan.fechaInicioPlanes  | date:'yyyy-MM-dd'}}</th>                       
-                                            <th style="text-align: center" ng-show="panelPlanEdit">{{::plan.fechaFinalizacionPlanes | date:'yyyy-MM-dd'}}</th>                       
+                                            <th style="text-align: center" ng-show="panelPlanEdit">{{::plan.fechaInicioPlanes| date:'yyyy-MM-dd'}}</th>                       
+                                            <th style="text-align: center" ng-show="panelPlanEdit">{{::plan.fechaFinalizacionPlanes| date:'yyyy-MM-dd'}}</th>                       
                                             <th style="text-align: center">{{::plan.porcentajeInterez}}</th>                       
                                             <th style="text-align: center">{{::plan.fechaCierre}}</th>                       
 
@@ -42,11 +42,19 @@
                                                 <button type="button"
                                                         class="btn btn-xs btn-info"
                                                         ng-click="hidePanelPlan(plan)">
+                                                    <md-tooltip md-direction="top" md-theme="default">
+                                                        Modificar
+                                                    </md-tooltip>
                                                     <span class="glyphicon glyphicon-pencil"></span>
                                                 </button>
                                                 <button type="button" 
                                                         class="btn btn-xs btn-danger"
-                                                        ng-click="eliminarPlan(plan)"><span class="glyphicon glyphicon-trash"></span></button>
+                                                        ng-click="eliminarPlan(plan)">
+                                                    <md-tooltip md-direction="top" md-theme="default">
+                                                        Eliminar
+                                                    </md-tooltip>
+                                                    <span class="glyphicon glyphicon-trash"></span>
+                                                </button>
                                             </th>                        
                                         </tr>
                                     </tbody>
@@ -58,6 +66,9 @@
                                     <button class="pull-right"
                                             ng-click="panelPlanEdit = true"
                                             style="background: transparent; border: none;">
+                                        <md-tooltip md-direction="top" md-theme="default">
+                                            Cerrar panel
+                                        </md-tooltip>
                                         <md-icon class="material-icons">&#xE14C;</md-icon>
                                     </button>
                                 </p>

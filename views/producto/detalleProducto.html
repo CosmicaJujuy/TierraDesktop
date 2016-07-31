@@ -443,9 +443,9 @@
     </div>
 </div>
 <script>
-    //var ipcRenderer = require("electron").ipcRenderer;
-    //function sendCommandToWorker(content) {
-    //  ipcRenderer.send("printPDF", content);
+    var ipcRenderer = require("electron").ipcRenderer;
+    function sendCommandToWorker(content) {
+      ipcRenderer.send("printPDF", content);
     //ipcRenderer.send("printer");
-    //}
+    }
 </script>

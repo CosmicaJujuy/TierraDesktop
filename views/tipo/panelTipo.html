@@ -27,11 +27,17 @@
                                                 <button type="button"
                                                         class="btn btn-xs btn-info"
                                                         ng-click="hidePanelTipo(tipo)">
+                                                    <md-tooltip md-direction="top" md-theme="default">
+                                                        Modificar
+                                                    </md-tooltip>
                                                     <span class="glyphicon glyphicon-pencil"></span>
                                                 </button>
                                                 <button type="button"
                                                         class="btn btn-xs btn-danger"
                                                         ng-click="eliminarTipo(tipo)">
+                                                    <md-tooltip md-direction="top" md-theme="default">
+                                                        Eliminar
+                                                    </md-tooltip>
                                                     <span class="glyphicon glyphicon-trash"></span>
                                                 </button>
                                             </th>                        
@@ -41,10 +47,13 @@
                             </div>
                             <div flex="45" ng-hide="panelTipoEdit" class="show-hide">
                                 <p flex style="text-align: center; font-weight: bold">
-                                    Modificar Categoria #{{editTipo.idTipo}}
+                                    Modificar Tipo de producto #{{editTipo.idTipo}}
                                     <button class="pull-right"
                                             ng-click="panelTipoEdit = true"
                                             style="background: transparent; border: none;">
+                                        <md-tooltip md-direction="top" md-theme="default">
+                                            Cerrar panel
+                                        </md-tooltip>
                                         <md-icon class="material-icons">&#xE14C;</md-icon>
                                     </button>
                                 </p>

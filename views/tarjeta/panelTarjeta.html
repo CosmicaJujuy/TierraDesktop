@@ -35,11 +35,17 @@
                                                 <button type="button"
                                                         class="btn btn-xs btn-info"
                                                         ng-click="hidePanel(tarjeta)">
+                                                    <md-tooltip md-direction="top" md-theme="default">
+                                                        Modificar
+                                                    </md-tooltip>
                                                     <span class="glyphicon glyphicon-pencil"></span>
                                                 </button>
                                                 <button type="button" 
                                                         class="btn btn-xs btn-danger"                                   
                                                         ng-click="eliminarTarjeta(tarjeta)">
+                                                    <md-tooltip md-direction="top" md-theme="default">
+                                                        Eliminar
+                                                    </md-tooltip>
                                                     <span class="glyphicon glyphicon-trash"></span>
                                                 </button>
                                             </th>                        
@@ -53,6 +59,9 @@
                                     <button class="pull-right"
                                             ng-click="panelTarjetaEdit = true"
                                             style="background: transparent; border: none;">
+                                        <md-tooltip md-direction="top" md-theme="default">
+                                            Cerrar panel
+                                        </md-tooltip>
                                         <md-icon class="material-icons">&#xE14C;</md-icon>
                                     </button>
                                 </p>
@@ -82,7 +91,9 @@
                                             <label>Tipo de tarjeta</label>
                                             <md-icon class="material-icons">&#xE252;</md-icon>
                                             <md-select ng-model="editTarjeta.medioPago"
-                                                       ng-model-options="{trackBy: '$value.idMedioPago'}"
+                                                       ng-model-options="{
+                                                                           trackBy: '$value.idMedioPago'
+                                                                       }"
                                                        data-ng-init="editTarjeta.medioPago"
                                                        required name="medios">                                            
                                                 <md-option ng-value="medio" 
@@ -101,7 +112,8 @@
                                             <label>Entidad bancaria</label>
                                             <md-icon class="material-icons">&#xE84F;</md-icon>
                                             <md-select ng-model="editTarjeta.entidadBancaria"
-                                                       ng-model-options="{trackBy: '$value.idEntidadMonetaria'}"
+                                                       ng-model-options="{
+                                                                           trackBy: '$value.idEntidadMonetaria'}"
                                                        data-ng-init="editTarjeta.entidadBancaria"
                                                        required name="entidades">                                            
                                                 <md-option ng-value="entidad" 

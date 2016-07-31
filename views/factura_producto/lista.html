@@ -43,10 +43,20 @@
             </form>
             <button class="btn btn-success btn-block" 
                     type="button"
-                    ng-click="agregarProductoFactura()">Agregar Producto</button>
+                    ng-click="agregarProductoFactura()">
+                <md-tooltip md-direction="top" md-theme="default">
+                    Agregar nuevo producto a esta factura
+                </md-tooltip>
+                Agregar Producto
+            </button>
             <button class="btn btn-success btn-block" 
                     type="button"
-                    ng-click="confirmarFinalizarCargaFactura()">Finalizar</button>
+                    ng-click="confirmarFinalizarCargaFactura()">
+                <md-tooltip md-direction="top" md-theme="default">
+                    Finalizar la carga de productos
+                </md-tooltip>
+                Finalizar
+            </button>
         </md-content>
     </div>
 </div>
@@ -73,7 +83,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr ng-repeat="producto in $data | orderBy: 'cantidadTotal'"
+                                        <tr ng-repeat="producto in $data| orderBy: 'cantidadTotal'"
                                             ng-class="{ danger: stockMinimo(producto) }"                
                                             >
                                             <td style="text-align: center">{{producto.idProducto}}</td>
@@ -84,9 +94,12 @@
                                             <td style="text-align: center">
                                                 <button class="btn btn-xs btn-danger"
                                                         type="button"
-                                                        uib-tooltip="Remover producto."
-                                                        ng-click="confirmarEliminarProducto(producto)"
-                                                        ><span class="glyphicon glyphicon-remove"></span></button>
+                                                        ng-click="confirmarEliminarProducto(producto)">
+                                                    <md-tooltip md-direction="top" md-theme="default">
+                                                        Eliminar
+                                                    </md-tooltip>
+                                                    <span class="glyphicon glyphicon-remove"></span>
+                                                </button>
                                             </td>                
                                         </tr>
                                     </tbody>
