@@ -50,9 +50,13 @@
                                             </td>
                                             <td style="text-align: center">
                                                 <button class="btn btn-xs btn-success"
-                                                        uib-tooltip="Distribuir mercaderia"
                                                         ng-click="verificarDistribucion(facturaProducto)"
-                                                        ng-disabled="false"><span class="glyphicon glyphicon-random"></span></button>
+                                                        ng-disabled="false">
+                                                    <md-tooltip md-direction="top" md-theme="default">
+                                                        Distribuir productos
+                                                    </md-tooltip>
+                                                    <span class="glyphicon glyphicon-random"></span>
+                                                </button>
                                             </td>
                                         </tr>
                                     </tbody>

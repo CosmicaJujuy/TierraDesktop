@@ -29,12 +29,19 @@
                                                 <button type="button"                                     
                                                         class="btn btn-xs btn-info"
                                                         ng-click="hidePanelCategoria(categoria)">
+                                                    <md-tooltip md-direction="top" md-theme="default">
+                                                        Modificar
+                                                    </md-tooltip>
                                                     <span class="glyphicon glyphicon-pencil"></span>
                                                 </button>
                                                 <button type="button"
                                                         class="btn btn-xs btn-danger" 
                                                         ng-click="eliminarCategoria(categoria)">
-                                                    <span class="glyphicon glyphicon-trash"></span></button>
+                                                    <md-tooltip md-direction="top" md-theme="default">
+                                                        Eliminar
+                                                    </md-tooltip>
+                                                    <span class="glyphicon glyphicon-trash"></span>
+                                                </button>
                                             </th>                        
                                         </tr>
                                     </tbody>
@@ -46,6 +53,9 @@
                                     <button class="pull-right"
                                             ng-click="panelCategoriaEdit = true"
                                             style="background: transparent; border: none;">
+                                        <md-tooltip md-direction="top" md-theme="default">
+                                            Cerrar panel
+                                        </md-tooltip>
                                         <md-icon class="material-icons">&#xE14C;</md-icon>
                                     </button>
                                 </p>

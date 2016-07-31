@@ -28,10 +28,20 @@
                                             <th style="text-align: center">
                                                 <button type="button"
                                                         class="btn btn-xs btn-info"
-                                                        ng-click="modificarEntidad(entidad)"><span class="glyphicon glyphicon-pencil"></span></button>
+                                                        ng-click="modificarEntidad(entidad)">
+                                                    <md-tooltip md-direction="top" md-theme="default">
+                                                        Modificar
+                                                    </md-tooltip>
+                                                    <span class="glyphicon glyphicon-pencil"></span>
+                                                </button>
                                                 <button type="button" 
                                                         class="btn btn-xs btn-danger"
-                                                        ng-click="eliminarEntidad(entidad)"><span class="glyphicon glyphicon-trash"></span></button>
+                                                        ng-click="eliminarEntidad(entidad)">
+                                                    <md-tooltip md-direction="top" md-theme="default">
+                                                        Eliminar
+                                                    </md-tooltip>
+                                                    <span class="glyphicon glyphicon-trash"></span>
+                                                </button>
                                             </th>                        
                                         </tr>
                                     </tbody>

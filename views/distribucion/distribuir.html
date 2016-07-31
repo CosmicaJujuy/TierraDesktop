@@ -47,9 +47,12 @@
                     <div flex style="text-align: center;"  class="padd">
                         <button class="btn btn-success btn-block"
                                 type="button"
-                                ng-click="confirmarFinalizarDistribucion(detalle)"
-                                uib-tooltip="Finalizar distribucion"
-                                >Finalizar</button>
+                                ng-click="confirmarFinalizarDistribucion(detalle)">
+                            <md-tooltip md-direction="top" md-theme="default">
+                                Finalizar distribución de productos
+                            </md-tooltip>
+                            Finalizar
+                        </button>
                     </div>
                 </form>
             </div>
@@ -83,7 +86,7 @@
                                         <tr ng-repeat="producto in $data| orderBy: 'cantidadTotal'"
                                             ng-class="{ success: producto.estadoDistribucion }">
                                             <td style="text-align: center">{{producto.idProducto}}</td>
-                                            <td style="text-align: center"><a target="_blank" href="" ui-sref="producto({idProducto:{{producto.idProducto}}})">{{producto.descripcion}}</a></td>
+                                            <td style="text-align: center"><a href="" ui-sref="producto({idProducto:{{producto.idProducto}}})">{{producto.descripcion}}</a></td>
                                             <td style="text-align: center">{{producto.cantidadTotal}}</td>
                                             <td style="text-align: center">{{producto.talla| uppercase}}</td>
                                             <td style="text-align: center">{{producto.colorProducto| uppercase}}</td>                
@@ -93,11 +96,14 @@
                                             </td>                
                                             <td style="text-align: center">
                                                 <button class="btn btn-xs btn-success"
-                                                        type="button"                            
-                                                        uib-tooltip="Repartir producto."
+                                                        type="button"
                                                         ng-disabled="{{producto.estadoDistribucion}}"
-                                                        ng-click="distribuirModal(producto)"
-                                                        ><span class="glyphicon glyphicon-random"></span></button>
+                                                        ng-click="distribuirModal(producto)">
+                                                    <md-tooltip md-direction="top" md-theme="default">
+                                                        Distribuir producto
+                                                    </md-tooltip>
+                                                    <span class="glyphicon glyphicon-random"></span>
+                                                </button>
                                             </td>                
                                         </tr>
                                     </tbody>
@@ -124,7 +130,7 @@
                                     <tbody>
                                         <tr ng-repeat="producto in $data">
                                             <td style="text-align: center">{{producto.idStock}}</td>
-                                            <td style="text-align: center"><a target="_blank" href="" ui-sref="^.producto-detalle({idProducto:{{producto.idProducto.idProducto}}})">{{producto.idProducto.descripcion}}</a></td>
+                                            <td style="text-align: center"><a href="" ui-sref="^.producto-detalle({idProducto:{{producto.idProducto.idProducto}}})">{{producto.idProducto.descripcion}}</a></td>
                                             <td style="text-align: center">{{producto.cantidad}}</td>
                                             <td style="text-align: center">{{producto.idProducto.talla| uppercase}}</td>
                                             <td style="text-align: center">{{producto.idProducto.colorProducto| uppercase}}</td>                
@@ -154,7 +160,7 @@
                                     <tbody>
                                         <tr ng-repeat="producto in $data">
                                             <td style="text-align: center">{{producto.idStock}}</td>
-                                            <td style="text-align: center"><a target="_blank" href="" ui-sref="^.producto-detalle({idProducto:{{producto.idProducto.idProducto}}})">{{producto.idProducto.descripcion}}</a></td>
+                                            <td style="text-align: center"><a href="" ui-sref="^.producto-detalle({idProducto:{{producto.idProducto.idProducto}}})">{{producto.idProducto.descripcion}}</a></td>
                                             <td style="text-align: center">{{producto.cantidad}}</td>
                                             <td style="text-align: center">{{producto.idProducto.talla| uppercase}}</td>
                                             <td style="text-align: center">{{producto.idProducto.colorProducto| uppercase}}</td>                
@@ -184,7 +190,7 @@
                                     <tbody>
                                         <tr ng-repeat="producto in $data">
                                             <td style="text-align: center">{{producto.idStock}}</td>
-                                            <td style="text-align: center"><a target="_blank" href="" ui-sref="^.producto-detalle({idProducto:{{producto.idProducto.idProducto}}})">{{producto.idProducto.descripcion}}</a></td>
+                                            <td style="text-align: center"><a href="" ui-sref="^.producto-detalle({idProducto:{{producto.idProducto.idProducto}}})">{{producto.idProducto.descripcion}}</a></td>
                                             <td style="text-align: center">{{producto.cantidad}}</td>
                                             <td style="text-align: center">{{producto.idProducto.talla| uppercase}}</td>
                                             <td style="text-align: center">{{producto.idProducto.colorProducto| uppercase}}</td>                
