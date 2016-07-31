@@ -51,22 +51,34 @@
                                 ng-hide="usuario.estado"
                                 class="btn btn-success btn-xs"
                                 ng-click="cambiarEstado(usuario)">
+                            <md-tooltip md-direction="top" md-theme="default">
+                                Cambiar estado
+                            </md-tooltip>
                             <span class="glyphicon glyphicon-check"></span>
                         </button>
                         <button type="button"
                                 ng-show="usuario.estado"
                                 class="btn btn-danger btn-xs"
                                 ng-click="cambiarEstado(usuario)">
+                            <md-tooltip md-direction="top" md-theme="default">
+                                Cambiar estado
+                            </md-tooltip>
                             <span class="glyphicon glyphicon-remove-sign"></span>
                         </button>
                         <button type="button"
                                 ng-click="cambiarSucursal($event, usuario)"
                                 class="btn btn-success btn-xs">
+                            <md-tooltip md-direction="top" md-theme="default">
+                                Cambiar sucursal
+                            </md-tooltip>
                             <span class="glyphicon glyphicon-user"></span>
                         </button>
                         <button type="button"
                                 ng-click="cambiarRol($vent, usuario);"
                                 class="btn btn-success btn-xs">
+                            <md-tooltip md-direction="top" md-theme="default">
+                                Cambiar rol
+                            </md-tooltip>
                             <span class="glyphicon glyphicon-flag"></span>
                         </button>                        
                     </center>
