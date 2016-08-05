@@ -31,12 +31,32 @@
                         <div layout="column" ng-controller="FiscalController">
                             <button class="btn btn-block btn-primary" flex
                                     ng-disabled="factura.numeracion !== null || factura.estado === 'CONFIRMADO'"
-                                    ng-click="optImprimir()">Imprimir</button>
+                                    ng-click="optImprimir()">
+                                <md-tooltip md-direction="top" md-theme="default">
+                                    Imprimir comprobante fiscal y finalizar factura
+                                </md-tooltip>
+                                Imprimir
+                            </button>
 
                             <button class="btn btn-block btn-success" flex
                                     ng-disabled="factura.estado === 'CONFIRMADO'"
                                     ng-click="cerrarFactura($event)"
-                                    style="float: bottom;">Finalizar</button>
+                                    style="float: bottom;">
+                                <md-tooltip md-direction="top" md-theme="default">
+                                    Finalizar factura
+                                </md-tooltip>
+                                Finalizar
+                            </button>
+
+                            <button class="btn btn-block btn-danger" flex
+                                    ng-disabled="factura.estado === 'CONFIRMADO'"
+                                    ng-click="cancelarFactura()"
+                                    style="float: bottom;">
+                                <md-tooltip md-direction="top" md-theme="default">
+                                    Cancelar factura
+                                </md-tooltip>
+                                Cancelar
+                            </button>
 
                             <!-- reactivar funcion accesoFiscal()-->
                             <div data-ng-init="">
@@ -57,7 +77,7 @@
             </md-content>
         </div>
     </div>
-    <div class="col-lg-9">
+    <div class="col-lg-9" ng-show="factura">
         <div class="distribucion-panel">
             <div ng-cloak>
                 <md-content md-theme="docs-dark" style="min-height: 598px;">
@@ -112,23 +132,31 @@
                                                     <td>{{detalleFactura.descuentoDetalle|currency}}</td>
                                                     <td>{{detalleFactura.totalDetalle|currency}}</td>
                                                     <td>
-                                                        <button type="button"
-                                                                uib-tooltip="Aplicar descuento"
+                                                        <button type="button"                                             
                                                                 ng-disabled="detalleFactura.descuentoDetalle !== 0 || factura.estado === 'CONFIRMADO'"
                                                                 ng-click="cargarDescuento(detalleFactura)"
                                                                 class="btn btn-xs btn-success">
+                                                            <md-tooltip md-direction="bottom" md-theme="default">
+                                                                Aplicar descuento
+                                                            </md-tooltip>
                                                             <span class="glyphicon glyphicon-usd"></span>
                                                         </button>
                                                         <button type="button"
                                                                 ng-disabled="factura.estado === 'CONFIRMADO'"
                                                                 ng-click="eliminarDetalleFactura(detalleFactura)"
                                                                 class="btn btn-xs btn-danger">
+                                                            <md-tooltip md-direction="bottom" md-theme="default">
+                                                                Eliminar detalle de la factura
+                                                            </md-tooltip>
                                                             <span class="glyphicon glyphicon-remove"></span>
                                                         </button>
                                                         <button type="button"
                                                                 ng-disabled="factura.estado === 'CONFIRMADO'"
                                                                 ng-click="eliminarDescuento(detalleFactura)"
                                                                 class="btn btn-xs btn-warning">
+                                                            <md-tooltip md-direction="bottom" md-theme="default">
+                                                                Eliminar descuento
+                                                            </md-tooltip>
                                                             <span class="glyphicon glyphicon-erase"></span>
                                                         </button>
                                                     </td>
@@ -175,7 +203,9 @@
                                             <md-icon class="material-icons">&#xE8B0;</md-icon>
                                             <md-select ng-model="cargarMetodo.mediosPago"
                                                        placeholder="Elegir medio de pago"
-                                                       ng-model-options="{trackBy: '$value.idMedioPago'}"
+                                                       ng-model-options="{
+                                                                   trackBy: '$value.idMedioPago'
+                                                               }"
                                                        data-ng-init="cargarMetodo.mediosPago"
                                                        required name="medios">                                            
                                                 <md-option ng-value="medio"
@@ -196,7 +226,8 @@
                                             <md-select ng-model="cargarMetodo.entidadPago"
                                                        ng-disabled="disableSelectEntidades"
                                                        placeholder="Elegir entidad financiera"
-                                                       ng-model-options="{trackBy: '$value.idEntidadMonetaria'}"
+                                                       ng-model-options="{
+                                                                   trackBy: '$value.idEntidadMonetaria'}"
                                                        data-ng-init="cargarMetodo.entidadPago"
                                                        ng-change="busquedaTarjeta()"
                                                        required name="entidades">                                            
@@ -218,7 +249,8 @@
                                             <md-select ng-model="cargarMetodo.tarjetasPago"
                                                        ng-disabled="disableSelectTarjeta"
                                                        placeholder="Elegir tarjeta"
-                                                       ng-model-options="{trackBy: '$value.idTarjeta'}"
+                                                       ng-model-options="{
+                                                                   trackBy: '$value.idTarjeta'}"
                                                        data-ng-init="cargarMetodo.tarjetasPago"
                                                        ng-change="busquedaPlanByTarjeta()"
                                                        required name="tarjetas">
@@ -240,7 +272,9 @@
                                             <md-select ng-model="cargarMetodo.planPago"
                                                        ng-disabled="disableSelectMetodo"
                                                        placeholder="Elegir plan de pago"
-                                                       ng-model-options="{trackBy: '$value.idPlanesPago'}"
+                                                       ng-model-options="{
+                                                                   trackBy: '$value.idPlanesPago'
+                                                               }"
                                                        data-ng-init="cargarMetodo.planPago"
                                                        required name="planes">
                                                 <md-option ng-value="plan"
@@ -347,12 +381,18 @@
                                                 <md-button class="md-raised"
                                                            type="search"
                                                            ng-click="agregarClienteDynamic(dynamicCliente)">
+                                                    <md-tooltip md-direction="bottom" md-theme="default">
+                                                        Añadir cliente en la busqueda
+                                                    </md-tooltip>
                                                     Añadir
                                                 </md-button>
                                                 <md-button class="md-raised"
                                                            type="search"
                                                            ng-disabled="factura.cliente"
                                                            ng-click="panelCliente = false">
+                                                    <md-tooltip md-direction="bottom" md-theme="default">
+                                                        Agregar nuevo cliente
+                                                    </md-tooltip>
                                                     Nuevo
                                                 </md-button>
                                             </div>
@@ -426,6 +466,9 @@
                                             <button class="pull-right"
                                                     ng-click="panelCliente = true"
                                                     style="background: transparent; border: none;">
+                                                <md-tooltip md-direction="bottom" md-theme="default">
+                                                    Cerrar panel
+                                                </md-tooltip>
                                                 <md-icon class="material-icons">&#xE14C;</md-icon>
                                             </button>
                                         </p>
@@ -433,7 +476,7 @@
                                             <div layout="row" flex>
                                                 <md-input-container flex class="md-block md-icon">
                                                     <label>Documento</label>
-                                                    <md-icon class="material-icons">&#xE150;</md-icon>
+                                                    <md-icon class="material-icons">&#xE90D;</md-icon>
                                                     <input type="text" 
                                                            ng-model="clienteFactura.documento"
                                                            name="documento" required
@@ -450,7 +493,7 @@
                                                 </md-input-container>
                                                 <md-input-container class="md-block" flex>
                                                     <label>Tipo de documento</label>
-                                                    <md-icon class="material-icons">&#xE150;</md-icon>
+                                                    <md-icon class="material-icons">&#xE90D;</md-icon>
                                                     <md-select ng-model="clienteFactura.tipoDocumento"
                                                                placeholder="Elige un tipo de documento"
                                                                required name="tipo">
@@ -487,7 +530,7 @@
                                                 </md-input-container>
                                                 <md-input-container flex class="md-block md-icon">
                                                     <label>Domicilio</label>
-                                                    <md-icon class="material-icons">&#xE150;</md-icon>
+                                                    <md-icon class="material-icons">&#xE88A;</md-icon>
                                                     <input type="text" 
                                                            ng-model="clienteFactura.domicilio"
                                                            name="domicilio" required
@@ -506,7 +549,7 @@
                                             <div layout="row" flex>
                                                 <md-input-container class="md-block" flex>
                                                     <label>Tipo de documento</label>
-                                                    <md-icon class="material-icons">&#xE150;</md-icon>
+                                                    <md-icon class="material-icons">&#xE801;</md-icon>
                                                     <md-select ng-model="clienteFactura.responsabilidadIva"
                                                                placeholder="Elige la responsabilidad frente al IVA."
                                                                required name="iva">
@@ -526,7 +569,7 @@
                                                 </md-input-container>
                                                 <md-input-container flex class="md-block md-icon">
                                                     <label>Teléfono</label>
-                                                    <md-icon class="material-icons">&#xE150;</md-icon>
+                                                    <md-icon class="material-icons">&#xE0CD;</md-icon>
                                                     <input type="tel" 
                                                            ng-model="clienteFactura.telefono"
                                                            name="telefono"
@@ -545,7 +588,7 @@
                                             <div layout="row" flex>                                   
                                                 <md-input-container flex class="md-block md-icon">
                                                     <label>E-mail</label>
-                                                    <md-icon class="material-icons">&#xE150;</md-icon>
+                                                    <md-icon class="material-icons">&#xE0BE;</md-icon>
                                                     <input type="email" 
                                                            ng-model="clienteFactura.emailCliente"
                                                            name="email" 
@@ -562,7 +605,7 @@
                                                 </md-input-container>
                                                 <md-input-container flex class="md-block md-icon">
                                                     <label>Fecha de Nacimiento</label>
-                                                    <md-icon class="material-icons">&#xE150;</md-icon>
+                                                    <md-icon class="material-icons">&#xE916;</md-icon>
                                                     <input type="date" 
                                                            ng-model="clienteFactura.fechaNacimiento"
                                                            name="fecha"
@@ -591,53 +634,7 @@
             </div>
         </div>
     </div>
-    <!-- Modal finalizar -->
-    <div class="modal fade" id="finalizarModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog modal-sm" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">¿Finalizar operación?</h4>
-                </div>
-                <div class="modal-body">
-                    <center>
-                        <label class="control-label">
-                            Por favor carga un vendedor.
-                        </label>
-                        <fieldset>
-                            <div class="form-group">
-                                <label class="control-label" for="vendedor">Vendedor</label>
-                                <div class="" data-ng-init="listaTarjetas()">
-                                    <select ng-disabled=""
-                                            class="form-control"
-                                            ng-options="vendedor as vendedor.nombre + ' ' + vendedor.apellido for vendedor in vendedores track by vendedor.idUsuario"
-                                            ng-model="vendedor"></select>
-                                </div>
-                            </div>                        
-                            <div class="form-group">
-                                <label class="control-label" for="tipoFactura">Tipo factura</label>
-                                <div class="" data-ng-init="listaVendedores()">
-                                    <select ng-disabled="true"
-                                            class="form-control"
-                                            ng-options="vendedor as vendedor.nombre + ' ' + vendedor.apellido for vendedor in vendedores track by vendedor.idUsuario"
-                                            ng-model="tipoFactura"></select>
-                                </div>
-                            </div>   
-                        </fieldset>                                             
-                        <br>
-                        <button class="btn btn-success"
-                                style=""
-                                data-dismiss="modal"
-                                ng-click="finalizarFactura()">Finalizar</button>
-                    </center>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>                    
-                </div>
-            </div>
-        </div>
-    </div>
-
+</div>
 
 
 

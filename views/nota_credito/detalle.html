@@ -41,7 +41,15 @@
                                 </div>
                             </div>
                         </div>
-
+                        <div layout="column" flex class="padd">
+                            <button class="btn btn-block btn-danger"
+                                    ng-click="cancelarNotaCredito()">
+                                <md-tooltip md-direction="bottom" md-theme="default">
+                                    Cancelar nota de credito
+                                </md-tooltip>
+                                Cancelar
+                            </button>
+                        </div>
                     </form>
                 </div>
             </md-content>
@@ -85,7 +93,10 @@
                                             <md-button class="md-raised"
                                                        ng-disabled="notaCredito.$invalid"
                                                        ng-click="buscarProductoOnFactura(busq)"
-                                                       type="search">Buscar <span class="glyphicon glyphicon-search"></span></md-button>
+                                                       type="search">
+                                                Buscar 
+                                                <span class="glyphicon glyphicon-search"></span>
+                                            </md-button>
                                         </div>
                                     </div>
                                 </form>                                    
@@ -119,12 +130,18 @@
                                                 <button type="button"
                                                         ng-disabled="notaCreditoDetalle.estadoUso === 'SIN USO'"                                                        ng-click="eliminarDetalleNota(detalle)"
                                                         class="btn btn-xs btn-danger">
+                                                    <md-tooltip md-direction="bottom" md-theme="default">
+                                                        Eliminar detalle de la nota de credito
+                                                    </md-tooltip>
                                                     <span class="glyphicon glyphicon-remove"></span>
                                                 </button>
                                                 <button type="button"
                                                         ng-disabled="notaCreditoDetalle.estadoUso === 'SIN USO'"
                                                         ng-click="modificarDetalleNota(detalle)"
                                                         class="btn btn-xs btn-warning">
+                                                    <md-tooltip md-direction="bottom" md-theme="default">
+                                                        Modificar cantidad del detalle
+                                                    </md-tooltip>
                                                     <span class="glyphicon glyphicon-cog"></span>
                                                 </button>
                                             </td>
@@ -138,6 +155,9 @@
                         <button class="btn btn-success pull-right"
                                 ng-disabled="notaCreditoDetalle.estadoUso === 'SIN USO'"
                                 ui-sref="detalle_nota_credito.finalizar">
+                            <md-tooltip md-direction="bottom" md-theme="default">
+                                Finalizar carga de productos en la nota de credito
+                            </md-tooltip>
                             Finalizar Carga
                         </button>
                     </div>

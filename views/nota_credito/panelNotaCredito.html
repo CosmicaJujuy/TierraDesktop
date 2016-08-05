@@ -41,7 +41,12 @@
                         <div layout="column" flex class="padd">
                             <button class="btn btn-block btn-success"
                                     style="margin-top: 50px; margin-bottom: 8px;"
-                                    ng-click="agregarNotaCredito(_notaCredito)">Nueva Nota de Credito</button>
+                                    ng-click="agregarNotaCredito(_notaCredito)">
+                                <md-tooltip md-direction="bottom" md-theme="default">
+                                    Crear una nueva nota de credito
+                                </md-tooltip>
+                                Nueva Nota de Credito
+                            </button>
                         </div>
                     </form>
                 </div>
@@ -70,7 +75,12 @@
                                     </thead>
                                     <tbody>
                                         <tr ng-repeat="nota in $data">
-                                            <td style="text-align: center;"><a href="" ui-sref="detalle_nota_credito({idNota:{{nota.idNotaCredito}}})">{{nota.idNotaCredito}}</a></td>
+                                            <td style="text-align: center;"
+                                                ng-class="{disabled: nota.estadoUso ==='CANCELADO'}">
+                                                <a href="" ui-sref="detalle_nota_credito({idNota:{{nota.idNotaCredito}}})">
+                                                    {{nota.idNotaCredito}}
+                                                </a>
+                                            </td>
                                             <td style="text-align: center;">{{nota.numero}}</td>
                                             <td style="text-align: center">{{nota.estadoUso}}</td>
                                             <td style="text-align: center">{{nota.fechaCreacion| date:'medium'}}</td>
