@@ -35,11 +35,21 @@
                             <button class="btn btn-block btn-success" flex
                                     ng-click="cerrarFactura($event)"
                                     ng-disabled="factura.estado === 'CONFIRMADO'"
-                                    style="float: bottom;">Terminar reserva</button>
+                                    style="float: bottom;">
+                                <md-tooltip md-direction="bottom" md-theme="default">
+                                    Dar por pagada la totalidad de la reserva
+                                </md-tooltip>
+                                Terminar reserva
+                            </button>
                             <button class="btn btn-block btn-success" flex
                                     ui-sref="facturas"
                                     ng-disabled="factura.estado === 'CONFIRMADO'"
-                                    style="float: bottom;">Continuar y salir</button>
+                                    style="float: bottom;">
+                                <md-tooltip md-direction="bottom" md-theme="default">
+                                    Salir de la reserva sin que este pagada en su totalidad.
+                                </md-tooltip>
+                                Continuar y salir
+                            </button>
                         </div>
                     </form>
                 </div>
@@ -102,22 +112,30 @@
                                                     <td>{{detalleFactura.totalDetalle|currency}}</td>
                                                     <td>
                                                         <button type="button"
-                                                                uib-tooltip="Aplicar descuento"
                                                                 ng-disabled="detalleFactura.descuentoDetalle !== 0 || factura.estado === 'CONFIRMADO'"
                                                                 ng-click="cargarDescuento(detalleFactura)"
                                                                 class="btn btn-xs btn-success">
+                                                            <md-tooltip md-direction="bottom" md-theme="default">
+                                                                Aplicar descuento
+                                                            </md-tooltip>
                                                             <span class="glyphicon glyphicon-usd"></span>
                                                         </button>
                                                         <button type="button"
                                                                 ng-disabled="factura.estado === 'CONFIRMADO'"
                                                                 ng-click="eliminarDetalleFactura(detalleFactura)"
                                                                 class="btn btn-xs btn-danger">
+                                                            <md-tooltip md-direction="bottom" md-theme="default">
+                                                                Eliminar detalle de la factura
+                                                            </md-tooltip>
                                                             <span class="glyphicon glyphicon-remove"></span>
                                                         </button>
                                                         <button type="button"
                                                                 ng-disabled="factura.estado === 'CONFIRMADO'"
                                                                 ng-click="eliminarDescuento(detalleFactura)"
                                                                 class="btn btn-xs btn-warning">
+                                                            <md-tooltip md-direction="bottom" md-theme="default">
+                                                                Eliminar descuento del detalle
+                                                            </md-tooltip>
                                                             <span class="glyphicon glyphicon-erase"></span>
                                                         </button>
                                                     </td>
@@ -415,6 +433,9 @@
                                             <button class="pull-right"
                                                     ng-click="panelCliente = true"
                                                     style="background: transparent; border: none;">
+                                                <md-tooltip md-direction="bottom" md-theme="default">
+                                                    Cerrar panel
+                                                </md-tooltip>
                                                 <md-icon class="material-icons">&#xE14C;</md-icon>
                                             </button>
                                         </p>
@@ -422,7 +443,7 @@
                                             <div layout="row" flex>
                                                 <md-input-container flex class="md-block md-icon">
                                                     <label>Documento</label>
-                                                    <md-icon class="material-icons">&#xE150;</md-icon>
+                                                    <md-icon class="material-icons">&#xE90D;</md-icon>
                                                     <input type="text" 
                                                            ng-model="clienteFactura.documento"
                                                            name="documento" required
@@ -439,7 +460,7 @@
                                                 </md-input-container>
                                                 <md-input-container class="md-block" flex>
                                                     <label>Tipo de documento</label>
-                                                    <md-icon class="material-icons">&#xE150;</md-icon>
+                                                    <md-icon class="material-icons">&#xE90D;</md-icon>
                                                     <md-select ng-model="clienteFactura.tipoDocumento"
                                                                placeholder="Elige un tipo de documento"
                                                                required name="tipo">
@@ -476,7 +497,7 @@
                                                 </md-input-container>
                                                 <md-input-container flex class="md-block md-icon">
                                                     <label>Domicilio</label>
-                                                    <md-icon class="material-icons">&#xE150;</md-icon>
+                                                    <md-icon class="material-icons">&#xE88A;</md-icon>
                                                     <input type="text" 
                                                            ng-model="clienteFactura.domicilio"
                                                            name="domicilio" required
@@ -495,7 +516,7 @@
                                             <div layout="row" flex>
                                                 <md-input-container class="md-block" flex>
                                                     <label>Tipo de documento</label>
-                                                    <md-icon class="material-icons">&#xE150;</md-icon>
+                                                    <md-icon class="material-icons">&#xE801;</md-icon>
                                                     <md-select ng-model="clienteFactura.responsabilidadIva"
                                                                placeholder="Elige la responsabilidad frente al IVA."
                                                                required name="iva">
@@ -515,7 +536,7 @@
                                                 </md-input-container>
                                                 <md-input-container flex class="md-block md-icon">
                                                     <label>Teléfono</label>
-                                                    <md-icon class="material-icons">&#xE150;</md-icon>
+                                                    <md-icon class="material-icons">&#xE0CD;</md-icon>
                                                     <input type="tel" 
                                                            ng-model="clienteFactura.telefono"
                                                            name="telefono"
@@ -534,7 +555,7 @@
                                             <div layout="row" flex>                                   
                                                 <md-input-container flex class="md-block md-icon">
                                                     <label>E-mail</label>
-                                                    <md-icon class="material-icons">&#xE150;</md-icon>
+                                                    <md-icon class="material-icons">&#xE0BE;</md-icon>
                                                     <input type="email" 
                                                            ng-model="clienteFactura.emailCliente"
                                                            name="email" 
@@ -551,7 +572,7 @@
                                                 </md-input-container>
                                                 <md-input-container flex class="md-block md-icon">
                                                     <label>Fecha de Nacimiento</label>
-                                                    <md-icon class="material-icons">&#xE150;</md-icon>
+                                                    <md-icon class="material-icons">&#xE916;</md-icon>
                                                     <input type="date" 
                                                            ng-model="clienteFactura.fechaNacimiento"
                                                            name="fecha"
