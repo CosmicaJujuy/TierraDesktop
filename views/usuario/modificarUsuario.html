@@ -133,13 +133,16 @@
                                             <md-icon class="material-icons">&#xE916;</md-icon>
                                             <!-- INPUT FECHA-->
                                             <input ng-model="user.fechaNacimiento"
-                                                   name="nacimiento" md-no-asterisk
+                                                   name="nacimiento" id="nacimientoDate"
                                                    type="date"
+                                                   min="1950-01-01"
                                                    required ng-pattern="/^([0-9]{4})+([-]{1})+([0-9]{2})+([-]{1})+([0-9]{2})$/">
                                             <!-- MENSAJES-->
                                             <div ng-messages="changePerfil.nacimiento.$error"
                                                  ng-if='changePerfil.nacimiento.$dirty || changePerfil.nacimiento.$touched'>
                                                 <div ng-message="date">Fecha de nacimiento invalida.</div>                            
+                                                <div ng-message="min">Fecha de nacimiento minima 01-01-1950.</div>                            
+                                                <div ng-message="max">Fecha de nacimiento maxima hoy.</div>                          
                                                 <div ng-message="required">Este campo no puede estar vacio.</div>                            
                                             </div>
                                             <!--ICONOS DE MENSAJE -->
@@ -200,6 +203,7 @@
                                            ngf-accept="'image/*'"
                                            ngf-max-size="2MB" ngf-min-height="100" type="file"
                                            style="margin-bottom: 5%;" required/>
+                                    <img ngf-thumbnail="fileUpload || '/thumb.jpg'">
                                     <!-- BOTON ACTUALIZAR FOTO -->
                                     <button ng-click="actualizarFoto(fileUpload)"
                                             ng-disabled="fotoPerfil.$invalid" 
@@ -303,4 +307,18 @@
     </div>
 </div>
 <div class="col-lg-2"></div>
-<toaster-container toaster-options="{'time-out': 3000, 'close-button':true, 'animation-class': 'toast-top-center'}"></toaster-container>
+<script>
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth() + 1; //Enero es 0!
+    var yyyy = today.getFullYear();
+    if (dd < 10) {
+        dd = '0' + dd;
+    }
+    if (mm < 10) {
+        mm = '0' + mm;
+    }
+
+    today = yyyy + '-' + mm + '-' + dd;
+    document.getElementById("nacimientoDate").setAttribute("max", today);
+</script>

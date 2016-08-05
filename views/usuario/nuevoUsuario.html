@@ -206,13 +206,16 @@
                     <md-icon class="material-icons">&#xE916;</md-icon>
                     <!-- INPUT FECHA-->
                     <input ng-model="user.fechaNacimiento"
-                           name="nacimiento" md-no-asterisk
+                           name="nacimiento" id="nacimientoDate"
+                           min="1950-01-01"
                            type="date" placeholder="Fecha de nacimiento"
                            required ng-pattern="/^([0-9]{4})+([-]{1})+([0-9]{2})+([-]{1})+([0-9]{2})$/">
                     <!-- MENSAJES-->
                     <div ng-messages="registrarUsuarios.nacimiento.$error"
                          ng-if='registrarUsuarios.nacimiento.$dirty || registrarUsuarios.nacimiento.$touched'>
-                        <div ng-message="date">Fecha de nacimiento invalida.</div>                            
+                        <div ng-message="date">Fecha de nacimiento invalida.</div>
+                        <div ng-message="min">Fecha de nacimiento minima 01-01-1950.</div>                            
+                        <div ng-message="max">Fecha de nacimiento maxima hoy.</div>   
                         <div ng-message="required">Este campo no puede estar vacio.</div>                            
                     </div>
                     <!--ICONOS DE MENSAJE -->
@@ -246,7 +249,21 @@
         </form>
     </md-content>
 </div>
-<toaster-container toaster-options="{'time-out': 3000, 'close-button':true, 'animation-class': 'toast-top-center'}"></toaster-container>
+<script>
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth() + 1; //Enero es 0!
+    var yyyy = today.getFullYear();
+    if (dd < 10) {
+        dd = '0' + dd;
+    }
+    if (mm < 10) {
+        mm = '0' + mm;
+    }
+
+    today = yyyy + '-' + mm + '-' + dd;
+    document.getElementById("nacimientoDate").setAttribute("max", today);
+</script>
 <style>
     .layout-lg-row>.flex, .layout-row>.flex {
         min-width: 0;
