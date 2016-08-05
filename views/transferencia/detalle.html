@@ -53,13 +53,27 @@
                             <div ng-if="transferencia.sucursalRespuesta === 2">Bebelandia</div>
                             <div ng-if="transferencia.sucursalRespuesta === 3">Libertador</div>
                             <div ng-if="transferencia.sucursalRespuesta === 4">Aprobado por administrador</div>
+                            <div ng-if="transferencia.sucursalRespuesta === 5">Cancelado</div>
                             <div ng-if="transferencia.sucursalRespuesta === 0">En espera</div>
                         </div>
                         <div layout="column" flex class="padd">
                             <button class="btn btn-block btn-success"
-                                    ng-disabled="transferencia.estadoPedido === true"
+                                    ng-disabled="transferencia.estadoPedido === true || transferencia.sucursalRespuesta === 5"
                                     style="margin-top: 50px; margin-bottom: 8px;"
-                                    ng-click="aceptarTransferencia()">Aceptar transferencia</button>
+                                    ng-click="aceptarTransferencia()">
+                                <md-tooltip md-direction="bottom" md-theme="default">
+                                    Aceptar transferencia y finalizar (Solo admins y receptores del pedido)
+                                </md-tooltip>
+                                Aceptar transferencia
+                            </button>
+                            <button class="btn btn-block btn-danger"
+                                    ng-disabled="transferencia.estadoPedido === true || transferencia.sucursalRespuesta === 5"
+                                    ng-click="cancelarTransferencia()">
+                                <md-tooltip md-direction="bottom" md-theme="default">
+                                    Cancelar transferencia
+                                </md-tooltip>
+                                Cancelar
+                            </button>
                         </div>
                     </form>
                 </div>
@@ -106,7 +120,7 @@
                                                 </md-input-container>
                                                 <div>
                                                     <md-button class="md-raised"
-                                                               ng-disabled="transferencia.estadoPedido === true"
+                                                               ng-disabled="transferencia.estadoPedido === true || transferencia.sucursalRespuesta === 5"
                                                                ng-click="buscarStock(busq)"
                                                                type="search">
                                                         Buscar <span class="glyphicon glyphicon-search"></span>
@@ -145,13 +159,19 @@
                                                 </td>
                                                 <td ng-hide="oculto">
                                                     <button class="btn btn-xs btn-danger"
-                                                            ng-disabled="transferencia.estadoPedido === true"
+                                                            ng-disabled="transferencia.estadoPedido === true || transferencia.sucursalRespuesta === 5"
                                                             ng-click="eliminarDetalleTransferencia(detalle)">
+                                                        <md-tooltip md-direction="bottom" md-theme="default">
+                                                            Eliminar detalle de la transferencia
+                                                        </md-tooltip>
                                                         <span class="glyphicon glyphicon-remove"></span>
                                                     </button>
                                                     <button class="btn btn-xs btn-warning"
-                                                            ng-disabled="transferencia.estadoPedido === true"
+                                                            ng-disabled="transferencia.estadoPedido === true || transferencia.sucursalRespuesta === 5"
                                                             ng-click="modificarDetalleTransferencia(detalle)">
+                                                        <md-tooltip md-direction="bottom" md-theme="default">
+                                                            Modificar cantidad del detalle
+                                                        </md-tooltip>
                                                         <span class="glyphicon glyphicon-cog"></span>
                                                     </button>
                                                 </td>                                                                                              
@@ -227,7 +247,7 @@
                                             </md-radio-group>
                                             <div>
                                                 <md-button class="md-raised"
-                                                           ng-disabled="transferencia.estadoPedido === true"
+                                                           ng-disabled="transferencia.estadoPedido === true || transferencia.sucursalRespuesta === 5"
                                                            ng-click="buscarStock(busq)"
                                                            type="search">
                                                     Buscar <span class="glyphicon glyphicon-search"></span>
