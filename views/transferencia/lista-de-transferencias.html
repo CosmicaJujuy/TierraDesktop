@@ -38,7 +38,12 @@
                         <div layout="column" flex class="padd">
                             <button class="btn btn-block btn-success"
                                     style="margin-top: 50px; margin-bottom: 8px;"
-                                    ng-click="agregarTransferencia()">Nueva transferencia</button>
+                                    ng-click="agregarTransferencia()">
+                                <md-tooltip md-direction="bottom" md-theme="default">
+                                    Comenzar una nueva transferencia de productos
+                                </md-tooltip>
+                                Nueva transferencia
+                            </button>
                         </div>
                     </form>
                 </div>
@@ -59,17 +64,20 @@
                                         <thead id="headTableProductos">
                                             <tr>
                                                 <th style="text-align: center">ID</th>
-                                                <th style="text-align: center">Suc. Pedido</th> 
-                                                <th style="text-align: center">Suc. Respuesta</th>
+                                                <th style="text-align: center">Pedido</th> 
+                                                <th style="text-align: center">Respuesta</th>
                                                 <th style="text-align: center">Estado</th> 
                                                 <th style="text-align: center">Fecha creación</th> 
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr ng-repeat="trans in $data"
-                                                ng-class="{ success: trans.estadoPedido === true }">
+                                                ng-class="{success: trans.estadoPedido === true,
+                                                        danger: trans.estadoPedido === false && trans.sucursalRespuesta === 5}">
                                                 <td style="text-align: center">
-                                                    <a href="" ui-sref="transferencias_detalle({idTransferencia:{{trans.idTransferencia}}})">{{trans.idTransferencia}}</a>
+                                                    <a href="" 
+                                                       ng-class="{disabled:trans.estadoPedido === false && trans.sucursalRespuesta === 5}"
+                                                       ui-sref="transferencias_detalle({idTransferencia:{{trans.idTransferencia}}})">{{trans.idTransferencia}}</a>
                                                 </td>
                                                 <td style="text-align: center">
                                                     <div ng-if="trans.sucursalPedido === 1">Tierra de Colores</div>
@@ -81,10 +89,12 @@
                                                     <div ng-if="trans.sucursalRespuesta === 2">Bebelandia</div>
                                                     <div ng-if="trans.sucursalRespuesta === 3">Libertador</div>
                                                     <div ng-if="trans.sucursalRespuesta === 4">Aprobado por administrador</div>
+                                                    <div ng-if="trans.sucursalRespuesta === 5"> - </div>
                                                 </td>                                                
                                                 <td style="text-align: center">
                                                     <div ng-if="trans.estadoPedido === true">Resuelto</div>
-                                                    <div ng-if="trans.estadoPedido === false">Sin resolver</div>
+                                                    <div ng-if="trans.estadoPedido === false && trans.sucursalRespuesta !== 5">Sin resolver</div>
+                                                    <div ng-if="trans.estadoPedido === false && trans.sucursalRespuesta === 5">Cancelado</div>
                                                 </td>
                                                 <td style="text-align: center">{{trans.fechaCreacion| date:'medium'}}</td>                                                           
                                             </tr>
