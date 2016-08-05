@@ -1,11 +1,23 @@
 <!DOCTYPE html>
 <div class="container">
-    <button class="quit" id="quit"><md-icon class="material-icons">&#xE14C;</md-icon></button>
+    <button ng-controller="NavbarController as navbar" 
+            class="settingbtn" ng-click="navbar.changeSettings($event)">
+        <md-tooltip md-direction="bottom" md-theme="default">
+            Ajustes
+        </md-tooltip>
+        <md-icon class="material-icons">&#xE8B8;</md-icon>
+    </button>
+    <button class="quit" id="quit">
+        <md-tooltip md-direction="bottom" md-theme="default">
+            Salir
+        </md-tooltip>
+        <md-icon class="material-icons">&#xE14C;</md-icon>
+    </button>
     <div class="row">
         <div class="col-lg-12">            
             <div class="wrap" style="margin-top: 45px;">
                 <p class="form-title">Iniciar sesión</p>
-                <form class="login">
+                <form class="login form-class">
                     <input type="text"
                            ng-model="usuario.username"
                            placeholder="Usuario" />
@@ -40,6 +52,14 @@
         top: 0px;
         right: 0;
         position: absolute;
+    }    
+    .settingbtn{
+        background-color: transparent;
+        border-color: transparent;
+        color: black;
+        top: 0px;
+        right: 30px;
+        position: absolute;
     }
     body
     {
@@ -60,7 +80,6 @@
         position: absolute;
         top: 0;
         left: 0;
-        z-index: 99;
     }
 
     p.form-title
@@ -75,7 +94,7 @@
         letter-spacing: 4px;
     }
 
-    form
+    .form-class
     {
         width: 250px;
         margin: 0 auto;
