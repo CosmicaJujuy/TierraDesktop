@@ -3,11 +3,36 @@
     <md-toolbar class="md-menu-toolbar">
         <div layout="row" ng-controller="NavbarController as navbar">
             <center ng-bind="title" ng-cloak class="title-page">Titulo</center>
-            <button class="settingbtn"><md-icon class="material-icons">&#xE8B8;</md-icon></button>
-            <button class="back" ng-click="navbar.goBack()"><md-icon class="material-icons">&#xE166;</md-icon></button>
-            <button class="update" ng-click="navbar.reloadPage()"><md-icon class="material-icons">&#xE5D5;</md-icon></button>
-            <button class="homebtn" ui-sref="home"><md-icon class="material-icons">&#xE88A;</md-icon></button>
-            <button class="quit" ng-click="navbar.logoutApp()" id="quit"><md-icon class="material-icons">&#xE14C;</md-icon></button>
+            <button class="settingbtn" ng-click="navbar.changeSettings($event)">
+                <md-tooltip md-direction="bottom" md-theme="default">
+                    Ajustes
+                </md-tooltip>
+                <md-icon class="material-icons">&#xE8B8;</md-icon>
+            </button>
+            <button class="back" ng-click="navbar.goBack()">
+                <md-tooltip md-direction="bottom" md-theme="default">
+                    Atras
+                </md-tooltip>
+                <md-icon class="material-icons">&#xE166;</md-icon>
+            </button>
+            <button class="update" ng-click="navbar.reloadPage()">
+                <md-tooltip md-direction="bottom" md-theme="default">
+                    Recargar aplicación
+                </md-tooltip>
+                <md-icon class="material-icons">&#xE5D5;</md-icon>
+            </button>
+            <button class="homebtn" ui-sref="home">
+                <md-tooltip md-direction="bottom" md-theme="default">
+                    Inicio
+                </md-tooltip>
+                <md-icon class="material-icons">&#xE88A;</md-icon>
+            </button>
+            <button class="quit" ng-click="navbar.logoutApp()" id="quit">
+                <md-tooltip md-direction="bottom" md-theme="default">
+                    Cerrar sesión y salir
+                </md-tooltip>
+                <md-icon class="material-icons">&#xE14C;</md-icon>
+            </button>
             <div>
                 <a style="padding-left: 45px;" class="navbar-brand" href="#/home" id="nav-titulo">Tierra de colores</a>
                 <md-menu-bar>
