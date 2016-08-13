@@ -15,20 +15,50 @@ var miAppHome = angular.module('tierraDeColoresApp', [
     'kendo.directives',
     'ngSanitize',
     'ui.mask',
+    'cfp.hotkeys',
     'angular-loading-bar'])
-        .config(function ($stateProvider, $urlRouterProvider, $mdIconProvider, $mdThemingProvider) {
+        .value('BaseURL', (function () {
+            var resource = 'http://';
+            return resource;
+        })())
+        .config(function (
+                $provide,
+                $stateProvider,
+                $urlRouterProvider,
+                $mdIconProvider,
+                colorConfProvider,
+                hotkeysProvider,
+                $mdThemingProvider) {
+
+                  hotkeysProvider.templateTitle = 'Listado de atajos';
+                  hotkeysProvider.cheatSheetDescription = 'Mostrar / Ocultar este menu de ayuda.';
+
+            $provide.decorator('BaseURL', function ($delegate, localStorageService, $state) {
+                var URL = localStorageService.get('BaseURL');
+                var conexion;
+                if (URL === null) {
+                    var data = {BaseUrl: 'https://tierradecoloresapi.herokuapp.com/'};
+                    localStorageService.set('BaseURL', data);
+                    conexion = data.BaseUrl;
+                } else {
+                    conexion = URL.BaseUrl;
+                }
+                console.log("Conexion con: ", URL, 'Predeterminado: ', conexion);
+                return conexion;
+            });
             $mdIconProvider
                     .iconSet('social', 'img/icons/sets/social-icons.svg', 24)
                     .defaultIconSet('styles/icons/sets/core-icons.svg', 24);
             $mdThemingProvider.theme('docs-dark')
-                    .primaryPalette('blue')
-                    .warnPalette('yellow')
-                    .accentPalette('yellow')
-//                    .backgroundPalette('deep-purple')
-                    .dark(true);
+                    .primaryPalette(colorConfProvider.colorPalette().primaryPalette)
+                    .warnPalette(colorConfProvider.colorPalette().warnPalette)
+                    .accentPalette(colorConfProvider.colorPalette().accentPalette)
+                    .backgroundPalette(colorConfProvider.colorPalette().backgroundPalette)
+                    .dark(colorConfProvider.colorPalette().dark);
 
-            var uri = 'https://tierradecoloresapi.herokuapp.com/usuarios/logged';
-            var auth = function ($http, $state, $timeout, cookieService) {
+
+            var auth = function ($http, $state, $timeout, cookieService, BaseURL) {
+                var uri = BaseURL + 'usuarios/logged';
                 var electron = require('electron');
                 var window = electron.remote.getCurrentWindow();
                 var token = cookieService.get('token');
@@ -59,7 +89,7 @@ var miAppHome = angular.module('tierraDeColoresApp', [
                     /*Login*/
                     .state('login', {
                         url: '/',
-                        data: {pageTitle: 'Inicio de sesión.'},
+                        data: {pageTitle: 'Inicio de sesiÃ³n'},
                         resolve: {},
                         views: {
                             'navbar': {
@@ -74,7 +104,7 @@ var miAppHome = angular.module('tierraDeColoresApp', [
                     })
                     .state('home', {
                         url: '/home',
-                        data: {pageTitle: 'Home.'},
+                        data: {pageTitle: 'Inicio'},
                         resolve: {auth: auth},
                         views: {
                             'navbar': {
@@ -82,9 +112,7 @@ var miAppHome = angular.module('tierraDeColoresApp', [
                                     var templateName = sessionProvider.getPath();
                                     return $templateRequest(templateName);
                                 },
-                                controller: function ($state) {
-
-                                }
+                                controller: null
                             },
                             'body': {
                                 templateUrl: "views/inicio.html",
@@ -94,7 +122,7 @@ var miAppHome = angular.module('tierraDeColoresApp', [
                     })
                     .state('perfil', {
                         url: '/perfil',
-                        data: {pageTitle: 'Perfil de usuario.'},
+                        data: {pageTitle: 'Perfil de usuario'},
                         resolve: {auth: auth},
                         views: {
                             'navbar': {
@@ -112,7 +140,7 @@ var miAppHome = angular.module('tierraDeColoresApp', [
                     })
                     .state('modificar-perfil', {
                         url: '/perfil/modificar',
-                        data: {pageTitle: 'Modificar perfil de usuario.'},
+                        data: {pageTitle: 'Modificar perfil de usuario'},
                         resolve: {auth: auth},
                         views: {
                             'navbar': {
@@ -130,7 +158,7 @@ var miAppHome = angular.module('tierraDeColoresApp', [
                     })
                     .state('usuarios', {
                         url: '/usuarios',
-                        data: {pageTitle: 'Lista de usuarios.'},
+                        data: {pageTitle: 'Lista de usuarios'},
                         resolve: {auth: auth},
                         views: {
                             'navbar': {
@@ -148,7 +176,7 @@ var miAppHome = angular.module('tierraDeColoresApp', [
                     })
                     .state('add_usuario', {
                         url: '/nuevo-usuario',
-                        data: {pageTitle: 'Agregar nuevo usuario.'},
+                        data: {pageTitle: 'Agregar nuevo usuario'},
                         resolve: {auth: auth},
                         views: {
                             'navbar': {
@@ -238,7 +266,7 @@ var miAppHome = angular.module('tierraDeColoresApp', [
                     })
                     .state('add_factura_producto', {
                         url: '/productos/factura',
-                        data: {pageTitle: 'Crear nueva factura.'},
+                        data: {pageTitle: 'Crear nueva factura'},
                         resolve: {auth: auth},
                         views: {
                             'navbar': {
@@ -274,7 +302,7 @@ var miAppHome = angular.module('tierraDeColoresApp', [
                     })
                     .state('add_producto_factura', {
                         url: '/productos/factura/:idFactura/add',
-                        data: {pageTitle: 'Nuevo producto.'},
+                        data: {pageTitle: 'Nuevo producto'},
                         resolve: {auth: auth},
                         views: {
                             'navbar': {
@@ -308,9 +336,47 @@ var miAppHome = angular.module('tierraDeColoresApp', [
                             }
                         }
                     })
+                    .state('helper', {
+                        url: '/helper',
+                        data: {pageTitle: 'Busqueda de productos'},
+                        params: {
+                            descripcion: {value: null, dynamic: true, squash: true},
+                            marca: {value: null, dynamic: true, squash: true},
+                            talla: {value: null, dynamic: true, squash: true},
+                            codigo: {value: null, dynamic: true, squash: true},
+                            categoria: {value: null, dynamic: true, squash: true}
+                        },
+                        reloadOnSearch: false,
+                        resolve: {auth: auth},
+                        views: {
+                            'navbar': {
+                                templateUrl: 'views/producto/helper/helper-navbar.html',
+                                controller: null
+                            },
+                            'body': {
+                                templateUrl: 'views/producto/helper/helper-content.html',
+                                controller: 'ProductoController'
+                            }
+                        }
+                    })
+                    .state('producto_helper', {
+                        url: '/helper/:idProducto',
+                        data: {pageTitle: 'Detalle de Producto'},
+                        resolve: {auth: auth},
+                        views: {
+                            'navbar': {
+                                templateUrl: 'views/producto/helper/helper-navbar.html',
+                                controller: null
+                            },
+                            'body': {
+                                templateUrl: "views/producto/helper/detalle_helper.html",
+                                controller: 'ProductoController'
+                            }
+                        }
+                    })
                     .state('distribucion', {
                         url: '/distribuir',
-                        data: {pageTitle: 'Panel de distribución.'},
+                        data: {pageTitle: 'Panel de distribución'},
                         resolve: {auth: auth},
                         views: {
                             'navbar': {
@@ -328,7 +394,7 @@ var miAppHome = angular.module('tierraDeColoresApp', [
                     })
                     .state('distribuir_productos', {
                         url: '/distribuir/:idFactura',
-                        data: {pageTitle: 'Distribuir factura.'},
+                        data: {pageTitle: 'Distribuir factura'},
                         resolve: {auth: auth},
                         views: {
                             'navbar': {
@@ -346,7 +412,7 @@ var miAppHome = angular.module('tierraDeColoresApp', [
                     })
                     .state('categorias', {
                         url: '/categorias',
-                        data: {pageTitle: 'Panel Categorias.'},
+                        data: {pageTitle: 'Panel Categorias'},
                         resolve: {auth: auth},
                         views: {
                             'navbar': {
@@ -364,7 +430,7 @@ var miAppHome = angular.module('tierraDeColoresApp', [
                     })
                     .state('marcas', {
                         url: '/marcas',
-                        data: {pageTitle: 'Panel Marcas.'},
+                        data: {pageTitle: 'Panel Marcas'},
                         resolve: {auth: auth},
                         views: {
                             'navbar': {
@@ -382,7 +448,7 @@ var miAppHome = angular.module('tierraDeColoresApp', [
                     })
                     .state('tipos', {
                         url: '/tipos',
-                        data: {pageTitle: 'Panel Tipo de Producto.'},
+                        data: {pageTitle: 'Panel Tipo de Producto'},
                         resolve: {auth: auth},
                         views: {
                             'navbar': {
@@ -400,7 +466,7 @@ var miAppHome = angular.module('tierraDeColoresApp', [
                     })
                     .state('proveedores', {
                         url: '/proveedores',
-                        data: {pageTitle: 'Panel Proovedores.'},
+                        data: {pageTitle: 'Panel Proovedores'},
                         resolve: {auth: auth},
                         views: {
                             'navbar': {
@@ -418,7 +484,7 @@ var miAppHome = angular.module('tierraDeColoresApp', [
                     })
                     .state('proveedor_detalle', {
                         url: '/proveedor/:idProveedor',
-                        data: {pageTitle: 'Detalle Proovedor.'},
+                        data: {pageTitle: 'Detalle Proovedor'},
                         resolve: {auth: auth},
                         views: {
                             'navbar': {
@@ -436,7 +502,7 @@ var miAppHome = angular.module('tierraDeColoresApp', [
                     })
                     .state('facturas', {
                         url: '/facturas',
-                        data: {pageTitle: 'Panel facturas.'},
+                        data: {pageTitle: 'Panel facturas'},
                         resolve: {auth: auth},
                         views: {
                             'navbar': {
@@ -454,7 +520,7 @@ var miAppHome = angular.module('tierraDeColoresApp', [
                     })
                     .state('factura', {
                         url: '/factura/:idFactura',
-                        data: {pageTitle: 'Nueva factura.'},
+                        data: {pageTitle: 'Nueva factura'},
                         resolve: {auth: auth},
                         views: {
                             'navbar': {
@@ -470,9 +536,27 @@ var miAppHome = angular.module('tierraDeColoresApp', [
                             }
                         }
                     })
+                    .state('reserva', {
+                        url: '/reserva/:idFactura',
+                        data: {pageTitle: 'Nueva reserva'},
+                        resolve: {auth: auth},
+                        views: {
+                            'navbar': {
+                                templateProvider: function ($templateRequest, sessionProvider) {
+                                    var templateName = sessionProvider.getPath();
+                                    return $templateRequest(templateName);
+                                },
+                                controller: null
+                            },
+                            'body': {
+                                templateUrl: "views/reserva/reservaPanel.html",
+                                controller: "FacturaController"
+                            }
+                        }
+                    })
                     .state('nota_credito', {
                         url: '/nota',
-                        data: {pageTitle: 'Panel de Notas de credito.'},
+                        data: {pageTitle: 'Panel de Notas de credito'},
                         resolve: {auth: auth},
                         views: {
                             'navbar': {
@@ -490,7 +574,7 @@ var miAppHome = angular.module('tierraDeColoresApp', [
                     })
                     .state('detalle_nota_credito', {
                         url: '/nota/:idNota',
-                        data: {pageTitle: 'Detalle nota de credito.'},
+                        data: {pageTitle: 'Detalle nota de credito'},
                         resolve: {auth: auth},
                         views: {
                             'navbar': {
@@ -508,14 +592,14 @@ var miAppHome = angular.module('tierraDeColoresApp', [
                     })
                     .state('detalle_nota_credito.finalizar', {
                         url: '/nota/:idNota/finalizar',
-                        data: {pageTitle: 'Finalizar detalle nota de credito.'},
+                        data: {pageTitle: 'Finalizar detalle nota de credito'},
                         resolve: {auth: auth},
                         templateUrl: "views/nota_credito/partial-cerrar-nota.html",
                         controller: "DetalleNotaCreditoController"
                     })
                     .state('transferencias', {
                         url: '/transferencias',
-                        data: {pageTitle: 'Panel de transferencias.'},
+                        data: {pageTitle: 'Panel de transferencias'},
                         resolve: {auth: auth},
                         views: {
                             'navbar': {
@@ -533,7 +617,7 @@ var miAppHome = angular.module('tierraDeColoresApp', [
                     })
                     .state('transferencias_detalle', {
                         url: '/transferencia/:idTransferencia',
-                        data: {pageTitle: 'Detalles de transferencias.'},
+                        data: {pageTitle: 'Detalles de transferencias'},
                         resolve: {auth: auth},
                         views: {
                             'navbar': {
@@ -550,42 +634,20 @@ var miAppHome = angular.module('tierraDeColoresApp', [
                         }
                     });
         })
-        .run(function ($state, $stateParams, $location, $cookies, sessionProvider, $rootScope, settingService) {
+        .run(function ($rootScope) {
+            $rootScope.$on('$stateChangeStart',
+                    function (event, toState, toParams, fromState, fromParams) {
+                        /*CAMBIO DE ESTADO*/
+                    });
             var session = require('electron').remote.session;
             var ses = session.fromPartition('persist:name');
             ses.clearCache(function (response) {
-                console.log(response);
+                /*console.log("Cache eliminado: ", response);*/
             });
             ses.cookies.get({name: 'token'}, function (error, cookies) {
-                console.log(cookies);
-                console.log(cookies[0].value);
+                /* console.log(cookies[0]);
+                 console.log(cookies[0].value);*/
             });
-            $rootScope.navbar2 = false;
-            $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
-//                console.log(toState.name);
-                if (toState.name === 'home') {
-                    $rootScope.navbar2 = false;
-                } else {
-                    $rootScope.navbar2 = true;
-                }
-            });
-//            var fs = require('fs');
-//            var date = new Date().getTime().toString();
-//            console.log(date);
-//            fs.writeFile("file" + date + ".200", "9" + String.fromCharCode(28) + "Z\n"
-//                    + "9" + String.fromCharCode(28) + "Z"
-//                    , function (err) {
-//                        if (err) {
-//                            return console.log(err);
-//                        }
-//                    });
-//            var exec = require('child_process').exec;
-//            var child = exec('type file' + date + '.200', function (err, stdout, stderr) {
-//                console.log(stdout);
-//                console.log(stderr);
-//                console.log(err);
-//            });
-//            console.log(child);
         })
         .filter('keyboardShortcut', function ($window) {
             return function (str) {
@@ -595,7 +657,7 @@ var miAppHome = angular.module('tierraDeColoresApp', [
                 var isOSX = /Mac OS X/.test($window.navigator.userAgent);
                 var seperator = (!isOSX || keys.length > 2) ? '+' : '';
                 var abbreviations = {
-                    M: isOSX ? '⌘' : 'Ctrl',
+                    M: isOSX ? 'âŒ˜' : 'Ctrl',
                     A: isOSX ? 'Option' : 'Alt',
                     S: 'Shift'
                 };
@@ -605,60 +667,29 @@ var miAppHome = angular.module('tierraDeColoresApp', [
                 }).join(seperator);
             };
         })
-        .controller('AppCtrl', function ($scope, $timeout, $mdSidenav, $log) {
-            $scope.toggleLeft = buildDelayedToggler('left');
-            $scope.toggleRight = buildToggler('right');
-            $scope.isOpenRight = function () {
-                return $mdSidenav('right').isOpen();
+        .provider('colorConf', function colorConfProvider() {
+            var palette = {
+                primaryPalette: 'blue',
+                warnPalette: 'yellow',
+                accentPalette: 'yellow',
+                backgroundPalette: 'grey',
+                dark: false
             };
-            /**
-             * Supplies a function that will continue to operate until the
-             * time is up.
-             */
-            function debounce(func, wait, context) {
-                var timer;
-                return function debounced() {
-                    var context = $scope,
-                            args = Array.prototype.slice.call(arguments);
-                    $timeout.cancel(timer);
-                    timer = $timeout(function () {
-                        timer = undefined;
-                        func.apply(context, args);
-                    }, wait || 10);
-                };
-            }
-            /**
-             * Build handler to open/close a SideNav; when animation finishes
-             * report completion in console
-             */
-            function buildDelayedToggler(navID) {
-                return debounce(function () {
-                    // Component lookup should always be available since we are not using `ng-if`
-                    $mdSidenav(navID)
-                            .toggle()
-                            .then(function () {
-                                $log.debug("toggle " + navID + " is done");
-                            });
-                }, 200);
-            }
-            function buildToggler(navID) {
-                return function () {
-                    // Component lookup should always be available since we are not using `ng-if`
-                    $mdSidenav(navID)
-                            .toggle()
-                            .then(function () {
-                                $log.debug("toggle " + navID + " is done");
-                            });
+            var Config = require('electron-config');
+            var config = new Config();
+            this.colorPalette = function () {
+                if (typeof config.get('Color') === 'undefined') {
+                    console.log("Colores reconfigurados");
+                    config.set('Color', palette);
                 }
-            }
+                return config.get('Color');
+            };
+            this.$get = [function colorConfFactory() {
+                    return new colorConfLauncher(colorPalette);
+                }];
         })
-        .controller('RightCtrl', function ($scope, $timeout, $mdSidenav, $log) {
-            $scope.close = function () {
-                // Component lookup should always be available since we are not using `ng-if`
-                $mdSidenav('right').close()
-                        .then(function () {
-                            $log.debug("close RIGHT is done");
-                        });
+        .filter('capitalize', function () {
+            return function (input) {
+                return (!!input) ? input.charAt(0).toUpperCase() + input.substr(1).toLowerCase() : '';
             };
         });
-
