@@ -1,35 +1,32 @@
 {
   "name": "TierraDesktop",
   "productName": "TierraDesktop",
-  "version": "1.0.0",
+  "version": "2.0.8",
   "description": "Aplicacion de escritorio tierra de colores",
   "main": "main.js",
   "scripts": {
-    "start": "electron main.js"
+    "start": "electron ."
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/electron/electron-quick-start.git"
+    "url": "git+https://github.com/PauloGaldo/TierraDesktop.git"
   },
   "keywords": [
-    "Electron",
-    "quick",
-    "start",
-    "tutorial"
+    "tierra",
+    "de",
+    "colores",
+    "sistema"
   ],
   "author": "PauloGaldo",
   "license": "CC0-1.0",
-  "bugs": {
-    "url": "https://github.com/electron/electron-quick-start/issues"
-  },
-  "homepage": "https://github.com/electron/electron-quick-start#readme",
   "devDependencies": {
     "debug-menu": "^0.4.0",
-    "devtron": "^1.2.1",
-    "electron-prebuilt": "^1.2.2",
+    "electron-prebuilt": "^1.2.0",
+    "electron-packager": "^7.5.1",
     "electron-winstaller": "^2.3.3"
   },
   "dependencies": {
+    "electron-config": "^0.2.1",
     "electron-json-storage": "^2.0.0"
   }
 }
