@@ -1,12 +1,12 @@
 var electronInstaller = require('electron-winstaller');
 var path = require('path');
 resultPromise = electronInstaller.createWindowsInstaller({
-    appDirectory: './TierraDesktop-win32-ia32',
+    appDirectory: './releases/TierraDesktop-win32-ia32',
     outputDirectory: './Installer',
     authors: 'Paulo Galdo - Cósmica Tecnología.',
     owners: 'Paulo Galdo - Cósmica Tecnología.',
     description: 'Sistema de gestion comercial.',
-    version: '2.0',
+    version: '2.0.8',
     setupIcon: path.join(__dirname, '/app.ico'),
     loadingGif: path.join(__dirname, '/balls.gif'),
     exe: 'TierraDesktop.exe',
