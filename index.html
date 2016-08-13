@@ -13,6 +13,7 @@
         <link href="bower_components/ng-table/dist/ng-table.min.css" rel="stylesheet" type="text/css"/>
         <link href="bower_components/ng-dialog/css/ngDialog.min.css" rel="stylesheet" type="text/css"/>
         <link href="bower_components/ng-dialog/css/ngDialog-theme-default.min.css" rel="stylesheet" type="text/css"/>
+        <link href="bower_components/angular-hotkeys/build/hotkeys.min.css" rel="stylesheet" type="text/css"/>
 
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
@@ -71,6 +72,22 @@
             ::-webkit-scrollbar-thumb {
                 background: #FF0000;
             }
+            .cfp-hotkeys-key{
+                text-transform: capitalize;
+            }
+            .cfp-hotkeys-container{
+                background: rgba(74, 11, 144, 0.7) !important;
+                color: white;
+            }
+            .cfp-hotkeys-text{
+                color:white;
+            }
+            .cfp-hotkeys-close:hover {
+                background-color: transparent;
+            }
+            .cfp-hotkeys-close{
+                border: none;
+            }
         </style>
 
         <!-- less.js -->
@@ -93,7 +110,8 @@
         <script src="bower_components/ng-dialog/js/ngDialog.min.js" type="text/javascript"></script>
         <script src="bower_components/angular-sanitize/angular-sanitize.min.js" type="text/javascript"></script>
         <script src="bower_components/angular-ui-mask/dist/mask.min.js" type="text/javascript"></script>
-
+        <script src="bower_components/angular-hotkeys/build/hotkeys.min.js" type="text/javascript"></script>
+        
         <script src="renderer.js" type="text/javascript"></script>
         <script src="scripts/main.js" type="text/javascript"></script>
         <script src="scripts/lib/ng-file-upload-shim.js" type="text/javascript"></script>
@@ -159,6 +177,8 @@
 
         <script src="scripts/angular/directive/filterPhone.js" type="text/javascript"></script>
         <script src="scripts/angular/directive/updateTitle.js" type="text/javascript"></script>       
+        
+        <script src="http://cdn.peerjs.com/0.3/peer.js"></script>
     </body>
 
     <script>
