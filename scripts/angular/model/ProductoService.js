@@ -30,6 +30,36 @@
             });
             return deferred.promise;
         };
+        this.advanced = function (producto) {
+            var datosRecu = null;
+            var deferred = $q.defer();
+            var uri = BaseURL + 'producto/advanced';
+            var token = cookieService.get('token');
+            token.then(function (data) {
+                $http({
+                    url: uri,
+                    method: 'post',
+                    params: {
+                        descripcion: producto.descripcion,
+                        marca: producto.marca,
+                        talla: producto.talla,
+                        codigo: producto.codigo,
+                        categoria: producto.categoria
+                    },
+                    headers: {
+                        'Authorization': 'Bearer ' + data,
+                        'Content-type': 'application/json'
+                    }
+                }).then(function successCallback(response) {
+                    datosRecu = response;
+                    deferred.resolve(datosRecu);
+                }, function errorCallback(response) {
+                    datosRecu = response;
+                    deferred.resolve(datosRecu);
+                });
+            });
+            return deferred.promise;
+        };
 
         this.add = function (producto) {
             var datosRecu = null;
