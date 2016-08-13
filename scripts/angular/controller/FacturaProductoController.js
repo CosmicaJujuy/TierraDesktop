@@ -3,7 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-miAppHome.controller('FacturaProductoController', function ($scope, ngDialog, NgTableParams, toaster, $timeout, facturaProductoService, $state, $stateParams) {
+miAppHome.controller('FacturaProductoController', function (
+        $scope,
+        BaseURL,
+        $http,
+        cookieService,
+        ngDialog,
+        NgTableParams,
+        toaster,
+        $timeout,
+        facturaProductoService,
+        $state,
+        $stateParams) {
 
     $scope._facturaProducto = {
         "idFacturaProducto": null,
@@ -41,32 +52,31 @@ miAppHome.controller('FacturaProductoController', function ($scope, ngDialog, Ng
 
 
     $scope.listaFacturaProducto = function () {
-        $list = facturaProductoService.getAll();
-        $list.then(function (datos) {
-            if (datos.status === 200) {
-                $scope.facturaProductos = datos.data;
-                var data = datos.data;
-                $scope.tableFacturaProductos = new NgTableParams({
-                    page: 1,
-                    count: 12
-                }, {
-                    total: data.length,
-                    getData: function (params) {
-                        data = $scope.facturaProductos;
-                        params.total(data.length);
-                        if (params.total() <= ((params.page() - 1) * params.count())) {
-                            params.page(1);
+        var token = cookieService.get('token');
+        token.then(function (data) {
+            $scope.tableFacturaProductos = new NgTableParams({
+                page: 1,
+                count: 11
+            }, {
+                getData: function (params) {
+                    return $http({
+                        url: BaseURL + "facturaProducto/list/paged",
+                        method: 'get',
+                        headers: {
+                            'Authorization': 'Bearer ' + data,
+                            'Content-type': 'application/json'
+                        },
+                        params: {
+                            page: params.page() - 1,
+                            size: params.count()
                         }
-                        return data.slice((params.page() - 1) * params.count(), params.page() * params.count());
-                    }});
-            } else {
-                toaster.pop({
-                    type: 'error',
-                    title: 'Error',
-                    body: "¡Op's algo paso!, comunicate con el administrador.",
-                    showCloseButton: false
-                });
-            }
+                    }).then(function successCallback(response) {
+                        params.total(response.data.totalElements);
+                        return response.data.content;
+                    }, function errorCallback(response) {
+                    });
+                }
+            });
         });
     };
 
