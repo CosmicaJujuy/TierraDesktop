@@ -4,7 +4,17 @@
  * @param {type} param1
  * @param {type} param2
  */
-miAppHome.controller('MarcaController', function ($scope, ngDialog, cookieService, $state, toaster, $http, NgTableParams, $timeout, $cookies, _marcaService, $rootScope) {
+miAppHome.controller('MarcaController', function (
+        $scope,
+        BaseURL,
+        ngDialog,
+        cookieService,
+        $state,
+        toaster,
+        $http,
+        NgTableParams,
+        $timeout,
+        _marcaService) {
 
     /**
      * Modelo de objecto Marca usado en la vista para agregar nuevas Marcas.
@@ -97,7 +107,7 @@ miAppHome.controller('MarcaController', function ($scope, ngDialog, cookieServic
             closeByDocument: false,
             closeByEscape: false,
             data: {marca: marca}
-        });        
+        });
     };
 
     /**
@@ -120,7 +130,7 @@ miAppHome.controller('MarcaController', function ($scope, ngDialog, cookieServic
      * @param {type} marca objeto Marca recibido desde la vista.
      * @returns {undefined}
      */
-    $scope.modificarMarca = function (marca) {    
+    $scope.modificarMarca = function (marca) {
         ngDialog.open({
             template: 'views/marcas/modal-confirmar-modificar-marca.html',
             className: 'ngdialog-theme-sm',
@@ -148,7 +158,7 @@ miAppHome.controller('MarcaController', function ($scope, ngDialog, cookieServic
      * @returns {unresolved}
      */
     $scope.getMarca = function (val) {
-        var uri = 'https://tierradecoloresapi.herokuapp.com/marcas/searchText';
+        var uri = BaseURL + 'marcas/searchText';
         var token = cookieService.get('token');
         return token.then(function (data) {
             return $http({
