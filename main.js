@@ -1,5 +1,6 @@
 const {ipcMain, Menu, shell, app, BrowserWindow} = require('electron');
 // this should be placed at top of main.js to handle setup events quickly
+app.setName('Tierra de colores');
 if (handleSquirrelEvent()) {
   // squirrel event handled and app will exit in 1000ms, so don't do anything else
   return;
@@ -87,12 +88,23 @@ function createWindow() {
         height: 350,
         resizable: false,
         movable: false,
+        show: false,
         icon: __dirname + '/styles/images/app.png'
     });
     //mainWindow.setIcon( __dirname + '/styles/images/appIcon.png');
-    
+        
     mainWindow.loadURL(`file://${__dirname}/index.html`);
+    mainWindow.once('ready-to-show', () => {
+        mainWindow.show()
+    })
     mainWindow.on('closed', function () {
+        var windows = BrowserWindow.getAllWindows();
+        windows.forEach(function(value) {
+            if (value.getTitle() === 'Busqueda de productos') {
+                value.close();
+                value = null;
+            }
+        });
         mainWindow = null;
         workerWindow.close();
         workerWindow = null;
