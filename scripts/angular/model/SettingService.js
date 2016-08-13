@@ -4,10 +4,16 @@
             .module('tierraDeColoresApp')
             .service('settingService', settingService);
 
-    settingService.$inject = ['$q'];
+    settingService.$inject = ['$q', 'localStorageService'];
 
-    function settingService($q) {
+    function settingService($q, localStorageService) {
         var storage = require('electron-json-storage');
+        var Config = require('electron-config');
+        var config = new Config();
+
+        this.setColor = function (palette) {
+            config.set('Color', palette);
+        };
 
         storage.has('BaseUrl', function (error, hasKey) {
             if (error) {
@@ -19,6 +25,8 @@
                 console.log("Reconfiguración");
                 storage.set('BaseUrl', {BaseUrl: 'https://tierradecoloresapi.herokuapp.com/'}, function (error) {
                     console.log(error);
+                    var data = {BaseUrl: 'https://tierradecoloresapi.herokuapp.com/'};
+//                    localStorageService.set('BaseURL', data);
                     if (error)
                         throw error;
                 });
