@@ -17,18 +17,16 @@ miAppHome.controller('LoginController',
                     switch (datos.status) {
                         case 200:
                             cookieService.put(datos.data.access_token, 'token');
-                            $rootScope.render = true;
-                            localStorageService.set('session', 'views/navbar.html');
                             var electron = require('electron');
                             var window = electron.remote.getCurrentWindow();
                             window.setResizable(true);
                             window.setMaximizable(true);
-                            var role = datos.data.role[0].authority;
-                            switch (role) {
-                                case 'ROLE_ADMIN':
+                            var role = datos.data.role[0].authority.toString();
+                            switch (role.valueOf()) {
+                                case "ROLE_ADMIN":
                                     localStorageService.set('path', 'admin');
                                     break;
-                                case 'ROLE_VENDOR':
+                                case "ROLE_VENDEDOR":
                                     localStorageService.set('path', 'vendedor');
                                     break;
                                 case "ROLE_CAJERO":
@@ -42,6 +40,9 @@ miAppHome.controller('LoginController',
                                     break;
                                 case "ROLE_ENCARGADO/VENDEDOR":
                                     localStorageService.set('path', 'encargado/vendedor');
+                                    break;
+                                default :
+                                    console.log(role);
                                     break;
                             }
                             window.hide();
@@ -82,23 +83,6 @@ miAppHome.controller('LoginController',
                                 showCloseButton: false
                             });
                     }
-                });
-            };
-
-            $scope.logout = function () {
-                $promesa = LoginService.logoutApi();
-                $promesa.then(function (datos) {
-                    if (datos.status === 200) {
-                        $timeout(function timer() {
-                            $state.go('login');
-                        }, 2000);
-                    }
-                    toaster.pop({
-                        type: 'info',
-                        title: 'Adios',
-                        body: 'Hasta luego :)',
-                        showCloseButton: false
-                    });
                 });
             };
 
