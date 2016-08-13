@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<div layout="row" flex>
+    <div class="md-padding" md-theme="docs-dark" ng-cloak flex="40" style="height: 440px;">
+        <md-toolbar class="md-warn">
+            <div class="md-toolbar-tools">
+                <h4 class="md-flex" style="width:100%; text-align: center;">
+                    Busqueda de productos
+                </h4>
+            </div>
+        </md-toolbar>
+        <md-content flex layout="row">
+            <div class="md-padding" flex>
+                <form name="busqueda">
+                    <md-input-container class="md-block" flex>
+                        <label>Descripción</label>
+                        <input type="text"
+                               ng-model="prod.descripcion"
+                               md-maxlength="40"
+                               maxlength="40"
+                               name="descripcion"
+                               placeholder="Ingresa una descripción"/>
+                    </md-input-container>
+                    <md-input-container class="md-block" flex>
+                        <label>Marca</label>
+                        <input type="text"
+                               ng-model="prod.marca"
+                               md-maxlength="30"
+                               maxlength="30"
+                               name="marca"
+                               placeholder="Nombre de marca"/>
+                    </md-input-container>
+                    <div layout="row">
+                        <md-input-container class="md-block" flex style="max-height: 58px; margin-bottom: 0px; margin-top: 0px;">
+                            <label>Talla</label>
+                            <input type="text"
+                                   ng-model="prod.talla"
+                                   md-maxlength="12"
+                                   name="talla"
+                                   maxlength="12"
+                                   placeholder="Número de talla y/o edad"/>
+                        </md-input-container>
+                        <md-input-container class="md-block" flex style="max-height: 58px; margin-bottom: 0px; margin-top: 0px;">
+                            <label>Codigo</label>
+                            <input type="text"
+                                   ng-model="prod.codigo"
+                                   md-maxlength="30"
+                                   maxlength="30"
+                                   name="codigo"
+                                   placeholder="Codigo de barras"/>
+                        </md-input-container>
+                    </div>                                        
+                    <md-input-container class="md-block" flex>
+                        <label>Categoria</label>
+                        <input type="text"
+                               ng-model="prod.categoria"
+                               md-maxlength="25"
+                               maxlength="25"
+                               name="categoria"
+                               placeholder="Nombre de categoria"/>
+                    </md-input-container>
+                    <div flex layout="row">
+                        <div>
+                            <md-button class="md-raised"                                       
+                                       ng-click="busquedaProducto(prod)"
+                                       type="search">
+                                Buscar <span class="glyphicon glyphicon-search"></span>
+                            </md-button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </md-content>
+    </div>
+    <div class="md-padding" md-theme="docs-dark" ng-cloak flex style="height: 500px;">
+        <md-content flex layout="row" style="height: 465px;">
+            <md-content class="md-padding" flex>
+                <div class="table-responsive">                
+                    <table data-ng-init="initBusqueda()"
+                           class="table table-striped table-hover light-table table-condensed"
+                           ng-table="tableBusqueda"
+                           id="tableProductos">
+                        <thead id="headTableProductos">
+                            <tr>
+                                <th style="text-align: center">ID</th>
+                                <th style="text-align: center">Descripcion</th>
+                                <th style="text-align: center">Marca</th>
+                                <th style="text-align: center">Cantidad</th> 
+                                <th style="text-align: center">Talla</th> 
+                                <th style="text-align: center">Color</th> 
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="producto in $data" ng-class="{
+                                        danger: stockMinimo(producto)
+                                    }">
+                                <td style="text-align: center">{{producto.idProducto}}</td>
+                                <td style="text-align: center">
+                                    <a href=""
+                                       ui-sref="producto_helper({idProducto:{{producto.idProducto}}})">
+                                        {{producto.descripcion}}                                        
+                                    </a>
+                                </td>
+                                <td style="text-align: center">{{producto.marcas.nombreMarca}}</td>
+                                <td style="text-align: center">{{producto.cantidadTotal}}</td>
+                                <td style="text-align: center">{{producto.talla| uppercase}}</td>
+                                <td style="text-align: center">{{producto.colorProducto| uppercase}}</td>                
+                            </tr>
+                        </tbody>
+                    </table>
+                </div> 
+            </md-content>
+        </md-content>    
+    </div>
+</div>
+<style>
+    main{
+        width: 100%;
+    }
+    .col-lg-12{
+        padding-right: 0px;
+        padding-left: 0px;
+    }
+</style>
