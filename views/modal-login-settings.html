@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<div class="ngdialog-message ngdialog-advertencia"
+     md-theme="docs-dark" style="min-height: 270px; min-width: 500px;">
+    <md-toolbar class="md-warn">
+        <div class="md-toolbar-tools">
+            <h3 class="modal-title" style="width: 100%; text-align: center;">AJUSTES</h3>
+        </div>
+    </md-toolbar>
+    <md-content flex style="height: 173px;">
+        <md-content class="md-padding" flex>
+            <p flex style="text-align: center; font-weight: bold; font-size: small;">
+                Esta dirección debe corresponder a la del servidor.
+            </p>
+            <form name="settings" flex>
+                <div layout="column" flex ng-show="confirm">
+                    <md-input-container class="md-block" flex style="margin-bottom: 0px;">
+                        <label>Dirección</label>
+                        <md-icon class="material-icons">&#xE902;</md-icon>
+                        <input ng-model="url.BaseUrl"
+                               maxlength="50" required
+                               md-maxlength="50"
+                               minlength="10"
+                               type="url"
+                               placeholder="Dirección del servidor"
+                               name="direccion"/>
+                        <div ng-messages="settings.direccion.$error"
+                             ng-if='settings.direccion.$dirty || settings.direccion.$touched'>
+                            <div ng-message="minlength">Dirección demasiado corta.</div>
+                            <div ng-message="md-maxlength">Dirección demasiado larga.</div>
+                            <div ng-message="url">Dirección invalida.</div>
+                            <div ng-message="required">Este campo no puede estar vacio.</div>
+                        </div>
+                    </md-input-container>
+                    <div style="text-align: center;">
+                        <md-button class="md-raised"
+                                   type="button"
+                                   ng-disabled="settings.$invalid"
+                                   style="margin-top: 0px;"
+                                   ng-click="confirm = false">Cambiar</md-button>
+                    </div>                    
+                </div>
+                <div layout="column" flex ng-hide="confirm" style="min-height: 118px;">
+                    <p flex style="text-align: center; font-weight: bold; font-size: small;">
+                        ¿Estas seguro de que quieres cambiar la dirección?
+                    </p>
+                    <p flex style="text-align: center; font-weight: bold; font-size: small;">
+                        La aplicación se recargara.
+                    </p>
+                    <div flex style="text-align: center">
+                        <button class="btn btn-md btn-success"
+                                style="width: 50px;"
+                                type="button"
+                                ng-click="updateURL(url.BaseUrl)">Si</button>
+                        <button class="btn btn-md btn-danger" 
+                                style="width: 50px;"
+                                ng-click="confirm = true">No</button>
+                    </div>
+                </div>
+            </form>
+        </md-content>
+    </md-content>
+    <md-content flex class="md-padding">
+        <button class="btn btn-md btn-danger pull-right"
+                ng-click="closeDialog()">Cerrar</button>
+    </md-content>
+</div>
