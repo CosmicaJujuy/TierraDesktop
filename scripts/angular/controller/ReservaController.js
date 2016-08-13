@@ -1,4 +1,11 @@
-miAppHome.controller('ReservaController', function ($scope, metodoPagoFacturaService, $state, $stateParams, reservaService, facturaService, NgTableParams, $rootScope) {
+miAppHome.controller('ReservaController', function (
+        $scope,
+        $state,
+        reservaService,
+        $http,
+        cookieService,
+        NgTableParams,
+        BaseURL) {
 
     $scope.nuevaReserva = {
         "idFactura": null,
@@ -17,54 +24,60 @@ miAppHome.controller('ReservaController', function ($scope, metodoPagoFacturaSer
     $scope.totalReservasMensuales = 0;
 
     $scope.listaReservasDiaria = function () {
-        $diaria = reservaService.getDay();
-        $diaria.then(function (datos) {
-            if (datos.status === 200) {
-                $scope.reservasDiarias = datos.data;
-                var data = datos.data;
-                angular.forEach(data, function (value, key) {
-                    $scope.totalReservas = parseFloat($scope.totalReservas) + parseFloat(value.total);
-                });
-                $scope.tableReservasDiaria = new NgTableParams({
-                    page: 1,
-                    count: 12
-                }, {
-                    total: data.length,
-                    getData: function (params) {
-                        data = $scope.reservasDiarias;
-                        params.total(data.length);
-                        if (params.total() <= ((params.page() - 1) * params.count())) {
-                            params.page(1);
+        var token = cookieService.get('token');
+        token.then(function (data) {
+            $scope.tableReservasDiaria = new NgTableParams({
+                page: 1,
+                count: 12
+            }, {
+                getData: function (params) {
+                    return $http({
+                        url: BaseURL + "reserva/day/paged",
+                        method: 'get',
+                        headers: {
+                            'Authorization': 'Bearer ' + data,
+                            'Content-type': 'application/json'
+                        },
+                        params: {
+                            page: params.page() - 1,
+                            size: params.count()
                         }
-                        return data.slice((params.page() - 1) * params.count(), params.page() * params.count());
-                    }});
-            }
+                    }).then(function successCallback(response) {
+                        params.total(response.data.totalElements);
+                        return response.data.content;
+                    }, function errorCallback(response) {
+                    });
+                }
+            });
         });
     };
 
     $scope.listaReservasMensual = function () {
-        $mensual = reservaService.getMonth();
-        $mensual.then(function (datos) {
-            if (datos.status === 200) {
-                $scope.reservasMensuales = datos.data;
-                var data = datos.data;
-                angular.forEach(data, function (value, key) {
-                    $scope.totalReservasMensuales = parseFloat($scope.totalReservasMensuales) + parseFloat(value.total);
-                });
-                $scope.tableReservasDiaria = new NgTableParams({
-                    page: 1,
-                    count: 12
-                }, {
-                    total: data.length,
-                    getData: function (params) {
-                        data = $scope.reservasMensuales;
-                        params.total(data.length);
-                        if (params.total() <= ((params.page() - 1) * params.count())) {
-                            params.page(1);
+        var token = cookieService.get('token');
+        token.then(function (data) {
+            $scope.tableReservasMensual = new NgTableParams({
+                page: 1,
+                count: 12
+            }, {
+                getData: function (params) {
+                    return $http({
+                        url: BaseURL + "reserva/month/paged",
+                        method: 'get',
+                        headers: {
+                            'Authorization': 'Bearer ' + data,
+                            'Content-type': 'application/json'
+                        },
+                        params: {
+                            page: params.page() - 1,
+                            size: params.count()
                         }
-                        return data.slice((params.page() - 1) * params.count(), params.page() * params.count());
-                    }});
-            }
+                    }).then(function successCallback(response) {
+                        params.total(response.data.totalElements);
+                        return response.data.content;
+                    }, function errorCallback(response) {
+                    });
+                }
+            });
         });
     };
 
