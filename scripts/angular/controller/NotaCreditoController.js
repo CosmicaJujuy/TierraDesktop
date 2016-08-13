@@ -42,7 +42,7 @@ miAppHome.controller('NotaCreditoController', function (toaster, $mdDialog, ngDi
             }
         });
     };
-    
+
     $scope.listaMesNotaCredito = function () {
         $scope.totalNotaMonth = 0;
         $scope.countNotasMonth = 0;
@@ -155,4 +155,18 @@ miAppHome.controller('NotaCreditoController', function (toaster, $mdDialog, ngDi
             data: {cliente: cli}
         });
     };
+
+    $scope.cancelarNotaCredito = function () {
+        var nota = $stateParams.idNota;
+        ngDialog.open({
+            template: 'views/nota_credito/modal-cancelar-nota.html',
+            className: 'ngdialog-theme-advertencia ngdialog-theme-custom',
+            showClose: false,
+            controller: 'ModalController',
+            closeByDocument: false,
+            closeByEscape: false,
+            data: {nota: nota}
+        });
+    };
+
 });
