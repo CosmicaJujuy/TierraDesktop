@@ -4,7 +4,7 @@
  * @param {type} param1
  * @param {type} param2
  */
-miAppHome.controller('ProveedorController', function ($scope, ngDialog, cookieService, NgTableParams, toaster, $state, $stateParams, $http, $timeout, _proveedorService) {
+miAppHome.controller('ProveedorController', function ($scope, BaseURL, ngDialog, cookieService, NgTableParams, toaster, $state, $stateParams, $http, $timeout, _proveedorService) {
 
     /**
      * Modelo de objeto Proveedor utilizado para agregar nuevos proveedores
@@ -180,7 +180,7 @@ miAppHome.controller('ProveedorController', function ($scope, ngDialog, cookieSe
      * @returns {unresolved}
      */
     $scope.getProveedor = function (val) {
-        var uri = 'https://tierradecoloresapi.herokuapp.com/proveedor/searchText';
+        var uri = BaseURL + 'proveedor/searchText';
         var token = cookieService.get('token');
         return token.then(function (data) {
             return $http({
