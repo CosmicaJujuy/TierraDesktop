@@ -5,7 +5,8 @@
  */
 miAppHome.controller('ProductoController', function ($scope,
         ngDialog,
-        localStorageService,
+        BaseURL,
+        cookieService,
         $state,
         facturaProductoService,
         $stateParams,
@@ -19,9 +20,17 @@ miAppHome.controller('ProductoController', function ($scope,
     /*
      * objeto type encargado de dar formato a los codigos de barra.
      */
-    $scope.listaBusqueda = "";
+    $scope.listaBusqueda = [];
     $scope.hide = false;
     $scope.type = 'CODE128C';
+
+    $scope.prod = {
+        descripcion: "",
+        marca: "",
+        talla: "",
+        codigo: "",
+        categoria: ""
+    };  
 
     $scope.search = {
         'categoria': "",
@@ -108,59 +117,33 @@ miAppHome.controller('ProductoController', function ($scope,
      * datos
      * @returns {undefined}
      */
-    $scope.productos = localStorageService.get('localStorageProductos');
     $scope.listaProductos = function () {
-        var length = 0;
-        if ($scope.productos !== null) {
-            length = $scope.productos.length;
+        var token = cookieService.get('token');
+        token.then(function (data) {
             $scope.tableProductos = new NgTableParams({
                 page: 1,
                 count: 12
             }, {
-                total: length,
                 getData: function (params) {
-                    var data = $scope.productos;
-                    params.total(length);
-                    if (params.total() <= ((params.page() - 1) * params.count())) {
-                        params.page(1);
-                    }
-                    return data.slice((params.page() - 1) * params.count(), params.page() * params.count());
+                    return $http({
+                        url: BaseURL + "producto/paged",
+                        method: 'get',
+                        headers: {
+                            'Authorization': 'Bearer ' + data,
+                            'Content-type': 'application/json'
+                        },
+                        params: {
+                            page: params.page() - 1,
+                            size: params.count()
+                        }
+                    }).then(function successCallback(response) {
+                        console.log(response);
+                        params.total(response.data.totalElements);
+                        return response.data.content;
+                    }, function errorCallback(response) {
+                    });
                 }
             });
-        }
-        $promesa = _productoService.getAll();
-        $promesa.then(function (datos) {
-            console.log(datos);
-            if (datos.status === 200) {
-                localStorageService.set('localStorageProductos', datos.data);
-                if ($scope.productos === null) {
-                    $scope.productos = datos.data;
-                    $scope.tableProductos = new NgTableParams({
-                        page: 1,
-                        count: 10
-                    }, {
-                        total: $scope.productos.length,
-                        getData: function (params) {
-                            var data = $scope.productos;
-                            params.total(data.length);
-                            if (params.total() <= ((params.page() - 1) * params.count())) {
-                                params.page(1);
-                            }
-                            return data.slice((params.page() - 1) * params.count(), params.page() * params.count());
-                        }
-                    });
-                } else {
-                    $scope.productos = datos.data;
-                    $scope.tableProductos.reload();
-                }
-            } else {
-                toaster.pop({
-                    type: 'error',
-                    title: 'Error',
-                    body: "¡Op's algo paso!, comunicate con el administrador.",
-                    showCloseButton: false
-                });
-            }
         });
     };
 
@@ -376,7 +359,7 @@ miAppHome.controller('ProductoController', function ($scope,
         text: 'descripcion',
         options: function (searchText) {
             var token = $cookies.getObject('token');
-            var uri = 'https://tierradecoloresapi.herokuapp.com/producto/searchText';
+            var uri = BaseURL + 'producto/searchText';
             return $http({
                 url: uri,
                 method: 'post',
@@ -449,44 +432,63 @@ miAppHome.controller('ProductoController', function ($scope,
         });
     };
 
-
-    $scope.busquedaProducto = function (producto) {
-        $busqueda = _productoService.advancedSearch(producto);
-        $busqueda.then(function (datos) {
-            $scope.listaBusqueda = datos;
-            var data = datos;
+    $scope.initBusqueda = function () {
+        var token = cookieService.get('token');
+        token.then(function (data) {
             $scope.tableBusqueda = new NgTableParams({
                 page: 1,
-                count: 10
+                count: 11
             }, {
-                total: data.length,
+                total: $scope.listaBusqueda.length,
                 getData: function (params) {
-                    data = $scope.listaBusqueda;
-                    params.total(data.length);
-                    if (params.total() <= ((params.page() - 1) * params.count())) {
-                        params.page(1);
-                    }
-                    return data.slice((params.page() - 1) * params.count(), params.page() * params.count());
-                }
-            });
-            if ($scope.listaBusqueda.length === 0) {
-                $scope.hide = false;
-                toaster.pop({
-                    type: 'info',
-                    title: "¡Op's!",
-                    body: 'Sin resultados.',
-                    showCloseButton: false
-                });
-            } else {
-                $scope.hide = true;
-                toaster.pop({
-                    type: 'success',
-                    title: 'Exito',
-                    body: 'Productos encontrados.',
-                    showCloseButton: false
-                });
-            }
+                    return $http({
+                        url: BaseURL + "producto/advanced",
+                        method: 'GET',
+                        headers: {
+                            'Authorization': 'Bearer ' + data,
+                            'Content-type': 'application/json'
+                        },
+                        params: {
+                            page: params.page() - 1,
+                            size: params.count(),
+                            descripcion: $state.params.descripcion,
+                            marca: $state.params.marca,
+                            talla: $state.params.talla,
+                            codigo: $state.params.codigo,
+                            categoria: $state.params.categoria
+                        }
+                    }).then(function successCallback(response) {
+                        params.total(response.data.totalElements);
+                        return response.data.content;
+                    }, function errorCallback(response) {
+                    });
+                }});
         });
+    };
+
+    $scope.busquedaProducto = function (producto) {
+        if (producto.descripcion === ""
+                && producto.marca === ""
+                && producto.talla === ""
+                && producto.codigo === ""
+                && producto.categoria === "") {
+            toaster.pop({
+                type: 'error',
+                title: "Error",
+                body: 'Los campos de busqueda no deben estar vacios.',
+                showCloseButton: false
+            });
+        } else {
+            $state.go('helper',
+                    {
+                        descripcion: producto.descripcion.toUpperCase(),
+                        marca: producto.marca.toUpperCase(),
+                        talla: producto.talla.toUpperCase(),
+                        codigo: producto.codigo.toUpperCase(),
+                        categoria: producto.categoria.toUpperCase()
+                    }, {notify: false});
+            $scope.initBusqueda();
+        }
     };
 
     $scope.limpiarBusqueda = function () {
@@ -635,7 +637,7 @@ miAppHome.controller('ProductoController', function ($scope,
         $scope._producto.talla = "";
     });
 
-    $scope.listaProductosFactura = function () {
+    $scope.listaProductosFacturaDeprecated = function () {
         var idFacturaProducto = parseInt($stateParams.idFactura);
         $list = _productoService.searchByIdFactura(idFacturaProducto);
         $list.then(function (datos) {
@@ -657,14 +659,39 @@ miAppHome.controller('ProductoController', function ($scope,
             });
         });
     };
+    $scope.listaProductosFactura = function () {
+        var token = cookieService.get('token');
+        token.then(function (data) {
+            $scope.tableProductosFactura = new NgTableParams({
+                page: 1,
+                count: 12
+            }, {
+                getData: function (params) {
+                    return $http({
+                        url: BaseURL + 'producto/list/factura/paged',
+                        method: 'GET',
+                        headers: {
+                            'Authorization': 'Bearer ' + data,
+                            'Content-type': 'application/json'
+                        },
+                        params: {
+                            idFacturaProducto: $stateParams.idFactura,
+                            page: params.page() - 1,
+                            size: params.count()
+                        }
+                    }).then(function successCallback(response) {
+                        params.total(response.data.totalElements);
+                        return response.data.content;
+                    }, function errorCallback(response) {
+                    });
+                }
+            });
+        });
+    };
 
     $rootScope.$on('updateTableProducto', function (event, object) {
-        $list = _productoService.searchByIdFactura(object.idFactura);
-        $list.then(function (datos) {
-            $scope.productosFactura = datos.data;
-            $rootScope.$broadcast('updateStock', {});
-            $scope.tableProductosFactura.reload();
-        });
+        $scope.tableProductosFactura.reload();
+        $rootScope.$broadcast('updateStock', {});
     });
 
     $scope.elegirCarga = function (producto) {
@@ -678,5 +705,27 @@ miAppHome.controller('ProductoController', function ($scope,
             data: {producto: producto}
         });
     };
-});
+
+    $scope.windowBusqueda = function () {
+        var electron = require('electron');
+        var busq = new electron.remote.BrowserWindow({
+        transparent: false,
+                frame: false,
+                fullscreen: false,
+                width: 1100,
+                height: 550,
+                show: false,
+                modal: true,
+                resizable: false,
+                icon: __dirname + '/styles/images/app.png'
+        });
+                busq.loadURL(`file://${__dirname}/index.html#/helper`);
+                        busq.once('ready-to-show', function () {
+                            busq.show();
+                        });
+            };
+
+
+
+        });
 
