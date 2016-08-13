@@ -441,7 +441,7 @@ miAppHome.controller('ModalController', function (
         });
     };
 
-    $scope.finalizarNotaCredito = function (cli) {
+    $scope.confirmarFinalizarNotaCredito = function (cli) {
         var idNota = $stateParams.idNota;
         $nota = notaCreditoService.getById(idNota);
         $nota.then(function (datos) {
@@ -464,6 +464,31 @@ miAppHome.controller('ModalController', function (
                             $state.go('nota_credito');
                         }, 2000);
                     }
+                });
+            }
+        });
+    };
+
+    $scope.confirmarCancelarNotaCredito = function (nota) {
+        $delete = notaCreditoService.delete(nota);
+        $delete.then(function (datos) {
+            ngDialog.closeAll();
+            if (datos.status === 200) {
+                toaster.pop({
+                    type: 'success',
+                    title: '¡Exito!',
+                    body: datos.data.msg,
+                    showCloseButton: false
+                });
+                $timeout(function timer() {
+                    $state.go('nota_credito');
+                }, 2000);
+            } else {
+                toaster.pop({
+                    type: 'error',
+                    title: '¡Exito!',
+                    body: datos.data.msg,
+                    showCloseButton: false
                 });
             }
         });
@@ -554,7 +579,6 @@ miAppHome.controller('ModalController', function (
     };
 
     $scope.confirmarModificarDetalleTransferencia = function (detalle) {
-        console.log(detalle);
         $update = detalleTransferenciaService.update(detalle);
         $update.then(function (datos) {
             if (datos.status === 200) {
@@ -581,9 +605,8 @@ miAppHome.controller('ModalController', function (
     $scope.confirmarAceptarTransferencia = function () {
         $approve = transferenciaService.approve($stateParams.idTransferencia);
         $approve.then(function (datos) {
-            console.log(datos);
+            ngDialog.closeAll();
             if (datos.status === 200) {
-                ngDialog.closeAll();
                 $rootScope.$broadcast('reloadTransferenciaDatos', {});
                 toaster.pop({
                     type: 'success',
@@ -592,11 +615,36 @@ miAppHome.controller('ModalController', function (
                     showCloseButton: false
                 });
             } else {
-                ngDialog.closeAll();
                 toaster.pop({
                     type: 'warning',
                     title: '¡Advertencia!',
                     body: datos.data.msg,
+                    showCloseButton: false
+                });
+            }
+        });
+    };
+
+    $scope.confirmarCancelarTransferencia = function (transferencia) {
+        transferencia.sucursalRespuesta = 5;
+        $trans = transferenciaService.cancel(transferencia);
+        $trans.then(function (datos) {
+            ngDialog.closeAll();
+            if (datos.status === 200) {
+                toaster.pop({
+                    type: 'success',
+                    title: '¡Exito!',
+                    body: 'La transferencia ha sido cancelada.',
+                    showCloseButton: false
+                });
+                $timeout(function timer() {
+                    $state.go('transferencias');
+                }, 2000);
+            } else {
+                toaster.pop({
+                    type: 'error',
+                    title: '¡Error!',
+                    body: 'La transferencia no ha podido ser cancelada.',
                     showCloseButton: false
                 });
             }
@@ -976,7 +1024,6 @@ miAppHome.controller('ModalController', function (
         $metodo = metodoPagoFacturaService.addMetodoPago($scope._metodoPago);
         $metodo.then(function (datos) {
             ngDialog.closeAll();
-            console.log(datos, $scope._metodoPago);
             if (datos.status === 200) {
                 $timeout(function timer() {
                     toaster.pop({
@@ -998,6 +1045,32 @@ miAppHome.controller('ModalController', function (
                         });
                     }, 1000);
                 }
+            }
+        });
+    };
+
+    $scope.confirmarCancelarFactura = function () {
+        $cancelar = facturaService.delete($stateParams.idFactura);
+        $cancelar.then(function (datos) {
+            ngDialog.closeAll();
+            if (datos.status === 200) {
+                toaster.pop({
+                    type: 'success',
+                    title: 'Exito.',
+                    body: datos.data.msg,
+                    showCloseButton: false
+                });
+                $timeout(function timer() {
+                    $state.go('facturas');
+                }, 3000);
+            } else {
+                toaster.pop({
+                    type: 'error',
+                    title: 'Advertencia',
+                    body: datos.data.msg,
+                    showCloseButton: false
+                });
+
             }
         });
     };
