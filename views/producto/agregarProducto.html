@@ -308,7 +308,15 @@
                             uib-tooltip="Agregar producto"
                             ng-click="elegirCarga(_producto)"
                             ng-disabled="nuevoProducto.$invalid"
-                            >AGREGAR</button>
+                            >Agregar</button>
+                    <button class="btn btn-success pull-right"
+                            style="width: 77px; margin-right: 10px;"
+                            ng-click="windowBusqueda()">
+                        <md-tooltip md-direction="bottom" md-theme="default">
+                            Abrir una ventana de busqueda.
+                        </md-tooltip>
+                        Buscar
+                    </button>
                 </form>
             </md-content>
         </md-content>
