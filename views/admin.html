@@ -45,25 +45,27 @@
                                 <md-icon class="material-icons">&#xE7FD;</md-icon>
                                 <md-button ui-sref="perfil">
                                     Ver mi perfil
+                                    <span class="md-alt-text"> {{ 'M-P' | keyboardShortcut }}</span>
                                 </md-button>
                             </md-menu-item>
                             <md-menu-item class="md-indent">
                                 <md-icon class="material-icons">&#xE3C9;</md-icon>
                                 <md-button ui-sref="modificar-perfil">
-                                    Modificar mi perfil
+                                    Modificar mi perfil                                    
                                 </md-button>
                             </md-menu-item>
                         </md-menu-content>
                     </md-menu>
                     <md-menu>
                         <button ng-click="$mdOpenMenu()">
-                            Usuarios
+                            Usuarios                            
                         </button>
                         <md-menu-content class="menu-content">
                             <md-menu-item class="md-indent">
                                 <md-icon class="material-icons">&#xE896;</md-icon>
                                 <md-button ui-sref="usuarios">
                                     Lista de usuarios
+                                    <span class="md-alt-text"> {{ 'M-L' | keyboardShortcut }}</span>
                                 </md-button>
                             </md-menu-item>                     
                             <md-menu-item class="md-indent">
@@ -83,18 +85,21 @@
                                 <md-icon class="material-icons">&#xE84F;</md-icon>
                                 <md-button ui-sref="bancos">
                                     Bancos
+                                    <span class="md-alt-text"> {{ 'M-B' | keyboardShortcut }}</span>
                                 </md-button>
                             </md-menu-item>
                             <md-menu-item class="md-indent">
                                 <md-icon class="material-icons">&#xE870;</md-icon>
                                 <md-button ui-sref="tarjetas">
                                     Tarjetas
+                                    <span class="md-alt-text"> {{ 'M-T' | keyboardShortcut }}</span>
                                 </md-button>
                             </md-menu-item>
                             <md-menu-item class="md-indent">
                                 <md-icon class="material-icons">&#xE263;</md-icon>
                                 <md-button ui-sref="pagos">
                                     Planes de pago
+                                    <span class="md-alt-text"> {{ 'M-Y' | keyboardShortcut }}</span>
                                 </md-button>
                             </md-menu-item>
                         </md-menu-content>
@@ -108,19 +113,21 @@
                                 <md-icon class="material-icons">&#xE8D1;</md-icon>
                                 <md-menu>
                                     <md-button ng-click="$mdOpenMenu()" style="font-weight: bold;">
-                                        Productos
+                                        Productos                                        
                                     </md-button>
                                     <md-menu-content class="menu-content">
                                         <md-menu-item class="md-indent">
                                             <md-icon class="material-icons">&#xE8B0;</md-icon>
                                             <md-button ui-sref="productos">
                                                 Productos / Facturas
+                                                <span class="md-alt-text"> {{ 'M-S' | keyboardShortcut }}</span>
                                             </md-button>
                                         </md-menu-item>
                                         <md-menu-item class="md-indent">
                                             <md-icon class="material-icons">&#xE0B6;</md-icon>
                                             <md-button ui-sref="distribucion">
                                                 Distribución
+                                                <span class="md-alt-text"> {{ 'M-D' | keyboardShortcut }}</span>
                                             </md-button>
                                         </md-menu-item>
                                         <md-menu-item class="md-indent" ng-hide="true">
@@ -141,18 +148,21 @@
                                             <md-icon class="material-icons">&#xE86E;</md-icon>
                                             <md-button ui-sref="categorias">
                                                 Categorias
+                                                <span class="md-alt-text"> {{ 'M-K' | keyboardShortcut }}</span>
                                             </md-button>
                                         </md-menu-item>
                                         <md-menu-item class="md-indent">
                                             <md-icon class="material-icons">&#xE06B;</md-icon>
                                             <md-button ui-sref="marcas">
                                                 Marcas
+                                                <span class="md-alt-text"> {{ 'M-N' | keyboardShortcut }}</span>
                                             </md-button>
                                         </md-menu-item>
                                         <md-menu-item class="md-indent">
                                             <md-icon class="material-icons">&#xE252;</md-icon>
                                             <md-button ui-sref="tipos">                                            
                                                 Tipo de Productos
+                                                <span class="md-alt-text"> {{ 'M-J' | keyboardShortcut }}</span>
                                             </md-button>
                                         </md-menu-item>
                                     </md-menu-content>
@@ -163,6 +173,7 @@
                                 <md-icon class="material-icons">&#xE0AF;</md-icon>
                                 <md-button ui-sref="proveedores">
                                     Proveedores
+                                    <span class="md-alt-text"> {{ 'S-P' | keyboardShortcut }}</span>
                                 </md-button>
                             </md-menu-item>
                         </md-menu-content>
@@ -176,18 +187,21 @@
                                 <md-icon class="material-icons">&#xE8CC;</md-icon>
                                 <md-button ui-sref="facturas">
                                     Facturas / Reservas
+                                    <span class="md-alt-text"> {{ 'S-F' | keyboardShortcut }}</span>
                                 </md-button>
                             </md-menu-item>
                             <md-menu-item class="md-indent">
                                 <md-icon class="material-icons">&#xE8B3;</md-icon>
                                 <md-button ui-sref="nota_credito">
                                     Notas de credito
+                                    <span class="md-alt-text"> {{ 'S-N' | keyboardShortcut }}</span>
                                 </md-button>
                             </md-menu-item>
                             <md-menu-item class="md-indent">
                                 <md-icon class="material-icons">&#xE572;</md-icon>
                                 <md-button ui-sref="transferencias">
                                     Transferencias
+                                    <span class="md-alt-text"> {{ 'S-T' | keyboardShortcut }}</span>
                                 </md-button>
                             </md-menu-item>
                         </md-menu-content>
@@ -218,6 +232,9 @@
 </div>
 <toaster-container toaster-options="{'time-out': 3000, 'close-button':true, 'animation-class': 'toast-top-center'}"></toaster-container>
 <style>
+    md-menu-content.md-menu-bar-menu.md-dense .md-button span.md-alt-text {
+        margin: 0px 0px -4px;
+    }
     .title-page{
         top: 5px;
         font-family: inherit;
@@ -280,7 +297,7 @@
         background-color: transparent;
         border-color: transparent;
         color: black;
-        top: 0px;
+        top: 5px;
         right: 0;
         position: absolute;
     }
@@ -288,7 +305,7 @@
         background-color: transparent;
         border-color: transparent;
         color: black;
-        top: 0px;
+        top: 5px;
         right: 30px;
         position: absolute;
     }
@@ -296,7 +313,7 @@
         background-color: transparent;
         border-color: transparent;
         color: black;
-        top: 0px;
+        top: 5px;
         right: 60px;
         position: absolute;
     }
@@ -304,7 +321,7 @@
         background-color: transparent;
         border-color: transparent;
         color: black;
-        top: 0px;
+        top: 5px;
         right: 90px;
         position: absolute;
     }
@@ -312,7 +329,7 @@
         background-color: transparent;
         border-color: transparent;
         color: black;
-        top: 0px;
+        top: 5px;
         right: 120px;
         position: absolute;
     }
