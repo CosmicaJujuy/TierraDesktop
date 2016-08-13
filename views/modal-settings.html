@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<div class="ngdialog-message ngdialog-advertencia"  md-theme="docs-dark" style="min-height: 280px; min-width: 500px;">
+<div class="ngdialog-message ngdialog-advertencia" md-theme="docs-dark" style="min-height: 590px; min-width: 500px;">
     <md-toolbar class="md-warn">
         <div class="md-toolbar-tools">
             <h3 class="modal-title" style="width: 100%; text-align: center;">AJUSTES</h3>
         </div>
     </md-toolbar>
-    <md-content flex style="height: 180px;">
+    <md-content flex style="height: 460px;">
         <md-content class="md-padding" flex>
             <p flex style="text-align: center; font-weight: bold; font-size: small;">
                 Esta dirección debe corresponder a la del servidor.
@@ -15,15 +15,8 @@
                     <md-input-container class="md-block" flex style="margin-bottom: 0px;">
                         <label>Dirección</label>
                         <md-icon class="material-icons">&#xE902;</md-icon>
-                        <input ng-model="url.BaseUrl"
-                               maxlength="50" required
-                               md-maxlength="50"
-                               minlength="10"
-                               type="url"
-                               placeholder="Dirección del servidor"
-                               name="direccion"/>
-                        <div ng-messages="settings.direccion.$error"
-                             ng-if='settings.direccion.$dirty || settings.direccion.$touched'>
+                        <input ng-model="url.BaseUrl" maxlength="50" required md-maxlength="50" minlength="10" type="url" placeholder="Dirección del servidor" name="direccion" />
+                        <div ng-messages="settings.direccion.$error" ng-if='settings.direccion.$dirty || settings.direccion.$touched'>
                             <div ng-message="minlength">Dirección demasiado corta.</div>
                             <div ng-message="md-maxlength">Dirección demasiado larga.</div>
                             <div ng-message="url">Dirección invalida.</div>
@@ -31,14 +24,10 @@
                         </div>
                     </md-input-container>
                     <div style="text-align: center;">
-                        <md-button class="md-raised"
-                                   type="button"
-                                   ng-disabled="settings.$invalid"
-                                   style="margin-top: 0px;"
-                                   ng-click="confirm = false">Cambiar</md-button>
-                    </div>                    
+                        <md-button class="md-raised" type="button" ng-disabled="settings.$invalid" style="margin-top: 0px;" ng-click="confirm = false">Cambiar</md-button>
+                    </div>
                 </div>
-                <div layout="column" flex ng-hide="confirm">
+                <div layout="column" flex ng-hide="confirm" style="min-height: 118px;">
                     <p flex style="text-align: center; font-weight: bold; font-size: small;">
                         ¿Estas seguro de que quieres cambiar la dirección?
                     </p>
@@ -46,20 +35,67 @@
                         La aplicación se recargara.
                     </p>
                     <div flex style="text-align: center">
-                        <button class="btn btn-md btn-success"
-                                style="width: 50px;"
-                                type="button"
-                                ng-click="updateURL(url.BaseUrl)">Si</button>
-                        <button class="btn btn-md btn-danger" 
-                                style="width: 50px;"
-                                ng-click="confirm = true">No</button>
+                        <button class="btn btn-md btn-success" style="width: 50px;" type="button" ng-click="updateURL(url.BaseUrl)">Si</button>
+                        <button class="btn btn-md btn-danger" style="width: 50px;" ng-click="confirm = true">No</button>
+                    </div>
+                </div>
+            </form>
+            <p flex style="text-align: center; font-weight: bold; font-size: small;">
+                Configura el color de la aplicación desde aquí
+            </p>
+            <form name="colorProvider" style="margin-top: 10px;">
+                <div flex layout="row">
+                    <md-input-container class="md-block" flex>
+                        <label>Primario</label>
+                        <md-select ng-model="userPalette.primaryPalette" placeholder="Elige un color" required name="color">
+                            <md-option value="{{color}}" ng-repeat="color in colores">{{color|capitalize}}</md-option>
+                        </md-select>
+                    </md-input-container>
+                    <md-input-container class="md-block" flex>
+                        <label>Enfasis</label>
+                        <md-select ng-model="userPalette.accentPalette" placeholder="Elige un color" required name="color">
+                            <md-option value="{{color}}" ng-repeat="color in colores">{{color|capitalize}}</md-option>
+                        </md-select>
+                    </md-input-container>
+                </div>
+                <div flex layout="row">
+                    <md-input-container class="md-block" flex>
+                        <label>Advertencia</label>
+                        <md-select ng-model="userPalette.warnPalette" placeholder="Elige un color" required name="color">
+                            <md-option value="{{color}}" ng-repeat="color in colores">{{color|capitalize}}</md-option>
+                        </md-select>
+                    </md-input-container>
+                    <md-input-container class="md-block" flex>
+                        <label>Fondo</label>
+                        <md-select ng-model="userPalette.backgroundPalette" placeholder="Elige un color" required name="color">
+                            <md-option value="{{color}}" ng-repeat="color in colores">{{color|capitalize}}</md-option>
+                        </md-select>
+                    </md-input-container>
+                </div>
+                <div flex layout="row">
+                    <label flex style="margin-top: 21px; margin-bottom: 16px; text-align: right; margin-right: 10px;">Contexto</label>
+                    <md-switch ng-model="userPalette.dark" flex aria-label="Switch" class="md-primary">
+                        <div ng-if="userPalette.dark === false">Luminoso</div>
+                        <div ng-if="userPalette.dark === true">Oscuro</div>
+                    </md-switch>
+                </div>
+                <div flex style="text-align: center;">
+                    <md-button ng-click="colorOculto = false" type="button" ng-show="colorOculto" class="md-raised">Cambiar</md-button>
+                    <div ng-hide="colorOculto">
+                        <p>¿Estas seguro de que quieres continuar?</p>
+                        <button ng-click="updateColor(userPalette)" style="width: 50px;" class="btn btn-success">Si</button>
+                        <button ng-click="colorOculto = true" style="width: 50px;" class="btn btn-danger">No</button>
                     </div>
                 </div>
             </form>
         </md-content>
     </md-content>
     <md-content flex class="md-padding">
-        <button class="btn btn-md btn-danger pull-right"
-                ng-click="closeDialog()">Cerrar</button>
+        <button class="btn btn-md btn-danger pull-right" ng-click="closeDialog()">Cerrar</button>
     </md-content>
 </div>
+<style>
+    md-dialog {
+        max-height: 100%;
+    }
+</style>
