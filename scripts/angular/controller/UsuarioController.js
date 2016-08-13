@@ -6,8 +6,8 @@
 /* global miAppHome */
 
 var usuarioController = miAppHome.controller('UsuarioController',
-        ['$scope', '$mdDialog', 'ngDialog', 'NgTableParams', 'cookieService', '$state', '$window', 'toaster', '$timeout', '$cookies', 'Upload', '$location', 'UsuarioService', '$rootScope',
-            function ($scope, $mdDialog, ngDialog, NgTableParams, cookieService, $state, $window, toaster, $timeout, $cookies, Upload, $location, UsuarioService, $rootScope) {
+        ['$scope', 'BaseURL', '$mdDialog', 'ngDialog', 'NgTableParams', 'cookieService', '$state', '$window', 'toaster', '$timeout', '$cookies', 'Upload', '$location', 'UsuarioService', '$rootScope',
+            function ($scope, BaseURL, $mdDialog, ngDialog, NgTableParams, cookieService, $state, $window, toaster, $timeout, $cookies, Upload, $location, UsuarioService, $rootScope) {
 
                 $scope.user = {
                     "idUsuario": null,
@@ -55,7 +55,7 @@ var usuarioController = miAppHome.controller('UsuarioController',
 
                 $scope.actualizarFoto = function (file) {
                     if (typeof file !== 'undefined') {
-                        var uri = 'https://tierradecoloresapi.herokuapp.com/usuarios/updatePhoto';
+                        var uri = BaseURL + 'usuarios/updatePhoto';
                         var token = cookieService.get('token');
                         token.then(function (data) {
                             Upload.upload({
@@ -110,7 +110,7 @@ var usuarioController = miAppHome.controller('UsuarioController',
                             var data = datos.data;
                             $scope.tableUsuarios = new NgTableParams({
                                 page: 1,
-                                count: 12
+                                count: 10
                             }, {
                                 total: data.length,
                                 getData: function (params) {
