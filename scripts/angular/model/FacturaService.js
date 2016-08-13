@@ -103,6 +103,34 @@
             return deferred.promise;
         };
 
+        this.sumByParams = function (time, type) {
+            var datosRecu = null;
+            var deferred = $q.defer();
+            var token = cookieService.get('token');
+            token.then(function (data) {
+                $http({
+                    url: BaseURL + "factura/sum",
+                    method: 'get',
+                    headers: {
+                        'Authorization': 'Bearer ' + data,
+                        'Content-type': 'application/json'
+                    },
+                    params: {
+                        time: time,
+                        type: type
+                    }
+                }).then(function successCallback(response) {
+                    datosRecu = response;
+                    deferred.resolve(datosRecu);
+                    return response.data;
+                }, function errorCallback(response) {
+                    datosRecu = response;
+                    deferred.resolve(datosRecu);
+                });
+            });
+            return deferred.promise;
+        };
+
         this.add = function (factura) {
             var datosRecu = null;
             var deferred = $q.defer();
@@ -138,6 +166,33 @@
                     url: uri,
                     method: 'post',
                     data: angular.toJson(factura),
+                    headers: {
+                        'Authorization': 'Bearer ' + data,
+                        'Content-type': 'application/json'
+                    }
+                }).then(function successCallback(response) {
+                    datosRecu = response;
+                    deferred.resolve(datosRecu);
+                }, function errorCallback(response) {
+                    datosRecu = response;
+                    deferred.resolve(datosRecu);
+                });
+            });
+            return deferred.promise;
+        };
+
+        this.delete = function (factura) {
+            var datosRecu = null;
+            var deferred = $q.defer();
+            var uri = BaseURL + 'factura/delete';
+            var token = cookieService.get('token');
+            token.then(function (data) {
+                $http({
+                    url: uri,
+                    method: 'post',
+                    params: {
+                        idFactura: factura
+                    },
                     headers: {
                         'Authorization': 'Bearer ' + data,
                         'Content-type': 'application/json'
