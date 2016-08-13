@@ -32,12 +32,13 @@
                 value: data,
                 expirationDate: expiration.getTime()
             }, function (error) {
+                /*console.log(error);*/
             });
         };
 
         this.removeAll = function () {
             ses.clearStorageData([], function (data) {
-                console.log(data);
+                /*console.log(data);*/
             });
         };
     }
