@@ -3,7 +3,21 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-miAppHome.controller('DistribucionController', function ($scope, localStorageService, $rootScope, _productoService, NgTableParams, ngDialog, toaster, $timeout, facturaProductoService, $state, $stateParams, distribucionService) {
+miAppHome.controller('DistribucionController', function (
+        $scope,
+        $http,
+        BaseURL,
+        cookieService,
+        $rootScope,
+        _productoService,
+        NgTableParams,
+        ngDialog,
+        toaster,
+        $timeout,
+        facturaProductoService,
+        $state,
+        $stateParams,
+        distribucionService) {
 
     $scope.alerts = [];
     $scope.modalDistribuir = {
@@ -56,14 +70,14 @@ miAppHome.controller('DistribucionController', function ($scope, localStorageSer
         });
     };
 
-    $scope.listaTierra = function () {
+    $scope.listaTierraDEPRECATED = function () {
         $tierra = distribucionService.getAll(1);
         $tierra.then(function (datos) {
             var data = datos.data;
             $scope.tierraStock = datos.data;
             $scope.tableTierraStock = new NgTableParams({
                 page: 1,
-                count: 11
+                count: 12
             }, {
                 total: data.length,
                 getData: function (params) {
@@ -76,46 +90,93 @@ miAppHome.controller('DistribucionController', function ($scope, localStorageSer
                 }});
         });
     };
+    $scope.listaTierra = function () {
+        var token = cookieService.get('token');
+        token.then(function (data) {
+            $scope.tableTierraStock = new NgTableParams({
+                page: 1,
+                count: 12
+            }, {
+                getData: function (params) {
+                    return $http({
+                        url: BaseURL + "stock/list/paged",
+                        method: 'get',
+                        headers: {
+                            'Authorization': 'Bearer ' + data,
+                            'Content-type': 'application/json'
+                        },
+                        params: {
+                            idStock: 1,
+                            page: params.page() - 1,
+                            size: params.count()
+                        }
+                    }).then(function successCallback(response) {
+                        params.total(response.data.totalElements);
+                        return response.data.content;
+                    }, function errorCallback(response) {
+                    });
+                }
+            });
+        });
+    };
 
     $scope.listaBebelandia = function () {
-        $tierra = distribucionService.getAll(2);
-        $tierra.then(function (datos) {
-            var data = datos.data;
-            $scope.bebelandiaStock = datos.data;
+        var token = cookieService.get('token');
+        token.then(function (data) {
             $scope.tableBebelandiaStock = new NgTableParams({
                 page: 1,
-                count: 11
+                count: 12
             }, {
-                total: data.length,
                 getData: function (params) {
-                    data = $scope.bebelandiaStock;
-                    params.total(data.length);
-                    if (params.total() <= ((params.page() - 1) * params.count())) {
-                        params.page(1);
-                    }
-                    return data.slice((params.page() - 1) * params.count(), params.page() * params.count());
-                }});
+                    return $http({
+                        url: BaseURL + "stock/list/paged",
+                        method: 'get',
+                        headers: {
+                            'Authorization': 'Bearer ' + data,
+                            'Content-type': 'application/json'
+                        },
+                        params: {
+                            idStock: 2,
+                            page: params.page() - 1,
+                            size: params.count()
+                        }
+                    }).then(function successCallback(response) {
+                        params.total(response.data.totalElements);
+                        return response.data.content;
+                    }, function errorCallback(response) {
+                    });
+                }
+            });
         });
     };
 
     $scope.listaLibertador = function () {
-        $tierra = distribucionService.getAll(3);
-        $tierra.then(function (datos) {
-            var data = datos.data;
-            $scope.libertadorStock = datos.data;
+        var token = cookieService.get('token');
+        token.then(function (data) {
             $scope.tableLibertadorStock = new NgTableParams({
                 page: 1,
-                count: 11
+                count: 12
             }, {
-                total: data.length,
                 getData: function (params) {
-                    data = $scope.libertadorStock;
-                    params.total(data.length);
-                    if (params.total() <= ((params.page() - 1) * params.count())) {
-                        params.page(1);
-                    }
-                    return data.slice((params.page() - 1) * params.count(), params.page() * params.count());
-                }});
+                    return $http({
+                        url: BaseURL + "stock/list/paged",
+                        method: 'get',
+                        headers: {
+                            'Authorization': 'Bearer ' + data,
+                            'Content-type': 'application/json'
+                        },
+                        params: {
+                            idStock: 3,
+                            page: params.page() - 1,
+                            size: params.count()
+                        }
+                    }).then(function successCallback(response) {
+                        params.total(response.data.totalElements);
+                        return response.data.content;
+                    }, function errorCallback(response) {
+                    });
+                }
+            });
         });
     };
 
@@ -127,7 +188,7 @@ miAppHome.controller('DistribucionController', function ($scope, localStorageSer
             var data = datos;
             $scope.tableFacturaTierra = new NgTableParams({
                 page: 1,
-                count: 8
+                count: 13
             }, {
                 total: data.length,
                 getData: function (params) {
@@ -149,7 +210,7 @@ miAppHome.controller('DistribucionController', function ($scope, localStorageSer
             $scope.facturaBebelandia = datos.data;
             $scope.tableFacturaBebelandia = new NgTableParams({
                 page: 1,
-                count: 10
+                count: 13
             }, {
                 total: data.length,
                 getData: function (params) {
@@ -171,7 +232,7 @@ miAppHome.controller('DistribucionController', function ($scope, localStorageSer
             $scope.facturaLibertador = datos.data;
             $scope.tableFacturaLibertador = new NgTableParams({
                 page: 1,
-                count: 10
+                count: 13
             }, {
                 total: data.length,
                 getData: function (params) {
