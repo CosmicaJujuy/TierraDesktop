@@ -207,5 +207,22 @@ miAppHome.controller('TransferenciaController', function ($scope, toaster, ngDia
             closeByEscape: false
         });
     };
+
+    $scope.cancelarTransferencia = function () {
+        $trans = transferenciaService.getById($stateParams.idTransferencia);
+        $trans.then(function (datos) {
+            if (datos.status === 200) {
+                ngDialog.open({
+                    template: 'views/transferencia/modal-cancelar-transferencia.html',
+                    className: 'ngdialog-theme-sm',
+                    showClose: false,
+                    controller: 'ModalController',
+                    closeByDocument: false,
+                    closeByEscape: false,
+                    data: {transferencia: datos.data}
+                });
+            }
+        });
+    };
 });
 
