@@ -1,4 +1,4 @@
-miAppHome.controller('ReservaController', function ($scope, $state, $stateParams, reservaService, facturaService, NgTableParams, $rootScope) {
+miAppHome.controller('ReservaController', function ($scope, metodoPagoFacturaService, $state, $stateParams, reservaService, facturaService, NgTableParams, $rootScope) {
 
     $scope.nuevaReserva = {
         "idFactura": null,
@@ -27,7 +27,7 @@ miAppHome.controller('ReservaController', function ($scope, $state, $stateParams
                 });
                 $scope.tableReservasDiaria = new NgTableParams({
                     page: 1,
-                    count: 5
+                    count: 12
                 }, {
                     total: data.length,
                     getData: function (params) {
@@ -53,7 +53,7 @@ miAppHome.controller('ReservaController', function ($scope, $state, $stateParams
                 });
                 $scope.tableReservasDiaria = new NgTableParams({
                     page: 1,
-                    count: 5
+                    count: 12
                 }, {
                     total: data.length,
                     getData: function (params) {
@@ -72,7 +72,7 @@ miAppHome.controller('ReservaController', function ($scope, $state, $stateParams
         $reserva = reservaService.add(reserva);
         $reserva.then(function (datos) {
             if (datos.status === 200) {
-                $state.transitionTo('home.reserva', {idFactura: datos.data.msg});
+                $state.transitionTo('reserva', {idFactura: datos.data.msg});
             }
         });
     };
