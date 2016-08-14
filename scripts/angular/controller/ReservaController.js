@@ -28,7 +28,7 @@ miAppHome.controller('ReservaController', function (
         token.then(function (data) {
             $scope.tableReservasDiaria = new NgTableParams({
                 page: 1,
-                count: 12
+                count: 13
             }, {
                 getData: function (params) {
                     return $http({
@@ -57,7 +57,7 @@ miAppHome.controller('ReservaController', function (
         token.then(function (data) {
             $scope.tableReservasMensual = new NgTableParams({
                 page: 1,
-                count: 12
+                count: 13
             }, {
                 getData: function (params) {
                     return $http({
