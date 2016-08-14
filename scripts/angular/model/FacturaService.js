@@ -103,21 +103,17 @@
             return deferred.promise;
         };
 
-        this.sumByParams = function (time, type) {
+        this.metrics = function () {
             var datosRecu = null;
             var deferred = $q.defer();
             var token = cookieService.get('token');
             token.then(function (data) {
                 $http({
-                    url: BaseURL + "factura/sum",
+                    url: BaseURL + "factura/metrics",
                     method: 'get',
                     headers: {
                         'Authorization': 'Bearer ' + data,
                         'Content-type': 'application/json'
-                    },
-                    params: {
-                        time: time,
-                        type: type
                     }
                 }).then(function successCallback(response) {
                     datosRecu = response;
