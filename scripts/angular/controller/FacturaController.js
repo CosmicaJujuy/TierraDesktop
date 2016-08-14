@@ -5,6 +5,7 @@
  */
 miAppHome.controller('FacturaController', function (
         $scope,
+        BaseURL,
         $mdDialog,
         cookieService,
         ngDialog, $state,
@@ -32,7 +33,7 @@ miAppHome.controller('FacturaController', function (
     };
 
     $scope.clock = "Cargando hora..."; // initialise the time variable
-    $scope.tickInterval = 1000; //ms
+    $scope.tickInterval = 1000; //ms    
     $scope.tick = function () {
         $scope.clock = Date.now(); // get the current time
         $timeout($scope.tick, $scope.tickInterval); // reset the timer
@@ -109,25 +110,6 @@ miAppHome.controller('FacturaController', function (
         });
     };
 
-    $scope.open = function (barcode) {
-        $rootScope.productosBarcode = "";
-        var control = barcode.length;
-        if (control >= 9) {
-            $promesa = _productoService.searchByBarcode(barcode);
-            $promesa.then(function (datos) {
-                $rootScope.productosBarcode = datos.data;
-            });
-            $timeout(function timer() {
-                var modalInstance = $uibModal.open({
-                    animation: true,
-                    templateUrl: 'searchResultados.html',
-                    controller: 'ModalController',
-                    size: 'lg',
-                    resolve: {}
-                });
-            }, 2000);
-        }
-    };
 
     $scope.listaDetalleFactura = function () {
         var idFacturaDetalle = $stateParams.idFactura;
@@ -183,9 +165,9 @@ miAppHome.controller('FacturaController', function (
                 planPago: null,
                 comprobantePago: ""
             };
-//                        $scope.metodoPago.$setValidity();
-//                        $scope.metodoPago.$setPristine();
-//                        $scope.metodoPago.$setUntouched();
+            /*  $scope.metodoPago.$setValidity();
+             $scope.metodoPago.$setPristine();
+             $scope.metodoPago.$setUntouched();*/
             $scope.disableSelectEntidades = true;
             $scope.disableSelectTarjeta = true;
             $scope.disableSelectMetodo = true;
@@ -196,7 +178,7 @@ miAppHome.controller('FacturaController', function (
     });
 
     $scope.getCliente = function (val) {
-        var uri = 'https://tierradecoloresapi.herokuapp.com/cliente/searchApellido';
+        var uri = BaseURL + 'cliente/searchApellido';
         var token = cookieService.get('token');
         return token.then(function (data) {
             return $http({
@@ -317,53 +299,60 @@ miAppHome.controller('FacturaController', function (
 
     $scope.agregarMetodoPago = function (metodo) {
         $promesa = facturaService.searchById($stateParams.idFactura);
-        $promesa.then(function (datos) {
-            var compare = parseFloat($scope.totalPago) + parseFloat(metodo.montoPago);
-            if (datos.data.total >= compare && metodo.mediosPago !== null) {
-                if ((metodo.mediosPago.idMedioPago !== 1 && metodo.comprobantePago !== "")
-                        || (metodo.mediosPago.idMedioPago === 1)) {
-                    ngDialog.open({
-                        template: 'views/factura/modal-confirmar-agregar-metodo-pago.html',
-                        className: 'ngdialog-theme-sm',
-                        showClose: false,
-                        controller: 'ModalController',
-                        closeByDocument: false,
-                        closeByEscape: false,
-                        data: {metodo: metodo, factura: datos.data}
-                    });
+        $promesa.then(function (datosf) {
+            $metodo = metodoPagoFacturaService.getListaPagoFactura($stateParams.idFactura);
+            $metodo.then(function (datos) {
+                $scope.totalReserva = 0;
+                angular.forEach(datos.data, function (value, key) {
+                    $scope.totalReserva = parseFloat($scope.totalReserva) + parseFloat(value.montoPago);
+                });
+                var compare = parseFloat($scope.totalReserva) + parseFloat(metodo.montoPago);
+                if (datosf.data.total >= compare && metodo.mediosPago !== null) {
+                    if ((metodo.mediosPago.idMedioPago !== 1 && metodo.comprobantePago !== "")
+                            || (metodo.mediosPago.idMedioPago === 1)) {
+                        ngDialog.open({
+                            template: 'views/factura/modal-confirmar-agregar-metodo-pago.html',
+                            className: 'ngdialog-theme-sm',
+                            showClose: false,
+                            controller: 'ModalController',
+                            closeByDocument: false,
+                            closeByEscape: false,
+                            data: {metodo: metodo, factura: datosf.data}
+                        });
+                    } else {
+                        toaster.pop({
+                            type: 'error',
+                            title: 'Error',
+                            body: 'Revisa las opciones de pago de nuevo.',
+                            showCloseButton: false
+                        });
+                    }
                 } else {
-                    toaster.pop({
-                        type: 'error',
-                        title: 'Error',
-                        body: 'Revisa las opciones de pago de nuevo.',
-                        showCloseButton: false
-                    });
+                    if (metodo.mediosPago === null) {
+                        toaster.pop({
+                            type: 'error',
+                            title: 'Error',
+                            body: 'El medio de pago no puede estar vacio.',
+                            showCloseButton: false
+                        });
+                    }
+                    if (isNaN(compare)) {
+                        toaster.pop({
+                            type: 'error',
+                            title: 'Error',
+                            body: 'El monto no puede estar vacio.',
+                            showCloseButton: false
+                        });
+                    } else {
+                        toaster.pop({
+                            type: 'error',
+                            title: 'Error',
+                            body: 'El monto supera el total de la factura.',
+                            showCloseButton: false
+                        });
+                    }
                 }
-            } else {
-                if (metodo.mediosPago === null) {
-                    toaster.pop({
-                        type: 'error',
-                        title: 'Error',
-                        body: 'El medio de pago no puede estar vacio.',
-                        showCloseButton: false
-                    });
-                }
-                if (isNaN(compare)) {
-                    toaster.pop({
-                        type: 'error',
-                        title: 'Error',
-                        body: 'El monto no puede estar vacio.',
-                        showCloseButton: false
-                    });
-                } else {
-                    toaster.pop({
-                        type: 'error',
-                        title: 'Error',
-                        body: 'El monto supera el total de la factura.',
-                        showCloseButton: false
-                    });
-                }
-            }
+            });
         });
     };
 
@@ -406,26 +395,35 @@ miAppHome.controller('FacturaController', function (
     };
 
     $scope.agregarClienteDynamic = function (cliente) {
-        $rootScope.factura.cliente = cliente;
-        $promesa = facturaService.update($rootScope.factura);
-        $promesa.then(function (datos) {
-            if (datos.status === 200) {
-                $scope.clientElementSearch.open = !$scope.clientElementSearch.open;
-                toaster.pop({
-                    type: 'success',
-                    title: 'Exito',
-                    body: 'Factura actualizada.',
-                    showCloseButton: false
-                });
-            } else {
-                toaster.pop({
-                    type: 'error',
-                    title: 'Error',
-                    body: 'Error, la factura no pudo ser actualizada',
-                    showCloseButton: false
-                });
-            }
-        });
+        if (cliente !== null) {
+            $rootScope.factura.cliente = cliente;
+            $promesa = facturaService.update($rootScope.factura);
+            $promesa.then(function (datos) {
+                if (datos.status === 200) {
+                    $scope.clientElementSearch.open = !$scope.clientElementSearch.open;
+                    toaster.pop({
+                        type: 'success',
+                        title: 'Exito',
+                        body: 'Factura actualizada.',
+                        showCloseButton: false
+                    });
+                } else {
+                    toaster.pop({
+                        type: 'error',
+                        title: 'Error',
+                        body: 'Error, la factura no pudo ser actualizada',
+                        showCloseButton: false
+                    });
+                }
+            });
+        } else {
+            toaster.pop({
+                type: 'error',
+                title: 'Error',
+                body: 'El cliente no debe estar vacio.',
+                showCloseButton: false
+            });
+        }
     };
 
     /*listdos de las tabs */
@@ -459,39 +457,33 @@ miAppHome.controller('FacturaController', function (
             }
         });
     };
+
     $scope.listaFacturasDiaria = function () {
-        $scope.facturaDiarias = "";
-        $rootScope.factConf = 0;
-        $rootScope.impresasHoy = 0;
-        $promesa = facturaService.getDay();
-        $promesa.then(function (datos) {
-            if (datos.status === 200) {
-                $scope.totalFacturasDiaria = 0;
-                angular.forEach(datos.data, function (value, key) {
-                    if (value.estado === 'CONFIRMADO') {
-                        $scope.totalFacturasDiaria = parseFloat($scope.totalFacturasDiaria) + parseFloat(value.total);
-                        $rootScope.factConf = $rootScope.factConf + 1;
-                        if (value.numeracion !== null) {
-                            $rootScope.impresasHoy = $rootScope.impresasHoy + parseFloat(value.total);
+        var token = cookieService.get('token');
+        token.then(function (data) {
+            $scope.tableFacturasDiaria = new NgTableParams({
+                page: 1,
+                count: 13
+            }, {
+                getData: function (params) {
+                    return $http({
+                        url: BaseURL + "factura/day/paged",
+                        method: 'get',
+                        headers: {
+                            'Authorization': 'Bearer ' + data,
+                            'Content-type': 'application/json'
+                        },
+                        params: {
+                            page: params.page() - 1,
+                            size: params.count()
                         }
-                    }
-                });
-                $scope.facturaDiarias = datos.data;
-                var data = datos.data;
-                $scope.tableFacturasDiaria = new NgTableParams({
-                    page: 1,
-                    count: 10
-                }, {
-                    total: data.length,
-                    getData: function (params) {
-                        data = $scope.facturaDiarias;
-                        params.total(data.length);
-                        if (params.total() <= ((params.page() - 1) * params.count())) {
-                            params.page(1);
-                        }
-                        return data.slice((params.page() - 1) * params.count(), params.page() * params.count());
-                    }});
-            }
+                    }).then(function successCallback(response) {
+                        params.total(response.data.totalElements);
+                        return response.data.content;
+                    }, function errorCallback(response) {
+                    });
+                }
+            });
         });
     };
 
@@ -500,17 +492,11 @@ miAppHome.controller('FacturaController', function (
         $mes = facturaService.getMonth();
         $mes.then(function (datos) {
             if (datos.status === 200) {
-                $scope.totalFacturasMensual = 0;
-                angular.forEach(datos.data, function (value, key) {
-                    if (value.estado === 'CONFIRMADO') {
-                        $scope.totalFacturasMensual = parseFloat($scope.totalFacturasMensual) + parseFloat(value.total);
-                    }
-                });
                 $scope.facturasMensual = datos.data;
                 var data = datos.data;
                 $scope.tableFacturasMensual = new NgTableParams({
                     page: 1,
-                    count: 10
+                    count: 13
                 }, {
                     total: data.length,
                     getData: function (params) {
@@ -716,6 +702,55 @@ miAppHome.controller('FacturaController', function (
         });
     };
 
+    $scope.cancelarFactura = function () {
+        ngDialog.open({
+            template: 'views/factura/modal-confirmar-cancelar-factura.html',
+            className: 'ngdialog-theme-sm',
+            showClose: false,
+            controller: 'ModalController',
+            closeByDocument: false,
+            closeByEscape: false
+        });
+    };
+
+    $scope.listaFacturasMensualPaged = function () {
+        var token = cookieService.get('token');
+        token.then(function (data) {
+            $scope.tableFacturasMensualPaged = new NgTableParams({
+                page: 1,
+                count: 13
+            }, {
+                getData: function (params) {
+                    return $http({
+                        url: BaseURL + "factura/month/paged",
+                        method: 'get',
+                        headers: {
+                            'Authorization': 'Bearer ' + data,
+                            'Content-type': 'application/json'
+                        },
+                        params: {
+                            page: params.page() - 1,
+                            size: params.count()
+                        }
+                    }).then(function successCallback(response) {
+                        params.total(response.data.totalElements);
+                        return response.data.content;
+                    }, function errorCallback(response) {
+                    });
+                }
+            });
+        });
+    };
+
+    $scope.metricas = function () {
+        $sum = facturaService.metrics();
+        $sum.then(function (datos) {
+            if (datos.status === 200) {
+                console.log(datos.data);
+                $scope.metrics = datos.data;
+            }
+        });
+    };
 
 });
 
