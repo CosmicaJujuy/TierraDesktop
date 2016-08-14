@@ -50,6 +50,15 @@
                                 </md-tooltip>
                                 Continuar y salir
                             </button>
+                            <button class="btn btn-block btn-danger" flex
+                                    ng-disabled="factura.estado === 'CONFIRMADO'"
+                                    ng-click="cancelarFactura()"
+                                    style="float: bottom;">
+                                <md-tooltip md-direction="bottom" md-theme="default">
+                                    Cancelar reserva
+                                </md-tooltip>
+                                Cancelar
+                            </button>
                         </div>
                     </form>
                 </div>
