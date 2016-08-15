@@ -4,3 +4,5 @@ node_modules
 /Installer
 /TierraDesktop-win32-ia32
 /TierraDesktop-win32-x64
+/releases/
+/.imdone/
