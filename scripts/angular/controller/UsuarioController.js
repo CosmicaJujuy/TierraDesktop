@@ -110,7 +110,7 @@ var usuarioController = miAppHome.controller('UsuarioController',
                             var data = datos.data;
                             $scope.tableUsuarios = new NgTableParams({
                                 page: 1,
-                                count: 10
+                                count: 12
                             }, {
                                 total: data.length,
                                 getData: function (params) {

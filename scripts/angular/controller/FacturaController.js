@@ -463,7 +463,7 @@ miAppHome.controller('FacturaController', function (
         token.then(function (data) {
             $scope.tableFacturasDiaria = new NgTableParams({
                 page: 1,
-                count: 13
+                count: 12
             }, {
                 getData: function (params) {
                     return $http({
@@ -718,7 +718,7 @@ miAppHome.controller('FacturaController', function (
         token.then(function (data) {
             $scope.tableFacturasMensualPaged = new NgTableParams({
                 page: 1,
-                count: 13
+                count: 12
             }, {
                 getData: function (params) {
                     return $http({

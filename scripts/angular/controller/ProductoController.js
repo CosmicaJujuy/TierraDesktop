@@ -122,7 +122,7 @@ miAppHome.controller('ProductoController', function ($scope,
         token.then(function (data) {
             $scope.tableProductos = new NgTableParams({
                 page: 1,
-                count: 12
+                count: 13
             }, {
                 getData: function (params) {
                     return $http({
