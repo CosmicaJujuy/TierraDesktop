@@ -54,7 +54,7 @@ miAppHome.controller('DetalleNotaCreditoController', function ($scope, $timeout,
                 var data = datos.data;
                 $scope.tableDetallesNotaCredito = new NgTableParams({
                     page: 1,
-                    count: 13
+                    count: 5
                 }, {
                     total: data.length,
                     getData: function (params) {

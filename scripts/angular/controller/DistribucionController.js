@@ -95,7 +95,7 @@ miAppHome.controller('DistribucionController', function (
         token.then(function (data) {
             $scope.tableTierraStock = new NgTableParams({
                 page: 1,
-                count: 12
+                count: 11
             }, {
                 getData: function (params) {
                     return $http({
@@ -125,7 +125,7 @@ miAppHome.controller('DistribucionController', function (
         token.then(function (data) {
             $scope.tableBebelandiaStock = new NgTableParams({
                 page: 1,
-                count: 12
+                count: 11
             }, {
                 getData: function (params) {
                     return $http({
@@ -155,7 +155,7 @@ miAppHome.controller('DistribucionController', function (
         token.then(function (data) {
             $scope.tableLibertadorStock = new NgTableParams({
                 page: 1,
-                count: 12
+                count: 11
             }, {
                 getData: function (params) {
                     return $http({
