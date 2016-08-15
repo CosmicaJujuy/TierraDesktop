@@ -4,7 +4,7 @@ var options = {
     'platform': 'win32',
     'dir': './',
     'app-copyright': 'Paulo Galdo',
-    'app-version': '2.0.8',
+    'app-version': '2.1.0.0',
     'asar': true,
     'icon': './app.ico',
     'name': 'TierraDesktop',
