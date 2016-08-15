@@ -32,6 +32,7 @@
     "ng-dialog": "^0.6.1",
     "angular-sanitize": "^1.5.7",
     "angular-ui-mask": "^1.8.5",
-    "angular-hotkeys": "chieffancypants/angular-hotkeys#^1.7.0"
+    "angular-hotkeys": "chieffancypants/angular-hotkeys#^1.7.0",
+    "angular-read-more": "^1.0.5"
   }
 }
