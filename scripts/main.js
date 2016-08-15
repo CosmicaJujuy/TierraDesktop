@@ -16,6 +16,7 @@ var miAppHome = angular.module('tierraDeColoresApp', [
     'ngSanitize',
     'ui.mask',
     'cfp.hotkeys',
+    'hm.readmore',
     'angular-loading-bar'])
         .value('BaseURL', (function () {
             var resource = 'http://';
@@ -89,7 +90,7 @@ var miAppHome = angular.module('tierraDeColoresApp', [
                     /*Login*/
                     .state('login', {
                         url: '/',
-                        data: {pageTitle: 'Inicio de sesiÃ³n'},
+                        data: {pageTitle: 'Inicio de sesion'},
                         resolve: {},
                         views: {
                             'navbar': {
@@ -230,7 +231,7 @@ var miAppHome = angular.module('tierraDeColoresApp', [
                     })
                     .state('pagos', {
                         url: '/planes-de-pago',
-                        data: {pageTitle: 'Panel Planes de Pago'},
+                        data: {pageTitle: 'Panel planes de Pago'},
                         resolve: {auth: auth},
                         views: {
                             'navbar': {
@@ -248,7 +249,7 @@ var miAppHome = angular.module('tierraDeColoresApp', [
                     })
                     .state('productos', {
                         url: '/productos',
-                        data: {pageTitle: 'Lista de Productos'},
+                        data: {pageTitle: 'Lista de productos'},
                         resolve: {auth: auth},
                         views: {
                             'navbar': {
@@ -320,7 +321,7 @@ var miAppHome = angular.module('tierraDeColoresApp', [
                     })
                     .state('producto', {
                         url: '/producto/:idProducto',
-                        data: {pageTitle: 'Detalle de Producto'},
+                        data: {pageTitle: 'Detalle de producto'},
                         resolve: {auth: auth},
                         views: {
                             'navbar': {
@@ -361,7 +362,7 @@ var miAppHome = angular.module('tierraDeColoresApp', [
                     })
                     .state('producto_helper', {
                         url: '/helper/:idProducto',
-                        data: {pageTitle: 'Detalle de Producto'},
+                        data: {pageTitle: 'Detalle de producto'},
                         resolve: {auth: auth},
                         views: {
                             'navbar': {
@@ -412,7 +413,7 @@ var miAppHome = angular.module('tierraDeColoresApp', [
                     })
                     .state('categorias', {
                         url: '/categorias',
-                        data: {pageTitle: 'Panel Categorias'},
+                        data: {pageTitle: 'Panel categorias'},
                         resolve: {auth: auth},
                         views: {
                             'navbar': {
@@ -430,7 +431,7 @@ var miAppHome = angular.module('tierraDeColoresApp', [
                     })
                     .state('marcas', {
                         url: '/marcas',
-                        data: {pageTitle: 'Panel Marcas'},
+                        data: {pageTitle: 'Panel marcas'},
                         resolve: {auth: auth},
                         views: {
                             'navbar': {
@@ -448,7 +449,7 @@ var miAppHome = angular.module('tierraDeColoresApp', [
                     })
                     .state('tipos', {
                         url: '/tipos',
-                        data: {pageTitle: 'Panel Tipo de Producto'},
+                        data: {pageTitle: 'Panel tipo de producto'},
                         resolve: {auth: auth},
                         views: {
                             'navbar': {
@@ -466,7 +467,7 @@ var miAppHome = angular.module('tierraDeColoresApp', [
                     })
                     .state('proveedores', {
                         url: '/proveedores',
-                        data: {pageTitle: 'Panel Proovedores'},
+                        data: {pageTitle: 'Panel proovedores'},
                         resolve: {auth: auth},
                         views: {
                             'navbar': {
@@ -484,7 +485,7 @@ var miAppHome = angular.module('tierraDeColoresApp', [
                     })
                     .state('proveedor_detalle', {
                         url: '/proveedor/:idProveedor',
-                        data: {pageTitle: 'Detalle Proovedor'},
+                        data: {pageTitle: 'Detalle proovedor'},
                         resolve: {auth: auth},
                         views: {
                             'navbar': {
@@ -556,7 +557,7 @@ var miAppHome = angular.module('tierraDeColoresApp', [
                     })
                     .state('nota_credito', {
                         url: '/nota',
-                        data: {pageTitle: 'Panel de Notas de credito'},
+                        data: {pageTitle: 'Panel de notas de credito'},
                         resolve: {auth: auth},
                         views: {
                             'navbar': {
