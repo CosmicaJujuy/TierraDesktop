@@ -1,9 +1,15 @@
 <!DOCTYPE html>
-<div md-theme="docs-dark"
+<div layout="row"
+     layout-margin
+     layout-xs="row"
+     md-theme="docs-dark"
      ng-controller="NotaCreditoController"
      data-ng-init="detalleNotaCredito()"
      ng-show="notaCreditoDetalle">
-    <div class="col-lg-3">
+    <div flex-lg="25"
+         flex-md="30"
+         layout="column"
+         layout-xs="column">
         <div layout="column" ng-cloak
              class="distribucion-panel">
             <md-toolbar class="md-warn">
@@ -55,8 +61,10 @@
             </md-content>
         </div>
     </div>
-
-    <main class="col-lg-9" class="anim-in-out anim-swap" ui-view data-anim-speed="2000">
+    <main flex-lg="75"
+          flex-md="70"
+          layout="column"
+          layout-xs="column" ui-view>
         <div class="distribucion-panel">
             <div ng-cloak>
                 <md-content md-theme="docs-dark" style="min-height: 598px;">
@@ -85,9 +93,6 @@
                                                 <div ng-message="md-maxlength">Codigo demasiado largo.</div>
                                                 <div ng-message="required">Este campo no puede estar vacio.</div>
                                             </div>
-                                            <!-- ICONOS DE MENSAJE-->
-                                            <span ng-show="notaCredito.barcode.$valid" class="glyphicon glyphicon-ok form-control-feedback" ></span>
-                                            <span ng-show="notaCredito.barcode.$dirty && notaCredito.barcode.$invalid" class="glyphicon glyphicon-remove  form-control-feedback"></span>
                                         </md-input-container>
                                         <div>
                                             <md-button class="md-raised"

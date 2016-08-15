@@ -1,6 +1,12 @@
 <!DOCTYPE html>
-<div md-theme="docs-dark">
-    <div class="col-lg-3">
+<div layout="row"
+     layout-margin
+     layout-xs="row"
+     md-theme="docs-dark">
+    <div flex-lg="25"
+         flex-md="30"
+         layout="column"
+         layout-xs="column">
         <div layout="column" ng-cloak
              class="distribucion-panel"
              ng-show="factura"
@@ -14,7 +20,7 @@
             </md-toolbar>
             <md-content flex layout="row" md-theme="docs-dark">
                 <div class="md-padding" flex>
-                    <form class="form-horizontal" style="text-align: center;">
+                    <form style="text-align: center;">
                         <p ng-if="factura.idSucursal === 1" style="font-weight: bolder; font-size: medium; margin-bottom: 20px;">Tierra de colores</p>
                         <p ng-if="factura.idSucursal === 2" style="font-weight: bolder; font-size: medium; margin-bottom: 20px;">Bebelandia</p>
                         <p ng-if="factura.idSucursal === 3" style="font-weight: bolder; font-size: medium; margin-bottom: 20px;">Libertador</p>
@@ -65,7 +71,10 @@
             </md-content>
         </div>
     </div>
-    <div class="col-lg-9" ng-show="factura">
+    <div flex-lg="75"
+         flex-md="70"
+         layout="column"
+         layout-xs="column" ng-show="factura">
         <div class="distribucion-panel">
             <div ng-cloak>
                 <md-content md-theme="docs-dark" style="min-height: 598px;">
@@ -103,8 +112,8 @@
                                                     <th>Id</th>
                                                     <th>Descripcion</th>
                                                     <th>Cantidad</th>
-                                                    <th>Precio U. + IVA 21%</th>
-                                                    <th>Precio U. sin IVA</th>
+                                                    <th>P/U. + IVA 21%</th>
+                                                    <th>P/U. sin IVA</th>
                                                     <th>Descuento</th>
                                                     <th>Total</th>
                                                     <th>Acciones</th>
@@ -113,13 +122,13 @@
                                             <tbody style="text-align: center;">
                                                 <tr ng-repeat="detalleFactura in $data">
                                                     <td>{{detalleFactura.idDetalleFactura}}</td>
-                                                    <td>{{detalleFactura.producto.descripcion}}</td>
+                                                    <td style="font-size: smaller;">{{detalleFactura.producto.descripcion}}</td>
                                                     <td>{{detalleFactura.cantidadDetalle}}</td>
                                                     <td>{{detalleFactura.producto.precioVenta|currency}}</td>
                                                     <td>{{detalleFactura.producto.precioVenta - (detalleFactura.producto.precioVenta * 21 / 100) | currency}}</td>
                                                     <td>{{detalleFactura.descuentoDetalle|currency}}</td>
                                                     <td>{{detalleFactura.totalDetalle|currency}}</td>
-                                                    <td>
+                                                    <td style="width: 100px;">
                                                         <button type="button"
                                                                 ng-disabled="detalleFactura.descuentoDetalle !== 0 || factura.estado === 'CONFIRMADO'"
                                                                 ng-click="cargarDescuento(detalleFactura)"
@@ -180,9 +189,6 @@
                                                 <div ng-message="max">Monto demasiado alto.</div>
                                                 <div ng-message="required">Este campo no puede estar vacio.</div>
                                             </div>
-                                            <!-- ICONOS DE MENSAJE-->
-                                            <span ng-show="metodoPago.monto.$dirty && metodoPago.monto.$valid" class="glyphicon glyphicon-ok form-control-feedback" ></span>
-                                            <span ng-show="metodoPago.monto.$dirty && metodoPago.monto.$invalid" class="glyphicon glyphicon-remove  form-control-feedback"></span>
                                         </md-input-container>
                                         <md-input-container style="min-height: 48px;"
                                                             class="md-block md-icon"
@@ -201,8 +207,6 @@
                                                  ng-if="metodoPago.medios.$dirty || metodoPago.medios.$touched">
                                                 <div ng-message="required">Este campo no puede estar vacio.</div>
                                             </div>
-                                            <span ng-show="metodoPago.medios.$dirty && metodoPago.medios.$valid" class="glyphicon glyphicon-ok form-control-feedback" ></span>
-                                            <span ng-show="metodoPago.medios.$dirty && metodoPago.medios.$invalid" class="glyphicon glyphicon-remove  form-control-feedback"></span>
                                         </md-input-container>
                                         <md-input-container style="min-height: 48px;"
                                                             class="md-block md-icon"
@@ -223,8 +227,6 @@
                                                  ng-if="metodoPago.entidades.$dirty || metodoPago.entidades.$touched">
                                                 <div ng-message="required">Este campo no puede estar vacio.</div>
                                             </div>
-                                            <span ng-show="metodoPago.entidades.$dirty && metodoPago.entidades.$valid" class="glyphicon glyphicon-ok form-control-feedback" ></span>
-                                            <span ng-show="metodoPago.entidades.$dirty && metodoPago.entidades.$invalid" class="glyphicon glyphicon-remove  form-control-feedback"></span>
                                         </md-input-container>
                                         <md-input-container style="min-height: 48px;"
                                                             class="md-block md-icon"
@@ -245,8 +247,6 @@
                                                  ng-if="metodoPago.tarjetas.$dirty || metodoPago.tarjetas.$touched">
                                                 <div ng-message="required">Este campo no puede estar vacio.</div>
                                             </div>
-                                            <span ng-show="metodoPago.tarjetas.$dirty && metodoPago.tarjetas.$valid" class="glyphicon glyphicon-ok form-control-feedback" ></span>
-                                            <span ng-show="metodoPago.tarjetas.$dirty && metodoPago.tarjetas.$invalid" class="glyphicon glyphicon-remove  form-control-feedback"></span>
                                         </md-input-container>
                                         <md-input-container style="min-height: 48px;"
                                                             class="md-block md-icon"
@@ -266,8 +266,6 @@
                                                  ng-if="metodoPago.planes.$dirty || metodoPago.planes.$touched">
                                                 <div ng-message="required">Este campo no puede estar vacio.</div>
                                             </div>
-                                            <span ng-show="metodoPago.planes.$dirty && metodoPago.planes.$valid" class="glyphicon glyphicon-ok form-control-feedback" ></span>
-                                            <span ng-show="metodoPago.planes.$dirty && metodoPago.planes.$invalid" class="glyphicon glyphicon-remove  form-control-feedback"></span>
                                         </md-input-container>
                                         <md-input-container class="md-block md-icon" flex>
                                             <label>Comprobante / N° CC</label>
@@ -285,8 +283,6 @@
                                                 <div ng-message="minlength">Número demasiado corto.</div>
                                                 <div ng-message="md-maxlength">Número demasiado largo.</div>
                                             </div>
-                                            <span ng-show="metodoPago.comprobante.$dirty && metodoPago.comprobante.$valid" class="glyphicon glyphicon-ok form-control-feedback" ></span>
-                                            <span ng-show="metodoPago.comprobante.$dirty && metodoPago.comprobante.$invalid" class="glyphicon glyphicon-remove  form-control-feedback"></span>
                                         </md-input-container>
                                         <div flex style="text-align: center;">
                                             <button class="btn btn-success"
@@ -305,18 +301,16 @@
                                         <thead>
                                             <tr>
                                                 <th>Metodo</th>
-                                                <th>Entidad</th>
                                                 <th>Tarjeta</th>
                                                 <th>Plan</th>
                                                 <th>Monto</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr ng-repeat="metodo in $data">
-                                                <td>{{metodo.planPago.tarjeta.medioPago.nombrePago}}</td>
-                                                <td>{{metodo.planPago.tarjeta.entidadBancaria.nombreEntidad}}</td>
-                                                <td>{{metodo.planPago.tarjeta.nombreTarjeta}}</td>
-                                                <td>{{metodo.planPago.nombrePlanesPago}}</td>
+                                           <tr ng-repeat="metodo in $data">
+                                                <td style="font-size: smaller; text-align: center;">{{metodo.planPago.tarjeta.medioPago.nombrePago}}</td>
+                                                <td style="font-size: smaller; text-align: center;">{{metodo.planPago.tarjeta.nombreTarjeta}}</td>
+                                                <td style="text-align: center; font-size: smaller;">{{metodo.planPago.nombrePlanesPago}}</td>
                                                 <td style="text-align: center;">{{metodo.montoPago|currency}}</td>
                                             </tr>
                                         </tbody>

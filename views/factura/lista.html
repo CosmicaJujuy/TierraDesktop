@@ -1,8 +1,14 @@
 <!DOCTYPE html>
 <div ng-controller="UsuarioController"
      data-ng-init="detailUsuario()"
-     ng-show="user.username">
-    <div class="col-lg-3">
+     ng-show="user.username"
+     layout="row"
+     layout-margin
+     layout-xs="row">
+    <div flex-lg="25"
+         flex-md="30"
+         layout="column"
+         layout-xs="column">
         <div layout="column" ng-cloak
              class="distribucion-panel">
             <md-toolbar class="md-warn" md-theme="docs-dark">
@@ -135,7 +141,10 @@
             </md-content>
         </div>
     </div>
-    <div class="col-lg-9"
+    <div flex-lg="75"
+         flex-md="70"
+         layout="column"
+         layout-xs="column"
          ng-controller="FacturaController">
         <div class="distribucion-panel">
             <div ng-cloak>
@@ -149,16 +158,19 @@
                                     <thead id="headTableProductos">
                                         <tr>
                                             <th style="text-align: center;">N°</th>
-                                            <th style="text-align: center;">Cliente</th>
+                                            <th style="text-align: center; font-size: smaller;">Cliente</th>
                                             <th style="text-align: center;">Total</th>
-                                            <th style="width: 160px; text-align: center;">Fecha</th>
-                                            <th style="width: 100px; text-align: center;">Estado</th>
-                                            <th style="text-align: center;">Vendedor</th>
-                                            <th style="width: 120px; text-align: center;">N°</th>
+                                            <th style="text-align: center;">Fecha</th>
+                                            <th style="text-align: center;">Estado</th>
+                                            <th style="text-align: center; font-size: smaller;">Vendedor</th>
+                                            <th style="text-align: center;">N°</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr ng-repeat="factura in $data">
+                                        <tr ng-repeat="factura in $data"
+                                            ng-class="{success:factura.estado === 'CONFIRMADO',
+                                                info: factura.estado === 'INICIADO',
+                                            danger: factura.estado === 'CANCELADO'}">
                                             <td style="text-align: center;">
                                                 <a href=""
                                                    ng-class="{
@@ -168,15 +180,37 @@
                                                     {{factura.idFactura}}
                                                 </a>
                                             </td>
-                                            <td style="text-align: center;">
+                                            <td style="text-align: center; font-size: smaller;">
                                                 {{factura.cliente.nombreCliente}} {{factura.cliente.apellidoCliente}}
                                                 <div ng-if="factura.cliente === null">Sin cliente</div>
                                             </td>
                                             <td style="text-align: center">{{factura.total|currency}}</td>
-                                            <td style="text-align: center; font-size: smaller;">{{factura.fechaCreacion| date : 'medium' : 'utc'}}</td>
-                                            <td style="text-align: center;">{{factura.estado}}</td>
-                                            <td style="text-align: center;">{{factura.idVendedor.nombre}} {{factura.idVendedor.apellido}}
-                                                <div ng-if="factura.idVendedor === null">En espera</div>
+                                            <td style="text-align: center; font-size: smaller;">{{factura.fechaCreacion| date : 'M/d/yy H:mm'}}</td>
+                                            <td style="text-align: center;">                                    
+                                                <i ng-if="factura.estado === 'CONFIRMADO'"
+                                                   class="material-icons" style="font-size: large;">
+                                                    <md-tooltip md-direction="top" md-theme="default">
+                                                        {{factura.estado}}
+                                                    </md-tooltip>
+                                                    &#xE876;
+                                                </i>
+                                                <i ng-if="factura.estado === 'CANCELADO'"
+                                                   class="material-icons" style="font-size: large;">
+                                                    <md-tooltip md-direction="top" md-theme="default">
+                                                        {{factura.estado}}
+                                                    </md-tooltip>
+                                                    &#xE14C;
+                                                </i>
+                                                <i ng-if="factura.estado === 'INICIADO'"
+                                                   class="material-icons" style="font-size: large;">
+                                                    <md-tooltip md-direction="top" md-theme="default">
+                                                        {{factura.estado}}
+                                                    </md-tooltip>
+                                                    &#xE8AE;
+                                                </i>
+                                            </td>
+                                            <td style="text-align: center; font-size: smaller;">{{factura.idVendedor.nombre}} {{factura.idVendedor.apellido}}
+                                                <div ng-if="factura.idVendedor === null"> ~ </div>
                                             </td>
                                             <td style="text-align: center;">{{factura.numeracion}}
                                                 <div ng-if="factura.numeracion === null">S/N</div>
@@ -194,16 +228,19 @@
                                     <thead id="headTableProductos">
                                         <tr>
                                             <th style="text-align: center;">N°</th>
-                                            <th style="text-align: center;">Cliente</th>
+                                            <th style="text-align: center; font-size: smaller;">Cliente</th>
                                             <th style="text-align: center;">Total</th>
-                                            <th style="width: 160px; text-align: center;">Fecha</th>
-                                            <th style="width: 100px; text-align: center;">Estado</th>
-                                            <th style="text-align: center;">Vendedor</th>
-                                            <th style="width: 120px; text-align: center;">N°</th>
+                                            <th style="text-align: center;">Fecha</th>
+                                            <th style="text-align: center;">Estado</th>
+                                            <th style="text-align: center; font-size: smaller;">Vendedor</th>
+                                            <th style="text-align: center;">N°</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr ng-repeat="factura in $data">
+                                        <tr ng-repeat="factura in $data"
+                                            ng-class="{success:factura.estado === 'CONFIRMADO',
+                                                info: factura.estado === 'INICIADO',
+                                            danger: factura.estado === 'CANCELADO'}">
                                             <td style="text-align: center;">
                                                 <a href=""
                                                    ng-class="{
@@ -213,15 +250,37 @@
                                                     {{factura.idFactura}}
                                                 </a>
                                             </td>
-                                            <td style="text-align: center;">
+                                            <td style="text-align: center; font-size: smaller;">
                                                 {{factura.cliente.nombreCliente}} {{factura.cliente.apellidoCliente}}
                                                 <div ng-if="factura.cliente === null">Sin cliente</div>
                                             </td>
                                             <td style="text-align: center">{{factura.total|currency}}</td>
-                                            <td style="text-align: center; font-size: smaller;">{{factura.fechaCreacion| date : 'medium' : 'utc'}}</td>
-                                            <td style="text-align: center;">{{factura.estado}}</td>
-                                            <td style="text-align: center;">{{factura.idVendedor.nombre}} {{factura.idVendedor.apellido}}
-                                                <div ng-if="factura.idVendedor === null">En espera</div>
+                                            <td style="text-align: center; font-size: smaller;">{{factura.fechaCreacion| date : 'M/d/yy H:mm'}}</td>
+                                            <td style="text-align: center;">                                    
+                                                <i ng-if="factura.estado === 'CONFIRMADO'"
+                                                   class="material-icons" style="font-size: large;">
+                                                    <md-tooltip md-direction="top" md-theme="default">
+                                                        {{factura.estado}}
+                                                    </md-tooltip>
+                                                    &#xE876;
+                                                </i>
+                                                <i ng-if="factura.estado === 'CANCELADO'"
+                                                   class="material-icons" style="font-size: large;">
+                                                    <md-tooltip md-direction="top" md-theme="default">
+                                                        {{factura.estado}}
+                                                    </md-tooltip>
+                                                    &#xE14C;
+                                                </i>
+                                                <i ng-if="factura.estado === 'INICIADO'"
+                                                   class="material-icons" style="font-size: large;">
+                                                    <md-tooltip md-direction="top" md-theme="default">
+                                                        {{factura.estado}}
+                                                    </md-tooltip>
+                                                    &#xE8AE;
+                                                </i>
+                                            </td>
+                                            <td style="text-align: center; font-size: smaller;">{{factura.idVendedor.nombre}} {{factura.idVendedor.apellido}}
+                                                <div ng-if="factura.idVendedor === null"> ~ </div>
                                             </td>
                                             <td style="text-align: center;">{{factura.numeracion}}
                                                 <div ng-if="factura.numeracion === null">S/N</div>
@@ -240,29 +299,38 @@
                                     <thead id="headTableProductos">
                                         <tr>
                                             <th style="text-align: center;">N°</th>
-                                            <th style="text-align: center;">Cliente</th>
+                                            <th style="text-align: center; font-size: smaller;">Cliente</th>
                                             <th style="text-align: center;">Total</th>
-                                            <th style="width: 160px; text-align: center;">Fecha</th>
-                                            <th style="width: 100px; text-align: center;">Estado</th>
-                                            <th style="text-align: center;">Vendedor</th>
-                                            <th style="width: 120px; text-align: center;">N°</th>
+                                            <th style="text-align: center;">Fecha</th>
+                                            <th style="text-align: center;">Estado</th>
+                                            <th style="text-align: center; font-size: smaller;">Vendedor</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr ng-repeat="factura in $data">
-                                            <td style="text-align: center;"><a href="" ui-sref="reserva({idFactura:{{factura.idFactura}}})">{{factura.idFactura}}</a></td>
                                             <td style="text-align: center;">
+                                                <a href=""
+                                                   ui-sref="reserva({idFactura:{{factura.idFactura}}})">
+                                                    {{factura.idFactura}}
+                                                </a>
+                                            </td>
+                                            <td style="text-align: center; font-size: smaller;">
                                                 {{factura.cliente.nombreCliente}} {{factura.cliente.apellidoCliente}}
                                                 <div ng-if="factura.cliente === null">Sin cliente</div>
                                             </td>
                                             <td style="text-align: center">{{factura.total|currency}}</td>
-                                            <td style="text-align: center; font-size: smaller;">{{factura.fechaCreacion| date : 'medium' : 'utc'}}</td>
-                                            <td style="text-align: center;">{{factura.estado}}</td>
-                                            <td style="text-align: center;">{{factura.idVendedor.nombre}} {{factura.idVendedor.apellido}}
-                                                <div ng-if="factura.idVendedor === null">En espera</div>
+                                            <td style="text-align: center; font-size: smaller;">{{factura.fechaCreacion| date : 'M/d/yy H:mm'}}</td>
+                                            <td style="text-align: center;">                                    
+                                                <i ng-if="factura.estado === 'RESERVADO'"
+                                                   class="material-icons" style="font-size: large;">
+                                                    <md-tooltip md-direction="top" md-theme="default">
+                                                        {{factura.estado}}
+                                                    </md-tooltip>
+                                                    &#xE88B;
+                                                </i>
                                             </td>
-                                            <td style="text-align: center;">{{factura.numeracion}}
-                                                <div ng-if="factura.numeracion === null">S/N</div>
+                                            <td style="text-align: center; font-size: smaller;">{{factura.idVendedor.nombre}} {{factura.idVendedor.apellido}}
+                                                <div ng-if="factura.idVendedor === null"> ~ </div>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -278,29 +346,38 @@
                                     <thead id="headTableProductos">
                                         <tr>
                                             <th style="text-align: center;">N°</th>
-                                            <th style="text-align: center;">Cliente</th>
+                                            <th style="text-align: center; font-size: smaller;">Cliente</th>
                                             <th style="text-align: center;">Total</th>
-                                            <th style="width: 160px; text-align: center;">Fecha</th>
-                                            <th style="width: 100px; text-align: center;">Estado</th>
-                                            <th style="text-align: center;">Vendedor</th>
-                                            <th style="width: 120px; text-align: center;">N°</th>
+                                            <th style="text-align: center;">Fecha</th>
+                                            <th style="text-align: center;">Estado</th>
+                                            <th style="text-align: center; font-size: smaller;">Vendedor</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr ng-repeat="factura in $data">
-                                            <td style="text-align: center;"><a href="" ui-sref="reserva({idFactura:{{factura.idFactura}}})">{{factura.idFactura}}</a></td>
                                             <td style="text-align: center;">
+                                                <a href=""
+                                                   ui-sref="reserva({idFactura:{{factura.idFactura}}})">
+                                                    {{factura.idFactura}}
+                                                </a>
+                                            </td>
+                                            <td style="text-align: center; font-size: smaller;">
                                                 {{factura.cliente.nombreCliente}} {{factura.cliente.apellidoCliente}}
                                                 <div ng-if="factura.cliente === null">Sin cliente</div>
                                             </td>
                                             <td style="text-align: center">{{factura.total|currency}}</td>
-                                            <td style="text-align: center; font-size: smaller;">{{factura.fechaCreacion| date : 'medium' : 'utc'}}</td>
-                                            <td style="text-align: center;">{{factura.estado}}</td>
-                                            <td style="text-align: center;">{{factura.idVendedor.nombre}} {{factura.idVendedor.apellido}}
-                                                <div ng-if="factura.idVendedor === null">En espera</div>
+                                            <td style="text-align: center; font-size: smaller;">{{factura.fechaCreacion| date : 'M/d/yy H:mm'}}</td>
+                                            <td style="text-align: center;">                                    
+                                                <i ng-if="factura.estado === 'RESERVADO'"
+                                                   class="material-icons" style="font-size: large;">
+                                                    <md-tooltip md-direction="top" md-theme="default">
+                                                        {{factura.estado}}
+                                                    </md-tooltip>
+                                                    &#xE88B;
+                                                </i>
                                             </td>
-                                            <td style="text-align: center;">{{factura.numeracion}}
-                                                <div ng-if="factura.numeracion === null">S/N</div>
+                                            <td style="text-align: center; font-size: smaller;">{{factura.idVendedor.nombre}} {{factura.idVendedor.apellido}}
+                                                <div ng-if="factura.idVendedor === null"> ~ </div>
                                             </td>
                                         </tr>
                                     </tbody>

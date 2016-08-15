@@ -1,6 +1,9 @@
 <!DOCTYPE html>
-<div class="col-lg-12">
-    <div class="distribucion-panel">
+<div layout="column"
+     layout-margin
+     layout-xs="column">
+    <div layout="column" layout-xs="column" flex 
+         class="distribucion-panel">
         <div ng-cloak>
             <md-content md-theme="docs-dark" style="min-height: 598px;">
                 <md-tabs md-dynamic-height md-border-bottom>
@@ -72,9 +75,6 @@
                                             <div ng-message="md-maxlength">Nombre demasiado largo.</div>
                                             <div ng-message="required">Este campo no puede estar vacio.</div>
                                         </div>
-                                        <!-- ICONOS DE MENSAJE-->
-                                        <span ng-show="nuevoProveedor.nombreProveedor.$dirty && nuevoProveedor.nombreProveedor.$valid" class="glyphicon glyphicon-ok form-control-feedback" ></span>
-                                        <span ng-show="nuevoProveedor.nombreProveedor.$dirty && nuevoProveedor.nombreProveedor.$invalid" class="glyphicon glyphicon-remove  form-control-feedback"></span>
                                     </md-input-container>
                                     <div layout="row" flex>
                                         <md-input-container class="md-block" flex>
@@ -93,9 +93,6 @@
                                                 <div ng-message="md-maxlength">C.U.I.T. demasiado largo.</div>
                                                 <div ng-message="required">Este campo no puede estar vacio.</div>
                                             </div>
-                                            <!-- ICONOS DE MENSAJE-->
-                                            <span ng-show="nuevoProveedor.cuitProveedor.$dirty && nuevoProveedor.cuitProveedor.$valid" class="glyphicon glyphicon-ok form-control-feedback" ></span>
-                                            <span ng-show="nuevoProveedor.cuitProveedor.$dirty && nuevoProveedor.cuitProveedor.$invalid" class="glyphicon glyphicon-remove  form-control-feedback"></span>
                                         </md-input-container>
                                         <md-input-container class="md-block" flex>
                                             <label>Dirección</label>
@@ -113,9 +110,6 @@
                                                 <div ng-message="md-maxlength">Dirección demasiado larga.</div>
                                                 <div ng-message="required">Este campo no puede estar vacio.</div>
                                             </div>
-                                            <!-- ICONOS DE MENSAJE-->
-                                            <span ng-show="nuevoProveedor.direccionProveedor.$dirty && nuevoProveedor.direccionProveedor.$valid" class="glyphicon glyphicon-ok form-control-feedback" ></span>
-                                            <span ng-show="nuevoProveedor.direccionProveedor.$dirty && nuevoProveedor.direccionProveedor.$invalid" class="glyphicon glyphicon-remove  form-control-feedback"></span>
                                         </md-input-container>
                                     </div>
                                     <div layout="row" flex>
@@ -135,9 +129,6 @@
                                                 <div ng-message="md-maxlength">Nombre de país demasiado largo.</div>
                                                 <div ng-message="required">Este campo no puede estar vacio.</div>
                                             </div>
-                                            <!-- ICONOS DE MENSAJE-->
-                                            <span ng-show="nuevoProveedor.paisProveedor.$dirty && nuevoProveedor.paisProveedor.$valid" class="glyphicon glyphicon-ok form-control-feedback" ></span>
-                                            <span ng-show="nuevoProveedor.paisProveedor.$dirty && nuevoProveedor.paisProveedor.$invalid" class="glyphicon glyphicon-remove  form-control-feedback"></span>
                                         </md-input-container>
                                         <md-input-container class="md-block" flex>
                                             <label>Provincia</label>
@@ -155,9 +146,6 @@
                                                 <div ng-message="md-maxlength">Nombre de país demasiado largo.</div>
                                                 <div ng-message="required">Este campo no puede estar vacio.</div>
                                             </div>
-                                            <!-- ICONOS DE MENSAJE-->
-                                            <span ng-show="nuevoProveedor.provinciaProveedor.$dirty && nuevoProveedor.provinciaProveedor.$valid" class="glyphicon glyphicon-ok form-control-feedback" ></span>
-                                            <span ng-show="nuevoProveedor.provinciaProveedor.$dirty && nuevoProveedor.provinciaProveedor.$invalid" class="glyphicon glyphicon-remove  form-control-feedback"></span>
                                         </md-input-container>
                                     </div>
                                     <div layout="row" flex>
@@ -177,9 +165,6 @@
                                                 <div ng-message="md-maxlength">Nombre de país demasiado largo.</div>
                                                 <div ng-message="required">Este campo no puede estar vacio.</div>
                                             </div>
-                                            <!-- ICONOS DE MENSAJE-->
-                                            <span ng-show="nuevoProveedor.localidadProveedor.$dirty && nuevoProveedor.localidadProveedor.$valid" class="glyphicon glyphicon-ok form-control-feedback" ></span>
-                                            <span ng-show="nuevoProveedor.localidadProveedor.$dirty && nuevoProveedor.localidadProveedor.$invalid" class="glyphicon glyphicon-remove  form-control-feedback"></span>
                                         </md-input-container>
                                         <md-input-container class="md-block" flex>
                                             <label>Codigo Postal</label>
@@ -197,9 +182,6 @@
                                                 <div ng-message="md-maxlength">Codigo postal demasiado largo.</div>
                                                 <div ng-message="required">Este campo no puede estar vacio.</div>
                                             </div>
-                                            <!-- ICONOS DE MENSAJE-->
-                                            <span ng-show="nuevoProveedor.codigoPostal.$dirty && nuevoProveedor.codigoPostal.$valid" class="glyphicon glyphicon-ok form-control-feedback" ></span>
-                                            <span ng-show="nuevoProveedor.codigoPostal.$dirty && nuevoProveedor.codigoPostal.$invalid" class="glyphicon glyphicon-remove  form-control-feedback"></span>
                                         </md-input-container>
                                     </div>
                                     <div layout="row" flex>
@@ -220,9 +202,6 @@
                                                 <div ng-message="required">Este campo no puede estar vacio.</div>
                                                 <div ng-message="tel">Número de telefono invalido</div>
                                             </div>
-                                            <!-- ICONOS DE MENSAJE-->
-                                            <span ng-show="nuevoProveedor.telefonoProveedor.$dirty && nuevoProveedor.telefonoProveedor.$valid" class="glyphicon glyphicon-ok form-control-feedback" ></span>
-                                            <span ng-show="nuevoProveedor.telefonoProveedor.$dirty && nuevoProveedor.telefonoProveedor.$invalid" class="glyphicon glyphicon-remove  form-control-feedback"></span>
                                         </md-input-container>
                                         <md-input-container class="md-block" flex>
                                             <label>E-mail</label>
@@ -241,9 +220,6 @@
                                                 <div ng-message="required">Este campo no puede estar vacio.</div>
                                                 <div ng-message="email">Dirección E-mail invalida.</div>
                                             </div>
-                                            <!-- ICONOS DE MENSAJE-->
-                                            <span ng-show="nuevoProveedor.emailProveedor.$dirty && nuevoProveedor.emailProveedor.$valid" class="glyphicon glyphicon-ok form-control-feedback" ></span>
-                                            <span ng-show="nuevoProveedor.emailProveedor.$dirty && nuevoProveedor.emailProveedor.$invalid" class="glyphicon glyphicon-remove  form-control-feedback"></span>
                                         </md-input-container>
                                     </div>
                                     <div flex style="text-align: center;">

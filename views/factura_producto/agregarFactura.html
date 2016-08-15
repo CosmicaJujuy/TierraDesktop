@@ -1,13 +1,18 @@
 <!DOCTYPE html>
-<div class="col-lg-3"></div>
-<div class="col-lg-6">
-    <div layout="column" ng-cloak md-theme="docs-dark" class="distribucion-panel">
+<div layout="row"
+     layout-align="center"
+     layout-xs="row">
+    <div flex="50"
+         flex-sm="80"
+         layout="column"
+         layout-xs="column"
+         ng-cloak md-theme="docs-dark" class="distribucion-panel">
         <md-toolbar class="md-warn">
             <div class="md-toolbar-tools">
                 <h4 class="md-flex" style="width:100%; text-align: center;">Agregar nueva factura</h4>
             </div>
         </md-toolbar>
-        <md-content class="md-padding" style="min-height: 534px;">
+        <md-content class="md-padding" style="min-height: 550px;">
             <form name="newFactura">
                 <md-input-container class="md-icon md-block">
                     <label>N° Factura</label>
@@ -25,10 +30,6 @@
                         <div ng-message="md-maxlength">Numeracion demasiada larga.</div>
                         <div ng-message="required">Este campo no puede estar vacio.</div>
                     </div>
-                    <!-- ICONOS DE MENSAJE-->
-                    <span ng-show="newFactura.numeroFactura.$dirty && newFactura.numeroFactura.$valid" class="glyphicon glyphicon-ok form-control-feedback" ></span>
-                    <span ng-show="newFactura.numeroFactura.$dirty && newFactura.numeroFactura.$invalid" class="glyphicon glyphicon-remove  form-control-feedback"></span>
-                    <span ng-show="newFactura.numeroFactura.$touched && newFactura.numeroFactura.$pristine" class="glyphicon glyphicon-warning-sign  form-control-feedback"></span>
                 </md-input-container>
                 <div style="max-height: 58px !important;"
                      ng-controller="ProveedorController as ctrl">
@@ -56,9 +57,6 @@
                             <div ng-message="minlength">El termino de busqueda es demasiado corto.</div>
                             <div ng-message="maxlength">El termino de busqueda es demasiado largo.</div>
                         </div>
-                        <span ng-show="newFactura.proveedor.$dirty && newFactura.proveedor.$valid" class="glyphicon glyphicon-ok form-control-feedback" ></span>
-                        <span ng-show="newFactura.proveedor.$dirty && newFactura.proveedor.$invalid" class="glyphicon glyphicon-remove  form-control-feedback"></span>
-                        <span ng-show="newFactura.proveedor.$touched && newFactura.proveedor.$pristine" class="glyphicon glyphicon-warning-sign  form-control-feedback"></span>
                     </md-autocomplete>
                 </div>
                 <md-input-container class="md-icon md-block" flex>
@@ -75,9 +73,6 @@
                         <div ng-message="date">Fecha de nacimiento invalida.</div>                            
                         <div ng-message="required">Este campo no puede estar vacio.</div>                            
                     </div>
-                    <!--ICONOS DE MENSAJE -->
-                    <span ng-show="newFactura.fecha.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
-                    <span ng-show="newFactura.fecha.$dirty && newFactura.fecha.$invalid" class="glyphicon glyphicon-remove  form-control-feedback" style="padding-right: 65px;"></span>
                 </md-input-container>
                 <md-input-container class="md-icon md-block">
                     <!-- LABEL FECHA-->
@@ -89,8 +84,7 @@
                            maxlength="10"
                            md-maxlength="10"
                            placeholder="Monto factura"
-                           name="monto" required
-                           class="form-control" />
+                           name="monto" required/>
                     <!-- MENSAJES-->
                     <div ng-messages="newFactura.monto.$error"
                          ng-if='newFactura.monto.$dirty || newFactura.monto.$touched'>
@@ -98,9 +92,6 @@
                         <div ng-message="minlength">Monto demasiado pequeño.</div>                            
                         <div ng-message="required">Este campo no puede estar vacio.</div>                            
                     </div>
-                    <!--ICONOS DE MENSAJE -->
-                    <span ng-show="newFactura.monto.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
-                    <span ng-show="newFactura.monto.$dirty && newFactura.monto.$invalid" class="glyphicon glyphicon-remove  form-control-feedback" style="padding-right: 65px;"></span>
                 </md-input-container>
                 <md-input-container class="md-block">
                     <label>Observaciones</label>
@@ -118,45 +109,7 @@
             </form>
         </md-content>
     </div>
-    <div class="panel" style="min-height: 440px; background-color: white;" ng-hide="true">
-        <div class="panel-heading panel-warning" style="text-align: center; color: #8a6d3b">
-            <label></label>
-        </div>
-        <div class="panel-body">
-            <form name="factura" class="form-horizontal">
-                <fieldset>
-                    <legend style="text-align: center;">Datos de la compra</legend>
-                    <div class="row col-lg-7">
-                    </div>
-                    <div class="row col-lg-5" style="padding-right: 0px;">                        
-
-                        <div class="form-group" style="margin-right: 5px;">
-                            <label class="control-label">Monto</label>
-
-                        </div>
-                    </div>
-                    <div class="row col-lg-12">
-                        <div class="form-group">
-                            <label class="control-label">Observaciones</label>
-                            <textarea type="text"
-                                      rows="3"
-                                      ng-model="_facturaProducto.observaciones"
-                                      name="observaciones"
-                                      maxlength="200"
-                                      placeholder="Observaciones del pedido"
-                                      id="textarea"
-                                      class="form-control"></textarea>
-                        </div>
-                        <div class="form-group" style="text-align: center;">
-
-                        </div>
-                    </div>                    
-                </fieldset>
-            </form>
-        </div>
-    </div>
 </div>
-<div class="col-lg-3"></div>
 <style>
     md-input-container:not(.md-input-has-value) input:not(:focus),
     md-input-container:not(.md-input-has-value) input:not(:focus)::-webkit-datetime-edit-ampm-field,

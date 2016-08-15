@@ -1,6 +1,9 @@
 <!DOCTYPE html>
-<div class="col-lg-12">
-    <div class="distribucion-panel">
+<div layout="column"
+     layout-margin
+     layout-xs="column">
+    <div class="distribucion-panel" 
+         layout="column" layout-xs="column" flex>
         <div ng-cloak>
             <md-content md-theme="docs-dark" style="min-height: 598px;">
                 <md-tabs md-dynamic-height md-border-bottom>
@@ -75,9 +78,6 @@
                                                 <div ng-message="md-maxlength">Nombre demasiado largo.</div>
                                                 <div ng-message="required">Este campo no puede estar vacio.</div>
                                             </div>
-                                            <!-- ICONOS DE MENSAJE-->
-                                            <span ng-show="updateTipo.tipo.$dirty && updateTipo.tipo.$valid" class="glyphicon glyphicon-ok form-control-feedback" ></span>
-                                            <span ng-show="updateTipo.tipo.$dirty && updateTipo.tipo.$invalid" class="glyphicon glyphicon-remove  form-control-feedback"></span>
                                         </md-input-container>
                                         <div class="md-block" flex ng-controller="TipoController">
                                             <center>
@@ -95,7 +95,7 @@
                         <md-content class="md-padding" layout="row">
                             <div flex="20"></div>
                             <div flex="60">
-                                <form name="nuevoTipo" class="form-horizontal">
+                                <form name="nuevoTipo">
                                     <md-input-container class="md-block md-icon" flex>
                                         <label>Nombre tipo de producto</label>
                                         <md-icon class="material-icons">&#xE150;</md-icon>
@@ -112,16 +112,13 @@
                                             <div ng-message="md-maxlength">Nombre demasiado largo.</div>
                                             <div ng-message="required">Este campo no puede estar vacio.</div>
                                         </div>
-                                        <!-- ICONOS DE MENSAJE-->
-                                        <span ng-show="nuevoTipo.tipo.$dirty && nuevoTipo.tipo.$valid" class="glyphicon glyphicon-ok form-control-feedback" ></span>
-                                        <span ng-show="nuevoTipo.tipo.$dirty && nuevoTipo.tipo.$invalid" class="glyphicon glyphicon-remove  form-control-feedback"></span>
                                     </md-input-container>
-                                    <div class="md-block" flex>
-                                        <center>
-                                            <button ng-click="agregarTipo(_tipo)"
-                                                    type="submit" class="btn btn-success"
-                                                    ng-disabled="nuevoTipo.$invalid" style="margin-top: 5%;">Agregar</button>
-                                        </center>                                    
+                                    <div class="md-block" flex style="text-align: center;">                                        
+                                        <button ng-click="agregarTipo(_tipo)"
+                                                type="submit" class="btn btn-success"
+                                                ng-disabled="nuevoTipo.$invalid" style="margin-top: 5%;">
+                                            Agregar
+                                        </button>                                                                            
                                     </div>
                                 </form>
                             </div>   

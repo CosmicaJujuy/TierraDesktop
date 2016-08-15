@@ -1,6 +1,9 @@
 <!DOCTYPE html>
-<div class="col-lg-12">
-    <div class="distribucion-panel">
+<div layout="column"
+     layout-margin
+     layout-xs="column">
+    <div layout="column" layout-xs="column" flex
+         class="distribucion-panel">
         <div ng-cloak>
             <md-content md-theme="docs-dark" style="min-height: 598px;">
                 <md-tabs md-dynamic-height md-border-bottom>
@@ -15,8 +18,8 @@
                                             <th style="text-align: center">ID</th>
                                             <th style="text-align: center">Nombre</th>
                                             <th style="text-align: center">Tipo de producto</th>
-                                            <th style="text-align: center">Fecha creación</th> 
-                                            <th style="text-align: center" ng-hide="edit">Acciones</th> 
+                                            <th style="text-align: center" ng-hide="!panelCategoriaEdit">Fecha creación</th> 
+                                            <th style="text-align: center">Acciones</th> 
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -24,8 +27,8 @@
                                             <th style="text-align: center">{{::categoria.idCategoria}}</th>
                                             <th style="text-align: center">{{::categoria.nombreCategoria}}</th>                     
                                             <th style="text-align: center">{{::categoria.tipoCategoria.nombreTipo}}</th>                     
-                                            <th style="text-align: center">{{::categoria.fechaCreacion}}</th>                        
-                                            <th style="text-align: center" ng-hide="edit">
+                                            <th style="text-align: center" ng-hide="!panelCategoriaEdit">{{::categoria.fechaCreacion}}</th>                        
+                                            <th style="text-align: center">
                                                 <button type="button"                                     
                                                         class="btn btn-xs btn-info"
                                                         ng-click="hidePanelCategoria(categoria)">
@@ -61,8 +64,9 @@
                                 </p>
                                 <md-content class="md-padding">
                                     <form name="updateCategoria" style="margin-top: 30px;">
-                                        <md-input-container class="md-block" flex>
+                                        <md-input-container class="md-block md-icon" flex>
                                             <label>Nombre categoria</label>
+                                            <md-icon class="material-icons">&#xE150;</md-icon>
                                             <input type="text"
                                                    minlength="4"
                                                    maxlength="30"
@@ -77,12 +81,10 @@
                                                 <div ng-message="md-maxlength">Nombre demasiado largo.</div>
                                                 <div ng-message="required">Este campo no puede estar vacio.</div>
                                             </div>
-                                            <!-- ICONOS DE MENSAJE-->
-                                            <span ng-show="updateCategoria.categoria.$dirty && updateCategoria.categoria.$valid" class="glyphicon glyphicon-ok form-control-feedback" ></span>
-                                            <span ng-show="updateCategoria.categoria.$dirty && updateCategoria.categoria.$invalid" class="glyphicon glyphicon-remove  form-control-feedback"></span>
                                         </md-input-container>
-                                        <md-input-container class="md-block" flex ng-controller="TipoController" data-ng-init="listaTipo()">
+                                        <md-input-container class="md-block md-icon" flex ng-controller="TipoController" data-ng-init="listaTipo()">
                                             <label>Tipo de producto</label>
+                                            <md-icon class="material-icons">&#xE252;</md-icon>
                                             <md-select ng-model="editCategoria.tipoCategoria"
                                                        ng-model-options="{trackBy: '$value.idTipo'}"
                                                        data-ng-init="editCategoria.tipoCategoria"
@@ -95,18 +97,15 @@
                                                  ng-if='updateCategoria.tipos.$touched'>
                                                 <div ng-message="required">Este campo no puede estar vacio.</div>
                                             </div>
-                                            <!-- ICONOS DE MENSAJE-->
-                                            <span ng-show="updateCategoria.tipos.$touched && updateCategoria.tipos.$valid" class="glyphicon glyphicon-ok form-control-feedback" ></span>
-                                            <span ng-show="updateCategoria.tipos.$touched && updateCategoria.tipos.$invalid" class="glyphicon glyphicon-remove  form-control-feedback"></span>
                                         </md-input-container>
-                                        <div class="form-group">
-                                            <center>
-                                                <button ng-click="modificarCategoria(editCategoria)"
-                                                        type="submit"
-                                                        id="btnAgregarCategoria"
-                                                        class="btn btn-success"
-                                                        ng-disabled="updateCategoria.$invalid">Modificar</button>
-                                            </center>                                
+                                        <div flex style="text-align: center;">                                            
+                                            <button ng-click="modificarCategoria(editCategoria)"
+                                                    type="submit"
+                                                    id="btnAgregarCategoria"
+                                                    class="btn btn-success"
+                                                    ng-disabled="updateCategoria.$invalid">
+                                                Modificar
+                                            </button>                                                                            
                                         </div>
                                     </form>
                                 </md-content>
@@ -119,8 +118,9 @@
                             <div flex="60">
                                 <md-content class="md-padding" flex>
                                     <form name="newCategoria">
-                                        <md-input-container class="md-block" flex>
+                                        <md-input-container class="md-block md-icon" flex>
                                             <label>Nombre categoria</label>
+                                            <md-icon class="material-icons">&#xE150;</md-icon>
                                             <input type="text"
                                                    minlength="4"
                                                    maxlength="30"
@@ -135,12 +135,10 @@
                                                 <div ng-message="md-maxlength">Nombre demasiado largo.</div>
                                                 <div ng-message="required">Este campo no puede estar vacio.</div>
                                             </div>
-                                            <!-- ICONOS DE MENSAJE-->
-                                            <span ng-show="newCategoria.categoria.$dirty && newCategoria.categoria.$valid" class="glyphicon glyphicon-ok form-control-feedback" ></span>
-                                            <span ng-show="newCategoria.categoria.$dirty && newCategoria.categoria.$invalid" class="glyphicon glyphicon-remove  form-control-feedback"></span>
                                         </md-input-container>
-                                        <md-input-container class="md-block" flex ng-controller="TipoController" data-ng-init="listaTipo()">
+                                        <md-input-container class="md-block md-icon" flex ng-controller="TipoController" data-ng-init="listaTipo()">
                                             <label>Tipo de producto</label>
+                                            <md-icon class="material-icons">&#xE252;</md-icon>
                                             <md-select ng-model="_categoria.tipoCategoria"
                                                        required name="tipos">                                            
                                                 <md-option ng-value="tipo" 
@@ -151,18 +149,15 @@
                                                  ng-if='newCategoria.tipos.$touched'>
                                                 <div ng-message="required">Este campo no puede estar vacio.</div>
                                             </div>
-                                            <!-- ICONOS DE MENSAJE-->
-                                            <span ng-show="newCategoria.tipos.$touched && newCategoria.tipos.$valid" class="glyphicon glyphicon-ok form-control-feedback" ></span>
-                                            <span ng-show="newCategoria.tipos.$touched && newCategoria.tipos.$invalid" class="glyphicon glyphicon-remove  form-control-feedback"></span>
                                         </md-input-container>
-                                        <div class="form-group">
-                                            <center>
-                                                <button ng-click="agrearCategoria(_categoria)"
-                                                        type="submit"
-                                                        id="btnAgregarCategoria"
-                                                        class="btn btn-success"
-                                                        ng-disabled="newCategoria.$invalid">Agregar</button>
-                                            </center>                                
+                                        <div flex style="text-align: center;">
+                                            <button ng-click="agrearCategoria(_categoria)"
+                                                    type="submit"
+                                                    id="btnAgregarCategoria"
+                                                    class="btn btn-success"
+                                                    ng-disabled="newCategoria.$invalid">
+                                                Agregar
+                                            </button>       
                                         </div>
                                     </form>
                                 </md-content>

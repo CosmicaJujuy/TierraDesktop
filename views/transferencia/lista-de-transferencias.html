@@ -1,6 +1,12 @@
 <!DOCTYPE html>
-<div md-theme="docs-dark">
-    <div class="col-lg-3">
+<div layout="row"
+     layout-margin
+     layout-xs="row"
+     md-theme="docs-dark">
+    <div flex-lg="25"
+         flex-md="30"
+         layout="column"
+         layout-xs="column">
         <div layout="column" ng-cloak
              data-ng-init="listaTransferencias()"
              class="distribucion-panel">
@@ -50,7 +56,10 @@
             </md-content>
         </div>
     </div>
-    <div class="col-lg-9">
+    <div flex-lg="75"
+         flex-md="70"
+         layout="column"
+         layout-xs="column">
         <div class="distribucion-panel">
             <div ng-cloak>
                 <md-content md-theme="docs-dark" style="min-height: 598px;">
@@ -75,28 +84,31 @@
                                                 ng-class="{success: trans.estadoPedido === true,
                                                         danger: trans.estadoPedido === false && trans.sucursalRespuesta === 5}">
                                                 <td style="text-align: center">
-                                                    <a href="" 
+                                                    <a href=""
                                                        ng-class="{disabled:trans.estadoPedido === false && trans.sucursalRespuesta === 5}"
-                                                       ui-sref="transferencias_detalle({idTransferencia:{{trans.idTransferencia}}})">{{trans.idTransferencia}}</a>
+                                                       ui-sref="transferencias_detalle({idTransferencia:{{trans.idTransferencia}}})">
+                                                        {{trans.idTransferencia}}
+                                                    </a>
                                                 </td>
-                                                <td style="text-align: center">
+                                                <td style="text-align: center; font-size: smaller;">
                                                     <div ng-if="trans.sucursalPedido === 1">Tierra de Colores</div>
                                                     <div ng-if="trans.sucursalPedido === 2">Bebelandia</div>
                                                     <div ng-if="trans.sucursalPedido === 3">Libertador</div>
                                                 </td>
-                                                <td style="text-align: center">
-                                                    <div ng-if="trans.sucursalRespuesta === 1">Tierra de Colores</div>
+                                                <td style="text-align: center; font-size: smaller;">
+                                                    <div ng-if="trans.sucursalRespuesta === 1">Tierra de colores</div>
                                                     <div ng-if="trans.sucursalRespuesta === 2">Bebelandia</div>
                                                     <div ng-if="trans.sucursalRespuesta === 3">Libertador</div>
                                                     <div ng-if="trans.sucursalRespuesta === 4">Aprobado por administrador</div>
-                                                    <div ng-if="trans.sucursalRespuesta === 5"> - </div>
-                                                </td>                                                
+                                                    <div ng-if="trans.sucursalRespuesta === 5">Cancelado</div>
+                                                    <div ng-if="trans.sucursalRespuesta === 0">En espera</div>
+                                                </td>
                                                 <td style="text-align: center">
                                                     <div ng-if="trans.estadoPedido === true">Resuelto</div>
                                                     <div ng-if="trans.estadoPedido === false && trans.sucursalRespuesta !== 5">Sin resolver</div>
                                                     <div ng-if="trans.estadoPedido === false && trans.sucursalRespuesta === 5">Cancelado</div>
                                                 </td>
-                                                <td style="text-align: center">{{trans.fechaCreacion| date:'medium'}}</td>                                                           
+                                                <td style="text-align: center; font-size: smaller;">{{trans.fechaCreacion| date:'short'}}</td>                                                           
                                             </tr>
                                         </tbody>
                                     </table>
@@ -120,25 +132,33 @@
                                         </thead>
                                         <tbody>
                                             <tr ng-repeat="trans in $data"
-                                                ng-class="{ success: trans.estadoPedido === true }">
+                                                ng-class="{ success: trans.estadoPedido === true,
+                                                        danger: trans.estadoPedido === false && trans.sucursalRespuesta === 5}">
                                                 <td style="text-align: center">
-                                                    <a href="" ui-sref="transferencias_detalle({idTransferencia:{{trans.idTransferencia}}})">{{trans.idTransferencia}}</a>
+                                                    <a href=""
+                                                       ng-class="{disabled:trans.estadoPedido === false && trans.sucursalRespuesta === 5}"
+                                                       ui-sref="transferencias_detalle({idTransferencia:{{trans.idTransferencia}}})">
+                                                        {{trans.idTransferencia}}
+                                                    </a>
                                                 </td>
-                                                <td style="text-align: center">
+                                                <td style="text-align: center; font-size: smaller;">
                                                     <div ng-if="trans.sucursalPedido === 1">Tierra de Colores</div>
                                                     <div ng-if="trans.sucursalPedido === 2">Bebelandia</div>
                                                     <div ng-if="trans.sucursalPedido === 3">Libertador</div>
                                                 </td>
-                                                <td style="text-align: center">
-                                                    <div ng-if="trans.sucursalRespuesta === 1">Tierra de Colores</div>
+                                                <td style="text-align: center; font-size: smaller;">
+                                                    <div ng-if="trans.sucursalRespuesta === 1">Tierra de colores</div>
                                                     <div ng-if="trans.sucursalRespuesta === 2">Bebelandia</div>
                                                     <div ng-if="trans.sucursalRespuesta === 3">Libertador</div>
-                                                </td>                                                
-                                                <td style="text-align: center">
+                                                    <div ng-if="trans.sucursalRespuesta === 4">Aprobado por administrador</div>
+                                                    <div ng-if="trans.sucursalRespuesta === 5">Cancelado</div>
+                                                    <div ng-if="trans.sucursalRespuesta === 0">En espera</div>
+                                                </td>                                               
+                                                <td style="text-align: center; font-size: smaller;">
                                                     <div ng-if="trans.estadoPedido === true">Resuelto</div>
                                                     <div ng-if="trans.estadoPedido === false">Sin resolver</div>
                                                 </td>
-                                                <td style="text-align: center">{{trans.fechaCreacion| date:'medium'}}</td>                                                           
+                                                <td style="text-align: center;font-size: smaller;">{{trans.fechaCreacion| date:'short'}}</td>                                                           
                                             </tr>
                                         </tbody>
                                     </table>

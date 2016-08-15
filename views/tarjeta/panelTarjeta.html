@@ -1,9 +1,12 @@
 <!DOCTYPE html>
-<div class="col-lg-12">
+<div layout="column"
+     layout-margin
+     layout-xs="column">
     <!-- TABS TARJETAS-->
-    <div class="distribucion-panel">
+    <div class="distribucion-panel"
+         layout="column" layout-xs="column" flex>
         <div ng-cloak>
-            <md-content md-theme="docs-dark" style="min-height: 598px;">
+            <md-content md-theme="docs-dark" style="min-height: 597px;">
                 <md-tabs md-dynamic-height md-border-bottom>
                     <md-tab label="Tarjetas">
                         <md-content class="md-padding" layout="row" flex>
@@ -18,8 +21,7 @@
                                             <th style="text-align: center">ID</th>
                                             <th style="text-align: center">Nombre tarjeta</th> 
                                             <th style="text-align: center">Entidad Bancaria</th> 
-                                            <th style="text-align: center">Medio de pago</th> 
-                                            <th style="text-align: center"ng-show="panelTarjetaEdit">Fecha</th> 
+                                            <th style="text-align: center">Medio de pago</th>
                                             <th style="text-align: center"ng-show="panelTarjetaEdit">Acciones</th> 
                                         </tr>
                                     </thead>
@@ -30,7 +32,6 @@
                                             <th style="text-align: center">{{::tarjeta.nombreTarjeta}}</th>                        
                                             <th style="text-align: center">{{::tarjeta.entidadBancaria.nombreEntidad}}</th>                        
                                             <th style="text-align: center" ng-show="panelTarjetaEdit">{{::tarjeta.medioPago.nombrePago}}</th>                        
-                                            <th style="text-align: center" ng-show="panelTarjetaEdit">{{::tarjeta.fechaCreacion}}</th>                        
                                             <th style="text-align: center">
                                                 <button type="button"
                                                         class="btn btn-xs btn-info"
@@ -53,7 +54,7 @@
                                     </tbody>
                                 </table><!-- FFIN TABLA TARJETAS-->
                             </div>
-                            <div flex="45" ng-hide="panelTarjetaEdit" class="show-hide">
+                            <div flex="45" ng-hide="panelTarjetaEdit">
                                 <p flex style="text-align: center; font-weight: bold">
                                     Modificar Tarjeta #{{editTarjeta.idTarjeta}}
                                     <button class="pull-right"
@@ -82,10 +83,6 @@
                                                 <div ng-message="md-maxlength">Nombre demasiado largo.</div>
                                                 <div ng-message="required">Este campo no puede estar vacio.</div>
                                             </div>
-                                            <!-- ICONOS DE MENSAJE-->
-                                            <span ng-show="updateTarjeta.nombre.$dirty && updateTarjeta.nombre.$valid" class="glyphicon glyphicon-ok form-control-feedback" ></span>
-                                            <span ng-show="updateTarjeta.nombre.$dirty && updateTarjeta.nombre.$invalid" class="glyphicon glyphicon-remove  form-control-feedback"></span>
-                                            <span ng-show="updateTarjeta.nombre.$touched && updateTarjeta.nombre.$pristine" class="glyphicon glyphicon-warning-sign  form-control-feedback"></span>
                                         </md-input-container>                                    
                                         <md-input-container class="md-icon md-block" ng-controller="MedioPagoController" data-ng-init="listaMedioPago()" style="min-height: 54px;">
                                             <label>Tipo de tarjeta</label>
@@ -104,9 +101,6 @@
                                                  ng-if='updateTarjeta.medios.$touched'>
                                                 <div ng-message="required">Este campo no puede estar vacio.</div>
                                             </div>
-                                            <!-- ICONOS DE MENSAJE-->
-                                            <span ng-show="updateTarjeta.medios.$touched && updateTarjeta.medios.$valid" class="glyphicon glyphicon-ok form-control-feedback" ></span>
-                                            <span ng-show="updateTarjeta.medios.$touched && updateTarjeta.medios.$invalid" class="glyphicon glyphicon-remove  form-control-feedback"></span>                                    
                                         </md-input-container>
                                         <md-input-container class="md-icon md-block" ng-controller="EntidadBancariaController" data-ng-init="listaEntidadBancaria()" style="min-height: 54px;">
                                             <label>Entidad bancaria</label>
@@ -124,18 +118,17 @@
                                                  ng-if='updateTarjeta.entidades.$touched'>
                                                 <div ng-message="required">Este campo no puede estar vacio.</div>
                                             </div>
-                                            <!-- ICONOS DE MENSAJE-->
-                                            <span ng-show="updateTarjeta.entidades.$touched && updateTarjeta.entidades.$valid" class="glyphicon glyphicon-ok form-control-feedback" ></span>
-                                            <span ng-show="updateTarjeta.entidades.$touched && updateTarjeta.entidades.$invalid" class="glyphicon glyphicon-remove  form-control-feedback"></span>                                    
                                         </md-input-container>
 
                                         <!-- BOTON MODIFICAR-->
-                                        <center class="form-group">
+                                        <div flex style="text-align: center;">
                                             <button ng-click="modificarTarjeta(editTarjeta)"
                                                     type="submit" 
                                                     class="btn btn-success"
-                                                    ng-disabled="updateTarjeta.$invalid">Modificar</button>
-                                        </center><!-- FIN BOTON AGREGAR-->
+                                                    ng-disabled="updateTarjeta.$invalid">
+                                                Modificar
+                                            </button>
+                                        </div>
 
                                     </form>
                                 </md-content>
@@ -163,10 +156,6 @@
                                             <div ng-message="md-maxlength">Nombre demasiado largo.</div>
                                             <div ng-message="required">Este campo no puede estar vacio.</div>
                                         </div>
-                                        <!-- ICONOS DE MENSAJE-->
-                                        <span ng-show="addTarjeta.nombre.$dirty && addTarjeta.nombre.$valid" class="glyphicon glyphicon-ok form-control-feedback" ></span>
-                                        <span ng-show="addTarjeta.nombre.$dirty && addTarjeta.nombre.$invalid" class="glyphicon glyphicon-remove  form-control-feedback"></span>
-                                        <span ng-show="addTarjeta.nombre.$touched && addTarjeta.nombre.$pristine" class="glyphicon glyphicon-warning-sign  form-control-feedback"></span>
                                     </md-input-container>                                    
                                     <md-input-container class="md-icon md-block" ng-controller="MedioPagoController" data-ng-init="listaMedioPago()" style="min-height: 54px;">
                                         <label>Tipo de tarjeta</label>
@@ -181,9 +170,6 @@
                                              ng-if='addTarjeta.medios.$touched'>
                                             <div ng-message="required">Este campo no puede estar vacio.</div>
                                         </div>
-                                        <!-- ICONOS DE MENSAJE-->
-                                        <span ng-show="addTarjeta.medios.$touched && addTarjeta.medios.$valid" class="glyphicon glyphicon-ok form-control-feedback" ></span>
-                                        <span ng-show="addTarjeta.medios.$touched && addTarjeta.medios.$invalid" class="glyphicon glyphicon-remove  form-control-feedback"></span>                                    
                                     </md-input-container>
                                     <md-input-container class="md-icon md-block" ng-controller="EntidadBancariaController" data-ng-init="listaEntidadBancaria()" style="min-height: 54px;">
                                         <label>Entidad bancaria</label>
@@ -198,49 +184,22 @@
                                              ng-if='addTarjeta.entidades.$touched'>
                                             <div ng-message="required">Este campo no puede estar vacio.</div>
                                         </div>
-                                        <!-- ICONOS DE MENSAJE-->
-                                        <span ng-show="addTarjeta.entidades.$touched && addTarjeta.entidades.$valid" class="glyphicon glyphicon-ok form-control-feedback" ></span>
-                                        <span ng-show="addTarjeta.entidades.$touched && addTarjeta.entidades.$invalid" class="glyphicon glyphicon-remove  form-control-feedback"></span>                                    
                                     </md-input-container>
-
-                                    <!-- BOTON AGREGAR-->
-                                    <center class="form-group">
+                                    <div flex style="text-align: center;">
                                         <button ng-click="agregarTarjeta(_tarjeta)"
                                                 type="submit" 
                                                 class="btn btn-success"
-                                                ng-disabled="addTarjeta.$invalid">Agregar</button>
-                                    </center><!-- FIN BOTON AGREGAR-->
-
-                                </form><!-- FIN FORMULARIO-->
+                                                ng-disabled="addTarjeta.$invalid">
+                                            Agregar
+                                        </button>
+                                    </div>
+                                </form>
                             </div>
                             <div class="col-lg-2"></div>
                         </md-content>                            
                     </md-tab>
                 </md-tabs>                    
             </md-content>
-        </div>
-    </div>
-</div>
-<div class="modal fade" id="myModalDelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog modal-sm" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">Eliminar tarjeta</h4>
-            </div>
-            <div class="modal-body">
-                <center>
-                    ¿Desea eliminar esta tarjeta?
-                    <br>
-                    <button class="btn btn-danger"
-                            ng-click="eliminarTarjeta()"
-                            data-dismiss="modal"
-                            >Eliminar</button>
-                </center>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
-            </div>
         </div>
     </div>
 </div>

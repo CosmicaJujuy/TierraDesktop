@@ -1,6 +1,9 @@
 <!DOCTYPE html>
-<div class="col-lg-12">
-    <div class="distribucion-panel">
+<div layout="column"
+     layout-margin
+     layout-xs="column">
+    <div class="distribucion-panel"
+         layout="column" layout-xs="column" flex>
         <div ng-cloak>
             <md-content md-theme="docs-dark" style="min-height: 598px;">
                 <md-tabs md-dynamic-height md-border-bottom>
@@ -14,9 +17,7 @@
                                         <tr>
                                             <th style="text-align: center">ID</th>
                                             <th style="text-align: center">Plan de pago</th>
-                                            <th style="text-align: center" ng-show="panelPlanEdit">Banco</th> 
-                                            <th style="text-align: center" ng-show="panelPlanEdit">Tarjeta</th> 
-                                            <th style="text-align: center">Medio</th>
+                                            <th style="text-align: center" ng-show="panelPlanEdit">Tarjeta</th>
                                             <th style="text-align: center">Cuotas</th>
                                             <th style="text-align: center" ng-show="panelPlanEdit">Inicio</th>
                                             <th style="text-align: center" ng-show="panelPlanEdit">Finalizacion</th>
@@ -29,9 +30,7 @@
                                         <tr ng-repeat="plan in $data">
                                             <th style="text-align: center">{{::plan.idPlanesPago}}</th>
                                             <th style="text-align: center">{{::plan.nombrePlanesPago}}</th> 
-                                            <th style="text-align: center" ng-show="panelPlanEdit">{{::plan.tarjeta.entidadBancaria.nombreEntidad}}</th>                        
                                             <th style="text-align: center" ng-show="panelPlanEdit">{{::plan.tarjeta.nombreTarjeta}}</th>                        
-                                            <th style="text-align: center">{{::plan.tarjeta.medioPago.nombrePago}}</th>                       
                                             <th style="text-align: center">{{::plan.cuotasPlanesPago}}</th>                       
                                             <th style="text-align: center" ng-show="panelPlanEdit">{{::plan.fechaInicioPlanes| date:'yyyy-MM-dd'}}</th>                       
                                             <th style="text-align: center" ng-show="panelPlanEdit">{{::plan.fechaFinalizacionPlanes| date:'yyyy-MM-dd'}}</th>                       
@@ -91,10 +90,6 @@
                                                 <div ng-message="md-maxlength">Nombre demasiado largo.</div>
                                                 <div ng-message="required">Este campo no puede estar vacio.</div>
                                             </div>
-                                            <!-- ICONOS DE MENSAJE-->
-                                            <span ng-show="updatePlan.nombrePlan.$dirty && updatePlan.nombrePlan.$valid" class="glyphicon glyphicon-ok form-control-feedback" ></span>
-                                            <span ng-show="updatePlan.nombrePlan.$dirty && updatePlan.nombrePlan.$invalid" class="glyphicon glyphicon-remove  form-control-feedback"></span>
-                                            <span ng-show="updatePlan.nombrePlan.$touched && updatePlan.nombrePlan.$pristine" class="glyphicon glyphicon-warning-sign  form-control-feedback"></span>
                                         </md-input-container>
                                         <md-input-container class="md-icon md-block" ng-controller="TarjetaController" data-ng-init="listaTarjetas()" style="min-height: 54px;">
                                             <label>Tarjeta</label>
@@ -113,9 +108,6 @@
                                                  ng-if='updatePlan.tarjeta.$touched'>
                                                 <div ng-message="required">Este campo no puede estar vacio.</div>
                                             </div>
-                                            <!-- ICONOS DE MENSAJE-->
-                                            <span ng-show="updatePlan.tarjeta.$touched && updatePlan.tarjeta.$valid" class="glyphicon glyphicon-ok form-control-feedback" ></span>
-                                            <span ng-show="updatePlan.tarjeta.$touched && updatePlan.tarjeta.$invalid" class="glyphicon glyphicon-remove  form-control-feedback"></span>                                    
                                         </md-input-container>
                                         <md-input-container class="md-icon md-block">
                                             <label>Cantidad de cuotas</label>
@@ -133,10 +125,6 @@
                                                 <div ng-message="md-maxlength">Cantidad demasiado larga.</div>
                                                 <div ng-message="required">Este campo no puede estar vacio.</div>
                                             </div>
-                                            <!-- ICONOS DE MENSAJE-->
-                                            <span ng-show="updatePlan.cuotasPlan.$dirty && updatePlan.cuotasPlan.$valid" class="glyphicon glyphicon-ok form-control-feedback" ></span>
-                                            <span ng-show="updatePlan.cuotasPlan.$dirty && updatePlan.cuotasPlan.$invalid" class="glyphicon glyphicon-remove  form-control-feedback"></span>
-                                            <span ng-show="updatePlan.cuotasPlan.$touched && updatePlan.cuotasPlan.$pristine" class="glyphicon glyphicon-warning-sign  form-control-feedback"></span>
                                         </md-input-container>
                                         <div layout="row">
                                             <md-input-container class="md-icon md-block" flex>
@@ -154,9 +142,6 @@
                                                     <div ng-message="date">Fecha de inicio invalida.</div>                            
                                                     <div ng-message="required">Este campo no puede estar vacio.</div>                            
                                                 </div>
-                                                <!--ICONOS DE MENSAJE -->
-                                                <span ng-show="updatePlan.fechaInicio.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
-                                                <span ng-show="updatePlan.fechaInicio.$dirty && updatePlan.fechaInicio.$invalid" class="glyphicon glyphicon-remove  form-control-feedback" style="padding-right: 65px;"></span>
                                             </md-input-container>
                                             <md-input-container class="md-icon md-block" flex>
                                                 <!-- LABEL FECHA-->
@@ -173,9 +158,6 @@
                                                     <div ng-message="date">Fecha de finalizacion invalida.</div>                            
                                                     <div ng-message="required">Este campo no puede estar vacio.</div>                            
                                                 </div>
-                                                <!--ICONOS DE MENSAJE -->
-                                                <span ng-show="updatePlan.fechaFinalizacion.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
-                                                <span ng-show="updatePlan.fechaFinalizacion.$dirty && updatePlan.fechaFinalizacion.$invalid" class="glyphicon glyphicon-remove  form-control-feedback" style="padding-right: 65px;"></span>
                                             </md-input-container>
                                         </div>
                                         <div layout="row">
@@ -195,10 +177,6 @@
                                                     <div ng-message="md-maxlength">Fecha demasiado larga.</div>
                                                     <div ng-message="required">Este campo no puede estar vacio.</div>
                                                 </div>
-                                                <!-- ICONOS DE MENSAJE-->
-                                                <span ng-show="updatePlan.cierraPlan.$dirty && updatePlan.cierraPlan.$valid" class="glyphicon glyphicon-ok form-control-feedback" ></span>
-                                                <span ng-show="updatePlan.cierraPlan.$dirty && updatePlan.cierraPlan.$invalid" class="glyphicon glyphicon-remove  form-control-feedback"></span>
-                                                <span ng-show="updatePlan.cierraPlan.$touched && updatePlan.cierraPlan.$pristine" class="glyphicon glyphicon-warning-sign  form-control-feedback"></span>
                                             </md-input-container>
                                             <md-input-container class="md-icon md-block" flex>
                                                 <label>% de interés</label>
@@ -216,19 +194,15 @@
                                                     <div ng-message="md-maxlength">Porcentaje demasiado largo.</div>
                                                     <div ng-message="required">Este campo no puede estar vacio.</div>
                                                 </div>
-                                                <!-- ICONOS DE MENSAJE-->
-                                                <span ng-show="updatePlan.porcentajePlan.$dirty && updatePlan.porcentajePlan.$valid" class="glyphicon glyphicon-ok form-control-feedback" ></span>
-                                                <span ng-show="updatePlan.porcentajePlan.$dirty && updatePlan.porcentajePlan.$invalid" class="glyphicon glyphicon-remove  form-control-feedback"></span>
-                                                <span ng-show="updatePlan.porcentajePlan.$touched && updatePlan.porcentajePlan.$pristine" class="glyphicon glyphicon-warning-sign  form-control-feedback"></span>
                                             </md-input-container>
                                         </div>                                    
-                                        <center>
+                                        <div flex style="text-align: center;">
                                             <button ng-click="modificarPlan(editPlanPago)"
                                                     type="submit" 
                                                     class="btn btn-success">
                                                 Modificar
                                             </button>
-                                        </center>                                    
+                                        </div>                                    
                                     </form>
                                 </md-content>
                             </div>
@@ -256,10 +230,6 @@
                                             <div ng-message="md-maxlength">Nombre demasiado largo.</div>
                                             <div ng-message="required">Este campo no puede estar vacio.</div>
                                         </div>
-                                        <!-- ICONOS DE MENSAJE-->
-                                        <span ng-show="newPlan.nombrePlan.$dirty && newPlan.nombrePlan.$valid" class="glyphicon glyphicon-ok form-control-feedback" ></span>
-                                        <span ng-show="newPlan.nombrePlan.$dirty && newPlan.nombrePlan.$invalid" class="glyphicon glyphicon-remove  form-control-feedback"></span>
-                                        <span ng-show="newPlan.nombrePlan.$touched && newPlan.nombrePlan.$pristine" class="glyphicon glyphicon-warning-sign  form-control-feedback"></span>
                                     </md-input-container>
                                     <md-input-container class="md-icon md-block" ng-controller="TarjetaController" data-ng-init="listaTarjetas()" style="min-height: 54px;">
                                         <label>Tarjeta</label>
@@ -276,9 +246,6 @@
                                              ng-if='newPlan.tarjeta.$touched'>
                                             <div ng-message="required">Este campo no puede estar vacio.</div>
                                         </div>
-                                        <!-- ICONOS DE MENSAJE-->
-                                        <span ng-show="newPlan.tarjeta.$touched && newPlan.tarjeta.$valid" class="glyphicon glyphicon-ok form-control-feedback" ></span>
-                                        <span ng-show="newPlan.tarjeta.$touched && newPlan.tarjeta.$invalid" class="glyphicon glyphicon-remove  form-control-feedback"></span>                                    
                                     </md-input-container>
                                     <md-input-container class="md-icon md-block">
                                         <label>Cantidad de cuotas</label>
@@ -296,10 +263,6 @@
                                             <div ng-message="md-maxlength">Cantidad demasiado larga.</div>
                                             <div ng-message="required">Este campo no puede estar vacio.</div>
                                         </div>
-                                        <!-- ICONOS DE MENSAJE-->
-                                        <span ng-show="newPlan.cuotasPlan.$dirty && newPlan.cuotasPlan.$valid" class="glyphicon glyphicon-ok form-control-feedback" ></span>
-                                        <span ng-show="newPlan.cuotasPlan.$dirty && newPlan.cuotasPlan.$invalid" class="glyphicon glyphicon-remove  form-control-feedback"></span>
-                                        <span ng-show="newPlan.cuotasPlan.$touched && newPlan.cuotasPlan.$pristine" class="glyphicon glyphicon-warning-sign  form-control-feedback"></span>
                                     </md-input-container>
                                     <div layout="row">
                                         <md-input-container class="md-icon md-block" flex>
@@ -317,9 +280,6 @@
                                                 <div ng-message="date">Fecha de inicio invalida.</div>                            
                                                 <div ng-message="required">Este campo no puede estar vacio.</div>                            
                                             </div>
-                                            <!--ICONOS DE MENSAJE -->
-                                            <span ng-show="newPlan.fechaInicio.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
-                                            <span ng-show="newPlan.fechaInicio.$dirty && newPlan.fechaInicio.$invalid" class="glyphicon glyphicon-remove  form-control-feedback" style="padding-right: 65px;"></span>
                                         </md-input-container>
                                         <md-input-container class="md-icon md-block" flex>
                                             <!-- LABEL FECHA-->
@@ -336,9 +296,6 @@
                                                 <div ng-message="date">Fecha de finalizacion invalida.</div>                            
                                                 <div ng-message="required">Este campo no puede estar vacio.</div>                            
                                             </div>
-                                            <!--ICONOS DE MENSAJE -->
-                                            <span ng-show="newPlan.fechaFinalizacion.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
-                                            <span ng-show="newPlan.fechaFinalizacion.$dirty && newPlan.fechaFinalizacion.$invalid" class="glyphicon glyphicon-remove  form-control-feedback" style="padding-right: 65px;"></span>
                                         </md-input-container>
                                     </div>
                                     <div layout="row">
@@ -358,10 +315,6 @@
                                                 <div ng-message="md-maxlength">Fecha demasiado larga.</div>
                                                 <div ng-message="required">Este campo no puede estar vacio.</div>
                                             </div>
-                                            <!-- ICONOS DE MENSAJE-->
-                                            <span ng-show="newPlan.cierraPlan.$dirty && newPlan.cierraPlan.$valid" class="glyphicon glyphicon-ok form-control-feedback" ></span>
-                                            <span ng-show="newPlan.cierraPlan.$dirty && newPlan.cierraPlan.$invalid" class="glyphicon glyphicon-remove  form-control-feedback"></span>
-                                            <span ng-show="newPlan.cierraPlan.$touched && newPlan.cierraPlan.$pristine" class="glyphicon glyphicon-warning-sign  form-control-feedback"></span>
                                         </md-input-container>
                                         <md-input-container class="md-icon md-block" flex>
                                             <label>% de interés</label>
@@ -379,18 +332,16 @@
                                                 <div ng-message="md-maxlength">Porcentaje demasiado largo.</div>
                                                 <div ng-message="required">Este campo no puede estar vacio.</div>
                                             </div>
-                                            <!-- ICONOS DE MENSAJE-->
-                                            <span ng-show="newPlan.porcentajePlan.$dirty && newPlan.porcentajePlan.$valid" class="glyphicon glyphicon-ok form-control-feedback" ></span>
-                                            <span ng-show="newPlan.porcentajePlan.$dirty && newPlan.porcentajePlan.$invalid" class="glyphicon glyphicon-remove  form-control-feedback"></span>
-                                            <span ng-show="newPlan.porcentajePlan.$touched && newPlan.porcentajePlan.$pristine" class="glyphicon glyphicon-warning-sign  form-control-feedback"></span>
                                         </md-input-container>
                                     </div>                                    
-                                    <center>
+                                    <div flex style="text-align: center;">
                                         <button ng-click="agregarPlan(_planPago)"
                                                 type="submit" 
-                                                class="btn btn-warning"
-                                                ng-disabled="newPlan.$invalid">Agregar</button>
-                                    </center>                                    
+                                                class="btn btn-success"
+                                                ng-disabled="newPlan.$invalid">
+                                            Agregar
+                                        </button>
+                                    </div>
                                 </form>
                             </div>                            
                         </md-content>

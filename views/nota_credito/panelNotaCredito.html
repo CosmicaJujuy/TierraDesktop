@@ -1,9 +1,15 @@
 <!DOCTYPE html>
-<div md-theme="docs-dark"
+<div layout="row"
+     layout-margin
+     layout-xs="row"
+     md-theme="docs-dark"
      ng-controller="UsuarioController"
      data-ng-init="detailUsuario()"
      ng-show="user.username">
-    <div class="col-lg-3">
+    <div flex-lg="25"
+         flex-md="30"
+         layout="column"
+         layout-xs="column">
         <div layout="column" ng-cloak
              class="distribucion-panel">
             <md-toolbar class="md-warn">
@@ -53,7 +59,10 @@
             </md-content>
         </div>
     </div>
-    <div class="col-lg-9">
+    <div flex-lg="75"
+         flex-md="70"
+         layout="column"
+         layout-xs="column">
         <div class="distribucion-panel">
             <div ng-cloak>
                 <md-content md-theme="docs-dark" style="min-height: 598px;">
@@ -74,16 +83,22 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr ng-repeat="nota in $data">
+                                        <tr ng-repeat="nota in $data"
+                                            ng-class="{success:nota.estadoUso === 'USADO',
+                                                    danger: nota.estadoUso === 'CANCELADO',
+                                                info: nota.estadoUso === 'CARGANDO',
+                                            warning: nota.estadoUso === 'SIN USO'}">
                                             <td style="text-align: center;"
-                                                ng-class="{disabled: nota.estadoUso ==='CANCELADO'}">
+                                                ng-class="{disabled: nota.estadoUso === 'CANCELADO'}">
                                                 <a href="" ui-sref="detalle_nota_credito({idNota:{{nota.idNotaCredito}}})">
                                                     {{nota.idNotaCredito}}
                                                 </a>
                                             </td>
                                             <td style="text-align: center;">{{nota.numero}}</td>
-                                            <td style="text-align: center">{{nota.estadoUso}}</td>
-                                            <td style="text-align: center">{{nota.fechaCreacion| date:'medium'}}</td>
+                                            <td style="text-align: center; font-size: smaller;">
+                                                {{nota.estadoUso}}
+                                            </td>
+                                            <td style="text-align: center; font-size: smaller;">{{nota.fechaCreacion| date:'short'}}</td>
                                             <td style="text-align: center">
                                                 <div ng-hide="nota.idCliente">S/N</div>
                                                 <div ng-show="nota.idCliente">
@@ -120,12 +135,20 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr ng-repeat="nota in $data">
-                                            <td style="text-align: center;"><a href="" ui-sref="detalle_nota_credito({idNota:{{nota.idNotaCredito}}})">{{nota.idNotaCredito}}</a></td>
+                                        <tr ng-repeat="nota in $data" ng-class="{success:nota.estadoUso === 'USADO',
+                                                    danger: nota.estadoUso === 'CANCELADO',
+                                                info: nota.estadoUso === 'CARGANDO',
+                                            warning: nota.estadoUso === 'SIN USO'}">
+                                            <td style="text-align: center;"
+                                                ng-class="{disabled: nota.estadoUso === 'CANCELADO'}">
+                                                <a href="" ui-sref="detalle_nota_credito({idNota:{{nota.idNotaCredito}}})">
+                                                    {{nota.idNotaCredito}}
+                                                </a>
+                                            </td>
                                             <td style="text-align: center;">{{nota.numero}}</td>
-                                            <td style="text-align: center">{{nota.estadoUso}}</td>
-                                            <td style="text-align: center">{{nota.fechaCreacion| date:'medium'}}</td>
-                                            <td style="text-align: center">
+                                            <td style="text-align: center; font-size: smaller;">{{nota.estadoUso}}</td>
+                                            <td style="text-align: center;font-size: smaller;">{{nota.fechaCreacion| date:'short'}}</td>
+                                            <td style="text-align: center;">
                                                 <div ng-hide="nota.idCliente">S/N</div>
                                                 <div ng-show="nota.idCliente">
                                                     {{nota.idCliente}}

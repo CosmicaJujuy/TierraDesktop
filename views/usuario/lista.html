@@ -1,7 +1,9 @@
 <!DOCTYPE html>
-
-<div class="col-lg-12">
-    <div layout="column" ng-cloak  md-theme="docs-dark" class="distribucion-panel">
+<div layout="column"
+     layout-margin
+     layout-xs="column">
+    <div layout="column" layout-xs="column" flex
+         ng-cloak  md-theme="docs-dark" class="distribucion-panel">
         <md-toolbar class="md-warn">
             <div class="md-toolbar-tools">
                 <h3 class="md-flex" style="width:100%; text-align: center;">
@@ -11,22 +13,19 @@
         </md-toolbar>
         <md-content flex layout-padding>
             <div class="table-responsive">
-                <table class="table table-hover table-striped light-table"
+                <table class="table table-hover table-striped light-table table-condensed"
                        ng-show="usuarios[0]" data-ng-init="listaUsuarios()"
-                       ng-table="tableUsuarios"
-                       style="background-color: white;">
+                       ng-table="tableUsuarios">
                     <thead id="headTableProductos">
                         <tr>
                             <th>ID</th>
                             <th>Nombre y Apellido</th>
                             <th>Rol</th>
                             <th>Sucursal</th>
-                            <th>E-mail</th>
                             <th>Telefono</th>
-                            <th>Domicilio Particular</th>                
-                            <th>Ultima conexion</th>
+                            <th>Domicilio Particular</th>
                             <th>Estado</th>
-                            <th>Acciones</th>
+                            <th style="width: 100px;">Acciones</th>
                         </tr>
                     </thead>
                     <tr ng-repeat="usuario in $data">
@@ -34,55 +33,50 @@
                         <td>{{usuario.nombre}} {{usuario.apellido}}</td>
                         <td style="font-size: smaller;">{{::usuario.roles.nombreRol}}</td>
                         <td style="font-size: smaller;">{{::usuario.usuarioSucursal.nombreSucursal}}</td>
-                        <td>{{usuario.email}}</td>
                         <td>{{usuario.telefono}}</td>
                         <td>{{usuario.domicilio}}</td>
-                        <td style="text-align: center;">
-                            <div style="font-size: smaller">{{usuario.ultimaConexion| date: 'medium'}}</div>
-                            <div ng-hide="usuario.ultimaConexion">NUNCA</div>
-                        </td>
                         <td style="text-align: center;">
                             <div ng-show="{{::usuario.estado}}">ACTIVO</div>
                             <div ng-hide="{{::usuario.estado}}">INACTIVO</div>
                         </td>
-                        <td>
-                    <center>
-                        <button type="button"
-                                ng-hide="usuario.estado"
-                                class="btn btn-success btn-xs"
-                                ng-click="cambiarEstado(usuario)">
-                            <md-tooltip md-direction="top" md-theme="default">
-                                Cambiar estado
-                            </md-tooltip>
-                            <span class="glyphicon glyphicon-check"></span>
-                        </button>
-                        <button type="button"
-                                ng-show="usuario.estado"
-                                class="btn btn-danger btn-xs"
-                                ng-click="cambiarEstado(usuario)">
-                            <md-tooltip md-direction="top" md-theme="default">
-                                Cambiar estado
-                            </md-tooltip>
-                            <span class="glyphicon glyphicon-remove-sign"></span>
-                        </button>
-                        <button type="button"
-                                ng-click="cambiarSucursal($event, usuario)"
-                                class="btn btn-success btn-xs">
-                            <md-tooltip md-direction="top" md-theme="default">
-                                Cambiar sucursal
-                            </md-tooltip>
-                            <span class="glyphicon glyphicon-user"></span>
-                        </button>
-                        <button type="button"
-                                ng-click="cambiarRol($vent, usuario);"
-                                class="btn btn-success btn-xs">
-                            <md-tooltip md-direction="top" md-theme="default">
-                                Cambiar rol
-                            </md-tooltip>
-                            <span class="glyphicon glyphicon-flag"></span>
-                        </button>                        
-                    </center>
-                    </td>
+                        <td style="width: 100px;">
+                            <div style="text-align: center;">
+                                <button type="button"
+                                        ng-hide="usuario.estado"
+                                        class="btn btn-success btn-xs"
+                                        ng-click="cambiarEstado(usuario)">
+                                    <md-tooltip md-direction="top" md-theme="default">
+                                        Cambiar estado
+                                    </md-tooltip>
+                                    <span class="glyphicon glyphicon-check"></span>
+                                </button>
+                                <button type="button"
+                                        ng-show="usuario.estado"
+                                        class="btn btn-danger btn-xs"
+                                        ng-click="cambiarEstado(usuario)">
+                                    <md-tooltip md-direction="top" md-theme="default">
+                                        Cambiar estado
+                                    </md-tooltip>
+                                    <span class="glyphicon glyphicon-remove-sign"></span>
+                                </button>
+                                <button type="button"
+                                        ng-click="cambiarSucursal($event, usuario)"
+                                        class="btn btn-success btn-xs">
+                                    <md-tooltip md-direction="top" md-theme="default">
+                                        Cambiar sucursal
+                                    </md-tooltip>
+                                    <span class="glyphicon glyphicon-user"></span>
+                                </button>
+                                <button type="button"
+                                        ng-click="cambiarRol($vent, usuario);"
+                                        class="btn btn-success btn-xs">
+                                    <md-tooltip md-direction="top" md-theme="default">
+                                        Cambiar rol
+                                    </md-tooltip>
+                                    <span class="glyphicon glyphicon-flag"></span>
+                                </button>                        
+                            </div>
+                        </td>
                     </tr>
                 </table>
             </div>

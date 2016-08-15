@@ -1,8 +1,14 @@
 <!DOCTYPE html>
-<!-- PANEL MODIFICAR USUARIO-->
-<div class="col-lg-2"></div>
-<div class="col-lg-8">
-    <div class="distribucion-panel" ng-show="user.username" data-ng-init="detailUsuario()">
+<div layout="row"
+     layout-align="center"
+     layout-xs="row">
+    <div class="distribucion-panel" 
+         flex-lg="60"
+         flex-md="90"
+         layout="column"
+         layout-xs="column"
+         ng-show="user.username" 
+         data-ng-init="detailUsuario()">
         <div ng-cloak>
             <!-- JUEGO DE TABS MODIFICAR USUARIO-->
             <md-content md-theme="docs-dark" style="min-height: 598px;">
@@ -30,9 +36,6 @@
                                             <div ng-message="md-maxlength">Nombre demasiado largo.</div>
                                             <div ng-message="required">Este campo no puede estar vacio.</div>
                                         </div>
-                                        <!-- ICONOS DE MENSAJE-->
-                                        <span ng-show="changePerfil.nombre.$valid" class="glyphicon glyphicon-ok form-control-feedback" ></span>
-                                        <span ng-show="changePerfil.nombre.$dirty && changePerfil.nombre.$invalid" class="glyphicon glyphicon-remove  form-control-feedback"></span>
                                     </md-input-container><!--FIN INPUT NOMBRE-->
                                     <!-- INPUT APELLIDO-->
                                     <md-input-container class="md-icon md-block">
@@ -52,9 +55,6 @@
                                             <div ng-message="md-maxlength">Apellido demasiado largo.</div>
                                             <div ng-message="required">Este campo no puede estar vacio.</div>
                                         </div>
-                                        <!-- ICONOS DE MENSAJE-->
-                                        <span ng-show="changePerfil.apellido.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
-                                        <span ng-show="changePerfil.apellido.$dirty && changePerfil.apellido.$invalid" class="glyphicon glyphicon-remove  form-control-feedback"></span>
                                     </md-input-container><!--FIN INPUT APELLIDO-->
                                     <!-- INPUT DNI-->
                                     <md-input-container class="md-icon md-block">
@@ -73,9 +73,6 @@
                                              ng-if='changePerfil.dni.$dirty || changePerfil.dni.$touched'>
                                             <div ng-message="required">Este campo no puede estar vacio.</div>                            
                                         </div>
-                                        <!--ICONOS DE MENSAJE -->
-                                        <span ng-show="changePerfil.dni.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
-                                        <span ng-show="changePerfil.dni.$dirty && changePerfil.dni.$invalid" class="glyphicon glyphicon-remove  form-control-feedback"></span>
                                     </md-input-container><!-- FIN DNI-->
                                     <!--INPUT DOMICILIO -->
                                     <md-input-container class="md-icon md-block">
@@ -83,8 +80,7 @@
                                         <label>Domicilio</label>
                                         <md-icon class="material-icons">&#xE88A;</md-icon>
                                         <!-- INPUT DOMICILIO-->
-                                        <input type="text" 
-                                               class="form-control"
+                                        <input type="text"
                                                minlength="8" 
                                                md-maxlength="25"
                                                placeholder="Domicilio" md-no-asterisk
@@ -96,9 +92,6 @@
                                             <div ng-message="md-maxlength">Dirección de domicilio demasiado larga.</div>
                                             <div ng-message="required">Este campo no puede estar vacio.</div>                            
                                         </div>
-                                        <!--ICONOS DE MENSAJE -->
-                                        <span ng-show="changePerfil.domicilio.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
-                                        <span ng-show="changePerfil.domicilio.$dirty && changePerfil.domicilio.$invalid" class="glyphicon glyphicon-remove  form-control-feedback"></span>
                                     </md-input-container><!-- FIN INPUT DOMICILIO-->                                        
                                     <!-- INPUT EMAIL-->
                                     <md-input-container class="md-icon md-block">
@@ -120,12 +113,9 @@
                                             <div ng-message="md-maxlength">Dirección de e-mail demasiado larga.</div>
                                             <div ng-message="required">Este campo no puede estar vacio.</div>                            
                                         </div>
-                                        <!--ICONOS DE MENSAJE -->
-                                        <span ng-show="changePerfil.email.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
-                                        <span ng-show="changePerfil.email.$dirty && changePerfil.email.$invalid" class="glyphicon glyphicon-remove  form-control-feedback"></span>
                                     </md-input-container><!-- FIN INPUT EMAIL-->
                                     <!--INPUT TELEFONO -->
-                                    <div layout="row">
+                                    <div layout="row" style="max-height: 84px;">
                                         <!-- INPUT FECHA-->
                                         <md-input-container class="md-icon md-block" flex>
                                             <!-- LABEL FECHA-->
@@ -145,9 +135,6 @@
                                                 <div ng-message="max">Fecha de nacimiento maxima hoy.</div>                          
                                                 <div ng-message="required">Este campo no puede estar vacio.</div>                            
                                             </div>
-                                            <!--ICONOS DE MENSAJE -->
-                                            <span ng-show="changePerfil.nacimiento.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
-                                            <span ng-show="changePerfil.nacimiento.$dirty && changePerfil.nacimiento.$invalid" class="glyphicon glyphicon-remove  form-control-feedback" style="padding-right: 65px;"></span>
                                         </md-input-container><!-- FIN INPUT FECHA-->
                                         <!-- INPUT TELEFONO-->
                                         <md-input-container class="md-icon md-block" flex>
@@ -167,13 +154,10 @@
                                                 <div ng-message="md-maxlenght">Número de telefono demasiado largo.</div>
                                                 <div ng-message="required">Este campo no puede estar vacio.</div>                            
                                             </div>
-                                            <!--ICONOS DE MENSAJE -->
-                                            <span ng-show="changePerfil.telefono.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
-                                            <span ng-show="changePerfil.telefono.$dirty && changePerfil.telefono.$invalid" class="glyphicon glyphicon-remove  form-control-feedback"></span>
                                         </md-input-container><!-- FIN INPUT TELEFONO-->   
                                     </div>
                                     <!-- BOTONES -->
-                                    <center>
+                                    <div flex style="text-align: center;">
                                         <!-- BOTON ACTUALIZAR-->
                                         <button ng-click="actualizarPerfil()"
                                                 class="btn btn-success"
@@ -184,26 +168,28 @@
                                                 class="btn btn-danger"
                                                 style="width: 79px;"
                                                 ui-sref="perfil">Salir</button>
-                                    </center><!-- FIN BOTONES-->
+                                    </div><!-- FIN BOTONES-->
                                 </form>                                
                             </div> 
                         </md-content>
                     </md-tab><!--FIN TAB MODIFICAR USUARIO-->
                     <!-- TAB ACTUALIZAR FOTO PERFIL-->
                     <md-tab label="Cambiar foto">
-                        <md-content class="md-padding">
-                            <center class="row">
+                        <md-content layout-margin>
+                            <div class="row" flex style="text-align: center;">
                                 <!-- FORMULARIO ACTUALIZAR FOTO-->
                                 <form name="fotoPerfil">
                                     <!-- IMAGEN DE PERFIL -->
-                                    <img ng-src="data:image/JPEG;base64,{{user.imagen}}" style="height: 50%; width: 50%; margin-top: 5%;">
-                                    <!-- INPUT ARCHIVO -->                                    
-                                    <input ngf-select 
-                                           ng-model="fileUpload" name="file" ngf-pattern="'image/*'"
-                                           ngf-accept="'image/*'"
-                                           ngf-max-size="2MB" ngf-min-height="100" type="file"
-                                           style="margin-bottom: 5%;" required/>
-                                    <img ngf-thumbnail="fileUpload || '/thumb.jpg'">
+                                    <img ng-src="data:image/JPEG;base64,{{user.imagen}}" 
+                                         style="max-height: 400px; max-width: 400px; margin-top: 1%;">
+                                    <!-- INPUT ARCHIVO -->
+                                    <center flex>
+                                        <input ngf-select 
+                                               ng-model="fileUpload" name="file" ngf-pattern="'image/*'"
+                                               ngf-accept="'image/*'"
+                                               ngf-max-size="2MB" ngf-min-height="100" type="file"
+                                               style="margin-bottom: 5%;" required/>
+                                    </center>
                                     <!-- BOTON ACTUALIZAR FOTO -->
                                     <button ng-click="actualizarFoto(fileUpload)"
                                             ng-disabled="fotoPerfil.$invalid" 
@@ -215,7 +201,7 @@
                                             style=" width: 79px;"
                                             ui-sref="perfil">Salir</button>
                                 </form>
-                            </center>
+                            </div>
                         </md-content>
                     </md-tab><!--FIN TAB ACTUALIZAR FOTO PERFIL-->
                     <!-- TAB ACTUALIZAR CONTRASEÑA -->
@@ -224,8 +210,7 @@
                             <div class="col-lg-2"></div>
                             <div class="col-lg-8">
                                 <!-- FORMULARIO ACTUALIZAR CONTRASEÑA -->
-                                <form class="form-horizontal"
-                                      name="changePassword">
+                                <form name="changePassword">
                                     <!-- INPUT CONTRASEÑA ACTUAL -->
                                     <md-input-container class="md-icon md-block">
                                         <!-- LABEL CONTRASEÑA ACTUAL-->
@@ -241,9 +226,6 @@
                                             <div ng-message="password">Contraseña invalida.</div>
                                             <div ng-message="required">Este campo no puede estar vacio.</div>                            
                                         </div>
-                                        <!--ICONOS DE MENSAJE -->
-                                        <span ng-show="changePassword.old.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
-                                        <span ng-show="changePassword.old.$dirty && changePassword.old.$invalid" class="glyphicon glyphicon-remove  form-control-feedback"></span>
                                     </md-input-container><!-- FIN INPUT CONTRASEÑA ACTUAL -->
                                     <!-- INPUT CONTRASEÑA NUEVA -->
                                     <md-input-container class="md-icon md-block">
@@ -262,9 +244,6 @@
                                             <div ng-message="minlength">Contraseña demasiado corta.</div>
                                             <div ng-message="required">Este campo no puede estar vacio.</div>                            
                                         </div>
-                                        <!--ICONOS DE MENSAJE -->
-                                        <span ng-show="changePassword.new.$valid && (userPw.new !== userPw.old)" class="glyphicon glyphicon-ok form-control-feedback"></span>
-                                        <span ng-show="changePassword.new.$dirty && changePassword.new.$invalid || ((userPw.new === userPw.old) && changePassword.new.$touched)" class="glyphicon glyphicon-remove  form-control-feedback"></span>
                                     </md-input-container><!-- FIN INPUT CONTRASEÑA NUEVA-->
                                     <!-- INPUT REPETIR CONTRASEÑA NUEVA -->
                                     <md-input-container class="md-icon md-block">
@@ -282,11 +261,8 @@
                                             <div ng-message="minlength">Contraseña demasiado corta.</div>
                                             <div ng-message="required">Este campo no puede estar vacio.</div>                            
                                         </div>
-                                        <!--ICONOS DE MENSAJE -->
-                                        <span ng-show="changePassword.rep.$valid && (userPw.rep === userPw.new)" class="glyphicon glyphicon-ok form-control-feedback"></span>
-                                        <span ng-show="changePassword.rep.$dirty && changePassword.rep.$invalid" class="glyphicon glyphicon-remove form-control-feedback"></span>
                                     </md-input-container>
-                                    <center style="margin-top: 10%;">
+                                    <div flex style="margin-top: 10%; text-align: center;">
                                         <button ng-click="cambiarPassword()"
                                                 class="btn btn-success" 
                                                 style=""
@@ -295,7 +271,7 @@
                                                 class="btn btn-danger"
                                                 style=" width: 79px;"
                                                 ui-sref="perfil">Salir</button>
-                                    </center>
+                                    </div>
                                 </form>
                             </div>                            
                             </form>
@@ -306,7 +282,6 @@
         </div>
     </div>
 </div>
-<div class="col-lg-2"></div>
 <script>
     var today = new Date();
     var dd = today.getDate();

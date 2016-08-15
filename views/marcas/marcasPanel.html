@@ -1,6 +1,9 @@
 <!DOCTYPE html>
-<div class="col-lg-12">
-    <div class="distribucion-panel">
+<div layout="column"
+     layout-margin
+     layout-xs="column">
+    <div class="distribucion-panel"
+         layout="column" layout-xs="column" flex>
         <div ng-cloak>
             <md-content  md-theme="docs-dark" style="min-height: 598px;">
                 <md-tabs md-dynamic-height md-border-bottom>
@@ -64,7 +67,6 @@
                                             <md-icon class="material-icons">&#xE150;</md-icon>
                                             <input type="text" 
                                                    placeholder="Ingrese nombre de la marca"
-                                                   class="form-control"
                                                    maxlength="20"
                                                    minlength="4"
                                                    ng-model="editMarca.nombreMarca" name="marca" required/>
@@ -74,9 +76,6 @@
                                                 <div ng-message="md-maxlength">Nombre demasiado largo.</div>
                                                 <div ng-message="required">Este campo no puede estar vacio.</div>
                                             </div>
-                                            <!-- ICONOS DE MENSAJE-->
-                                            <span ng-show="updateMarca.marca.$dirty && updateMarca.marca.$valid" class="glyphicon glyphicon-ok form-control-feedback" ></span>
-                                            <span ng-show="updateMarca.marca.$dirty && updateMarca.marca.$invalid" class="glyphicon glyphicon-remove  form-control-feedback"></span>
                                         </md-input-container>                                   
                                         <div class="md-block" flex>
                                             <center ng-controller="MarcaController">
@@ -96,13 +95,12 @@
                         <md-content class="md-padding" layout="row">
                             <div flex="20"></div>
                             <div flex="60">
-                                <form name="nuevaMarca" class="form-horizontal">
+                                <form name="nuevaMarca">
                                     <md-input-container class="md-block md-icon" flex>
                                         <label>Nombre marca</label>
                                         <md-icon class="material-icons">&#xE150;</md-icon>
                                         <input type="text" 
                                                placeholder="Ingrese nombre de la marca"
-                                               class="form-control"
                                                maxlength="20"
                                                minlength="4"
                                                ng-model="_marca.nombreMarca" name="marca" required/>
@@ -112,19 +110,15 @@
                                             <div ng-message="md-maxlength">Nombre demasiado largo.</div>
                                             <div ng-message="required">Este campo no puede estar vacio.</div>
                                         </div>
-                                        <!-- ICONOS DE MENSAJE-->
-                                        <span ng-show="nuevaMarca.marca.$dirty && nuevaMarca.marca.$valid" class="glyphicon glyphicon-ok form-control-feedback" ></span>
-                                        <span ng-show="nuevaMarca.marca.$dirty && nuevaMarca.marca.$invalid" class="glyphicon glyphicon-remove  form-control-feedback"></span>
-
                                     </md-input-container>                                   
-                                    <div class="md-block" flex>
-                                        <center>
-                                            <button ng-click="agrearMarca(_marca)" 
-                                                    type="submit"
-                                                    class="btn btn-success"
-                                                    id="btnAgregarCategoria"
-                                                    ng-disabled="nuevaMarca.$invalid">Agregar</button>  
-                                        </center>
+                                    <div class="md-block" flex style="text-align: center;">
+                                        <button ng-click="agrearMarca(_marca)" 
+                                                type="submit"
+                                                class="btn btn-success"
+                                                id="btnAgregarCategoria"
+                                                ng-disabled="nuevaMarca.$invalid">
+                                            Agregar
+                                        </button>
                                     </div>
                                 </form>
                             </div>                    

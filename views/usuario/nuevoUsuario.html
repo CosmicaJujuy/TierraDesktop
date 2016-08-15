@@ -1,6 +1,9 @@
 <!DOCTYPE html>
-<div class="col-lg-12" style="margin-top: 40px;">
-    <md-content flex layout-padding md-theme="docs-dark">
+<div layout="column"
+     layout-margin
+     layout-xs="column">
+    <md-content layout="column" layout-xs="column"
+                flex layout-padding md-theme="docs-dark">
         <form name="registrarUsuarios">
             <div layout="row">
                 <md-input-container class="md-icon md-block" flex>
@@ -18,9 +21,6 @@
                         <div ng-message="md-maxlength">Nombre demasiado largo.</div>
                         <div ng-message="required">Este campo no puede estar vacio.</div>
                     </div>
-                    <!-- ICONOS DE MENSAJE-->
-                    <span ng-show="registrarUsuarios.nombre.$valid" class="glyphicon glyphicon-ok form-control-feedback" ></span>
-                    <span ng-show="registrarUsuarios.nombre.$dirty && registrarUsuarios.nombre.$invalid" class="glyphicon glyphicon-remove  form-control-feedback"></span>
                 </md-input-container>
                 <md-input-container class="md-icon md-block" flex>
                     <!-- LABEL TELEFONO-->
@@ -39,9 +39,6 @@
                         <div ng-message="md-maxlenght">Número de telefono demasiado largo.</div>
                         <div ng-message="required">Este campo no puede estar vacio.</div>                            
                     </div>
-                    <!--ICONOS DE MENSAJE -->
-                    <span ng-show="registrarUsuarios.telefono.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
-                    <span ng-show="c.telefono.$dirty && registrarUsuarios.telefono.$invalid" class="glyphicon glyphicon-remove  form-control-feedback"></span>
                 </md-input-container>
             </div>
             <div layout="row">
@@ -62,9 +59,6 @@
                         <div ng-message="md-maxlength">Apellido demasiado largo.</div>
                         <div ng-message="required">Este campo no puede estar vacio.</div>
                     </div>
-                    <!-- ICONOS DE MENSAJE-->
-                    <span ng-show="registrarUsuarios.apellido.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
-                    <span ng-show="registrarUsuarios.apellido.$dirty && registrarUsuarios.apellido.$invalid" class="glyphicon glyphicon-remove  form-control-feedback"></span>
                 </md-input-container>
                 <md-input-container class="md-icon md-block" flex>
                     <!-- LABEL EMAIL-->
@@ -85,9 +79,6 @@
                         <div ng-message="md-maxlength">Dirección de e-mail demasiado larga.</div>
                         <div ng-message="required">Este campo no puede estar vacio.</div>                            
                     </div>
-                    <!--ICONOS DE MENSAJE -->
-                    <span ng-show="registrarUsuarios.email.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
-                    <span ng-show="registrarUsuarios.email.$dirty && registrarUsuarios.email.$invalid" class="glyphicon glyphicon-remove  form-control-feedback"></span>
                 </md-input-container>
             </div>
             <div layout="row">
@@ -107,9 +98,6 @@
                          ng-if='registrarUsuarios.dni.$dirty || registrarUsuarios.dni.$touched'>
                         <div ng-message="required">Este campo no puede estar vacio.</div>
                     </div>
-                    <!--ICONOS DE MENSAJE -->
-                    <span ng-show="registrarUsuarios.dni.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
-                    <span ng-show="registrarUsuarios.dni.$dirty && registrarUsuarios.dni.$invalid" class="glyphicon glyphicon-remove  form-control-feedback"></span>
                 </md-input-container>
                 <div layout="row" flex>
                     <md-input-container class="md-icon md-block" flex>
@@ -130,9 +118,6 @@
                             <div ng-message="md-maxlength">El nombre de usuario es demasiado largo.</div>
                             <div ng-message="required">Este campo no puede estar vacio.</div>                            
                         </div>
-                        <!--ICONOS DE MENSAJE -->
-                        <span ng-show="registrarUsuarios.username.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
-                        <span ng-show="registrarUsuarios.username.$dirty && registrarUsuarios.username.$invalid" class="glyphicon glyphicon-remove  form-control-feedback"></span>
                     </md-input-container>
                     <md-input-container class="md-icon md-block" flex>
                         <label>Contraseña</label>
@@ -153,9 +138,6 @@
                             <div ng-message="md-maxlength">Contraseña demasiado larga.</div>
                             <div ng-message="required">Este campo no puede estar vacio.</div>                            
                         </div>
-                        <!--ICONOS DE MENSAJE -->
-                        <span ng-show="registrarUsuarios.password.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
-                        <span ng-show="registrarUsuarios.password.$dirty && registrarUsuarios.password.$invalid" class="glyphicon glyphicon-remove  form-control-feedback"></span>
                     </md-input-container>
                 </div>
             </div>
@@ -177,9 +159,6 @@
                         <div ng-message="md-maxlength">Dirección de domicilio demasiado larga.</div>
                         <div ng-message="required">Este campo no puede estar vacio.</div>                            
                     </div>
-                    <!--ICONOS DE MENSAJE -->
-                    <span ng-show="registrarUsuarios.domicilio.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
-                    <span ng-show="registrarUsuarios.domicilio.$dirty && registrarUsuarios.domicilio.$invalid" class="glyphicon glyphicon-remove  form-control-feedback"></span>
                 </md-input-container>
                 <md-input-container class="md-icon md-block" flex data-ng-init="listaRoles()">
                     <label>Rol</label>
@@ -194,9 +173,6 @@
                          ng-if='registrarUsuarios.rol.$dirty || registrarUsuarios.rol.$touched'>
                         <div ng-message="required">Este campo no puede estar vacio.</div>
                     </div>
-                    <!-- ICONOS DE MENSAJE-->
-                    <span ng-show="registrarUsuarios.rol.$dirty && registrarUsuarios.rol.$valid" class="glyphicon glyphicon-ok form-control-feedback" ></span>
-                    <span ng-show="registrarUsuarios.rol.$dirty && registrarUsuarios.rol.$invalid" class="glyphicon glyphicon-remove  form-control-feedback"></span>
                 </md-input-container>
             </div>
             <div layout="row">
@@ -218,9 +194,6 @@
                         <div ng-message="max">Fecha de nacimiento maxima hoy.</div>   
                         <div ng-message="required">Este campo no puede estar vacio.</div>                            
                     </div>
-                    <!--ICONOS DE MENSAJE -->
-                    <span ng-show="registrarUsuarios.nacimiento.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
-                    <span ng-show="registrarUsuarios.nacimiento.$dirty && registrarUsuarios.nacimiento.$invalid" class="glyphicon glyphicon-remove  form-control-feedback" style="padding-right: 65px;"></span>
                 </md-input-container>
                 <md-input-container class="md-icon md-block" flex data-ng-init="listaSucursales()">
                     <label>Sucursal</label>
@@ -235,9 +208,6 @@
                          ng-if='registrarUsuarios.sucursal.$dirty || registrarUsuarios.sucursal.$touched'>
                         <div ng-message="required">Este campo no puede estar vacio.</div>
                     </div>
-                    <!-- ICONOS DE MENSAJE-->
-                    <span ng-show="registrarUsuarios.sucursal.$dirty && registrarUsuarios.sucursal.$valid" class="glyphicon glyphicon-ok form-control-feedback" ></span>
-                    <span ng-show="registrarUsuarios.sucursal.$dirty && registrarUsuarios.sucursal.$invalid" class="glyphicon glyphicon-remove  form-control-feedback"></span>
                 </md-input-container>
             </div>
             <!-- BOTON AGREGAR USUARIO-->

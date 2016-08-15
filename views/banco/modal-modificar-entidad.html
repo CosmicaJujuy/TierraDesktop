@@ -25,16 +25,13 @@
                         <div ng-message="md-maxlength">Nombre demasiado largo.</div>
                         <div ng-message="required">Este campo no puede estar vacio.</div>
                     </div>
-                    <!-- ICONOS DE MENSAJE-->
-                    <span ng-show="updateEntidad.nombre.$valid" class="glyphicon glyphicon-ok form-control-feedback" ></span>
-                    <span ng-show="updateEntidad.nombre.$dirty && updateEntidad.nombre.$invalid" class="glyphicon glyphicon-remove  form-control-feedback"></span>
                 </md-input-container>
                 <md-input-container class="md-block md-icon" flex>
                     <label>Dirección</label>
                     <md-icon class="material-icons">&#xE88A;</md-icon>
                     <input ng-model="ngDialogData.entidad.direccionEntidad"
-                           maxlengh="30"
-                           md-maxlengh="30"
+                           maxlength="30"
+                           md-maxlength="30"
                            minlength="4"
                            type="text" required
                            placeholder="Dirección de la entidad."
@@ -46,16 +43,13 @@
                         <div ng-message="md-maxlength">Dirección demasiado larga.</div>
                         <div ng-message="required">Este campo no puede estar vacio.</div>
                     </div>
-                    <!-- ICONOS DE MENSAJE-->
-                    <span ng-show="updateEntidad.direccion.$valid" class="glyphicon glyphicon-ok form-control-feedback" ></span>
-                    <span ng-show="updateEntidad.direccion.$dirty && updateEntidad.direccion.$invalid" class="glyphicon glyphicon-remove  form-control-feedback"></span>
                 </md-input-container>
                 <md-input-container class="md-block md-icon" flex>
                     <label>Teléfono</label>
                     <md-icon class="material-icons">&#xE0CD;</md-icon>
                     <input ng-model="ngDialogData.entidad.telefonoEntidad"
-                           maxlengh="20"
-                           md-maxlengh="20"
+                           maxlength="20"
+                           md-maxlength="20"
                            type="tel" required
                            placeholder="Teléfono de la entidad."
                            name="telefono"/>
@@ -67,9 +61,6 @@
                         <div ng-message="required">Este campo no puede estar vacio.</div>
                         <div ng-message="tel">Número de telefono invalido.</div>
                     </div>
-                    <!-- ICONOS DE MENSAJE-->
-                    <span ng-show="updateEntidad.telefono.$valid" class="glyphicon glyphicon-ok form-control-feedback" ></span>
-                    <span ng-show="updateEntidad.telefono.$dirty && updateEntidad.telefono.$invalid" class="glyphicon glyphicon-remove  form-control-feedback"></span>
                 </md-input-container>            
                 <div flex style="text-align: center;">
                     <button class="btn btn-success"

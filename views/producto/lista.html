@@ -1,6 +1,9 @@
 <!DOCTYPE html>
-<div class="col-lg-12">
-    <div class="distribucion-panel">
+<div layout="column"
+     layout-margin
+     layout-xs="column">
+    <div class="distribucion-panel"
+         layout="column" layout-xs="column" flex>
         <div ng-cloak>
             <md-content md-theme="docs-dark" style="min-height: 598px;">
                 <md-tabs md-dynamic-height md-border-bottom>
@@ -26,11 +29,15 @@
                                             ng-class="{ danger: stockMinimo(producto) }"                
                                             >
                                             <td style="text-align: center">{{producto.idProducto}}</td>
-                                            <td style="text-align: center"><a href="" ui-sref="producto({idProducto:{{producto.idProducto}}})">{{producto.descripcion}}</a></td>
-                                            <td style="text-align: center">{{producto.marcas.nombreMarca}}</td>
+                                            <td style="text-align: center; font-size: small;">
+                                                <a href="" ui-sref="producto({idProducto:{{producto.idProducto}}})">
+                                                    {{producto.descripcion}}
+                                                </a>
+                                            </td>
+                                            <td style="text-align: center; font-size: small;">{{producto.marcas.nombreMarca}}</td>
                                             <td style="text-align: center">{{producto.cantidadTotal}}</td>
                                             <td style="text-align: center">{{producto.talla| uppercase}}</td>
-                                            <td style="text-align: center">{{producto.colorProducto| uppercase}}</td>                
+                                            <td style="text-align: center; font-size: small;">{{producto.colorProducto| uppercase}}</td>                
                                         </tr>
                                     </tbody>
                                 </table>
@@ -65,8 +72,9 @@
                                         </tr>
                                     </thead>
                                     <tbody ng-repeat="facturaProducto in $data">
-                                        <tr
-                                            ng-class="{danger: facturaProducto.carga === true, success: facturaProducto.carga === false}">
+                                        <tr ng-class="{danger: facturaProducto.carga === true,
+                                                    info: facturaProducto.carga === false && facturaProducto.estadoLocal !== 'REPARTIDO',
+                                                success: facturaProducto.carga === false && facturaProducto.estadoLocal === 'REPARTIDO'}">
                                             <td style="text-align: center">{{facturaProducto.idFacturaProducto}}</td>
                                             <td style="text-align: center">
                                                 <a ui-sref="panel_factura_producto({idFactura: facturaProducto.idFacturaProducto})"
@@ -74,7 +82,12 @@
                                             </td>
                                             <td style="text-align: center">{{facturaProducto.proveedor.nombreProveedor}}</td>
                                             <td style="text-align: center">{{facturaProducto.monto|currency}}</td>
-                                            <td style="text-align: center">{{facturaProducto.estadoLocal}}</td>
+                                            <td style="text-align: center">
+                                                <span style="color:#3c763d;"
+                                                      ng-if="facturaProducto.estadoLocal === 'REPARTIDO'"
+                                                      class="glyphicon glyphicon-ok"></span>
+                                                {{facturaProducto.estadoLocal}}
+                                            </td>
                                             <td style="text-align: center">
                                                 <div ng-show="facturaProducto.carga">INICIADA</div>                                
                                                 <div ng-hide="facturaProducto.carga">FINALIZADA</div> 

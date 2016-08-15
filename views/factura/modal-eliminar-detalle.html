@@ -28,9 +28,6 @@
                          ng-if='eliminarDetalle.dni.$dirty || eliminarDetalle.dni.$touched'>
                         <div ng-message="required">Este campo no puede estar vacio.</div>
                     </div>
-                    <!--ICONOS DE MENSAJE -->
-                    <span ng-show="eliminarDetalle.dni.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
-                    <span ng-show="eliminarDetalle.dni.$dirty && eliminarDetalle.dni.$invalid" class="glyphicon glyphicon-remove  form-control-feedback"></span>
                 </md-input-container>
                 <md-input-container flex class="md-block md-icon">
                     <label>Contraseña</label>
@@ -46,9 +43,6 @@
                         <div ng-message="required">Este campo no puede estar vacio.</div>
                         <div ng-message="minlength">Contraseña demasiado corta.</div>
                     </div>
-                    <!--ICONOS DE MENSAJE -->
-                    <span ng-show="eliminarDetalle.password.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
-                    <span ng-show="eliminarDetalle.password.$dirty && eliminarDetalle.dni.$invalid" class="glyphicon glyphicon-remove  form-control-feedback"></span>
                 </md-input-container>
                 <div layout layout-align="center center">
                     <button 

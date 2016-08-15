@@ -1,208 +1,218 @@
 <!DOCTYPE html>
-<div class="col-lg-3">
-    <div layout="column" ng-cloak
-         class="distribucion-panel"
-         ng-controller="DistribucionController"
-         data-ng-init="detallesFacturaProductoDistribucion()">
-        <md-toolbar class="md-warn" md-theme="docs-dark">
-            <div class="md-toolbar-tools">
-                <h4 class="md-flex" style="width:100%; text-align: center;">
-                    Datos de la factura
-                </h4>
-            </div>
-        </md-toolbar>
-        <md-content flex layout="row" md-theme="docs-dark">
-            <div class="md-padding" flex>
-                <form>
-                    <div layout="row" flex class="padd">
-                        <label flex>Número: </label>
-                        <div flex>{{detalle.numeroFactura}}</div>                                
-                    </div>
-                    <div layout="row" flex class="padd">
-                        <label flex>Fecha: </label>
-                        <div flex>{{detalle.fechaFactura}}</div>                                
-                    </div>
-                    <div layout="row" flex class="padd">
-                        <label flex>Proveedor: </label>
-                        <div flex>{{detalle.proveedor.nombreProveedor}}</div>                                
-                    </div>
-                    <div layout="row" flex class="padd">
-                        <label flex>Monto: </label>
-                        <div flex>{{detalle.monto|currency}}</div>                                
-                    </div>
-                    <div layout="row" flex class="padd">
-                        <label flex>Estado: </label>
-                        <div flex>{{detalle.estadoLocal}}</div>                                
-                    </div>
-                    <div layout="row" flex class="padd">
-                        <label flex>Carga: </label>
-                        <div flex ng-show="detalle.carga">INICIADA</div>                                
-                        <div flex ng-hide="detalle.carga">FINALIZADA</div>                                
-                    </div>
-                    <div layout="column" flex style="text-align: center;" class="padd">
-                        <label flex>Observaciones</label>
-                        <div flex>{{detalle.observaciones}}</div>
-                        <div flex ng-hide="detalle.observaciones">NINGUNA</div>                        
-                    </div>
-                    <div flex style="text-align: center;"  class="padd">
-                        <button class="btn btn-success btn-block"
-                                type="button"
-                                ng-click="confirmarFinalizarDistribucion(detalle)">
-                            <md-tooltip md-direction="top" md-theme="default">
-                                Finalizar distribución de productos
-                            </md-tooltip>
-                            Finalizar
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </md-content>
-    </div>
-</div>
-<div class="col-lg-9">
-    <div class="distribucion-panel">
-        <div ng-cloak>
-            <md-content md-theme="docs-dark" style="min-height: 598px;">
-                <md-tabs md-dynamic-height md-border-bottom>
-                    <md-tab label="Lista de productos">
-                        <md-content class="md-padding">
-                            <div class="table-responsive"
-                                 ng-controller="ProductoController">
-                                <table class="table table-striped table-hover table-condensed light-table"
-                                       ng-table="tableProductosFactura"
-                                       data-ng-init="listaProductosFactura()">
-                                    <thead id="headTableProductos">
-                                        <tr>
-                                            <th style="text-align: center">ID</th>
-                                            <th style="text-align: center">Descripcion</th> 
-                                            <th style="text-align: center">Cantidad</th> 
-                                            <th style="text-align: center">Talla</th> 
-                                            <th style="text-align: center">Color</th> 
-                                            <th style="text-align: center">Distribución</th> 
-                                            <th style="text-align: center">Acciones</th> 
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr ng-repeat="producto in $data| orderBy: 'cantidadTotal'"
-                                            ng-class="{ success: producto.estadoDistribucion }">
-                                            <td style="text-align: center">{{producto.idProducto}}</td>
-                                            <td style="text-align: center"><a href="" ui-sref="producto({idProducto:{{producto.idProducto}}})">{{producto.descripcion}}</a></td>
-                                            <td style="text-align: center">{{producto.cantidadTotal}}</td>
-                                            <td style="text-align: center">{{producto.talla| uppercase}}</td>
-                                            <td style="text-align: center">{{producto.colorProducto| uppercase}}</td>                
-                                            <td style="text-align: center">
-                                                <div ng-show="producto.estadoDistribucion">REPARTIDO</div>
-                                                <div ng-hide="producto.estadoDistribucion">SIN REPARTIR</div>
-                                            </td>                
-                                            <td style="text-align: center">
-                                                <button class="btn btn-xs btn-success"
-                                                        type="button"
-                                                        ng-disabled="{{producto.estadoDistribucion}}"
-                                                        ng-click="distribuirModal(producto)">
-                                                    <md-tooltip md-direction="top" md-theme="default">
-                                                        Distribuir producto
-                                                    </md-tooltip>
-                                                    <span class="glyphicon glyphicon-random"></span>
-                                                </button>
-                                            </td>                
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </md-content>
-                    </md-tab>
-                    <md-tab label="Tierra de colores">
-                        <md-content class="md-padding">
-                            <div class="table-responsive">
-                                <table class="table table-striped table-hover table-condensed light-table"
-                                       ng-table="tableFacturaTierra"
-                                       data-ng-init="listaFacturaTierra()">
-                                    <thead id="headTableProductos">
-                                        <tr>
-                                            <th style="text-align: center">ID</th>
-                                            <th style="text-align: center">Descripcion</th> 
-                                            <th style="text-align: center">Cantidad</th> 
-                                            <th style="text-align: center">Talla</th> 
-                                            <th style="text-align: center">Color</th> 
-                                            <th style="text-align: center">Fecha distribución</th> 
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr ng-repeat="producto in $data">
-                                            <td style="text-align: center">{{producto.idStock}}</td>
-                                            <td style="text-align: center"><a href="" ui-sref="^.producto-detalle({idProducto:{{producto.idProducto.idProducto}}})">{{producto.idProducto.descripcion}}</a></td>
-                                            <td style="text-align: center">{{producto.cantidad}}</td>
-                                            <td style="text-align: center">{{producto.idProducto.talla| uppercase}}</td>
-                                            <td style="text-align: center">{{producto.idProducto.colorProducto| uppercase}}</td>                
-                                            <td style="text-align: center">{{producto.fechaCreacion}}</td>                
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </md-content>
-                    </md-tab>
-                    <md-tab label="Bebelandia">
-                        <md-content class="md-padding">
-                            <div class="table-responsive">
-                                <table class="table table-striped table-hover table-condensed light-table"
-                                       ng-table="tableFacturaBebelandia"
-                                       data-ng-init="listaFacturaBebelandia()">
-                                    <thead id="headTableProductos">
-                                        <tr>
-                                            <th style="text-align: center">ID</th>
-                                            <th style="text-align: center">Descripcion</th> 
-                                            <th style="text-align: center">Cantidad</th> 
-                                            <th style="text-align: center">Talla</th> 
-                                            <th style="text-align: center">Color</th> 
-                                            <th style="text-align: center">Fecha distribución</th> 
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr ng-repeat="producto in $data">
-                                            <td style="text-align: center">{{producto.idStock}}</td>
-                                            <td style="text-align: center"><a href="" ui-sref="^.producto-detalle({idProducto:{{producto.idProducto.idProducto}}})">{{producto.idProducto.descripcion}}</a></td>
-                                            <td style="text-align: center">{{producto.cantidad}}</td>
-                                            <td style="text-align: center">{{producto.idProducto.talla| uppercase}}</td>
-                                            <td style="text-align: center">{{producto.idProducto.colorProducto| uppercase}}</td>                
-                                            <td style="text-align: center">{{producto.fechaCreacion}}</td>                
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </md-content>
-                    </md-tab>
-                    <md-tab label="Libertador">
-                        <md-content class="md-padding">
-                            <div class="table-responsive">
-                                <table class="table table-striped table-hover table-condensed light-table"
-                                       ng-table="tableFacturaLibertador"
-                                       data-ng-init="listaFacturaLibertador()">
-                                    <thead id="headTableProductos">
-                                        <tr>
-                                            <th style="text-align: center">ID</th>
-                                            <th style="text-align: center">Descripcion</th> 
-                                            <th style="text-align: center">Cantidad</th> 
-                                            <th style="text-align: center">Talla</th> 
-                                            <th style="text-align: center">Color</th> 
-                                            <th style="text-align: center">Fecha distribución</th> 
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr ng-repeat="producto in $data">
-                                            <td style="text-align: center">{{producto.idStock}}</td>
-                                            <td style="text-align: center"><a href="" ui-sref="^.producto-detalle({idProducto:{{producto.idProducto.idProducto}}})">{{producto.idProducto.descripcion}}</a></td>
-                                            <td style="text-align: center">{{producto.cantidad}}</td>
-                                            <td style="text-align: center">{{producto.idProducto.talla| uppercase}}</td>
-                                            <td style="text-align: center">{{producto.idProducto.colorProducto| uppercase}}</td>                
-                                            <td style="text-align: center">{{producto.fechaCreacion}}</td>                
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </md-content>
-                    </md-tab>
-                </md-tabs>
+<div layout="row"
+     layout-margin
+     layout-xs="row">
+    <div flex-lg="25"
+         flex-md="30"
+         layout="column"
+         layout-xs="column">
+        <div layout="column" ng-cloak
+             class="distribucion-panel"
+             ng-controller="DistribucionController"
+             data-ng-init="detallesFacturaProductoDistribucion()">
+            <md-toolbar class="md-warn" md-theme="docs-dark">
+                <div class="md-toolbar-tools">
+                    <h4 class="md-flex" style="width:100%; text-align: center;">
+                        Datos de la factura
+                    </h4>
+                </div>
+            </md-toolbar>
+            <md-content flex layout="row" md-theme="docs-dark">
+                <div class="md-padding" flex>
+                    <form>
+                        <div layout="row" flex class="padd">
+                            <label flex>Número: </label>
+                            <div flex>{{detalle.numeroFactura}}</div>                                
+                        </div>
+                        <div layout="row" flex class="padd">
+                            <label flex>Fecha: </label>
+                            <div flex>{{detalle.fechaFactura}}</div>                                
+                        </div>
+                        <div layout="row" flex class="padd">
+                            <label flex>Proveedor: </label>
+                            <div flex>{{detalle.proveedor.nombreProveedor}}</div>                                
+                        </div>
+                        <div layout="row" flex class="padd">
+                            <label flex>Monto: </label>
+                            <div flex>{{detalle.monto|currency}}</div>                                
+                        </div>
+                        <div layout="row" flex class="padd">
+                            <label flex>Estado: </label>
+                            <div flex>{{detalle.estadoLocal}}</div>                                
+                        </div>
+                        <div layout="row" flex class="padd">
+                            <label flex>Carga: </label>
+                            <div flex ng-show="detalle.carga">INICIADA</div>                                
+                            <div flex ng-hide="detalle.carga">FINALIZADA</div>                                
+                        </div>
+                        <div layout="column" flex style="text-align: center;" class="padd">
+                            <label flex>Observaciones</label>
+                            <div flex>{{detalle.observaciones}}</div>
+                            <div flex ng-hide="detalle.observaciones">NINGUNA</div>                        
+                        </div>
+                        <div flex style="text-align: center;"  class="padd">
+                            <button class="btn btn-success btn-block"
+                                    type="button"
+                                    ng-click="confirmarFinalizarDistribucion(detalle)">
+                                <md-tooltip md-direction="top" md-theme="default">
+                                    Finalizar distribución de productos
+                                </md-tooltip>
+                                Finalizar
+                            </button>
+                        </div>
+                    </form>
+                </div>
             </md-content>
+        </div>
+    </div>
+    <div flex-lg="75"
+         flex-md="70"
+         layout="column"
+         layout-xs="column">
+        <div class="distribucion-panel">
+            <div ng-cloak>
+                <md-content md-theme="docs-dark" style="min-height: 598px;">
+                    <md-tabs md-dynamic-height md-border-bottom>
+                        <md-tab label="Lista de productos">
+                            <md-content class="md-padding">
+                                <div class="table-responsive"
+                                     ng-controller="ProductoController">
+                                    <table class="table table-striped table-hover table-condensed light-table"
+                                           ng-table="tableProductosFactura"
+                                           data-ng-init="listaProductosFactura()">
+                                        <thead id="headTableProductos">
+                                            <tr>
+                                                <th style="text-align: center">ID</th>
+                                                <th style="text-align: center">Descripcion</th> 
+                                                <th style="text-align: center">Cantidad</th> 
+                                                <th style="text-align: center">Talla</th> 
+                                                <th style="text-align: center">Color</th> 
+                                                <th style="text-align: center">Distribución</th> 
+                                                <th style="text-align: center">Acciones</th> 
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="producto in $data| orderBy: 'cantidadTotal'"
+                                                ng-class="{ success: producto.estadoDistribucion }">
+                                                <td style="text-align: center">{{producto.idProducto}}</td>
+                                                <td style="text-align: center"><a href="" ui-sref="producto({idProducto:{{producto.idProducto}}})">{{producto.descripcion}}</a></td>
+                                                <td style="text-align: center">{{producto.cantidadTotal}}</td>
+                                                <td style="text-align: center">{{producto.talla| uppercase}}</td>
+                                                <td style="text-align: center">{{producto.colorProducto| uppercase}}</td>                
+                                                <td style="text-align: center">
+                                                    <div ng-show="producto.estadoDistribucion">REPARTIDO</div>
+                                                    <div ng-hide="producto.estadoDistribucion">SIN REPARTIR</div>
+                                                </td>                
+                                                <td style="text-align: center">
+                                                    <button class="btn btn-xs btn-success"
+                                                            type="button"
+                                                            ng-disabled="{{producto.estadoDistribucion}}"
+                                                            ng-click="distribuirModal(producto)">
+                                                        <md-tooltip md-direction="top" md-theme="default">
+                                                            Distribuir producto
+                                                        </md-tooltip>
+                                                        <span class="glyphicon glyphicon-random"></span>
+                                                    </button>
+                                                </td>                
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </md-content>
+                        </md-tab>
+                        <md-tab label="Tierra de colores">
+                            <md-content class="md-padding">
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-hover table-condensed light-table"
+                                           ng-table="tableFacturaTierra"
+                                           data-ng-init="listaFacturaTierra()">
+                                        <thead id="headTableProductos">
+                                            <tr>
+                                                <th style="text-align: center">ID</th>
+                                                <th style="text-align: center">Descripcion</th> 
+                                                <th style="text-align: center">Cantidad</th> 
+                                                <th style="text-align: center">Talla</th> 
+                                                <th style="text-align: center">Color</th> 
+                                                <th style="text-align: center">Fecha distribución</th> 
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="producto in $data">
+                                                <td style="text-align: center">{{producto.idStock}}</td>
+                                                <td style="text-align: center"><a href="" ui-sref="^.producto-detalle({idProducto:{{producto.idProducto.idProducto}}})">{{producto.idProducto.descripcion}}</a></td>
+                                                <td style="text-align: center">{{producto.cantidad}}</td>
+                                                <td style="text-align: center">{{producto.idProducto.talla| uppercase}}</td>
+                                                <td style="text-align: center">{{producto.idProducto.colorProducto| uppercase}}</td>                
+                                                <td style="text-align: center">{{producto.fechaCreacion}}</td>                
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </md-content>
+                        </md-tab>
+                        <md-tab label="Bebelandia">
+                            <md-content class="md-padding">
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-hover table-condensed light-table"
+                                           ng-table="tableFacturaBebelandia"
+                                           data-ng-init="listaFacturaBebelandia()">
+                                        <thead id="headTableProductos">
+                                            <tr>
+                                                <th style="text-align: center">ID</th>
+                                                <th style="text-align: center">Descripcion</th> 
+                                                <th style="text-align: center">Cantidad</th> 
+                                                <th style="text-align: center">Talla</th> 
+                                                <th style="text-align: center">Color</th> 
+                                                <th style="text-align: center">Fecha distribución</th> 
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="producto in $data">
+                                                <td style="text-align: center">{{producto.idStock}}</td>
+                                                <td style="text-align: center"><a href="" ui-sref="^.producto-detalle({idProducto:{{producto.idProducto.idProducto}}})">{{producto.idProducto.descripcion}}</a></td>
+                                                <td style="text-align: center">{{producto.cantidad}}</td>
+                                                <td style="text-align: center">{{producto.idProducto.talla| uppercase}}</td>
+                                                <td style="text-align: center">{{producto.idProducto.colorProducto| uppercase}}</td>                
+                                                <td style="text-align: center">{{producto.fechaCreacion}}</td>                
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </md-content>
+                        </md-tab>
+                        <md-tab label="Libertador">
+                            <md-content class="md-padding">
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-hover table-condensed light-table"
+                                           ng-table="tableFacturaLibertador"
+                                           data-ng-init="listaFacturaLibertador()">
+                                        <thead id="headTableProductos">
+                                            <tr>
+                                                <th style="text-align: center">ID</th>
+                                                <th style="text-align: center">Descripcion</th> 
+                                                <th style="text-align: center">Cantidad</th> 
+                                                <th style="text-align: center">Talla</th> 
+                                                <th style="text-align: center">Color</th> 
+                                                <th style="text-align: center">Fecha distribución</th> 
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="producto in $data">
+                                                <td style="text-align: center">{{producto.idStock}}</td>
+                                                <td style="text-align: center"><a href="" ui-sref="^.producto-detalle({idProducto:{{producto.idProducto.idProducto}}})">{{producto.idProducto.descripcion}}</a></td>
+                                                <td style="text-align: center">{{producto.cantidad}}</td>
+                                                <td style="text-align: center">{{producto.idProducto.talla| uppercase}}</td>
+                                                <td style="text-align: center">{{producto.idProducto.colorProducto| uppercase}}</td>                
+                                                <td style="text-align: center">{{producto.fechaCreacion}}</td>                
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </md-content>
+                        </md-tab>
+                    </md-tabs>
+                </md-content>
+            </div>
         </div>
     </div>
 </div>

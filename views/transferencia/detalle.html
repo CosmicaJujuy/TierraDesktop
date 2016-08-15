@@ -1,6 +1,12 @@
 <!DOCTYPE html>
-<div md-theme="docs-dark">
-    <div class="col-lg-3">
+<div md-theme="docs-dark"
+     layout="row"
+     layout-margin
+     layout-xs="row">
+    <div flex-lg="25"
+         flex-md="30"
+         layout="column"
+         layout-xs="column">
         <div layout="column" ng-cloak
              data-ng-init="datosTransferencia()"
              ng-show="transferencia"
@@ -80,14 +86,19 @@
             </md-content>
         </div>
     </div>
-    <div class="col-lg-9" ng-show="transferencia">
+    <div flex-lg="75"
+         flex-md="70"
+         layout="column"
+         layout-xs="column" ng-show="transferencia">
         <div class="distribucion-panel">
             <div ng-cloak>
                 <md-content md-theme="docs-dark" style="min-height: 598px;">
                     <md-toolbar class="md-warn">
                         <div class="md-toolbar-tools" layout="row" flex>                            
                             <h3 flex class="modal-title">Lista de productos solicitados</h3>                        
-                            <md-switch ng-model="oculto" flex="20"
+                            <md-switch ng-model="oculto" 
+                                       flex-lg="20"
+                                       flex-md="30"
                                        ng-change="cleanBusqAvanzada()"
                                        aria-label="Switch"
                                        class="md-primary">
