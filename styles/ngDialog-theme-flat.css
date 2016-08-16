@@ -60,7 +60,7 @@
     }
 }
 
-.ngdialog.ngdialog-theme-flat {
+.ngdialog.ngdialog-theme-flat {    
     /*font-size: 1.5em;*/
     padding-bottom: 50px;
     padding-top: 50px;
@@ -84,6 +84,7 @@
 }
 /*SMALL*/
 .ngdialog.ngdialog-theme-sm {
+    /*z-index: 80;*/
     /*font-size: 1.5em;*/
     padding-bottom: 100px;
     padding-top: 100px;
