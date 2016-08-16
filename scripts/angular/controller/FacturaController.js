@@ -746,7 +746,6 @@ miAppHome.controller('FacturaController', function (
         $sum = facturaService.metrics();
         $sum.then(function (datos) {
             if (datos.status === 200) {
-                console.log(datos.data);
                 $scope.metrics = datos.data;
             }
         });

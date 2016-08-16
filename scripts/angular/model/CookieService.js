@@ -36,6 +36,23 @@
             });
         };
 
+        this.has = function (name) {
+            var datosRecu = null;
+            var deferred = $q.defer();
+            ses.cookies.get({}, function (error, cookies) {
+                angular.forEach(cookies, function (cookie, key) {
+                    if (cookie.name === name) {
+                        datosRecu = true;
+                        deferred.resolve(datosRecu);
+                    } else {
+                        datosRecu = false;
+                        deferred.resolve(datosRecu);
+                    }
+                });
+            });
+            return deferred.promise;
+        };
+
         this.removeAll = function () {
             ses.clearStorageData([], function (data) {
                 /*console.log(data);*/

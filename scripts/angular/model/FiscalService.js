@@ -15,7 +15,7 @@
         this.printer = function () {
             var datosRecu = null;
             var deferred = $q.defer();
-            var uri = 'http://localhost:8085/HasarPrinterAPI-0.5/oauth/token';
+            var uri = 'http://localhost:8888/HasarPrinterAPI-0.5/oauth/token';
             $http({
                 ignoreLoadingBar: true,
                 url: uri,
@@ -64,12 +64,61 @@
             return deferred.promise;
         };
 
+        this.factura_a = function (listaDetalles) {
+            var datosRecu = null;
+            var deferred = $q.defer();
+            var uri = 'http://localhost:8888/HasarPrinterAPI-0.5/fiscal/factura/A';
+            var token = cookieService.get('ptk');
+            token.then(function (data) {
+                $http({
+                    url: uri,
+                    method: 'post',
+                    data: angular.toJson(listaDetalles),
+                    headers: {
+                        'Authorization': 'Bearer ' + data,
+                        'Content-type': 'application/json'
+                    }
+                }).then(function successCallback(response) {
+                    datosRecu = response;
+                    deferred.resolve(datosRecu);
+                }, function errorCallback(response) {
+                    datosRecu = response;
+                    deferred.resolve(datosRecu);
+                });
+            });
+            return deferred.promise;
+        };
+        
+        this.factura_b = function (listaDetalles) {
+            var datosRecu = null;
+            var deferred = $q.defer();
+            var uri = 'http://localhost:8888/HasarPrinterAPI-0.5/fiscal/factura/B';
+            var token = cookieService.get('ptk');
+            token.then(function (data) {
+                $http({
+                    url: uri,
+                    method: 'post',
+                    data: angular.toJson(listaDetalles),
+                    headers: {
+                        'Authorization': 'Bearer ' + data,
+                        'Content-type': 'application/json'
+                    }
+                }).then(function successCallback(response) {
+                    datosRecu = response;
+                    deferred.resolve(datosRecu);
+                }, function errorCallback(response) {
+                    datosRecu = response;
+                    deferred.resolve(datosRecu);
+                });
+            });
+            return deferred.promise;
+        };
 
         this.ticket = function (listaDetalles) {
             var datosRecu = null;
             var deferred = $q.defer();
-            var uri = 'http://localhost:8085/HasarPrinterAPI-0.5/fiscal/ticket';
-            var token = cookieService.get('token');
+            var uri = 'http://localhost:8888/HasarPrinterAPI-0.5/fiscal/ticket';
+            var token = cookieService.get('ptk');
             token.then(function (data) {
                 $http({
                     url: uri,
@@ -94,7 +143,7 @@
             var datosRecu = null;
             var deferred = $q.defer();
             var uri = 'http://localhost:8085/HasarPrinterAPI-0.5/fiscal/comprobante/Z';
-            var token = cookieService.get('token');
+            var token = cookieService.get('ptk');
             token.then(function (data) {
                 $http({
                     url: uri,
