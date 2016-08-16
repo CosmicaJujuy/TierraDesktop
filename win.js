@@ -6,7 +6,7 @@ resultPromise = electronInstaller.createWindowsInstaller({
     authors: 'Paulo Galdo - Cósmica Tecnología.',
     owners: 'Paulo Galdo - Cósmica Tecnología.',
     description: 'Sistema de gestion comercial.',
-    version: '2.1.0.0',
+    version: '2.1.0',
     setupIcon: path.join(__dirname, '/app.ico'),
     loadingGif: path.join(__dirname, '/balls.gif'),
     exe: 'TierraDesktop.exe',
