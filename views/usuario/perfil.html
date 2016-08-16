@@ -8,10 +8,10 @@
          flex-md="90"
          ng-cloak data-ng-init="detailUsuario()"
          ng-show="user.nombre">
-        <md-toolbar class="md-warn" md-theme="docs-dark">
+        <md-toolbar class="md-accent" md-theme="docs-dark">
             <div class="md-toolbar-tools">
                 <h4 class="md-flex" style="width:100%;"># {{user.idUsuario}}: {{user.username}}
-                    <a href='' ui-sref="modificar-perfil" style="color: #000000;float: right;">Editar</a>
+                    <a href='' class="md-accent" ui-sref="modificar-perfil" style="float: right;">Editar</a>
                 </h4>
             </div>
         </md-toolbar>

@@ -4,14 +4,14 @@
      layout-xs="column">
     <div layout="column" layout-xs="column" flex
          ng-cloak  md-theme="docs-dark" class="distribucion-panel">
-        <md-toolbar class="md-warn">
+        <md-toolbar class="md-accent">
             <div class="md-toolbar-tools">
                 <h3 class="md-flex" style="width:100%; text-align: center;">
                     Lista de usuarios
                 </h3>
             </div>
         </md-toolbar>
-        <md-content flex layout-padding>
+        <md-content flex layout-padding style="min-height: 534px;">
             <div class="table-responsive">
                 <table class="table table-hover table-striped light-table table-condensed"
                        ng-show="usuarios[0]" data-ng-init="listaUsuarios()"
@@ -74,7 +74,7 @@
                                         Cambiar rol
                                     </md-tooltip>
                                     <span class="glyphicon glyphicon-flag"></span>
-                                </button>                        
+                                </button>
                             </div>
                         </td>
                     </tr>

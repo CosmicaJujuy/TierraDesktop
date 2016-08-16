@@ -45,6 +45,7 @@
                                 <md-icon class="material-icons">&#xE7FD;</md-icon>
                                 <md-button ui-sref="perfil">
                                     Ver mi perfil
+                                    <span class="md-alt-text"> {{ 'M-P' | keyboardShortcut }}</span>
                                 </md-button>
                             </md-menu-item>
                             <md-menu-item class="md-indent">
@@ -59,23 +60,26 @@
                         <button ng-click="$mdOpenMenu()">
                             Facturacion
                         </button>
-                        <md-menu-content class="menu-content">
+                         <md-menu-content class="menu-content">
                             <md-menu-item class="md-indent">
                                 <md-icon class="material-icons">&#xE8CC;</md-icon>
                                 <md-button ui-sref="facturas">
                                     Facturas / Reservas
+                                    <span class="md-alt-text"> {{ 'S-F' | keyboardShortcut }}</span>
                                 </md-button>
                             </md-menu-item>
                             <md-menu-item class="md-indent">
                                 <md-icon class="material-icons">&#xE8B3;</md-icon>
                                 <md-button ui-sref="nota_credito">
                                     Notas de credito
+                                    <span class="md-alt-text"> {{ 'S-N' | keyboardShortcut }}</span>
                                 </md-button>
                             </md-menu-item>
                             <md-menu-item class="md-indent">
                                 <md-icon class="material-icons">&#xE572;</md-icon>
                                 <md-button ui-sref="transferencias">
                                     Transferencias
+                                    <span class="md-alt-text"> {{ 'S-T' | keyboardShortcut }}</span>
                                 </md-button>
                             </md-menu-item>
                         </md-menu-content>
@@ -185,18 +189,4 @@
         right: 120px;
         position: absolute;
     }
-    .menuBardemoBasicUsage .page-container {
-        padding: 32px; }
-    .menuBardemoBasicUsage .page {
-        margin: 0 auto;
-        padding: 24px;
-        max-width: 680px;
-        box-shadow: 0px 1px 2px 1px rgba(0, 0, 0, 0.25); }
-    .menuBardemoBasicUsage .page h1 {
-        text-align: center;
-        font-size: 1.8rem;
-        margin-top: 0;
-        font-weight: normal; }
-    .menuBardemoBasicUsage .page p {
-        line-height: 1.6rem; }
 </style>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<div class="ngdialog-message ngdialog-theme-sm"  md-theme="docs-dark">
+    <md-toolbar class="md-accent" md-theme="docs-dark">
+        <div class="md-toolbar-tools">
+            <h3 class="modal-title" style="width: 100%; text-align: center;">
+                Selecciona tipo de comprobante
+            </h3>
+        </div>
+    </md-toolbar>
+    <md-content flex>
+        <md-content class="md-padding" flex>
+            <form name="printFiscal">                
+                <md-input-container style="min-height: 58px;" class="md-icon md-block">
+                    <label>Tipo de comprobante</label>
+                    <md-select ng-model="comprobanteFiscal"
+                               required
+                               placeholder="Elige un tipo de comprobante"
+                               required name="tipo">
+                        <md-option ng-value="1">Ticket</md-option>
+                        <md-option ng-value="3">Factura A</md-option>
+                        <md-option ng-value="4">Factura B</md-option>
+                    </md-select>
+                </md-input-container>
+                <md-input-container style="min-height: 58px;" class="md-icon md-block"
+                                    flex data-ng-init="listaVendedores()">
+                    <label>Vendedores</label>
+                    <md-select ng-model="vendedorComprobante"
+                               placeholder="Elige un vendedor"
+                               ng-model-options="{trackBy: '$value.idUsuario'}"
+                               data-ng-init="vendedorComprobante"
+                               required name="vend">                                            
+                        <md-option ng-value="vend"
+                                   ng-repeat="vend in vendedores">{{vend.nombre}} {{vend.apellido}}</md-option>                                            
+                    </md-select>
+                </md-input-container>
+                <div flex style="text-align: center;">
+                    <button class="btn btn-success"
+                            ng-disabled="printFiscal.$invalid"
+                            ng-click="confirmarImpresion(comprobanteFiscal, vendedorComprobante);">
+                        Imprimir
+                    </button>
+                </div>
+            </form>
+        </md-content>
+    </md-content>
+    <md-content flex class="md-padding">
+        <button class="btn btn-md btn-danger pull-right"
+                ng-click="closeThisDialog('')">Cerrar</button>        
+    </md-content>
+</div>
+<style>
+    .ngdialog.ngdialog-theme-sm {
+        z-index: 80;
+        /*Z-INDEX AGREGADO PARA PODER VISUALIZAR CORRECTAMENTE EL SELECT DE MATERIAL*/
+    }
+</style>

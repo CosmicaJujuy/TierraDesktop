@@ -248,10 +248,13 @@
     a.md-button.md-default-theme:not([disabled]):hover, a.md-button:not([disabled]):hover, .md-button.md-default-theme:not([disabled]):hover, .md-button:not([disabled]):hover {
         background-color: rgba(40, 53, 147, 0.35);
     }
-    a:focus, a:hover {
+    a.md-button.md-ink-ripple:focus, a.md-button.md-ink-ripple:hover {
         color: rgb(255,128,171);
     }
-
+    a:focus, a:hover {
+        color: inherit;
+        text-decoration: underline;
+    }
     md-select-menu.md-docs-dark-theme md-option:focus:not([disabled]):not([selected]) {
         background: rgb(238,238,238);
         color: black;
@@ -333,18 +336,4 @@
         right: 120px;
         position: absolute;
     }
-    .menuBardemoBasicUsage .page-container {
-        padding: 32px; }
-    .menuBardemoBasicUsage .page {
-        margin: 0 auto;
-        padding: 24px;
-        max-width: 680px;
-        box-shadow: 0px 1px 2px 1px rgba(0, 0, 0, 0.25); }
-    .menuBardemoBasicUsage .page h1 {
-        text-align: center;
-        font-size: 1.8rem;
-        margin-top: 0;
-        font-weight: normal; }
-    .menuBardemoBasicUsage .page p {
-        line-height: 1.6rem; }
 </style>

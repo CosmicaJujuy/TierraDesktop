@@ -11,7 +11,7 @@
              class="distribucion-panel"
              ng-show="factura"
              data-ng-init="detailFactura()">
-            <md-toolbar class="md-warn">
+            <md-toolbar class="md-accent">
                 <div class="md-toolbar-tools">
                     <h4 class="md-flex" style="width:100%; text-align: center;">
                         <div>Factura N°{{factura.idFactura}} {{factura.numeracion}}</div>
@@ -43,7 +43,6 @@
                                 </md-tooltip>
                                 Imprimir
                             </button>
-
                             <button class="btn btn-block btn-success" flex
                                     ng-disabled="factura.estado === 'CONFIRMADO'"
                                     ng-click="cerrarFactura($event)"
@@ -53,7 +52,6 @@
                                 </md-tooltip>
                                 Finalizar
                             </button>
-
                             <button class="btn btn-block btn-danger" flex
                                     ng-disabled="factura.estado === 'CONFIRMADO'"
                                     ng-click="cancelarFactura()"
@@ -63,18 +61,24 @@
                                 </md-tooltip>
                                 Cancelar
                             </button>
-
-                            <!-- reactivar funcion accesoFiscal()-->
-                            <div data-ng-init="">
+                            <div data-ng-init="accesoFiscal()">
                                 <h2>
                                     <span class="glyphicon glyphicon-print"
-                                          ng-hide="printer"
-                                          uib-tooltip="Impresora conectada"
-                                          style="color: #419641;"> Conectada</span>
-                                    <span class="glyphicon glyphicon-print"
                                           ng-show="printer"
-                                          uib-tooltip="Impresora desconectada"
-                                          style="color: #c12e2a;"> Desconectada</span>
+                                          style="color: #419641;"> 
+                                        <md-tooltip md-direction="top" md-theme="default">
+                                            Impresora conectada para imprimir
+                                        </md-tooltip>
+                                        Conectada
+                                    </span>
+                                    <span class="glyphicon glyphicon-print"
+                                          ng-hide="printer"
+                                          style="color: #c12e2a;"> 
+                                        <md-tooltip md-direction="top" md-theme="default">
+                                            Impresora desconectada para imprimir
+                                        </md-tooltip>
+                                        Desconectada
+                                    </span>
                                 </h2>
                             </div>
                         </div>
@@ -210,8 +214,8 @@
                                             <md-select ng-model="cargarMetodo.mediosPago"
                                                        placeholder="Elegir medio de pago"
                                                        ng-model-options="{
-                                                                   trackBy: '$value.idMedioPago'
-                                                               }"
+                                                                           trackBy: '$value.idMedioPago'
+                                                                       }"
                                                        data-ng-init="cargarMetodo.mediosPago"
                                                        required name="medios">                                            
                                                 <md-option ng-value="medio"
@@ -231,7 +235,7 @@
                                                        ng-disabled="disableSelectEntidades"
                                                        placeholder="Elegir entidad financiera"
                                                        ng-model-options="{
-                                                                   trackBy: '$value.idEntidadMonetaria'}"
+                                                                           trackBy: '$value.idEntidadMonetaria'}"
                                                        data-ng-init="cargarMetodo.entidadPago"
                                                        ng-change="busquedaTarjeta()"
                                                        required name="entidades">                                            
@@ -252,7 +256,7 @@
                                                        ng-disabled="disableSelectTarjeta"
                                                        placeholder="Elegir tarjeta"
                                                        ng-model-options="{
-                                                                   trackBy: '$value.idTarjeta'}"
+                                                                           trackBy: '$value.idTarjeta'}"
                                                        data-ng-init="cargarMetodo.tarjetasPago"
                                                        ng-change="busquedaPlanByTarjeta()"
                                                        required name="tarjetas">
@@ -273,8 +277,8 @@
                                                        ng-disabled="disableSelectMetodo"
                                                        placeholder="Elegir plan de pago"
                                                        ng-model-options="{
-                                                                   trackBy: '$value.idPlanesPago'
-                                                               }"
+                                                                           trackBy: '$value.idPlanesPago'
+                                                                       }"
                                                        data-ng-init="cargarMetodo.planPago"
                                                        required name="planes">
                                                 <md-option ng-value="plan"
