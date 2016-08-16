@@ -671,7 +671,7 @@ var miAppHome = angular.module('tierraDeColoresApp', [
         .provider('colorConf', function colorConfProvider() {
             var palette = {
                 primaryPalette: 'blue',
-                warnPalette: 'yellow',
+                warnPalette: 'red',
                 accentPalette: 'yellow',
                 backgroundPalette: 'grey',
                 dark: false
