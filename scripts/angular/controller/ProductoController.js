@@ -30,7 +30,7 @@ miAppHome.controller('ProductoController', function ($scope,
         talla: "",
         codigo: "",
         categoria: ""
-    };  
+    };
 
     $scope.search = {
         'categoria': "",
@@ -709,23 +709,21 @@ miAppHome.controller('ProductoController', function ($scope,
     $scope.windowBusqueda = function () {
         var electron = require('electron');
         var busq = new electron.remote.BrowserWindow({
-        transparent: false,
-                frame: false,
-                fullscreen: false,
-                width: 1100,
-                height: 550,
-                show: false,
-                modal: true,
-                resizable: false,
-                icon: __dirname + '/styles/images/app.png'
+            transparent: false,
+            frame: false,
+            fullscreen: false,
+            width: 1100,
+            height: 550,
+            show: false,
+            modal: true,
+            resizable: false,
+            icon: __dirname + '/styles/images/app.png'
         });
-                busq.loadURL(`file://${__dirname}/index.html#/helper`);
-                        busq.once('ready-to-show', function () {
-                            busq.show();
-                        });
-            };
-
-
-
+        busq.loadURL(`file://${__dirname}/index.html#/helper`);
+        busq.once('ready-to-show', function () {
+            busq.show();
         });
+
+    };
+});
 

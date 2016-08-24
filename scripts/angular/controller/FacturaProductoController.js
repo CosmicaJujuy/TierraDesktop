@@ -56,7 +56,7 @@ miAppHome.controller('FacturaProductoController', function (
         token.then(function (data) {
             $scope.tableFacturaProductos = new NgTableParams({
                 page: 1,
-                count: 13
+                count: 11
             }, {
                 getData: function (params) {
                     return $http({

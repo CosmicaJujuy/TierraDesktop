@@ -25,14 +25,24 @@ var miAppHome = angular.module('tierraDeColoresApp', [
         .config(function (
                 $provide,
                 $stateProvider,
+                $httpProvider,
                 $urlRouterProvider,
                 $mdIconProvider,
                 colorConfProvider,
                 hotkeysProvider,
                 $mdThemingProvider) {
 
-                  hotkeysProvider.templateTitle = 'Listado de atajos';
-                  hotkeysProvider.cheatSheetDescription = 'Mostrar / Ocultar este menu de ayuda.';
+            $httpProvider.interceptors.push(function () {
+                return {
+                    request: function (config) {
+                        config.timeout = 15000;
+                        return config;
+                    }
+                };
+            });
+
+            hotkeysProvider.templateTitle = 'Listado de atajos';
+            hotkeysProvider.cheatSheetDescription = 'Mostrar / Ocultar este menu de ayuda.';
 
             $provide.decorator('BaseURL', function ($delegate, localStorageService, $state) {
                 var URL = localStorageService.get('BaseURL');
@@ -88,9 +98,9 @@ var miAppHome = angular.module('tierraDeColoresApp', [
 
             $stateProvider
                     /*Login*/
-                    .state('login', {
-                        url: '/',
-                        data: {pageTitle: 'Inicio de sesion'},
+                    .state('loading', {
+                        url: '/a',
+                        data: {pageTitle: 'Primer uso de aplicación'},
                         resolve: {},
                         views: {
                             'navbar': {
@@ -98,7 +108,31 @@ var miAppHome = angular.module('tierraDeColoresApp', [
                                 controller: null
                             },
                             'body': {
-                                templateUrl: "views/login.html",
+                                templateUrl: "views/loading.html",
+                                controller: 'LoadingController as loading'
+                            }
+                        }
+                    })
+                    .state('login', {
+                        url: '/',
+                        data: {pageTitle: 'Inicio'},
+                        resolve: {},
+                        views: {
+                            'navbar': {
+                                templateUrl: null,
+                                controller: null
+                            },
+                            'body': {
+                                templateProvider: function ($templateRequest, localStorageService) {
+                                    var setup = localStorageService.get('setup');
+                                    var templateName;
+                                    if (setup !== null) {
+                                        templateName = "views/login.html";
+                                    } else {
+                                        templateName = "views/loading.html";
+                                    }
+                                    return $templateRequest(templateName);
+                                },
                                 controller: 'LoginController'
                             }
                         }
@@ -371,6 +405,38 @@ var miAppHome = angular.module('tierraDeColoresApp', [
                             },
                             'body': {
                                 templateUrl: "views/producto/helper/detalle_helper.html",
+                                controller: 'ProductoController'
+                            }
+                        }
+                    })
+                    .state('busqueda_producto', {
+                        url: '/productos/busqueda',
+                        data: {pageTitle: 'Busqueda de productos'},
+                        params: {
+                            descripcion: {value: null, dynamic: true, squash: true},
+                            marca: {value: null, dynamic: true, squash: true},
+                            talla: {value: null, dynamic: true, squash: true},
+                            codigo: {value: null, dynamic: true, squash: true},
+                            categoria: {value: null, dynamic: true, squash: true},
+                            temporada: {value: null, dynamic: true, squash: true},
+                            sexo: {value: null, dynamic: true, squash: true},
+                            clase: {value: null, dynamic: true, squash: true},
+                            color: {value: null, dynamic: true, squash: true},
+                            proveedor: {value: null, dynamic: true, squash: true},
+                            factura: {value: null, dynamic: true, squash: true}
+                        },
+                        reloadOnSearch: false,
+                        resolve: {auth: auth},
+                        views: {
+                            'navbar': {
+                                templateProvider: function ($templateRequest, sessionProvider) {
+                                    var templateName = sessionProvider.getPath();
+                                    return $templateRequest(templateName);
+                                },
+                                controller: null
+                            },
+                            'body': {
+                                templateUrl: "views/producto/busqueda_Producto.html",
                                 controller: 'ProductoController'
                             }
                         }

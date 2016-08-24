@@ -14,7 +14,7 @@
         var session = require('electron').remote.session;
         var ses = session.fromPartition('persist:name');
         vm.changeSettings = function (ev) {
-            if ($state.current.name === 'login') {
+            if ($state.current.name === 'login' || $state.current.name === 'loading') {
                 $scope.modal = 'views/modal-login-settings.html';
             } else {
                 $scope.modal = 'views/modal-settings.html';

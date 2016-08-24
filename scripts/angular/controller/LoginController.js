@@ -14,6 +14,7 @@ miAppHome.controller('LoginController',
             $scope.iniciarSesion = function () {
                 $promesa = LoginService.getAccess($scope.usuario);
                 $promesa.then(function (datos) {
+                    console.log(datos);
                     switch (datos.status) {
                         case 200:
                             cookieService.put(datos.data.access_token, 'token');
