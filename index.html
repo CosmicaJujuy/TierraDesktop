@@ -14,9 +14,9 @@
         <link href="bower_components/ng-dialog/css/ngDialog.min.css" rel="stylesheet" type="text/css"/>
         <link href="bower_components/ng-dialog/css/ngDialog-theme-default.min.css" rel="stylesheet" type="text/css"/>
         <link href="bower_components/angular-hotkeys/build/hotkeys.min.css" rel="stylesheet" type="text/css"/>
-        
+
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
-        
+
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
         <link href="styles/appAnimation.less" rel="stylesheet/less" type="text/css"/>
@@ -75,22 +75,6 @@
             ::-webkit-scrollbar-thumb {
                 background: #FF0000;
             }
-            .cfp-hotkeys-key{
-                text-transform: capitalize;
-            }
-            .cfp-hotkeys-container{
-                background: rgba(74, 11, 144, 0.7) !important;
-                color: white;
-            }
-            .cfp-hotkeys-text{
-                color:white;
-            }
-            .cfp-hotkeys-close:hover {
-                background-color: transparent;
-            }
-            .cfp-hotkeys-close{
-                border: none;
-            }
         </style>
 
         <!-- less.js -->
@@ -127,6 +111,7 @@
         <script src="scripts/angular/provider/sessionProvider.js" type="text/javascript"></script>
 
         <script src="scripts/angular/controller/NavbarController.js" type="text/javascript"></script>
+        <script src="scripts/angular/controller/LoadingController.js" type="text/javascript"></script>
         <script src="scripts/angular/controller/LoginController.js" type="text/javascript"></script>
         <script src="scripts/angular/controller/UsuarioController.js" type="text/javascript"></script>
         <script src="scripts/angular/controller/TarjetaController.js" type="text/javascript"></script>
@@ -186,7 +171,9 @@
 
     <script>
     console.log("Electron version: ",process.versions.electron);
-                 /*const debugMenu = require('debug-menu');
-                 debugMenu.install();*/
+                 /*
+                 const debugMenu = require('debug-menu');
+                 debugMenu.install();
+                 */
     </script>
 </html>
