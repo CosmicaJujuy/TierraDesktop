@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<div layout="column"
+     ng-controller="LoadingController as loading"
+     layout-margin>
+    <div class="container">
+        <md-progress-linear md-mode="query"
+                            ng-hide="loading.query"></md-progress-linear>
+        <md-progress-linear md-mode="indeterminate"
+                            ng-hide="loading.indeterminate"></md-progress-linear>
+        <md-progress-linear md-mode="determinate"
+                            value="{{loading.determinateCount}}"
+                            ng-hide="loading.determinate"></md-progress-linear>
+        <div class="bottom-block" flex
+             style="margin-top: 20px;"
+             layout="column"
+             layout-align="center center"
+             ng-hide="loading.text">
+            <span flex style="font-weight: bold; color: white;">
+                    {{loading.messagge}}
+            </span>            
+        </div>
+        <md-content class="md-padding"
+                    ng-hide="loading.url"
+                    flex md-theme="docs-dark">
+            <form name="settings" flex>
+                <p flex style="text-align: center; font-weight: bold; font-size: small;">
+                    Esta dirección debe corresponder a la del servidor.
+                </p>
+                <div layout="column" flex>
+                    <md-input-container class="md-block" flex style="margin-bottom: 0px;">
+                        <label>Dirección</label>
+                        <md-icon class="material-icons">&#xE902;</md-icon>
+                        <input ng-model="BaseUrl"
+                               maxlength="50" required
+                               md-maxlength="50"
+                               minlength="10"
+                               type="url"
+                               placeholder="Dirección del servidor"
+                               name="direccion"/>
+                        <div ng-messages="settings.direccion.$error"
+                             ng-if='settings.direccion.$dirty || settings.direccion.$touched'>
+                            <div ng-message="minlength">Dirección demasiado corta.</div>
+                            <div ng-message="md-maxlength">Dirección demasiado larga.</div>
+                            <div ng-message="url">Dirección invalida.</div>
+                            <div ng-message="required">Este campo no puede estar vacio.</div>
+                        </div>
+                    </md-input-container>
+                    <div style="text-align: center;">
+                        <md-button class="md-raised"
+                                   type="button"
+                                   ng-click="loading.guardarBaseUrl(BaseUrl)"
+                                   ng-disabled="settings.$invalid"
+                                   style="margin-top: 0px;">Guardar</md-button>
+                    </div>                    
+                </div>
+            </form>
+        </md-content>
+    </div>    
+</div>
+<toaster-container toaster-options="{'time-out': 3000, 'close-button':true, 'animation-class': 'toast-top-right'}"></toaster-container>
+<style>
+    main{height: 100% !important;}
+</style>
