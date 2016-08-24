@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<div md-theme="docs-dark"
+     layout="row"
+     style="height: 100%;"
+     layout-xs="row">
+    <div flex-lg="30"
+         flex-md="35"
+         layout="column"
+         layout-xs="column">
+        <div layout="column" ng-cloak>
+            <md-content flex>
+                <div class="md-margin" flex style="margin-top: 32px;">
+                    <form name="busqueda">
+                        <md-input-container flex class="md-block">
+                            <label>Descripción</label>
+                            <input type="text"
+                                   style="text-transform:uppercase;"
+                                   maxlength="30"
+                                   md-maxlength="30"
+                                   placeholder="Descripción del producto"
+                                   ng-model="find.descripcion"
+                                   name="descripcion"/>
+                        </md-input-container>
+                        <div layout="row" style="height: 58px; margin-bottom: 18px;">
+                            <md-input-container class="md-block"
+                                                style="margin: 0;"
+                                                flex ng-controller="MarcaController"
+                                                data-ng-init="listaMarcas()">
+                                <label>Marca</label>
+                                <md-select ng-model="find.marcas"
+                                           placeholder="Selecciona una marca"
+                                           ng-model-options="{
+                                               trackBy: '$value.idMarca'
+                                               }"
+                                           data-ng-init="busqueda.marcas"
+                                           required name="marca">                                            
+                                    <md-option ng-value="marca"
+                                               ng-repeat="marca in marcas">{{marca.nombreMarca}}</md-option>                                            
+                                </md-select>
+                            </md-input-container>
+                            <md-input-container class="md-block"
+                                                style="margin: 0;"
+                                                flex ng-controller="CategoriaController"
+                                                data-ng-init="listaCategorias()">
+                                <label>Categorias</label>
+                                <md-select ng-model="find.categoria"
+                                           placeholder="Selecciona una categoria"
+                                           ng-model-options="{
+                                               trackBy: '$value.idCategoria'}"
+                                           data-ng-init="find.categoria"
+                                           required name="categoria">                                            
+                                    <md-option ng-value="categoria"
+                                               ng-repeat="categoria in categorias">{{categoria.nombreCategoria}}</md-option>
+                                </md-select>
+                            </md-input-container>
+                        </div>                        
+                        <div layout="row" style="height: 58px; margin-bottom: 18px;">
+                            <md-input-container class="md-block"
+                                                style="margin: 0; margin-bottom: 9px;"
+                                                flex data-ng-init="listaSexos()"
+                                                ng-controller="SexoController">
+                                <label>Sexo</label>
+                                <md-select ng-model="find.sexo"
+                                           placeholder="Selecciona un sexo"
+                                           ng-model-options="{
+                                               trackBy: '$value.idSexo'}"
+                                           data-ng-init="find.sexo"
+                                           required name="sexos">                                            
+                                    <md-option ng-value="sexo"
+                                               ng-repeat="sexo in sexos">{{sexo.nombreSexo}}</md-option>
+                                </md-select>
+                            </md-input-container>
+                            <md-input-container class="md-block"
+                                                style="margin: 0; margin-bottom: 9px;"
+                                                flex ng-controller="TemporadaController"
+                                                data-ng-init="listaTemporadas()">
+                                <label>Temporada</label>
+                                <md-select ng-model="find.temporada"
+                                           placeholder="Selecciona una temporada"
+                                           ng-model-options="{
+                                               trackBy: '$value.idTemporada'
+                                               }"
+                                           data-ng-init="find.temporada"
+                                           required name="temporadas">                                            
+                                    <md-option ng-value="temporada"
+                                               ng-repeat="temporada in temporadas">{{temporada.nombreTemporada}}</md-option>
+                                </md-select>
+                            </md-input-container>
+                        </div>
+                        <div layout="row" style="height: 58px; margin-bottom: 18px;">
+                            <md-input-container class="md-block" flex
+                                                style="margin: 0; margin-bottom: 9px;">
+                                <label>Clase</label>
+                                <md-select ng-model="find.clase"
+                                           placeholder="Selecciona una clase"
+                                           required name="clase">
+                                    <md-option value="{{class.value}}"
+                                               ng-repeat="class in classes">{{ class.name}}</md-option>
+                                </md-select>
+                            </md-input-container>
+                            <md-input-container flex class="md-block"
+                                                style="margin: 0; margin-bottom: 9px;">
+                                <label>Talla</label>
+                                <input type="text"
+                                       maxlength="5"
+                                       md-maxlength="5"
+                                       placeholder="Ingresa la talla del producto"
+                                       ng-model="find.talla"
+                                       name="codigo"/>
+                            </md-input-container>
+                        </div>
+                        <md-input-container flex class="md-block">
+                            <label>Codigo de barras</label>
+                            <input type="text"
+                                   maxlength="30"
+                                   md-maxlength="30"
+                                   placeholder="Codigo de barras del producto"
+                                   ng-model="find.codigo"
+                                   name="codigo"/>
+                        </md-input-container>
+                        <md-input-container flex class="md-block">
+                            <label>Color</label>
+                            <input type="text"
+                                   maxlength="30"
+                                   md-maxlength="30"
+                                   placeholder="Ingresa el color del producto"
+                                   ng-model="find.color"
+                                   name="descripcion"/>
+                        </md-input-container>
+                        <div layout="row" style="height: 58px; margin-bottom: 28px;">
+                            <md-input-container flex class="md-block">
+                                <label>Proveedor</label>
+                                <input type="text"
+                                       maxlength="30"
+                                       md-maxlength="30"
+                                       placeholder="Ingresa el proveedor del producto"
+                                       ng-model="find.proveedor"
+                                       name="proveedor"/>
+                            </md-input-container>
+                            <md-input-container flex class="md-block">
+                                <label>N° de Factura</label>
+                                <input type="text"
+                                       maxlength="30"
+                                       md-maxlength="30"
+                                       placeholder="Ingresa el n° de factura"
+                                       ng-model="find.factura"
+                                       name="factura"/>
+                            </md-input-container>
+                        </div>
+                        <div layout="row" flex>
+                            <div flex style="margin-top: 12px; margin-bottom: 12px">
+                                <button class="btn btn-block btn-success">Buscar</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </md-content>
+        </div>
+    </div>
+    <div flex-lg="70"
+         flex-md="65"
+         layout="column"
+         layout-xs="column">
+        <md-content class="md-margin">
+            <md-toolbar class="md-accent" md-theme="docs-dark">
+                <div class="md-toolbar-tools">
+                    <h4 class="md-flex" style="width:100%; text-align: center;">
+                        Resultados
+                    </h4>
+                </div>
+            </md-toolbar>
+            <md-content class="md-padding" style="min-height: 560px;">                
+                <div class="table-responsive">                
+                    <table data-ng-init="initBusqueda()"
+                           class="table table-striped table-hover light-table table-condensed"
+                           ng-table="tableBusqueda"
+                           id="tableProductos">
+                        <thead id="headTableProductos">
+                            <tr>
+                                <th style="text-align: center">ID</th>
+                                <th style="text-align: center">Descripcion</th>
+                                <th style="text-align: center">Marca</th>
+                                <th style="text-align: center">Cantidad</th> 
+                                <th style="text-align: center">Talla</th> 
+                                <th style="text-align: center">Color</th> 
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="producto in $data" ng-class="{
+                                        danger: stockMinimo(producto)
+                                    }">
+                                <td style="text-align: center">{{producto.idProducto}}</td>
+                                <td style="text-align: center">
+                                    <a href=""
+                                       ui-sref="producto_helper({idProducto:{{producto.idProducto}}})">
+                                        {{producto.descripcion}}                                        
+                                    </a>
+                                </td>
+                                <td style="text-align: center">{{producto.marcas.nombreMarca}}</td>
+                                <td style="text-align: center">{{producto.cantidadTotal}}</td>
+                                <td style="text-align: center">{{producto.talla| uppercase}}</td>
+                                <td style="text-align: center">{{producto.colorProducto| uppercase}}</td>                
+                            </tr>
+                        </tbody>
+                    </table>
+                </div> 
+            </md-content>
+
+        </md-content>
+
+    </div>
+</div>

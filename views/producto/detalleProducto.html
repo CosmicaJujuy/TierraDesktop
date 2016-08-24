@@ -96,29 +96,174 @@
                                               ng-model="foundProducto.codigoProducto"
                                               style="width: 160px; height: 80px;">                                          
                                         </span>
-                                        <div ng-bind="foundProducto.descripcion" class="etiqueta" style="font-size: 10pt; font-family: monospace"></div>
+                                        <div ng-bind="foundProducto.descripcion"
+                                             class="etiqueta"
+                                             style="font-size: 10pt; font-family: monospace"></div>
                                     </center>
                                 </div>
+                                <!-- CODIGO 20 X 30 CON TALLE-->
+                                <div id="printable"
+                                     ng-hide="true">
+                                    <div class="row">
+                                        <div style="float: left; text-align: center; font-size: smaller;">
+                                            <div class="etiqueta">T-N: {{foundProducto.talla}}</div>
+                                            <span kendo-barcode
+                                                  k-type="'code128'"
+                                                  ng-model="foundProducto.codigoProducto"
+                                                  style="width: 100px; height: 40px;"></span>
+                                        </div>
+                                        <div style="float: right; text-align: center; font-size: smaller;">
+                                            <div class="etiqueta">T-N: {{foundProducto.talla}}</div>
+                                            <span kendo-barcode
+                                                  k-type="'code128'"
+                                                  ng-model="foundProducto.codigoProducto"
+                                                  style="width: 100px; height: 40px;"></span>
+                                        </div>
+                                    </div>     
+                                </div>
+                                <!-- CODIGO 20 X 30 CON TALLE-->
+                                <div id="printableIzq"
+                                     ng-hide="true">
+                                    <div class="row">
+                                        <div style="float: left; text-align: center; font-size: smaller;">
+                                            <div class="etiqueta">T-N: {{foundProducto.talla}}</div>
+                                            <span kendo-barcode
+                                                  k-type="'code128'"
+                                                  ng-model="foundProducto.codigoProducto"
+                                                  style="width: 100px; height: 40px;"></span>
+                                        </div>
+                                    </div>     
+                                </div>
+                                <!-- CODIGO 20 X 30 CON TALLE-->
+                                <div id="printableDer"
+                                     ng-hide="true">
+                                    <div class="row">
+                                        <div style="float: right; text-align: center; font-size: smaller;">
+                                            <div class="etiqueta">T-N: {{foundProducto.talla}}</div>
+                                            <span kendo-barcode
+                                                  k-type="'code128'"
+                                                  ng-model="foundProducto.codigoProducto"
+                                                  style="width: 100px; height: 40px;"></span>
+                                        </div>
+                                    </div>     
+                                </div>
+                                
                                 <!-- CODIGO 34 X 38 CON TALLE-->
-                                <div id="printable" class="etiqueta-box" ng-hide="true">
-                                    <center>
-                                        <div ng-bind="'Talla/edad: '+ foundProducto.talla" class="etiqueta"></div>
-                                        <span kendo-barcode
-                                              k-type="'code128'"
-                                              ng-model="foundProducto.codigoProducto"
-                                              style="width: 160px; height: 80px;">                                          
-                                        </span>
-                                        <div ng-bind="foundProducto.descripcion" class="etiqueta" style="font-size: 8pt; font-family: monospace"></div>
-                                    </center>
+                                <div id="printable2"
+                                     ng-hide="true">
+                                    <div class="row">
+                                        <div style="float: left; text-align: center; font-size: smaller;">
+                                            <center>
+                                                <div class="etiqueta">
+                                                    T-N: {{foundProducto.talla}}
+                                                </div>
+                                                <span kendo-barcode
+                                                      k-type="'code128'"
+                                                      ng-model="foundProducto.codigoProducto"
+                                                      style="width: 100px; height: 40px;"></span>
+                                                <div style="font-size: x-small;">
+                                                    {{foundProducto.descripcion}}
+                                                </div>
+                                            </center>
+                                        </div>
+                                        <div style="float: right; text-align: center; font-size: smaller;">
+                                            <center>
+                                                <div class="etiqueta">
+                                                    T-N: {{foundProducto.talla}}
+                                                </div>
+                                                <span kendo-barcode
+                                                      k-type="'code128'"
+                                                      ng-model="foundProducto.codigoProducto"
+                                                      style="width: 100px; height: 40px;"></span>
+                                                <div style="font-size: x-small;">
+                                                    {{foundProducto.descripcion}}
+                                                </div>
+                                            </center>
+                                        </div>
+                                    </div>     
                                 </div>
-                                <!-- BOTON 20 X 30  -->
-                                <button ng-click="printDiv('printable');"
-                                        style='margin-top: 10%;'
-                                        class="btn btn-info">Imprimir codigo 20 x 30</button>
-                                <!-- BOTON  34 X 38 -->
-                                <button ng-click="printDiv('printable2');"
-                                        style='margin-top: 10%;'
-                                        class="btn btn-info">Imprimir codigo 34 x 38</button>
+                                <div id="printable2Izq"
+                                     ng-hide="true">
+                                    <div class="row">
+                                        <div style="float: left; text-align: center; font-size: smaller;">
+                                            <center>
+                                                <div class="etiqueta">
+                                                    T-N: {{foundProducto.talla}}
+                                                </div>
+                                                <span kendo-barcode
+                                                      k-type="'code128'"
+                                                      ng-model="foundProducto.codigoProducto"
+                                                      style="width: 100px; height: 40px;"></span>
+                                                <div style="font-size: x-small;">
+                                                    {{foundProducto.descripcion}}
+                                                </div>
+                                            </center>
+                                        </div>
+                                    </div>     
+                                </div>
+                                <div id="printable2Der"
+                                     ng-hide="true">
+                                    <div class="row">
+                                        <div style="float: right; text-align: center; font-size: smaller;">
+                                            <center>
+                                                <div class="etiqueta">
+                                                    T-N: {{foundProducto.talla}}
+                                                </div>
+                                                <span kendo-barcode
+                                                      k-type="'code128'"
+                                                      ng-model="foundProducto.codigoProducto"
+                                                      style="width: 100px; height: 40px;"></span>
+                                                <div style="font-size: x-small;">
+                                                    {{foundProducto.descripcion}}
+                                                </div>
+                                            </center>
+                                        </div>
+                                    </div>     
+                                </div>
+                                
+                                <div layout="row" style="margin-top: 5%;" layout-margin>
+                                    <div flex>
+                                        <div layout="column">
+                                            <p flex 
+                                               style="text-align: center; font-weight: bold;">
+                                                Imprimir 20mm x 30mm
+                                            </p>
+                                            <!-- BOTON 20 X 30  -->
+                                            <button ng-click="printDiv('printable');"
+                                                    style='margin-top: 10%;' flex
+                                                    class="btn btn-info">Doble</button>
+                                            <!-- BOTON 20 X 30  -->
+                                            <button ng-click="printDiv('printableIzq');"
+                                                    style='margin-top: 10%;' flex
+                                                    class="btn btn-info">Izquierda</button>
+                                            <!-- BOTON 20 X 30  -->
+                                            <button ng-click="printDiv('printableDer');"
+                                                    style='margin-top: 10%;' flex
+                                                    class="btn btn-info">Derecha</button>
+                                        </div>
+                                    </div>                                    
+                                    <div flex>
+                                        <div layout="column">
+                                            <p flex 
+                                               style="text-align: center; font-weight: bold;">
+                                                Imprimir 34mm x 38mm
+                                            </p>
+                                            <!-- BOTON  34 X 38 -->
+                                            <button ng-click="printDiv('printable2');"
+                                                    style='margin-top: 10%;' flex
+                                                    class="btn btn-info">Doble</button>
+                                            <!-- BOTON  34 X 38 -->
+                                            <button ng-click="printDiv('printable2Izq');"
+                                                    style='margin-top: 10%;' flex
+                                                    class="btn btn-info">Izquierda</button>
+                                            <!-- BOTON  34 X 38 -->
+                                            <button ng-click="printDiv('printable2Der');"
+                                                    style='margin-top: 10%;' flex
+                                                    class="btn btn-info">Derecha</button>
+                                        </div>
+                                    </div>
+
+                                </div>
                             </center>
                         </div>
                     </div>
@@ -173,7 +318,9 @@
                                         <md-select ng-model="productoEdit.categoria"
                                                    placeholder="Categoria"
                                                    ng-disabled="categoriaProducto"
-                                                   ng-model-options="{trackBy: '$value.idCategoria'}"
+                                                   ng-model-options="{
+                                                       trackBy: '$value.idCategoria'
+                                                       }"
                                                    data-ng-init="productoEdit.categoria"
                                                    required name="categorias">                                            
                                             <md-option ng-value="categoria"
@@ -192,7 +339,9 @@
                                         <md-select ng-model="productoEdit.temporada"
                                                    placeholder="Elige una temporada"
                                                    ng-disabled="temporadaProducto"
-                                                   ng-model-options="{trackBy: '$value.idTemporada'}"
+                                                   ng-model-options="{
+                                                       trackBy: '$value.idTemporada'
+                                                       }"
                                                    data-ng-init="productoEdit.temporada"
                                                    required name="temporadas">                                            
                                             <md-option ng-value="temporada"
@@ -213,7 +362,9 @@
                                         <md-select ng-model="productoEdit.sexo"
                                                    placeholder="Elige un sexo"
                                                    ng-disabled="sexoProducto"
-                                                   ng-model-options="{trackBy: '$value.idSexo'}"
+                                                   ng-model-options="{
+                                                       trackBy: '$value.idSexo'
+                                                       }"
                                                    data-ng-init="productoEdit.sexo"
                                                    required name="sexos">                                            
                                             <md-option ng-value="sexo"
@@ -387,64 +538,6 @@
                     </div>            
                 </md-content>
             </md-content>
-        </div>
-    </div>
-</div>
-
-<div id="printable2" ng-hide="true" style="margin-top: 50%;">
-    <div class="row">
-        <div style="float: left; text-align: center; font-family: monospace; font-size: small;">
-            <div style="font-family: monospace;">Talla: {{foundProducto.talla}}</div>
-            <io-barcode options="options" code="{{foundProducto.codigoProducto}}" type="CODE128C"></io-barcode>
-        </div>
-        <div style="float: right; text-align: center; font-family: monospace; font-size: small;">
-            <div style="font-family: monospace;">Talla: {{foundProducto.talla}}</div>
-            <io-barcode options="options" code="{{foundProducto.codigoProducto}}" type="CODE128C"></io-barcode>
-        </div>
-    </div>                
-</div>
-<!-- CODIGO 20 X 30 CON DESCRIPCION Y TALLE-->
-<div id="printable" ng-hide="true" style="margin-top: 50%;">
-    <div class="row">
-        <div style="float: left; text-align: center; font-family: monospace; font-size: small;">
-            <div class="etiqueta">T-N: {{foundProducto.talla}}</div>
-            <span kendo-barcode
-                  k-type="'code128'"
-                  ng-model="foundProducto.codigoProducto"
-                  style="width: 100px; height: 40px;"></span>   
-        </div>
-        <div style="float: right; text-align: center; font-family: monospace; font-size: small;">
-            <div class="etiqueta">T-N: {{foundProducto.talla}}</div>
-            <span kendo-barcode
-                  k-type="'code128'"
-                  ng-model="foundProducto.codigoProducto"
-                  style="width: 100px; height: 40px;"></span>   
-        </div>
-    </div>                
-</div>
-</div>
-
-
-<div class="modal fade" id="myModalDelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog modal-sm" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">Eliminar producto</h4>
-            </div>
-            <div class="modal-body">
-                <center>
-                    ¿Desea eliminar esta Producto?
-                    <br>
-                    <button class="btn btn-danger"
-                            ng-click="eliminarProducto()"
-                            data-dismiss="modal"
-                            >Eliminar</button>
-                </center>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
-            </div>
         </div>
     </div>
 </div>
