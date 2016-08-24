@@ -130,9 +130,11 @@
                                                 <span class="md-alt-text"> {{ 'M-D' | keyboardShortcut }}</span>
                                             </md-button>
                                         </md-menu-item>
-                                        <md-menu-item class="md-indent" ng-hide="true">
+                                        <md-menu-item class="md-indent">
                                             <md-icon class="material-icons">&#xE8B6;</md-icon>
-                                            <md-button>Busqueda</md-button>
+                                            <md-button ui-sref="busqueda_producto">
+                                                Busqueda
+                                            </md-button>
                                         </md-menu-item>
                                     </md-menu-content>
                                 </md-menu>
