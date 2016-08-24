@@ -71,7 +71,7 @@
 }
 .etiqueta{
     font-family: monospace;
-    font-size: large; 
+    font-size: medium; 
     color: #000;
 }
 .etiqueta-box{
@@ -86,9 +86,9 @@
 .animate-repeat.ng-move,
 .animate-repeat.ng-enter,
 .animate-repeat.ng-leave {
-   transition:all linear 0.5s;
-   backface-visibility: hidden;
-    
+    transition:all linear 0.5s;
+    backface-visibility: hidden;
+
 }
 .animate-repeat.ng-leave.ng-leave-active,
 .animate-repeat.ng-move,
@@ -103,7 +103,6 @@
     opacity:1;
     max-height:30px;
 }
-.highlighted { background: yellow }
 .pagination {
     margin: 0px 0 !important;
 }
@@ -115,8 +114,8 @@
     margin-bottom: 10px;
 }
 md-backdrop.md-opaque.md-default-theme, md-backdrop.md-opaque {
-     /*background-color: rgba(33,33,33,0);*/ 
-     background-color: rgba(74, 11, 144, 1);
+    /*background-color: rgba(33,33,33,0);*/ 
+    background-color: rgba(74, 11, 144, 1);
 }
 md-dialog.md-transition-in {
     border: 2px solid purple;
@@ -124,22 +123,27 @@ md-dialog.md-transition-in {
 md-tooltip {
     font-size: 10pt;
 }
-md-toast.md-error-toast-theme div.md-toast-content{
-    color: white !important;
-    background-color: red !important;
-}
-
-md-toast.md-success-toast-theme div.md-toast-content{
-    color: white !important;
-    background-color: green !important;
-}
-.popover{
-    padding: 0;
-    border: none;
-}
-.popover-content{
-    padding: 0px;
-}
 .table{
     margin-bottom: 10px;
+}
+
+.cfp-hotkeys-key{
+    box-shadow: none;
+    text-transform: capitalize;
+}
+.cfp-hotkeys-keys{
+    padding: 3px;
+}
+.cfp-hotkeys-container{
+    background: rgba(74, 11, 144, 0.7) !important;
+    color: white;
+}
+.cfp-hotkeys-text{
+    color:white;
+}
+.cfp-hotkeys-close:hover {
+    background-color: transparent;
+}
+.cfp-hotkeys-close{
+    border: none;
 }
