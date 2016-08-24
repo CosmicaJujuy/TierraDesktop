@@ -4,24 +4,24 @@ var options = {
     'platform': 'win32',
     'dir': './',
     'app-copyright': 'Paulo Galdo',
-    'app-version': '2.1.0',
+    'app-version': '2.1.5',
     'asar': true,
     'icon': './app.ico',
     'name': 'TierraDesktop',
-    'ignore': ['./releases', './.git', './Installer','./nbproject','./.imdone'],
+    'ignore': ['./releases', './.git', './nbproject'],
     'out': './releases',
     'overwrite': true,
     'prune': true,
-    'version': '1.3.3',
-    'version-string':{
-      'CompanyName': 'Paulo Galdo',
-      'FileDescription': 'Tierra de colores', /*This is what display windows on task manager, shortcut and process*/
-      'OriginalFilename': 'TierraDesktop',
-      'ProductName': 'Tierra de colores',
-      'InternalName': 'TierraDesktop'
+    'version': '1.3.4',
+    'version-string': {
+        'CompanyName': 'Paulo Galdo',
+        'FileDescription': 'Tierra de colores', /*This is what display windows on task manager, shortcut and process*/
+        'OriginalFilename': 'TierraDesktop',
+        'ProductName': 'Tierra de colores',
+        'InternalName': 'TierraDesktop'
     }
 };
 packager(options, function done_callback(err, appPaths) {
-    console.log("Error: ",err);
-    console.log("appPaths: ",appPaths);
+    console.log("Error: ", err);
+    console.log("appPaths: ", appPaths);
 });
