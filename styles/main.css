@@ -132,11 +132,12 @@ md-tooltip {
     text-transform: capitalize;
 }
 .cfp-hotkeys-keys{
-    padding: 3px;
+    padding: 2px;
 }
 .cfp-hotkeys-container{
     background: rgba(74, 11, 144, 0.7) !important;
     color: white;
+    font-size: 0.9em;
 }
 .cfp-hotkeys-text{
     color:white;
