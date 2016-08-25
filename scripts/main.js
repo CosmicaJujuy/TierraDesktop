@@ -35,7 +35,7 @@ var miAppHome = angular.module('tierraDeColoresApp', [
             $httpProvider.interceptors.push(function () {
                 return {
                     request: function (config) {
-                        config.timeout = 15000;
+                        /*config.timeout = 15000;*/
                         return config;
                     }
                 };

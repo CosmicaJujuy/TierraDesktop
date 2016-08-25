@@ -32,6 +32,28 @@ miAppHome.controller('ProductoController', function ($scope,
         categoria: ""
     };
 
+    $scope.find = {
+        descripcion: "",
+        marca: {
+            nombreMarca: ""
+        },
+        talla: "",
+        codigo: "",
+        categoria: {
+            nombreCategoria: ""
+        },
+        temporada: {
+            nombreTemporada: ""
+        },
+        sexo: {
+            nombreSexo: ""
+        },
+        clase: "",
+        color: "",
+        proveedor: "",
+        factura: ""
+    };
+
     $scope.search = {
         'categoria': "",
         'claseProducto': "",
@@ -466,6 +488,63 @@ miAppHome.controller('ProductoController', function ($scope,
         });
     };
 
+    $scope.byAllParams = function () {
+        var token = cookieService.get('token');
+        token.then(function (data) {
+            $scope.tableByAllParams = new NgTableParams({
+                page: 1,
+                count: 13
+            }, {
+                total: $scope.listaBusqueda.length,
+                getData: function (params) {
+                    return $http({
+                        url: BaseURL + "producto/full",
+                        method: 'GET',
+                        headers: {
+                            'Authorization': 'Bearer ' + data,
+                            'Content-type': 'application/json'
+                        },
+                        params: {
+                            page: params.page() - 1,
+                            size: params.count(),
+                            descripcion: $state.params.descripcion,
+                            marca: $state.params.marca,
+                            talla: $state.params.talla,
+                            codigo: $state.params.codigo,
+                            categoria: $state.params.categoria,
+                            temporada: $state.params.temporada,
+                            sexo: $state.params.sexo,
+                            clase: $state.params.clase,
+                            color: $state.params.color,
+                            proveedor: $state.params.proveedor,
+                            factura: $state.params.factura
+                        }
+                    }).then(function successCallback(response) {
+                        params.total(response.data.totalElements);
+                        return response.data.content;
+                    }, function errorCallback(response) {
+                    });
+                }});
+        });
+    };
+
+    $scope.searchByAllParams = function (producto) {
+        $state.go('busqueda_producto', {
+            descripcion: producto.descripcion,
+            marca: producto.marca.nombreMarca,
+            talla: producto.talla,
+            codigo: producto.codigo,
+            categoria: producto.categoria.nombreCategoria,
+            temporada: producto.temporada.nombreTemporada,
+            sexo: producto.sexo.nombreSexo,
+            clase: producto.clase,
+            color: producto.color,
+            proveedor: producto.proveedor,
+            factura: producto.factura
+        }, {notify: false});
+        $scope.byAllParams();
+    };
+    
     $scope.busquedaProducto = function (producto) {
         if (producto.descripcion === ""
                 && producto.marca === ""
@@ -709,21 +788,21 @@ miAppHome.controller('ProductoController', function ($scope,
     $scope.windowBusqueda = function () {
         var electron = require('electron');
         var busq = new electron.remote.BrowserWindow({
-            transparent: false,
-            frame: false,
-            fullscreen: false,
-            width: 1100,
-            height: 550,
-            show: false,
-            modal: true,
-            resizable: false,
-            icon: __dirname + '/styles/images/app.png'
+        transparent: false,
+                frame: false,
+                fullscreen: false,
+                width: 1100,
+                height: 550,
+                show: false,
+                modal: true,
+                resizable: false,
+                icon: __dirname + '/styles/images/app.png'
         });
-        busq.loadURL(`file://${__dirname}/index.html#/helper`);
-        busq.once('ready-to-show', function () {
-            busq.show();
-        });
+                busq.loadURL(`file://${__dirname}/index.html#/helper`);
+                        busq.once('ready-to-show', function () {
+                            busq.show();
+                        });
 
-    };
-});
+            };
+        });
 
