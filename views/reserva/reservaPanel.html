@@ -78,7 +78,11 @@
         <div class="distribucion-panel">
             <div ng-cloak>
                 <md-content md-theme="docs-dark" style="min-height: 598px;">
-                    <md-tabs md-dynamic-height md-border-bottom>                    
+                    <md-tabs md-dynamic-height md-border-bottom
+                             md-no-ink-bar="false"
+                             md-stretch-tabs="always"
+                             md-center-tabs="true"
+                             md-selected="tabs">
                         <md-tab label="Productos">
                             <md-content class="md-padding">
                                 <div class="col-lg-12"
@@ -307,7 +311,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                           <tr ng-repeat="metodo in $data">
+                                            <tr ng-repeat="metodo in $data">
                                                 <td style="font-size: smaller; text-align: center;">{{metodo.planPago.tarjeta.medioPago.nombrePago}}</td>
                                                 <td style="font-size: smaller; text-align: center;">{{metodo.planPago.tarjeta.nombreTarjeta}}</td>
                                                 <td style="text-align: center; font-size: smaller;">{{metodo.planPago.nombrePlanesPago}}</td>

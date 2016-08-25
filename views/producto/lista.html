@@ -6,7 +6,11 @@
          layout="column" layout-xs="column" flex>
         <div ng-cloak>
             <md-content md-theme="docs-dark" style="min-height: 598px;">
-                <md-tabs md-dynamic-height md-border-bottom>
+                <md-tabs md-dynamic-height md-border-bottom
+                         md-no-ink-bar="false"
+                         md-stretch-tabs="always"
+                         md-center-tabs="true"
+                         md-selected="tabs">
                     <md-tab label="Listado de productos">
                         <md-content class="md-padding">
                             <div class="table-responsive">                
