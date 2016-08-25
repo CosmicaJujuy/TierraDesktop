@@ -96,7 +96,7 @@ miAppHome.controller('EntidadBancariaController', function ($scope, ngDialog, $t
             showClose: false,
             controller: 'ModalController',
             closeByDocument: false,
-            closeByEscape: false,
+            closeByEscape: true,
             data: {entidad: entidad}
         });
 
@@ -115,7 +115,7 @@ miAppHome.controller('EntidadBancariaController', function ($scope, ngDialog, $t
             showClose: false,
             controller: 'ModalController',
             closeByDocument: false,
-            closeByEscape: false,
+            closeByEscape: true,
             data: {entidad: entidad}
         });        
     };

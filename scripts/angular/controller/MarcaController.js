@@ -105,7 +105,7 @@ miAppHome.controller('MarcaController', function (
             showClose: false,
             controller: 'ModalController',
             closeByDocument: false,
-            closeByEscape: false,
+            closeByEscape: true,
             data: {marca: marca}
         });
     };
@@ -137,7 +137,7 @@ miAppHome.controller('MarcaController', function (
             showClose: false,
             controller: 'ModalController',
             closeByDocument: false,
-            closeByEscape: false,
+            closeByEscape: true,
             data: {marca: marca}
         });
     };

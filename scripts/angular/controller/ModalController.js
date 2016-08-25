@@ -186,7 +186,7 @@ miAppHome.controller('ModalController', function (
             showClose: false,
             controller: 'ModalController',
             closeByDocument: false,
-            closeByEscape: false,
+            closeByEscape: true,
             data: {item: item}
         });
     };
@@ -236,7 +236,7 @@ miAppHome.controller('ModalController', function (
                 showClose: false,
                 controller: 'ModalController',
                 closeByDocument: false,
-                closeByEscape: false,
+                closeByEscape: true,
                 data: {
                     item: item,
                     mount: $scope.mount,
@@ -418,7 +418,7 @@ miAppHome.controller('ModalController', function (
                 showClose: false,
                 controller: 'ModalController',
                 closeByDocument: false,
-                closeByEscape: false,
+                closeByEscape: true,
                 data: {detalle: detalle}
             });
         }
@@ -501,7 +501,7 @@ miAppHome.controller('ModalController', function (
             showClose: false,
             controller: 'ModalController',
             closeByDocument: false,
-            closeByEscape: false,
+            closeByEscape: true,
             data: {item: item}
         });
     };
@@ -514,7 +514,7 @@ miAppHome.controller('ModalController', function (
                 showClose: false,
                 controller: 'ModalController',
                 closeByDocument: false,
-                closeByEscape: false,
+                closeByEscape: true,
                 data: {item: item, cantidad: cantidad}
             });
         } else {
@@ -658,7 +658,7 @@ miAppHome.controller('ModalController', function (
             showClose: false,
             controller: 'ModalController',
             closeByDocument: false,
-            closeByEscape: false,
+            closeByEscape: true,
             data: {entidad: entidad}
         });
     };
@@ -950,7 +950,7 @@ miAppHome.controller('ModalController', function (
             showClose: false,
             controller: 'ModalController',
             closeByDocument: false,
-            closeByEscape: false,
+            closeByEscape: true,
             data: {proveedor: proveedor}
         });
     };

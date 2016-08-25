@@ -99,7 +99,7 @@ miAppHome.controller('CategoriaController',
                     showClose: false,
                     controller: 'ModalController',
                     closeByDocument: false,
-                    closeByEscape: false,
+                    closeByEscape: true,
                     data: {categoria: categoria}
                 });
             };
@@ -133,7 +133,7 @@ miAppHome.controller('CategoriaController',
                     showClose: false,
                     controller: 'ModalController',
                     closeByDocument: false,
-                    closeByEscape: false,
+                    closeByEscape: true,
                     data: {categoria: categoria}
                 });
             };

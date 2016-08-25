@@ -76,7 +76,7 @@ miAppHome.controller('TipoController', function ($scope, ngDialog, $state, toast
             showClose: false,
             controller: 'ModalController',
             closeByDocument: false,
-            closeByEscape: false,
+            closeByEscape: true,
             data: {tipo: tipo}
         });
     };
@@ -98,7 +98,7 @@ miAppHome.controller('TipoController', function ($scope, ngDialog, $state, toast
             showClose: false,
             controller: 'ModalController',
             closeByDocument: false,
-            closeByEscape: false,
+            closeByEscape: true,
             data: {tipo: tipo}
         });
     };

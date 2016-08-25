@@ -151,7 +151,7 @@ miAppHome.controller('NotaCreditoController', function (toaster, $mdDialog, ngDi
             showClose: false,
             controller: 'ModalController',
             closeByDocument: false,
-            closeByEscape: false,
+            closeByEscape: true,
             data: {cliente: cli}
         });
     };
@@ -164,7 +164,7 @@ miAppHome.controller('NotaCreditoController', function (toaster, $mdDialog, ngDi
             showClose: false,
             controller: 'ModalController',
             closeByDocument: false,
-            closeByEscape: false,
+            closeByEscape: true,
             data: {nota: nota}
         });
     };

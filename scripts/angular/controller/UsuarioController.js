@@ -246,7 +246,7 @@ var usuarioController = miAppHome.controller('UsuarioController',
                         showClose: false,
                         controller: 'UsuarioController',
                         closeByDocument: false,
-                        closeByEscape: false,
+                        closeByEscape: true,
                         data: {usuario: usuario}
                     });
                 };
@@ -307,7 +307,7 @@ var usuarioController = miAppHome.controller('UsuarioController',
                         parent: angular.element(document.body),
                         targetEvent: ev,
                         clickOutsideToClose: false,
-                        escapeToClose: false,
+                        escapeToClose: true,
                         locals: {usuario: usuario}
                     });
                     function DialogController($scope, $mdDialog, usuario, UsuarioService, $rootScope) {
@@ -347,7 +347,7 @@ var usuarioController = miAppHome.controller('UsuarioController',
                         parent: angular.element(document.body),
                         targetEvent: ev,
                         clickOutsideToClose: false,
-                        escapeToClose: false,
+                        escapeToClose: true,
                         locals: {usuario: usuario}
                     });
                     function DialogController($scope, $mdDialog, usuario, UsuarioService, $rootScope) {

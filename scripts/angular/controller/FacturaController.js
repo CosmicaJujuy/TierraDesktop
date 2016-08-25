@@ -316,7 +316,7 @@ miAppHome.controller('FacturaController', function (
                             showClose: false,
                             controller: 'ModalController',
                             closeByDocument: false,
-                            closeByEscape: false,
+                            closeByEscape: true,
                             data: {metodo: metodo, factura: datosf.data}
                         });
                     } else {
@@ -537,7 +537,7 @@ miAppHome.controller('FacturaController', function (
                         parent: angular.element(document.body),
                         targetEvent: ev,
                         clickOutsideToClose: false,
-                        escapeToClose: false,
+                        escapeToClose: true,
                         locals: {factura: datos.data}
                     });
                     function DialogController($scope, factura, facturaService) {
@@ -636,7 +636,7 @@ miAppHome.controller('FacturaController', function (
                     showClose: false,
                     controller: 'ModalController',
                     closeByDocument: false,
-                    closeByEscape: false,
+                    closeByEscape: true,
                     data: {
                         stock: $scope.stock
                     }
@@ -659,7 +659,7 @@ miAppHome.controller('FacturaController', function (
             showClose: false,
             controller: 'ModalController',
             closeByDocument: false,
-            closeByEscape: false,
+            closeByEscape: true,
             data: {detalleFactura: detalleFactura}
         });
     };
@@ -671,7 +671,7 @@ miAppHome.controller('FacturaController', function (
             showClose: false,
             controller: 'ModalController',
             closeByDocument: false,
-            closeByEscape: false,
+            closeByEscape: true,
             data: {detalleFactura: detalleFactura}
         });
     };
@@ -683,7 +683,7 @@ miAppHome.controller('FacturaController', function (
             showClose: false,
             controller: 'ModalController',
             closeByDocument: false,
-            closeByEscape: false,
+            closeByEscape: true,
             data: {detalleFactura: detalleFactura}
         });
     };

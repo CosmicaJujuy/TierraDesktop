@@ -17,7 +17,7 @@ miAppHome.controller('DetalleNotaCreditoController', function ($scope, $timeout,
                     showClose: false,
                     controller: 'DetalleNotaCreditoController',
                     closeByDocument: false,
-                    closeByEscape: false,
+                    closeByEscape: true,
                     data: {productos: datos.data}
                 });
             } else {
@@ -38,7 +38,7 @@ miAppHome.controller('DetalleNotaCreditoController', function ($scope, $timeout,
             showClose: false,
             controller: 'ModalController',
             closeByDocument: false,
-            closeByEscape: false,
+            closeByEscape: true,
             data: {detalle: item}
         });
     };
@@ -92,7 +92,7 @@ miAppHome.controller('DetalleNotaCreditoController', function ($scope, $timeout,
             showClose: false,
             controller: 'ModalController',
             closeByDocument: false,
-            closeByEscape: false,
+            closeByEscape: true,
             data: {detalle: detalle}
         });
     };
@@ -104,7 +104,7 @@ miAppHome.controller('DetalleNotaCreditoController', function ($scope, $timeout,
             showClose: false,
             controller: 'ModalController',
             closeByDocument: false,
-            closeByEscape: false,
+            closeByEscape: true,
             data: {detalle: detalle}
         });
     };

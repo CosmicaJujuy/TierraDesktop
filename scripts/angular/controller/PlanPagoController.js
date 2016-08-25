@@ -118,7 +118,7 @@ miAppHome.controller('PlanPagoController', function ($scope, ngDialog, $timeout,
             showClose: false,
             controller: 'ModalController',
             closeByDocument: false,
-            closeByEscape: false,
+            closeByEscape: true,
             data: {planPago: planPago}
         });
     };
@@ -130,7 +130,7 @@ miAppHome.controller('PlanPagoController', function ($scope, ngDialog, $timeout,
             showClose: false,
             controller: 'ModalController',
             closeByDocument: false,
-            closeByEscape: false,
+            closeByEscape: true,
             data: {planPago: planPago}
         });
     };

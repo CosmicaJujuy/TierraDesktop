@@ -171,7 +171,7 @@ miAppHome.controller('FacturaProductoController', function (
             showClose: false,
             controller: 'FacturaProductoController',
             closeByDocument: false,
-            closeByEscape: false,
+            closeByEscape: true,
             data: {
                 'toUpdate': toUpdate
             }

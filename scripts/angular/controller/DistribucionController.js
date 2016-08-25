@@ -280,7 +280,7 @@ miAppHome.controller('DistribucionController', function (
                 showClose: false,
                 controller: 'DistribucionController',
                 closeByDocument: false,
-                closeByEscape: false,
+                closeByEscape: true,
                 data: {
                     'wrapper': $scope.wrapper,
                     'producto': $rootScope.modalProducto
@@ -380,7 +380,7 @@ miAppHome.controller('DistribucionController', function (
             showClose: false,
             controller: 'DistribucionController',
             closeByDocument: false,
-            closeByEscape: false,
+            closeByEscape: true,
             data: {'detalle': detalle}
         });
     };

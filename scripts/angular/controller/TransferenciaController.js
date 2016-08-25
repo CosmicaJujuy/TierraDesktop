@@ -149,7 +149,7 @@ miAppHome.controller('TransferenciaController', function ($scope, toaster, ngDia
                     showClose: false,
                     controller: 'ModalController',
                     closeByDocument: false,
-                    closeByEscape: false,
+                    closeByEscape: true,
                     data: {stock: $scope.stock, sucursal: busq.sucursal}
                 });
             } else {
@@ -180,7 +180,7 @@ miAppHome.controller('TransferenciaController', function ($scope, toaster, ngDia
             showClose: false,
             controller: 'ModalController',
             closeByDocument: false,
-            closeByEscape: false,
+            closeByEscape: true,
             data: {detalle: detalle}
         });
     };
@@ -192,7 +192,7 @@ miAppHome.controller('TransferenciaController', function ($scope, toaster, ngDia
             showClose: false,
             controller: 'ModalController',
             closeByDocument: false,
-            closeByEscape: false,
+            closeByEscape: true,
             data: {detalle: detalle}
         });
     };
@@ -218,7 +218,7 @@ miAppHome.controller('TransferenciaController', function ($scope, toaster, ngDia
                     showClose: false,
                     controller: 'ModalController',
                     closeByDocument: false,
-                    closeByEscape: false,
+                    closeByEscape: true,
                     data: {transferencia: datos.data}
                 });
             }

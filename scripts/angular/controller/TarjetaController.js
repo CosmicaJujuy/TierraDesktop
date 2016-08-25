@@ -82,7 +82,7 @@ miAppHome.controller('TarjetaController',
                     showClose: false,
                     controller: 'ModalController',
                     closeByDocument: false,
-                    closeByEscape: false,
+                    closeByEscape: true,
                     data: {tarjeta: tarjeta}
                 });
             };
@@ -94,7 +94,7 @@ miAppHome.controller('TarjetaController',
                     showClose: false,
                     controller: 'ModalController',
                     closeByDocument: false,
-                    closeByEscape: false,
+                    closeByEscape: true,
                     data: {tarjeta: tarjeta}
                 });
             };

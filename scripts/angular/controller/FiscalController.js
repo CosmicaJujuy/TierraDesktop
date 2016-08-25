@@ -65,7 +65,7 @@ miAppHome.controller('FiscalController', function (
             showClose: false,
             controller: 'FiscalController',
             closeByDocument: false,
-            closeByEscape: false,
+            closeByEscape: true,
             data: {
                 comprobanteFiscal: comprobanteFiscal,
                 vendedorFiscal: vendedorFiscal

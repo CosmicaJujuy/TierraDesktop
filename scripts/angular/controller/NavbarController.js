@@ -26,7 +26,7 @@
                 parent: angular.element(document.body),
                 targetEvent: ev,
                 clickOutsideToClose: false,
-                escapeToClose: false,
+                escapeToClose: true,
                 locals: {url: url}
             });
             function DialogController(url, $scope, $timeout, toaster, localStorageService) {

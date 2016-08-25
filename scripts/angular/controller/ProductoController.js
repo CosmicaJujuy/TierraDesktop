@@ -243,7 +243,7 @@ miAppHome.controller('ProductoController', function ($scope,
             showClose: false,
             controller: 'ProductoController',
             closeByDocument: false,
-            closeByEscape: false,
+            closeByEscape: true,
             data: {producto: producto}
         });
     };
@@ -300,7 +300,7 @@ miAppHome.controller('ProductoController', function ($scope,
             showClose: false,
             controller: 'ProductoController',
             closeByDocument: false,
-            closeByEscape: false,
+            closeByEscape: true,
             data: {producto: producto}
         });
     };
@@ -432,7 +432,7 @@ miAppHome.controller('ProductoController', function ($scope,
             showClose: false,
             controller: 'ProductoController',
             closeByDocument: false,
-            closeByEscape: false,
+            closeByEscape: true,
             data: {producto: producto}
         });
     };
@@ -780,7 +780,7 @@ miAppHome.controller('ProductoController', function ($scope,
             showClose: false,
             controller: 'ProductoController',
             closeByDocument: false,
-            closeByEscape: false,
+            closeByEscape: true,
             data: {producto: producto}
         });
     };

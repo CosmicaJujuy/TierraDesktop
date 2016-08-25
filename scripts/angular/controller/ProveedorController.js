@@ -107,7 +107,7 @@ miAppHome.controller('ProveedorController', function ($scope, BaseURL, ngDialog,
             showClose: false,
             controller: 'ModalController',
             closeByDocument: false,
-            closeByEscape: false,
+            closeByEscape: true,
             data: {proveedor: proveedor}
         });
     };
@@ -135,7 +135,7 @@ miAppHome.controller('ProveedorController', function ($scope, BaseURL, ngDialog,
             showClose: false,
             controller: 'ModalController',
             closeByDocument: false,
-            closeByEscape: false,
+            closeByEscape: true,
             data: {proveedor: proveedor}
         });
     };
