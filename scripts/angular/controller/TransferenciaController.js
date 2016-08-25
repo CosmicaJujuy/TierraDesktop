@@ -204,7 +204,7 @@ miAppHome.controller('TransferenciaController', function ($scope, toaster, ngDia
             showClose: false,
             controller: 'ModalController',
             closeByDocument: false,
-            closeByEscape: false
+            closeByEscape: true
         });
     };
 

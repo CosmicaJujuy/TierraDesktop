@@ -254,7 +254,7 @@ miAppHome.controller('DistribucionController', function (
             showClose: false,
             controller: 'DistribucionController',
             closeByDocument: false,
-            closeByEscape: false
+            closeByEscape: true
         });
     };
 
@@ -365,7 +365,7 @@ miAppHome.controller('DistribucionController', function (
                 showClose: false,
                 controller: 'DistribucionController',
                 closeByDocument: false,
-                closeByEscape: false
+                closeByEscape: true
             });
         } else {
             $state.go('distribuir_productos', {idFactura: facturaProducto.idFacturaProducto});

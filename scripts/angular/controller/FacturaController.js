@@ -709,7 +709,7 @@ miAppHome.controller('FacturaController', function (
             showClose: false,
             controller: 'ModalController',
             closeByDocument: false,
-            closeByEscape: false
+            closeByEscape: true
         });
     };
 

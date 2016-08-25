@@ -53,7 +53,7 @@ miAppHome.controller('FiscalController', function (
             showClose: false,
             controller: 'FiscalController',
             closeByDocument: false,
-            closeByEscape: false
+            closeByEscape: true
         });
     };
 
@@ -194,7 +194,7 @@ miAppHome.controller('FiscalController', function (
             showClose: false,
             controller: 'FiscalController',
             closeByDocument: false,
-            closeByEscape: false
+            closeByEscape: true
         });
     };
 
