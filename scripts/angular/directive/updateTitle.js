@@ -1,4 +1,4 @@
-miAppHome.directive('title', ['$rootScope', '$timeout',
+angular.module('tierraDeColoresApp').directive('title', ['$rootScope', '$timeout',
     function ($rootScope, $timeout) {
         return {
             link: function () {

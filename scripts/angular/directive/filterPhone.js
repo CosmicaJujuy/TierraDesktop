@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-miAppHome.filter('tel', function () {
+angular.module('tierraDeColoresApp').filter('tel', function () {
     return function (tel) {
         if (!tel) {
             return '';
