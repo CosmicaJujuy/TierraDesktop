@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-miAppHome.controller('ModalController', function (
+angular.module('tierraDeColoresApp').controller('ModalController', function (
         $scope,
         metodoPagoFacturaService,
         _proveedorService,
@@ -538,8 +538,8 @@ miAppHome.controller('ModalController', function (
                 $scope.detalleTransferencia.cantidad = cantidad;
                 $add = detalleTransferenciaService.add($scope.detalleTransferencia);
                 $add.then(function (datos) {
+                    ngDialog.closeAll();
                     if (datos.status === 200) {
-                        ngDialog.closeAll();
                         $rootScope.$broadcast('reloadTransferencias', {});
                         toaster.pop({
                             type: 'success',

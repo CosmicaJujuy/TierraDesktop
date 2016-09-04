@@ -1,13 +1,27 @@
-miAppHome.controller('ClienteController', function ($scope, clienteService) {
+(function () {
+    'use strict';
 
-    $scope.listaClientes = function () {
-        $list = clienteService.getAll();
-        $list.then(function (datos) {
-            if (datos.status === 200) {
-                $scope.clientes = datos.data;
-            }
-        });
-    };
+    angular
+            .module('tierraDeColoresApp')
+            .controller('ClienteController', ClienteController);
 
-});
+    ClienteController.$inject = ['$scope', 'clienteService'];
 
+    function ClienteController($scope, clienteService) {
+        var vm = this;
+        vm.clientes = [];
+        vm.listaClientes = listaClientes;
+
+        function listaClientes() {
+            clienteService
+                    .getAll()
+                    .then(function (datos) {
+                        if (datos.status === 200) {
+                            vm.clientes = datos.data;
+                        }
+                    });
+        }
+
+    }
+
+})();

@@ -1,28 +1,34 @@
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-miAppHome.controller('MedioPagoController', function ($scope, medioPagoService) {
+(function () {
+    'use strict';
 
-    $scope._medioPago = {
-        "idMedioPago": null,
-        "nombrePago": "",
-        "estado": true,
-        "fechaCreacion": "",
-        "fechaModificacion": null,
-        "usuarioCreacion": null,
-        "usuarioModificacion": null
-    };
+    angular
+            .module('tierraDeColoresApp')
+            .controller('MedioPagoController', MedioPagoController);
+    MedioPagoController.$inject = ['$scope', 'medioPagoService'];
 
-    $scope.listaMedioPago = function () {
-        $scope.medioPagos = "";
-        $promesa = medioPagoService.getAll();
-        $promesa.then(function (datos) {
-            datos.data.shift();
-            $scope.medioPagos = datos.data;
-        });
-    };
+    function MedioPagoController($scope, medioPagoService) {
+        var vm = this;
+        vm._medioPago = {
+            "idMedioPago": null,
+            "nombrePago": "",
+            "estado": true,
+            "fechaCreacion": "",
+            "fechaModificacion": null,
+            "usuarioCreacion": null,
+            "usuarioModificacion": null
+        };
+        vm.listaMedioPago = listaMedioPago;
 
-});
+        function listaMedioPago() {
+            $scope.medioPagos = "";
+            medioPagoService
+                    .getAll()
+                    .then(function (datos) {
+                        datos.data.shift();
+                        $scope.medioPagos = datos.data;
+                    });
+        }
+    }
+
+})();
 
