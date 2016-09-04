@@ -74,21 +74,6 @@
         }
 
         $stateProvider
-                .state('loading', {
-                    url: '/a',
-                    data: {pageTitle: 'Primer uso de aplicación'},
-                    resolve: {},
-                    views: {
-                        'navbar': {
-                            templateUrl: null,
-                            controller: null
-                        },
-                        'body': {
-                            templateUrl: "views/loading.html",
-                            controller: 'LoadingController as loading'
-                        }
-                    }
-                })
                 .state('login', {
                     url: '/',
                     data: {pageTitle: 'Inicio'},
@@ -109,7 +94,7 @@
                                 }
                                 return $templateRequest(templateName);
                             },
-                            controller: 'LoginController'
+                            controller: 'LoginController as vm'
                         }
                     }
                 })
@@ -145,7 +130,7 @@
                         },
                         'body': {
                             templateUrl: "views/usuario/perfil.html",
-                            controller: 'UsuarioController'
+                            controller: 'UsuarioController as vm'
                         }
                     }
                 })
@@ -163,7 +148,7 @@
                         },
                         'body': {
                             templateUrl: "views/usuario/modificarUsuario.html",
-                            controller: 'UsuarioController'
+                            controller: 'UsuarioController as vm'
                         }
                     }
                 })
@@ -181,7 +166,7 @@
                         },
                         'body': {
                             templateUrl: "views/usuario/lista.html",
-                            controller: 'UsuarioController'
+                            controller: 'UsuarioController as vm'
                         }
                     }
                 })
@@ -199,7 +184,7 @@
                         },
                         'body': {
                             templateUrl: "views/usuario/nuevoUsuario.html",
-                            controller: 'UsuarioController'
+                            controller: 'UsuarioController as vm'
                         }
                     }
                 })
@@ -217,7 +202,7 @@
                         },
                         'body': {
                             templateUrl: "views/tarjeta/panelTarjeta.html",
-                            controller: 'TarjetaController'
+                            controller: 'TarjetaController as vm'
                         }
                     }
                 })
@@ -235,7 +220,7 @@
                         },
                         'body': {
                             templateUrl: "views/banco/panelBanco.html",
-                            controller: 'EntidadBancariaController'
+                            controller: 'EntidadBancariaController as vm'
                         }
                     }
                 })
@@ -253,7 +238,7 @@
                         },
                         'body': {
                             templateUrl: "views/planes/panelPlanes.html",
-                            controller: 'PlanPagoController'
+                            controller: 'PlanPagoController as vm'
                         }
                     }
                 })
@@ -271,7 +256,7 @@
                         },
                         'body': {
                             templateUrl: "views/producto/lista.html",
-                            controller: 'ProductoController'
+                            controller: 'ProductoController as vm'
                         }
                     }
                 })
@@ -289,7 +274,7 @@
                         },
                         'body': {
                             templateUrl: "views/factura_producto/agregarFactura.html",
-                            controller: 'FacturaProductoController'
+                            controller: 'FacturaProductoController as vm'
                         }
                     }
                 })
@@ -303,11 +288,11 @@
                                 var templateName = sessionProvider.getPath();
                                 return $templateRequest(templateName);
                             },
-                            controller: 'FacturaProductoController'
+                            controller: null
                         },
                         'body': {
                             templateUrl: "views/factura_producto/lista.html",
-                            controller: 'FacturaProductoController'
+                            controller: 'FacturaProductoController as vm'
                         }
                     }
                 })
@@ -325,7 +310,7 @@
                         },
                         'body': {
                             templateUrl: "views/producto/agregarProducto.html",
-                            controller: 'ProductoController'
+                            controller: 'ProductoController as vm'
                         }
                     }
                 })
@@ -343,7 +328,7 @@
                         },
                         'body': {
                             templateUrl: "views/producto/detalleProducto.html",
-                            controller: 'ProductoController'
+                            controller: 'ProductoController as vm'
                         }
                     }
                 })
@@ -366,7 +351,7 @@
                         },
                         'body': {
                             templateUrl: 'views/producto/helper/helper-content.html',
-                            controller: 'ProductoController'
+                            controller: 'ProductoController as vm'
                         }
                     }
                 })
@@ -381,7 +366,7 @@
                         },
                         'body': {
                             templateUrl: "views/producto/helper/detalle_helper.html",
-                            controller: 'ProductoController'
+                            controller: 'ProductoController as vm'
                         }
                     }
                 })
@@ -413,7 +398,7 @@
                         },
                         'body': {
                             templateUrl: "views/producto/busqueda_Producto.html",
-                            controller: 'ProductoController'
+                            controller: 'ProductoController as vm'
                         }
                     }
                 })
@@ -431,7 +416,7 @@
                         },
                         'body': {
                             templateUrl: 'views/distribucion/distribucionPanel.html',
-                            controller: 'DistribucionController'
+                            controller: 'DistribucionController as vm'
                         }
                     }
                 })
@@ -449,7 +434,7 @@
                         },
                         'body': {
                             templateUrl: 'views/distribucion/distribuir.html',
-                            controller: 'DistribucionController'
+                            controller: 'DistribucionController as vm'
                         }
                     }
                 })
@@ -467,7 +452,7 @@
                         },
                         'body': {
                             templateUrl: 'views/categoria/categoriaPanel.html',
-                            controller: 'CategoriaController as categoria'
+                            controller: 'CategoriaController as vm'
                         }
                     }
                 })
@@ -485,7 +470,7 @@
                         },
                         'body': {
                             templateUrl: 'views/marcas/marcasPanel.html',
-                            controller: 'MarcaController'
+                            controller: 'MarcaController as vm'
                         }
                     }
                 })
@@ -503,7 +488,7 @@
                         },
                         'body': {
                             templateUrl: 'views/tipo/panelTipo.html',
-                            controller: 'TipoController'
+                            controller: 'TipoController as vm'
                         }
                     }
                 })
@@ -521,7 +506,7 @@
                         },
                         'body': {
                             templateUrl: 'views/proveedor/proveedorPanel.html',
-                            controller: 'ProveedorController'
+                            controller: 'ProveedorController as vm'
                         }
                     }
                 })
@@ -539,7 +524,7 @@
                         },
                         'body': {
                             templateUrl: 'views/proveedor/detalleProveedor.html',
-                            controller: 'ProveedorController'
+                            controller: 'ProveedorController as vm'
                         }
                     }
                 })
@@ -557,7 +542,7 @@
                         },
                         'body': {
                             templateUrl: 'views/factura/lista.html',
-                            controller: 'FacturaController'
+                            controller: 'FacturaController as vm'
                         }
                     }
                 })
@@ -575,7 +560,7 @@
                         },
                         'body': {
                             templateUrl: "views/factura/facturaPanel.html",
-                            controller: "FacturaController"
+                            controller: "FacturaController as vm"
                         }
                     }
                 })
@@ -593,7 +578,7 @@
                         },
                         'body': {
                             templateUrl: "views/reserva/reservaPanel.html",
-                            controller: "FacturaController"
+                            controller: "FacturaController as vm"
                         }
                     }
                 })
@@ -611,7 +596,7 @@
                         },
                         'body': {
                             templateUrl: "views/nota_credito/panelNotaCredito.html",
-                            controller: "NotaCreditoController"
+                            controller: "NotaCreditoController as vm"
                         }
                     }
                 })
@@ -629,7 +614,7 @@
                         },
                         'body': {
                             templateUrl: "views/nota_credito/detalle.html",
-                            controller: "DetalleNotaCreditoController as detNota"
+                            controller: "DetalleNotaCreditoController as vm"
                         }
                     }
                 })
@@ -638,7 +623,7 @@
                     data: {pageTitle: 'Finalizar detalle nota de credito'},
                     resolve: {auth: auth},
                     templateUrl: "views/nota_credito/partial-cerrar-nota.html",
-                    controller: "DetalleNotaCreditoController as detNota"
+                    controller: "NotaCreditoController as vm"
                 })
                 .state('transferencias', {
                     url: '/transferencias',
@@ -654,7 +639,7 @@
                         },
                         'body': {
                             templateUrl: "views/transferencia/lista-de-transferencias.html",
-                            controller: "TransferenciaController"
+                            controller: "TransferenciaController as vm"
                         }
                     }
                 })
@@ -672,7 +657,7 @@
                         },
                         'body': {
                             templateUrl: "views/transferencia/detalle.html",
-                            controller: "TransferenciaController"
+                            controller: "TransferenciaController as vm"
                         }
                     }
                 });
