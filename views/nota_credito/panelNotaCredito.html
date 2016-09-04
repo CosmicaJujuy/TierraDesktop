@@ -3,9 +3,9 @@
      layout-margin
      layout-xs="row"
      md-theme="docs-dark"
-     ng-controller="UsuarioController"
-     data-ng-init="detailUsuario()"
-     ng-show="user.username">
+     ng-controller="UsuarioController as usCtrl"
+     data-ng-init="usCtrl.detailUsuario()"
+     ng-show="usCtrl.user.username">
     <div flex-lg="25"
          flex-md="30"
          layout="column"
@@ -15,8 +15,8 @@
             <md-toolbar class="md-accent">
                 <div class="md-toolbar-tools">
                     <h4 class="md-flex" style="width:100%; text-align: center;">
-                        <div>{{user.nombre}} {{user.apellido}}</div>
-                        <div>{{user.usuarioSucursal.nombreSucursal}}</div>
+                        <div>{{usCtrl.user.nombre}} {{usCtrl.user.apellido}}</div>
+                        <div>{{usCtrl.user.usuarioSucursal.nombreSucursal}}</div>
                     </h4>
                 </div>
             </md-toolbar>
@@ -47,7 +47,7 @@
                         <div layout="column" flex class="padd">
                             <button class="btn btn-block btn-success"
                                     style="margin-top: 50px; margin-bottom: 8px;"
-                                    ng-click="agregarNotaCredito(_notaCredito)">
+                                    ng-click="vm.agregarNotaCredito(vm._notaCredito)">
                                 <md-tooltip md-direction="bottom" md-theme="default">
                                     Crear una nueva nota de credito
                                 </md-tooltip>
@@ -75,7 +75,7 @@
                             <md-content class="md-padding">
                                 <table class="table table-striped table-hover table-condensed light-table"
                                        ng-table="tableNotaCredito"
-                                       data-ng-init="listaHoyNotaCredito()">
+                                       data-ng-init="vm.listaHoyNotaCredito()">
                                     <thead id="headTableProductos">
                                         <tr>
                                             <th style="text-align: center;">N°</th>
@@ -127,7 +127,7 @@
                             <md-content class="md-padding">
                                 <table class="table table-striped table-hover table-condensed light-table"
                                        ng-table="tableNotaCreditoMes"
-                                       data-ng-init="listaMesNotaCredito()">
+                                       data-ng-init="vm.listaMesNotaCredito()">
                                     <thead id="headTableProductos">
                                         <tr>
                                             <th style="text-align: center;">N°</th>

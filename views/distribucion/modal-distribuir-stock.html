@@ -12,11 +12,11 @@
                     <label flex style="font-size: medium;">En almacen: {{modalProducto.cantidadTotal}}</label>
                 </div>
                 <div flex style="text-align: center;">
-                    <label flex style="font-size: medium;">A distribuir: {{modalDistribuir.tierra + modalDistribuir.bebelandia + modalDistribuir.libertador}}</label>
+                    <label flex style="font-size: medium;">A distribuir: {{vm.modalDistribuir.tierra + vm.modalDistribuir.bebelandia + vm.modalDistribuir.libertador}}</label>
                 </div>
                 <md-input-container class="md-block" flex>
                     <label>Tierra de colores</label>
-                    <input ng-model="modalDistribuir.tierra"
+                    <input ng-model="vm.modalDistribuir.tierra"
                            maxlength="2"
                            min="0"
                            type="number"
@@ -25,7 +25,7 @@
                 </md-input-container>
                 <md-input-container class="md-block" flex>
                     <label>Bebelandia</label>
-                    <input ng-model="modalDistribuir.bebelandia"
+                    <input ng-model="vm.modalDistribuir.bebelandia"
                            maxlengh="2"
                            min="0"
                            type="number"
@@ -34,7 +34,7 @@
                 </md-input-container>
                 <md-input-container class="md-block" flex>
                     <label>Libertador</label>
-                    <input ng-model="modalDistribuir.libertador"
+                    <input ng-model="vm.modalDistribuir.libertador"
                            maxlengh="2"
                            min="0"
                            type="number"
@@ -43,7 +43,7 @@
                 </md-input-container>            
                 <div flex style="text-align: center;">
                     <button class="btn btn-success"
-                            ng-click="confirmarDistribuir(modalDistribuir)">Distribuir</button>
+                            ng-click="vm.confirmarDistribuir(vm.modalDistribuir)">Distribuir</button>
                 </div>
             </form>
         </md-content>

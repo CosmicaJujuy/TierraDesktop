@@ -7,8 +7,8 @@
          flex-md="90"
          layout="column"
          layout-xs="column"
-         ng-show="user.username" 
-         data-ng-init="detailUsuario()">
+         ng-show="vm.user.username" 
+         data-ng-init="vm.detailUsuario()">
         <div ng-cloak>
             <!-- JUEGO DE TABS MODIFICAR USUARIO-->
             <md-content md-theme="docs-dark" style="min-height: 598px;">
@@ -18,10 +18,9 @@
                          md-center-tabs="true"
                          md-selected="tabs">
                     <!-- TAB MODIFICAR USUARIO-->
-                    <md-tab label="Perfil de {{user.username}}">
+                    <md-tab label="Perfil de {{vm.user.username}}">
                         <md-content class="md-padding">
-                            <div class="col-lg-2"></div>
-                            <div layout="column" ng-cloak class="col-lg-8">
+                            <div layout="column" ng-cloak flex="60" flex-offset="20">
                                 <!-- FORMULARIO MODIFICAR DATOS USUARIO-->
                                 <form name="changePerfil">
                                     <!-- INPUT NOMBRE-->
@@ -31,7 +30,7 @@
                                         <input minlength="4"
                                                md-maxlength="20"
                                                maxlength="25"
-                                               ng-model="user.nombre" md-no-asterisk
+                                               ng-model="vm.user.nombre" md-no-asterisk
                                                name="nombre" required placeholder="Nombre"/>
                                         <!-- MENSAJES-->
                                         <div ng-messages="changePerfil.nombre.$error"
@@ -51,7 +50,7 @@
                                                md-maxlength="20"
                                                maxlength="25"
                                                placeholder="Apellido" md-no-asterisk
-                                               ng-model="user.apellido" name="apellido" required/>
+                                               ng-model="vm.user.apellido" name="apellido" required/>
                                         <!-- MENSAJES-->
                                         <div ng-messages="changePerfil.apellido.$error"
                                              ng-if='changePerfil.apellido.$dirty || changePerfil.apellido.$touched'>
@@ -71,7 +70,7 @@
                                                md-maxlength="8"
                                                maxlength="8"
                                                placeholder="D.N.I."
-                                               ng-model="user.dni" name="dni" required/>
+                                               ng-model="vm.user.dni" name="dni" required/>
                                         <!-- MENSAJES -->
                                         <div ng-messages="changePerfil.dni.$error"
                                              ng-if='changePerfil.dni.$dirty || changePerfil.dni.$touched'>
@@ -88,7 +87,7 @@
                                                minlength="8" 
                                                md-maxlength="25"
                                                placeholder="Domicilio" md-no-asterisk
-                                               ng-model="user.domicilio" name="domicilio" required/>
+                                               ng-model="vm.user.domicilio" name="domicilio" required/>
                                         <!-- MENSAJES-->
                                         <div ng-messages="changePerfil.domicilio.$error"
                                              ng-if='changePerfil.domicilio.$dirty || changePerfil.domicilio.$touched'>
@@ -108,7 +107,7 @@
                                                md-maxlength="35"
                                                maxlength="40"
                                                placeholder="E-mail" md-no-asterisk
-                                               ng-model="user.email" name="email" required/>
+                                               ng-model="vm.user.email" name="email" required/>
                                         <!-- MENSAJES-->
                                         <div ng-messages="changePerfil.email.$error"
                                              ng-if='changePerfil.email.$dirty || changePerfil.email.$touched'>
@@ -126,7 +125,7 @@
                                             <label>Fecha de nacimiento</label>
                                             <md-icon class="material-icons">&#xE916;</md-icon>
                                             <!-- INPUT FECHA-->
-                                            <input ng-model="user.fechaNacimiento"
+                                            <input ng-model="vm.user.fechaNacimiento"
                                                    name="nacimiento" id="nacimientoDate"
                                                    type="date"
                                                    min="1950-01-01"
@@ -150,7 +149,7 @@
                                                    maxlength="10"
                                                    md-maxlength="10"
                                                    placeholder="Telefono"
-                                                   ng-model="user.telefono" name="telefono" required/>
+                                                   ng-model="vm.user.telefono" name="telefono" required/>
                                             <!-- MENSAJES-->
                                             <div ng-messages="changePerfil.telefono.$error"
                                                  ng-if='changePerfil.telefono.$dirty || changePerfil.telefono.$touched'>
@@ -163,15 +162,18 @@
                                     <!-- BOTONES -->
                                     <div flex style="text-align: center;">
                                         <!-- BOTON ACTUALIZAR-->
-                                        <button ng-click="actualizarPerfil()"
+                                        <button ng-click="vm.actualizarPerfil(vm.user)"
                                                 class="btn btn-success"
-                                                ng-disabled="changePerfil.$invalid"
-                                                >Guardar</button>
+                                                ng-disabled="changePerfil.$invalid">
+                                            Guardar
+                                        </button>
                                         <!-- BOTON SALIR-->
                                         <button type="button"
                                                 class="btn btn-danger"
                                                 style="width: 79px;"
-                                                ui-sref="perfil">Salir</button>
+                                                ui-sref="perfil">
+                                            Salir
+                                        </button>
                                     </div><!-- FIN BOTONES-->
                                 </form>                                
                             </div> 
@@ -184,7 +186,7 @@
                                 <!-- FORMULARIO ACTUALIZAR FOTO-->
                                 <form name="fotoPerfil">
                                     <!-- IMAGEN DE PERFIL -->
-                                    <img ng-src="data:image/JPEG;base64,{{user.imagen}}" 
+                                    <img ng-src="data:image/JPEG;base64,{{vm.user.imagen}}" 
                                          style="max-height: 400px; max-width: 400px; margin-top: 1%;">
                                     <!-- INPUT ARCHIVO -->
                                     <center flex>
@@ -195,15 +197,18 @@
                                                style="margin-bottom: 5%;" required/>
                                     </center>
                                     <!-- BOTON ACTUALIZAR FOTO -->
-                                    <button ng-click="actualizarFoto(fileUpload)"
+                                    <button ng-click="vm.actualizarFoto(fileUpload)"
                                             ng-disabled="fotoPerfil.$invalid" 
-                                            class="btn btn-success"
-                                            style="">Guardar</button>
+                                            class="btn btn-success">
+                                        Guardar
+                                    </button>
                                     <!-- BOTON SALIR -->
                                     <button type="button"
                                             class="btn btn-danger"
                                             style=" width: 79px;"
-                                            ui-sref="perfil">Salir</button>
+                                            ui-sref="perfil">
+                                        Salir
+                                    </button>
                                 </form>
                             </div>
                         </md-content>
@@ -211,8 +216,7 @@
                     <!-- TAB ACTUALIZAR CONTRASEÑA -->
                     <md-tab label="Cambiar contraseña">
                         <md-content class="md-padding">
-                            <div class="col-lg-2"></div>
-                            <div class="col-lg-8">
+                            <div flex="60" flex-offset="20">
                                 <!-- FORMULARIO ACTUALIZAR CONTRASEÑA -->
                                 <form name="changePassword">
                                     <!-- INPUT CONTRASEÑA ACTUAL -->
@@ -223,7 +227,7 @@
                                         <input type="password" 
                                                ng-minlength="8" 
                                                placeholder="Ingresa contraseña actual"
-                                               ng-model="userPw.old" name="old" required/>
+                                               ng-model="vm.userPw.old" name="old" required/>
                                         <!-- MENSAJES-->
                                         <div ng-messages="changePassword.old.$error"
                                              ng-if='changePassword.old.$dirty || changePassword.old.$touched'>
@@ -240,7 +244,7 @@
                                                ng-pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*$"
                                                pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*$"
                                                placeholder="Ingresa contraseña nueva"
-                                               ng-model="userPw.new" name="new" required/>
+                                               ng-model="vm.userPw.new" name="new" required/>
                                         <!-- MENSAJES-->
                                         <div ng-messages="changePassword.new.$error"
                                              ng-if='changePassword.new.$dirty || changePassword.new.$touched'>
@@ -257,7 +261,7 @@
                                         <input type="password"
                                                ng-minlength="8"
                                                placeholder="Repetir contraseña"
-                                               ng-model="userPw.rep" name="rep" required/>
+                                               ng-model="vm.userPw.rep" name="rep" required/>
                                         <!-- MENSAJES-->
                                         <div ng-messages="changePassword.rep.$error"
                                              ng-if='changePassword.rep.$dirty || changePassword.rep.$touched'>
@@ -267,14 +271,18 @@
                                         </div>
                                     </md-input-container>
                                     <div flex style="margin-top: 10%; text-align: center;">
-                                        <button ng-click="cambiarPassword()"
+                                        <button ng-click="vm.cambiarPassword(vm.userPw)"
                                                 class="btn btn-success" 
                                                 style=""
-                                                ng-disabled="changePassword.$invalid">Guardar</button>
+                                                ng-disabled="changePassword.$invalid">
+                                            Guardar
+                                        </button>
                                         <button type="button"
                                                 class="btn btn-danger"
                                                 style=" width: 79px;"
-                                                ui-sref="perfil">Salir</button>
+                                                ui-sref="perfil">
+                                            Salir
+                                        </button>
                                     </div>
                                 </form>
                             </div>                            

@@ -9,11 +9,15 @@
     </md-toolbar>
     <md-content flex style="width: 400px; height: 250px">
         <md-content class="md-padding" flex>
-            <p flex style="text-align: center; font-weight: bold;">Elige un vendedor por favor.</p>
-            <p flex style="width: 100%; text-align: center; font-size: small;">Una vez finalizada esta acción no podras deshacerla.</p>
+            <p flex style="text-align: center; font-weight: bold;">
+                Elige un vendedor por favor.
+            </p>
+            <p flex style="width: 100%; text-align: center; font-size: small;">
+                Una vez finalizada esta acción no podras deshacerla.
+            </p>
             <form name="cerrarFactura" style="margin-top: 40px;">
                 <md-input-container style="min-height: 58px;" class="md-icon md-block"
-                                    flex ng-controller="FiscalController" data-ng-init="listaVendedores()">
+                                    flex ng-controller="FiscalController as fsCtrl" data-ng-init="fsCtrl.listaVendedores()">
                     <label>Vendedores</label>
                     <md-select ng-model="facturaToUpdate.idVendedor"
                                placeholder="Vendedores"

@@ -29,8 +29,8 @@
                                 </div>
                                 <table class="table table-striped table-hover table-condensed light-table"
                                        ng-table="tableFacturaProductos"
-                                       ng-controller="FacturaProductoController"
-                                       data-ng-init="listaFacturaProducto()">                                                                        
+                                       ng-controller="FacturaProductoController as fpCtrl"
+                                       data-ng-init="fpCtrl.listaFacturaProducto()">
                                     <thead id="headTableProductos">
                                         <tr>
                                             <th>ID</th>
@@ -67,7 +67,7 @@
                                             </td>
                                             <td style="text-align: center">
                                                 <button class="btn btn-xs btn-success"
-                                                        ng-click="verificarDistribucion(facturaProducto)"
+                                                        ng-click="vm.verificarDistribucion(facturaProducto)"
                                                         ng-disabled="false">
                                                     <md-tooltip md-direction="top" md-theme="default">
                                                         Distribuir productos
@@ -99,7 +99,7 @@
                                 </div>
                                 <table class="table table-striped table-hover table-condensed light-table"
                                        ng-table="tableTierraStock"
-                                       data-ng-init="listaTierra()">
+                                       data-ng-init="vm.listaTierra()">
                                     <thead id="headTableProductos">
                                         <tr>
                                             <th>ID</th>
@@ -159,7 +159,7 @@
                                 </div>
                                 <table class="table table-striped table-hover table-condensed light-table"
                                        ng-table="tableBebelandiaStock"
-                                       data-ng-init="listaBebelandia()">
+                                       data-ng-init="vm.listaBebelandia()">
                                     <thead id="headTableProductos">
                                         <tr>
                                             <th>ID</th>
@@ -220,7 +220,7 @@
                                 </div>
                                 <table class="table table-striped table-hover table-condensed light-table"
                                        ng-table="tableLibertadorStock"
-                                       data-ng-init="listaLibertador()">
+                                       data-ng-init="vm.listaLibertador()">
                                     <thead id="headTableProductos">
                                         <tr>
                                             <th>ID</th>

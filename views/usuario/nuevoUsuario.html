@@ -12,7 +12,7 @@
                     <input minlength="4"
                            md-maxlength="20"
                            maxlength="25"
-                           ng-model="user.nombre" md-no-asterisk
+                           ng-model="vm.user.nombre" md-no-asterisk
                            name="nombre" required placeholder="Nombre"/>
                     <!-- MENSAJES-->
                     <div ng-messages="registrarUsuarios.nombre.$error"
@@ -31,7 +31,7 @@
                            maxlength="10"
                            md-maxlength="10"
                            placeholder="Telefono"
-                           ng-model="user.telefono" name="telefono" required/>
+                           ng-model="vm.user.telefono" name="telefono" required/>
                     <!-- MENSAJES-->
                     <div ng-messages="registrarUsuarios.telefono.$error"
                          ng-if='registrarUsuarios.telefono.$dirty || registrarUsuarios.telefono.$touched'>
@@ -51,7 +51,7 @@
                            md-maxlength="20"
                            maxlength="25"
                            placeholder="Apellido" md-no-asterisk
-                           ng-model="user.apellido" name="apellido" required/>
+                           ng-model="vm.user.apellido" name="apellido" required/>
                     <!-- MENSAJES-->
                     <div ng-messages="registrarUsuarios.apellido.$error"
                          ng-if='registrarUsuarios.apellido.$dirty || registrarUsuarios.apellido.$touched'>
@@ -70,7 +70,7 @@
                            md-maxlength="35"
                            maxlength="40"
                            placeholder="E-mail" md-no-asterisk
-                           ng-model="user.email" name="email" required/>
+                           ng-model="vm.user.email" name="email" required/>
                     <!-- MENSAJES-->
                     <div ng-messages="registrarUsuarios.email.$error"
                          ng-if='registrarUsuarios.email.$dirty || registrarUsuarios.email.$touched'>
@@ -92,7 +92,7 @@
                            md-maxlength="8"
                            maxlength="8"
                            placeholder="D.N.I."
-                           ng-model="user.dni" name="dni" required/>
+                           ng-model="vm.user.dni" name="dni" required/>
                     <!-- MENSAJES -->
                     <div ng-messages="registrarUsuarios.dni.$error"
                          ng-if='registrarUsuarios.dni.$dirty || registrarUsuarios.dni.$touched'>
@@ -110,7 +110,7 @@
                                md-maxlength="35"
                                maxlength="40"
                                placeholder="Username" md-no-asterisk
-                               ng-model="user.username" name="username" required/>
+                               ng-model="vm.user.username" name="username" required/>
                         <!-- MENSAJES-->
                         <div ng-messages="registrarUsuarios.username.$error"
                              ng-if='registrarUsuarios.username.$dirty || registrarUsuarios.username.$touched'>
@@ -129,7 +129,7 @@
                                ng-pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*$"
                                pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*$"
                                placeholder="Contraseña"
-                               ng-model="user.password" name="password" required/>
+                               ng-model="vm.user.password" name="password" required/>
                         <!-- MENSAJES-->
                         <div ng-messages="registrarUsuarios.password.$error"
                              ng-if='registrarUsuarios.password.$dirty || registrarUsuarios.password.$touched'>
@@ -151,7 +151,7 @@
                            minlength="8" 
                            md-maxlength="25"
                            placeholder="Domicilio" md-no-asterisk
-                           ng-model="user.domicilio" name="domicilio" required/>
+                           ng-model="vm.user.domicilio" name="domicilio" required/>
                     <!-- MENSAJES-->
                     <div ng-messages="registrarUsuarios.domicilio.$error"
                          ng-if='registrarUsuarios.domicilio.$dirty || registrarUsuarios.domicilio.$touched'>
@@ -160,10 +160,10 @@
                         <div ng-message="required">Este campo no puede estar vacio.</div>                            
                     </div>
                 </md-input-container>
-                <md-input-container class="md-icon md-block" flex data-ng-init="listaRoles()">
+                <md-input-container class="md-icon md-block" flex data-ng-init="vm.listaRoles()">
                     <label>Rol</label>
                     <md-icon class="material-icons">&#xE7EF;</md-icon>
-                    <md-select ng-model="user.roles"
+                    <md-select ng-model="vm.user.roles"
                                required name="rol">                                            
                         <md-option ng-value="rol" 
                                    ng-repeat="rol in roles">{{rol.nombreRol}}</md-option>                                            
@@ -181,7 +181,7 @@
                     <label>Fecha de nacimiento</label>
                     <md-icon class="material-icons">&#xE916;</md-icon>
                     <!-- INPUT FECHA-->
-                    <input ng-model="user.fechaNacimiento"
+                    <input ng-model="vm.user.fechaNacimiento"
                            name="nacimiento" id="nacimientoDate"
                            min="1950-01-01"
                            type="date" placeholder="Fecha de nacimiento"
@@ -195,10 +195,10 @@
                         <div ng-message="required">Este campo no puede estar vacio.</div>                            
                     </div>
                 </md-input-container>
-                <md-input-container class="md-icon md-block" flex data-ng-init="listaSucursales()">
+                <md-input-container class="md-icon md-block" flex data-ng-init="vm.listaSucursales()">
                     <label>Sucursal</label>
                     <md-icon class="material-icons">&#xE7F1;</md-icon>
-                    <md-select ng-model="user.usuarioSucursal"
+                    <md-select ng-model="vm.user.usuarioSucursal"
                                required name="sucursal">                                            
                         <md-option ng-value="sucursal"
                                    ng-repeat="sucursal in sucursales">{{sucursal.nombreSucursal}}</md-option>                                            
@@ -213,7 +213,7 @@
             <!-- BOTON AGREGAR USUARIO-->
             <button class="btn btn-success"
                     type="submit" style="float: right; margin-right: 35px; margin-bottom: 15px; margin-top: -5px;"
-                    ng-click="nuevoUsuario(user)"
+                    ng-click="vm.nuevoUsuario(vm.user)"
                     ng-disabled="registrarUsuario.$invalid">Registrar</button>
             <!-- FIN BOTON AGREGAR USUARIO-->
         </form>

@@ -22,15 +22,15 @@
             <input type="text"
                    class="customPlaceholder"
                    md-autofocus
-                   ng-model="usuario.username"
+                   ng-model="vm.usuario.username"
                    placeholder="Usuario" />
             <input type="password"
                    class="customPlaceholder"
-                   ng-model="usuario.password"
+                   ng-model="vm.usuario.password"
                    placeholder="Contraseña" />
             <input href="javascript:void(0)"
                    type="submit" style="width: 250px; margin-top: 20px;"
-                   ng-click="iniciarSesion()"
+                   ng-click="vm.iniciarSesion()"
                    value='ENTRAR'
                    class="btn btn-success"/>
         </form>

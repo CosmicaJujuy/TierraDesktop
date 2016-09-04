@@ -14,7 +14,7 @@
                     <md-tab label="Proveedores">
                         <md-content class="md-padding">
                             <div class="table-responsive">
-                                <table data-ng-init="listaProveedores()"
+                                <table data-ng-init="vm.listaProveedores()"
                                        class="table table-striped table-condensed table-hover light-table"
                                        ng-table="tableProveedores">
                                     <thead id="headTableProductos">
@@ -31,13 +31,17 @@
                                         <tr ng-repeat="proveedor in $data">
                                             <th style="text-align: center">{{::proveedor.idProveedor}}</th>
                                             <th style="text-align: center">{{::proveedor.cuitProveedor}}</th> 
-                                            <th style="text-align: center"><a href="" ui-sref="proveedor_detalle({idProveedor:{{::proveedor.idProveedor}}})">{{::proveedor.nombreProveedor}}</a></th>                        
+                                            <th style="text-align: center">
+                                                <a href="" ui-sref="proveedor_detalle({idProveedor:{{::proveedor.idProveedor}}})">
+                                                    {{::proveedor.nombreProveedor}}
+                                                </a>
+                                            </th>                        
                                             <th style="text-align: center">{{::proveedor.direccionProveedor}}</th>                        
                                             <th style="text-align: center">{{::proveedor.telefonoProveedor}}</th>                        
-                                            <th style="text-align: center" ng-controller="ProveedorController">
+                                            <th style="text-align: center">
                                                 <button type="button"
                                                         class="btn btn-xs btn-info"
-                                                        ng-click="modificarProveedor(proveedor)">
+                                                        ng-click="vm.modificarProveedor(proveedor)">
                                                     <md-tooltip md-direction="top" md-theme="default">
                                                         Modificar
                                                     </md-tooltip>
@@ -45,7 +49,7 @@
                                                 </button>
                                                 <button type="button"
                                                         class="btn btn-xs btn-danger"
-                                                        ng-click="eliminarProveedor(proveedor)">
+                                                        ng-click="vm.eliminarProveedor(proveedor)">
                                                     <md-tooltip md-direction="top" md-theme="default">
                                                         Eliminar
                                                     </md-tooltip>
@@ -70,7 +74,7 @@
                                                minlength="4"
                                                maxlength="30"
                                                md-maxlength="30"
-                                               ng-model="_proveedor.nombreProveedor"
+                                               ng-model="vm._proveedor.nombreProveedor"
                                                name="nombreProveedor" required/>
                                         <!-- MENSAJES-->
                                         <div ng-messages="nuevoProveedor.nombreProveedor.$error"
@@ -88,7 +92,7 @@
                                                    minlength="10"
                                                    maxlength="11"
                                                    md-maxlength="11"
-                                                   ng-model="_proveedor.cuitProveedor"
+                                                   ng-model="vm._proveedor.cuitProveedor"
                                                    name="cuitProveedor" required/>
                                             <!-- MENSAJES-->
                                             <div ng-messages="nuevoProveedor.cuitProveedor.$error"
@@ -105,7 +109,7 @@
                                                    minlength="4"
                                                    maxlength="30"
                                                    md-maxlength="30"
-                                                   ng-model="_proveedor.direccionProveedor"
+                                                   ng-model="vm._proveedor.direccionProveedor"
                                                    name="direccionProveedor" required/>
                                             <!-- MENSAJES-->
                                             <div ng-messages="nuevoProveedor.direccionProveedor.$error"
@@ -124,7 +128,7 @@
                                                    maxlength="20"
                                                    md-maxlength="20"
                                                    placeholder="País del proveedor"
-                                                   ng-model="_proveedor.paisProveedor"
+                                                   ng-model="vm._proveedor.paisProveedor"
                                                    name="paisProveedor" required/>
                                             <!-- MENSAJES-->
                                             <div ng-messages="nuevoProveedor.paisProveedor.$error"
@@ -141,7 +145,7 @@
                                                    maxlength="20"
                                                    md-maxlength="20"
                                                    placeholder="Provincia del proveedor"
-                                                   ng-model="_proveedor.provinciaProveedor"
+                                                   ng-model="vm._proveedor.provinciaProveedor"
                                                    name="provinciaProveedor" required/>
                                             <!-- MENSAJES-->
                                             <div ng-messages="nuevoProveedor.provinciaProveedor.$error"
@@ -160,7 +164,7 @@
                                                    maxlength="20"
                                                    md-maxlength="20"
                                                    placeholder="Localidad del proveedor"
-                                                   ng-model="_proveedor.localidadProveedor" 
+                                                   ng-model="vm._proveedor.localidadProveedor" 
                                                    name="localidadProveedor" required/>
                                             <!-- MENSAJES-->
                                             <div ng-messages="nuevoProveedor.localidadProveedor.$error"
@@ -177,7 +181,7 @@
                                                    maxlength="15"
                                                    md-maxlength="15"
                                                    placeholder="Codigo postal del proveedor"
-                                                   ng-model="_proveedor.codigoPostal"
+                                                   ng-model="vm._proveedor.codigoPostal"
                                                    name="codigoPostal" required/>
                                             <!-- MENSAJES-->
                                             <div ng-messages="nuevoProveedor.codigoPostal.$error"
@@ -196,7 +200,7 @@
                                                    maxlength="20"
                                                    md-maxlength="20"
                                                    placeholder="Número de telefono del proveedor"
-                                                   ng-model="_proveedor.telefonoProveedor"
+                                                   ng-model="vm._proveedor.telefonoProveedor"
                                                    name="telefonoProveedor" required/>
                                             <!-- MENSAJES-->
                                             <div ng-messages="nuevoProveedor.telefonoProveedor.$error"
@@ -214,7 +218,7 @@
                                                    maxlength="30"
                                                    md-maxlength="30"
                                                    placeholder="E-mail del proveedor"
-                                                   ng-model="_proveedor.emailProveedor"
+                                                   ng-model="vm._proveedor.emailProveedor"
                                                    name="emailProveedor" required/>
                                             <!-- MENSAJES-->
                                             <div ng-messages="nuevoProveedor.emailProveedor.$error"
@@ -227,7 +231,7 @@
                                         </md-input-container>
                                     </div>
                                     <div flex style="text-align: center;">
-                                        <button ng-click="agrearProveedor(_proveedor)"
+                                        <button ng-click="vm.agregarProveedor(vm._proveedor)"
                                                 type="submit"
                                                 class="btn btn-success"
                                                 ng-disabled="nuevoProveedor.$invalid">Agregar</button>
@@ -236,7 +240,7 @@
                             </div>                           
                         </md-content>
                     </md-tab>
-                </md-tabs>                    
+                </md-tabs>
             </md-content>
         </div>
     </div>

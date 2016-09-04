@@ -11,7 +11,7 @@
         <md-content class="md-padding" flex>
             <p flex style="text-align: center; font-weight: bold;">Transferir de sucursal</p>
             <form name="changeSucursal" style="margin-top: 40px;">
-                <md-input-container style="min-height: 58px;" class="md-icon md-block" flex ng-controller="UsuarioController" data-ng-init="listaSucursales()">
+                <md-input-container style="min-height: 58px;" class="md-icon md-block" flex ng-controller="UsuarioController as usCtrl" data-ng-init="usCtrl.listaSucursales()">
                     <label>Sucursales</label>
                     <md-select ng-model="items.usuarioSucursal"
                                placeholder="Sucursales"

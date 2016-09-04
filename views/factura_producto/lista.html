@@ -2,7 +2,7 @@
 <div layout="row"
      layout-margin
      layout-xs="row">
-    <div data-ng-init="detallesFacturaProducto()"
+    <div data-ng-init="vm.detallesFacturaProducto()"
          flex-lg="25"
          flex-md="30"
          layout="column"
@@ -57,7 +57,7 @@
                 </form>
                 <button class="btn btn-success btn-block" 
                         type="button"
-                        ng-click="agregarProductoFactura()">
+                        ng-click="vm.agregarProductoFactura()">
                     <md-tooltip md-direction="top" md-theme="default">
                         Agregar nuevo producto a esta factura
                     </md-tooltip>
@@ -65,7 +65,7 @@
                 </button>
                 <button class="btn btn-success btn-block" 
                         type="button"
-                        ng-click="confirmarFinalizarCargaFactura()">
+                        ng-click="vm.confirmarFinalizarCargaFactura()">
                     <md-tooltip md-direction="top" md-theme="default">
                         Finalizar la carga de productos
                     </md-tooltip>
@@ -89,10 +89,10 @@
                         <md-tab label="Productos">
                             <md-content class="md-padding">
                                 <div class="table-responsive"
-                                     ng-controller="ProductoController">
+                                     ng-controller="ProductoController as poCtrl">
                                     <table class="table table-striped table-hover light-table table-condensed"
                                            ng-table="tableProductosFactura"
-                                           data-ng-init="listaProductosFactura()">
+                                           data-ng-init="poCtrl.listaProductosFactura()">
                                         <thead id="headTableProductos">
                                             <tr>
                                                 <th style="text-align: center">ID</th>
@@ -105,8 +105,7 @@
                                         </thead>
                                         <tbody>
                                             <tr ng-repeat="producto in $data| orderBy: 'cantidadTotal'"
-                                                ng-class="{ danger: stockMinimo(producto) }"                
-                                                >
+                                                ng-class="{ danger: stockMinimo(producto) }">
                                                 <td style="text-align: center">{{producto.idProducto}}</td>
                                                 <td style="text-align: center"><a href="" ui-sref="producto({idProducto:{{producto.idProducto}}})">{{producto.descripcion}}</a></td>
                                                 <td style="text-align: center">{{producto.cantidadTotal}}</td>
@@ -115,7 +114,7 @@
                                                 <td style="text-align: center">
                                                     <button class="btn btn-xs btn-danger"
                                                             type="button"
-                                                            ng-click="confirmarEliminarProducto(producto)">
+                                                            ng-click="poCtrl.confirmarEliminarProducto(producto)">
                                                         <md-tooltip md-direction="top" md-theme="default">
                                                             Eliminar
                                                         </md-tooltip>
@@ -151,7 +150,7 @@
                                                     <div ng-message="required">Este campo no puede estar vacio.</div>
                                                 </div>
                                             </md-input-container>                                        
-                                            <md-input-container style="min-height: 58px;" class="md-icon md-block" flex ng-controller="ProveedorController" data-ng-init="listaProveedores()">
+                                            <md-input-container style="min-height: 58px;" class="md-icon md-block" flex ng-controller="ProveedorController as prCtrl" data-ng-init="prCtrl.listaProveedores()">
                                                 <label>Proveedor</label>
                                                 <md-select ng-model="detalle.proveedor"
                                                            placeholder="Proveedor"
@@ -213,7 +212,7 @@
                                                 <button class="btn btn-success"
                                                         type="submit"
                                                         ng-disabled="modificarFacturaProducto.$invalid"
-                                                        ng-click="confirmarActualizarFacturaProducto(detalle)">Guardar</button>
+                                                        ng-click="vm.confirmarActualizarFacturaProducto(detalle)">Guardar</button>
                                             </div>
                                         </form>
                                     </div>

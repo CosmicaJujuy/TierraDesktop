@@ -23,8 +23,12 @@
                     <div flex class="md-padding" ng-hide="ngDialogData.producto.estadoDistribucion">
                         <span style="font-size: medium; font-weight: bold;">¿Estas seguro de que quieres eliminar este producto?</span>
                         <div flex class="md-padding">
-                            <button class="btn btn-md btn-success" style="width: 50px;" ng-click="confirmarEliminarProductoDetalle(ngDialogData.producto)">Si</button>
-                            <button class="btn btn-md btn-danger" style="width: 50px;" ng-click="closeThisDialog(0)">No</button>
+                            <button class="btn btn-md btn-success"
+                                    style="width: 50px;"
+                                    ng-click="vm.confirmarEliminarProductoDetalle(ngDialogData.producto)">Si</button>
+                            <button class="btn btn-md btn-danger"
+                                    style="width: 50px;"
+                                    ng-click="closeThisDialog(0)">No</button>
                         </div>
                     </div>
 

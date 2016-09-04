@@ -7,13 +7,13 @@
          flex-md="90"
          layout="column"
          layout-xs="column" md-theme="docs-dark"
-         data-ng-init="buscarProveedor()">
-        <md-toolbar class="md-accent" md-theme="docs-dark" ng-controller="ProveedorController">
+         data-ng-init="vm.buscarProveedor()">
+        <md-toolbar class="md-accent" md-theme="docs-dark">
             <div class="md-toolbar-tools">
                 <h4 class="md-flex" style="width:100%;">
                     Detalles de Proveedor # {{foundProveedor.idProveedor}}                
                     <a href=""
-                       ng-click="modificarProveedor(foundProveedor)"
+                       ng-click="vm.modificarProveedor(foundProveedor)"
                        style="color: #000; float: right;">Editar</a>
                 </h4>
             </div>
@@ -23,43 +23,43 @@
             <form class="md-padding" flex="50">
                 <div layout="row" class="padd">
                     <label flex>Proveedor</label>                
-                    <div flex>{{foundProveedor.nombreProveedor}}</div>
+                    <div flex>{{::foundProveedor.nombreProveedor}}</div>
                 </div>
                 <div layout="row" class="padd">
                     <label flex>C.U.I.T.</label>
-                    <div flex>{{foundProveedor.cuitProveedor}}</div>  
+                    <div flex>{{::foundProveedor.cuitProveedor}}</div>  
                 </div>
                 <div layout="row" class="padd">
                     <label flex>Direccion</label>            
-                    <div flex>{{foundProveedor.direccionProveedor}}</div>
+                    <div flex>{{::foundProveedor.direccionProveedor}}</div>
                 </div>
                 <div layout="row" class="padd">
                     <label flex>Pais</label>
-                    <div flex>{{foundProveedor.paisProveedor}}</div>
+                    <div flex>{{::foundProveedor.paisProveedor}}</div>
                 </div>
                 <div layout="row" class="padd">
                     <label flex>Provincia</label>
-                    <div flex>{{foundProveedor.provinciaProveedor}}</div>
+                    <div flex>{{::foundProveedor.provinciaProveedor}}</div>
                 </div>
                 <div layout="row" class="padd">
                     <label flex>Localidad</label>
-                    <div flex>{{foundProveedor.localidadProveedor}}</div>
+                    <div flex>{{::foundProveedor.localidadProveedor}}</div>
                 </div>
                 <div layout="row" class="padd">
                     <label flex>Codigo postal</label>
-                    <div flex>{{foundProveedor.codigoPostal}}</div>
+                    <div flex>{{::foundProveedor.codigoPostal}}</div>
                 </div>
                 <div layout="row" class="padd">
                     <label flex>Telefono</label>
-                    <div flex>{{foundProveedor.telefonoProveedor|tel}}</div>
+                    <div flex>{{::foundProveedor.telefonoProveedor|tel}}</div>
                 </div>                    
                 <div layout="row" class="padd">
                     <label flex>E-mail</label>
-                    <div flex>{{foundProveedor.emailProveedor}}</div>
+                    <div flex>{{::foundProveedor.emailProveedor}}</div>
                 </div>                    
                 <div layout="row" class="padd">
                     <label flex>Fecha de registro</label>
-                    <div flex>{{foundProveedor.fechaCreacion}}</div>
+                    <div flex>{{::foundProveedor.fechaCreacion}}</div>
                 </div>           
             </form>
         </md-content>        

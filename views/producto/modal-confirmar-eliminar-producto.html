@@ -18,8 +18,12 @@
                         <p style="font-size: small;">Esta acción es irreversible.</p>
                     </div>
                     <div flex class="md-padding">
-                        <button class="btn btn-md btn-success" style="width: 50px;" ng-click="eliminarProductoFactura(ngDialogData.producto)"">Si</button>
-                        <button class="btn btn-md btn-danger" style="width: 50px;" ng-click="closeThisDialog(0)">No</button>
+                        <button class="btn btn-md btn-success"
+                                style="width: 50px;"
+                                ng-click="vm.eliminarProductoFactura(ngDialogData.producto)"">Si</button>
+                        <button class="btn btn-md btn-danger"
+                                style="width: 50px;"
+                                ng-click="closeThisDialog(0)">No</button>
                     </div>
                 </form>
             </md-whiteframe>

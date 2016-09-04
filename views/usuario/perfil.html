@@ -6,11 +6,11 @@
          layout-xs="column"
          flex-lg="70"
          flex-md="90"
-         ng-cloak data-ng-init="detailUsuario()"
-         ng-show="user.nombre">
+         ng-cloak data-ng-init="vm.detailUsuario()"
+         ng-show="vm.user.nombre">
         <md-toolbar class="md-accent" md-theme="docs-dark">
             <div class="md-toolbar-tools">
-                <h4 class="md-flex" style="width:100%;"># {{user.idUsuario}}: {{user.username}}
+                <h4 class="md-flex" style="width:100%;"># {{vm.user.idUsuario}}: {{vm.user.username}}
                     <a href='' class="md-accent" ui-sref="modificar-perfil" style="float: right;">Editar</a>
                 </h4>
             </div>
@@ -21,44 +21,45 @@
                     <div flex style="align-content: center;">
                         <div layout="row" flex class="padd">
                             <label flex="40">Nombre</label>                
-                            <div flex>{{user.nombre}}</div>
+                            <div flex>{{vm.user.nombre}}</div>
                         </div>
                         <div layout="row" flex class="padd">
                             <label flex="40">Apellido</label>                
-                            <div flex>{{user.apellido}}</div>
+                            <div flex>{{vm.user.apellido}}</div>
                         </div>
                         <div layout="row" flex class="padd">
                             <label flex="40">D.N.I.</label>                
-                            <div flex>{{user.dni|number:0}}</div>
+                            <div flex>{{vm.user.dni|number:0}}</div>
                         </div>
                         <div layout="row" flex class="padd">
                             <label flex="40">Fecha de nac.</label>                
-                            <div flex>{{user.fechaNacimiento| date: 'fullDate'}}</div>
+                            <div flex>{{vm.user.fechaNacimiento| date: 'fullDate'}}</div>
                         </div>
                         <div layout="row" flex class="padd">
                             <label flex="40">Email</label>
-                            <div flex>{{user.email}}</div>
+                            <div flex>{{vm.user.email}}</div>
                         </div>
                         <div layout="row" flex class="padd">
                             <label flex="40">Télefono</label>
-                            <div flex>{{user.telefono|tel}}</div>
+                            <div flex>{{vm.user.telefono|tel}}</div>
                         </div>
                         <div layout="row" flex class="padd">
                             <label flex="40">Rol</label>
-                            <div flex>{{user.roles.nombreRol}}</div>
+                            <div flex>{{vm.user.roles.nombreRol}}</div>
                         </div>
                         <div layout="row" flex class="padd">
                             <label flex="40">Estado</label>
-                            <div flex>{{user.estado}}</div>
+                            <div flex ng-if="vm.user.estado === true">Activo</div>
+                            <div flex ng-if="vm.user.estado === false">Inactivo</div>
                         </div>
                         <div layout="row" flex class="padd">
                             <label flex="40">Sucursal</label>
-                            <div flex>{{user.usuarioSucursal.nombreSucursal}}</div>
+                            <div flex>{{vm.user.usuarioSucursal.nombreSucursal}}</div>
                         </div>
                     </div>
                 </form>
                 <div flex="40" class="md-padding" style="text-align: center;">
-                    <img ng-src="data:image/JPEG;base64,{{user.imagen}}"
+                    <img ng-src="data:image/JPEG;base64,{{vm.user.imagen}}"
                          style="max-height: 300px; max-width: 250px;">
                 </div>
             </div>

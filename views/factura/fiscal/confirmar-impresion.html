@@ -14,13 +14,17 @@
                            layout layout-align="center center">
                 <form style="text-align: center;">
                     <div flex class="md-padding">
-                        <span style="font-size: medium; font-weight: bold;">¿Estas seguro de que quieres continuar?</span>
-                        <p style="font-size: small;">Una vez finalizada esta acción no podras deshacer los cambios.</p>
+                        <span style="font-size: medium; font-weight: bold;">
+                            ¿Estas seguro de que quieres continuar?
+                        </span>
+                        <p style="font-size: small;">
+                            Una vez finalizada esta acción no podras deshacer los cambios.
+                        </p>
                     </div>
                     <div flex class="md-padding">
                         <button class="btn btn-md btn-success"
                                 style="width: 50px;"
-                                ng-click="imprimir(ngDialogData.comprobanteFiscal, ngDialogData.vendedorFiscal)">Si</button>
+                                ng-click="vm.imprimir(ngDialogData.comprobanteFiscal, ngDialogData.vendedorFiscal)">Si</button>
                         <button class="btn btn-md btn-danger"
                                 style="width: 50px;"
                                 ng-click="closeThisDialog(0)">No</button>

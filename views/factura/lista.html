@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<div ng-controller="UsuarioController"
-     data-ng-init="detailUsuario()"
-     ng-show="user.username"
+<div ng-controller="UsuarioController as usCtrl"
+     data-ng-init="usCtrl.detailUsuario()"
+     ng-show="usCtrl.user.username"
      layout="row"
      layout-margin
      layout-xs="row">
@@ -14,17 +14,17 @@
             <md-toolbar class="md-accent" md-theme="docs-dark">
                 <div class="md-toolbar-tools">
                     <h4 class="md-flex" style="width:100%; text-align: center;">
-                        <div>{{user.nombre}} {{user.apellido}}</div>
-                        <div>{{user.usuarioSucursal.nombreSucursal}}</div>
+                        <div>{{usCtrl.user.nombre}} {{usCtrl.user.apellido}}</div>
+                        <div>{{usCtrl.user.usuarioSucursal.nombreSucursal}}</div>
                     </h4>
                 </div>
             </md-toolbar>
             <md-content flex layout="row" md-theme="docs-dark">
                 <div class="md-padding" flex>
-                    <form style="text-align: center;" data-ng-init="metricas()">
+                    <form style="text-align: center;" data-ng-init="vm.metricas()">
                         <div layout="column" flex style="margin-bottom: 0px;">
                             <p style="font-weight: bolder;">
-                                {{ clock | date:'medium'}}
+                                {{vm.clock| date:'medium'}}
                             </p>
                         </div>                    
                         <div layout="column" flex style="margin-bottom: 10px;">
@@ -32,20 +32,20 @@
                             <div layout="row" flex>
                                 <label flex="10">Hoy</label>
                                 <div flex>
-                                    <div ng-if="metrics.totalFacturasHoy === null">
+                                    <div ng-if="vm.metrics.totalFacturasHoy === null">
                                         {{0|currency}}
                                     </div>
-                                    <div ng-if="metrics.totalFacturasHoy !== null">
-                                        {{metrics.totalFacturasHoy|currency}}
+                                    <div ng-if="vm.metrics.totalFacturasHoy !== null">
+                                        {{vm.metrics.totalFacturasHoy|currency}}
                                     </div>                                    
                                 </div>
                                 <label flex="10">Mes</label>
                                 <div flex>
-                                    <div ng-if="metrics.totalFacturasMensual === null">
+                                    <div ng-if="vm.metrics.totalFacturasMensual === null">
                                         {{0|currency}}
                                     </div>
-                                    <div ng-if="metrics.totalFacturasMensual !== null">
-                                        {{metrics.totalFacturasMensual|currency}}
+                                    <div ng-if="vm.metrics.totalFacturasMensual !== null">
+                                        {{vm.metrics.totalFacturasMensual|currency}}
                                     </div>
                                 </div>
                             </div>                            
@@ -55,20 +55,20 @@
                             <div layout="row" flex>
                                 <label flex="10">Hoy</label>
                                 <div flex>
-                                    <div ng-if="metrics.totalReservasHoy === null">
+                                    <div ng-if="vm.metrics.totalReservasHoy === null">
                                         {{0|currency}}
                                     </div>
-                                    <div ng-if="metrics.totalReservasHoy !== null">
-                                        {{metrics.totalReservasHoy|currency}}
+                                    <div ng-if="vm.metrics.totalReservasHoy !== null">
+                                        {{vm.metrics.totalReservasHoy|currency}}
                                     </div>
                                 </div>
                                 <label flex="10">Mes</label>
                                 <div flex>
-                                    <div ng-if="metrics.totalReservasMensual === null">
+                                    <div ng-if="vm.metrics.totalReservasMensual === null">
                                         {{0|currency}}
                                     </div>
-                                    <div ng-if="metrics.totalReservasMensual !== null">
-                                        {{metrics.totalReservasMensual|currency}}
+                                    <div ng-if="vm.metrics.totalReservasMensual !== null">
+                                        {{vm.metrics.totalReservasMensual|currency}}
                                     </div>
                                 </div>
                             </div>
@@ -78,20 +78,20 @@
                             <div layout="row" flex>
                                 <label flex="10">Hoy</label>
                                 <div flex>
-                                    <div ng-if="metrics.efectivoHoy === null">
+                                    <div ng-if="vm.metrics.efectivoHoy === null">
                                         {{0|currency}}
                                     </div>
-                                    <div ng-if="metrics.efectivoHoy !== null">
-                                        {{metrics.efectivoHoy|currency}}
+                                    <div ng-if="vm.metrics.efectivoHoy !== null">
+                                        {{vm.metrics.efectivoHoy|currency}}
                                     </div>
                                 </div>
                                 <label flex="10">Mes</label>
                                 <div flex>
-                                    <div ng-if="metrics.efectivoMensual === null">
+                                    <div ng-if="vm.metrics.efectivoMensual === null">
                                         {{0|currency}}
                                     </div>
-                                    <div ng-if="metrics.efectivoMensual !== null">
-                                        {{metrics.efectivoMensual|currency}}
+                                    <div ng-if="vm.metrics.efectivoMensual !== null">
+                                        {{vm.metrics.efectivoMensual|currency}}
                                     </div>
                                 </div>
                             </div>  
@@ -100,24 +100,24 @@
                             <label flex>Impresas</label>
                             <div layout="row" flex>
                                 <label flex="10">Hoy</label>
-                                <div flex>{{metrics.impresasHoy}}</div>
+                                <div flex>{{vm.metrics.impresasHoy}}</div>
                                 <label flex="10">Mes</label>
-                                <div flex>{{metrics.impresasMensual}}</div>
+                                <div flex>{{vm.metrics.impresasMensual}}</div>
                             </div>  
                         </div>                  
                         <div layout="column" flex class="padd">
                             <button class="btn btn-block btn-success"
                                     style="margin-top: 20px; margin-bottom: 8px;"
-                                    ng-click="agregarFactura(_newFactura)">
+                                    ng-click="vm.agregarFactura(vm._newFactura)">
                                 <md-tooltip md-direction="top" md-theme="default">
                                     Crear una nueva factura
                                 </md-tooltip>
                                 Nueva Factura
                             </button>
                             <button 
-                                ng-controller="ReservaController"
+                                ng-controller="ReservaController as reCtrl"
                                 style="margin-top: 8px; margin-bottom: 8px;"
-                                ng-click="agregarReserva(nuevaReserva)"
+                                ng-click="reCtrl.agregarReserva(reCtrl.nuevaReserva)"
                                 class="btn btn-block btn-success">
                                 <md-tooltip md-direction="top" md-theme="default">
                                     Crear una nueva reserva
@@ -125,10 +125,10 @@
                                 Nueva Reserva
                             </button>
 
-                            <div  ng-controller="FiscalController" data-ng-init="accesoFiscal()">
+                            <div  ng-controller="FiscalController as fsCtrl" data-ng-init="fsCtrl.accesoFiscal()">
                                 <button class="btn btn-block btn-primary"
                                         style="margin-top: 8px; margin-bottom: 8px;"
-                                        ng-click="imprimirComprobanteZ()">
+                                        ng-click="fsCtrl.imprimirComprobanteZ()">
                                     <md-tooltip md-direction="top" md-theme="default">
                                         Imprimir comprobante Z con la impresora fiscal
                                     </md-tooltip>
@@ -144,8 +144,7 @@
     <div flex-lg="75"
          flex-md="70"
          layout="column"
-         layout-xs="column"
-         ng-controller="FacturaController">
+         layout-xs="column">
         <div class="distribucion-panel">
             <div ng-cloak>
                 <md-content md-theme="docs-dark" style="min-height: 598px;">
@@ -158,7 +157,7 @@
                             <md-content class="md-padding">
                                 <table class="table table-striped table-hover table-condensed light-table"
                                        ng-table="tableFacturasDiaria"
-                                       data-ng-init="listaFacturasDiaria()">
+                                       data-ng-init="vm.listaFacturasDiaria()">
                                     <thead id="headTableProductos">
                                         <tr>
                                             <th style="text-align: center;">N°</th>
@@ -228,7 +227,7 @@
                             <md-content class="md-padding">
                                 <table class="table table-striped table-hover table-condensed light-table"
                                        ng-table="tableFacturasMensualPaged"
-                                       data-ng-init="listaFacturasMensualPaged()">
+                                       data-ng-init="vm.listaFacturasMensualPaged()">
                                     <thead id="headTableProductos">
                                         <tr>
                                             <th style="text-align: center;">N°</th>
@@ -297,9 +296,9 @@
                         <md-tab label="Reservas de hoy">
                             <md-content class="md-padding">
                                 <table class="table table-striped table-hover table-condensed light-table"
-                                       ng-controller="ReservaController"
                                        ng-table="tableReservasDiaria"
-                                       data-ng-init="listaReservasDiaria()">
+                                       ng-controller="ReservaController as reCtrl"
+                                       data-ng-init="reCtrl.listaReservasDiaria()">
                                     <thead id="headTableProductos">
                                         <tr>
                                             <th style="text-align: center;">N°</th>
@@ -344,9 +343,9 @@
                         <md-tab label="Reservas ultimos 30 dias">
                             <md-content class="md-padding">
                                 <table class="table table-striped table-hover table-condensed light-table"
-                                       ng-controller="ReservaController"
+                                       ng-controller="ReservaController as reCtrl"
                                        ng-table="tableReservasMensual"
-                                       data-ng-init="listaReservasMensual()">
+                                       data-ng-init="reCtrl.listaReservasMensual()">
                                     <thead id="headTableProductos">
                                         <tr>
                                             <th style="text-align: center;">N°</th>

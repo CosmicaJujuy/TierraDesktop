@@ -14,7 +14,7 @@
         <md-content flex layout-padding style="min-height: 534px;">
             <div class="table-responsive">
                 <table class="table table-hover table-striped light-table table-condensed"
-                       ng-show="usuarios[0]" data-ng-init="listaUsuarios()"
+                       data-ng-init="vm.listaUsuarios()"
                        ng-table="tableUsuarios">
                     <thead id="headTableProductos">
                         <tr>
@@ -44,7 +44,7 @@
                                 <button type="button"
                                         ng-hide="usuario.estado"
                                         class="btn btn-success btn-xs"
-                                        ng-click="cambiarEstado(usuario)">
+                                        ng-click="vm.cambiarEstado(usuario)">
                                     <md-tooltip md-direction="top" md-theme="default">
                                         Cambiar estado
                                     </md-tooltip>
@@ -53,14 +53,14 @@
                                 <button type="button"
                                         ng-show="usuario.estado"
                                         class="btn btn-danger btn-xs"
-                                        ng-click="cambiarEstado(usuario)">
+                                        ng-click="vm.cambiarEstado(usuario)">
                                     <md-tooltip md-direction="top" md-theme="default">
                                         Cambiar estado
                                     </md-tooltip>
                                     <span class="glyphicon glyphicon-remove-sign"></span>
                                 </button>
                                 <button type="button"
-                                        ng-click="cambiarSucursal($event, usuario)"
+                                        ng-click="vm.cambiarSucursal($event, usuario)"
                                         class="btn btn-success btn-xs">
                                     <md-tooltip md-direction="top" md-theme="default">
                                         Cambiar sucursal
@@ -68,7 +68,7 @@
                                     <span class="glyphicon glyphicon-user"></span>
                                 </button>
                                 <button type="button"
-                                        ng-click="cambiarRol($vent, usuario);"
+                                        ng-click="vm.cambiarRol($vent, usuario);"
                                         class="btn btn-success btn-xs">
                                     <md-tooltip md-direction="top" md-theme="default">
                                         Cambiar rol

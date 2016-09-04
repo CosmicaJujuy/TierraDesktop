@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <div layout="column" flex ng-cloak >
     <div class="md-padding"
-         data-ng-init="buscarProducto()"
-         ng-show="foundProducto"
+         data-ng-init="vm.buscarProducto()"
+         ng-show="vm.foundProducto"
          md-theme="docs-dark" ng-cloak flex>
         <md-toolbar class="md-accent" flex>
             <div class="md-toolbar-tools">
                 <h4 class="md-flex" style="width:100%;">
-                    # {{foundProducto.idProducto}}
+                    # {{vm.foundProducto.idProducto}}
                 </h4>
             </div>
         </md-toolbar>
@@ -17,57 +17,61 @@
                     <div flex>
                         <div layout="row" class="padd">
                             <label flex>Descripcion</label>                
-                            <div flex>{{::foundProducto.descripcion}}</div>
+                            <div flex>{{::vm.foundProducto.descripcion}}</div>
                         </div>
                         <div layout="row" class="padd">
                             <label flex>Color</label>
-                            <div flex>{{::foundProducto.colorProducto}}</div>  
+                            <div flex>{{::vm.foundProducto.colorProducto}}</div>  
                         </div>
                         <div layout="row" class="padd">
                             <label flex>Talla</label>            
-                            <div flex>{{::foundProducto.talla| uppercase}}</div>
+                            <div flex>{{::vm.foundProducto.talla| uppercase}}</div>
                         </div>
                         <div layout="row" class="padd">
                             <label flex>Precio costo</label>
-                            <div flex>{{::foundProducto.precioCosto|currency}}</div>
+                            <div flex>{{::vm.foundProducto.precioCosto|currency}}</div>
                         </div>
                         <div layout="row" class="padd">
                             <label flex>Precio venta</label>
-                            <div flex>{{::foundProducto.precioVenta|currency}}</div>
+                            <div flex>{{::vm.foundProducto.precioVenta|currency}}</div>
                         </div>
                         <div layout="row" class="padd">
                             <label flex>Cantidad en stock</label>
-                            <div flex>{{::foundProducto.cantidadTotal}}</div>
+                            <div flex>{{::vm.foundProducto.cantidadTotal}}</div>
                         </div>
                         <div layout="row" class="padd">
                             <label flex>Marca</label>
-                            <div flex>{{::foundProducto.marcas.nombreMarca}}</div>
+                            <div flex>{{::vm.foundProducto.marcas.nombreMarca}}</div>
                         </div>
                     </div>
                     <div flex>
                         <div layout="row" class="padd">
                             <label flex>Categoria</label>
-                            <div flex>{{::foundProducto.categoria.nombreCategoria}}</div>
+                            <div flex>{{::vm.foundProducto.categoria.nombreCategoria}}</div>
                         </div>
                         <div layout="row" class="padd">
                             <label flex>Temporada</label>
-                            <div flex>{{::foundProducto.temporada.nombreTemporada}}</div>
+                            <div flex>{{::vm.foundProducto.temporada.nombreTemporada}}</div>
                         </div>
                         <div layout="row" class="padd">
                             <label flex>Sexo</label>
-                            <div flex>{{::foundProducto.sexo.nombreSexo}}</div>
+                            <div flex>{{::vm.foundProducto.sexo.nombreSexo}}</div>
                         </div>
                         <div layout="row" class="padd">
                             <label flex>Proveedor</label>
-                            <div flex>{{foundProducto.facturaProducto.proveedor.nombreProveedor}}</div>
+                            <div flex>{{vm.foundProducto.facturaProducto.proveedor.nombreProveedor}}</div>
                         </div>
                         <div layout="row" class="padd">
                             <label flex>N° Factura</label>
-                            <div flex>{{foundProducto.facturaProducto.numeroFactura}}</div>
+                            <div flex>{{vm.foundProducto.facturaProducto.numeroFactura}}</div>
                         </div>
                         <div layout="row" class="padd">
                             <label flex>Fecha Factura</label>
-                            <div flex>{{foundProducto.facturaProducto.fechaFactura}}</div>
+                            <div flex>{{vm.foundProducto.facturaProducto.fechaFactura}}</div>
+                        </div>
+                        <div layout="row" class="padd">
+                            <label flex>Codigo</label>
+                            <div flex>{{vm.foundProducto.codigoProducto}}</div>
                         </div>
                     </div>
                 </div>                

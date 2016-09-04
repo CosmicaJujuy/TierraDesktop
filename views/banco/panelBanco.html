@@ -14,7 +14,7 @@
                     <md-tab label="Entidades Bancarias">
                         <md-content class="md-padding">
                             <div class="table-responsive">
-                                <table data-ng-init="listaEntidadBancaria()"
+                                <table data-ng-init="vm.listaEntidadBancaria()"
                                        class="table table-striped table-hover table-condensed light-table"
                                        ng-table="tableEntidades">
                                     <thead id="headTableProductos">
@@ -35,7 +35,7 @@
                                             <th style="text-align: center">
                                                 <button type="button"
                                                         class="btn btn-xs btn-info"
-                                                        ng-click="modificarEntidad(entidad)">
+                                                        ng-click="vm.modificarEntidad(entidad)">
                                                     <md-tooltip md-direction="top" md-theme="default">
                                                         Modificar
                                                     </md-tooltip>
@@ -43,7 +43,7 @@
                                                 </button>
                                                 <button type="button" 
                                                         class="btn btn-xs btn-danger"
-                                                        ng-click="eliminarEntidad(entidad)">
+                                                        ng-click="vm.eliminarEntidad(entidad)">
                                                     <md-tooltip md-direction="top" md-theme="default">
                                                         Eliminar
                                                     </md-tooltip>
@@ -57,16 +57,15 @@
                         </md-content>
                     </md-tab>
                     <md-tab label="Agregar nueva Entidad">
-                        <md-content class="md-padding">
-                            <div class="col-lg-2"></div>
-                            <div class="col-lg-8">
+                        <md-content class="md-padding">                            
+                            <div flex="60" flex-offset="20">
                                 <form name="newEntidad">
                                     <md-input-container class="md-icon md-block">
                                         <label>Nombre</label>
                                         <md-icon class="material-icons">&#xE150;</md-icon>
                                         <input type="text"
                                                placeholder="Ingrese nombre de la entidad bancaria"
-                                               ng-model="_entidadBancaria.nombreEntidad"
+                                               ng-model="vm._entidadBancaria.nombreEntidad"
                                                md-maxlength="30"
                                                maxlength="30"
                                                minlength="5"
@@ -86,7 +85,7 @@
                                                maxlength="30"
                                                md-maxlength="30"
                                                placeholder="Ingrese direccion"
-                                               ng-model="_entidadBancaria.direccionEntidad"
+                                               ng-model="vm._entidadBancaria.direccionEntidad"
                                                name="direccionEntidad" required/>
                                         <!-- MENSAJES-->
                                         <div ng-messages="newEntidad.direccionEntidad.$error"
@@ -103,7 +102,7 @@
                                                maxlength="20"
                                                md-maxlength="20"
                                                placeholder="Ingrese número de telefono"
-                                               ng-model="_entidadBancaria.telefonoEntidad"
+                                               ng-model="vm._entidadBancaria.telefonoEntidad"
                                                name="entidadTelefono" required/>
                                         <!-- MENSAJES-->
                                         <div ng-messages="newEntidad.entidadTelefono.$error"
@@ -116,7 +115,7 @@
                                     </md-input-container>        
                                     <div flex>
                                         <center>
-                                            <button ng-click="agregarEntidad(_entidadBancaria)"
+                                            <button ng-click="vm.agregarEntidad(vm._entidadBancaria)"
                                                     type="submit"
                                                     class="btn btn-success"
                                                     ng-disabled="newEntidad.$invalid">Agregar</button>
@@ -124,8 +123,7 @@
                                     </div>
 
                                 </form>
-                            </div>                    
-                            <div class="col-lg-2"></div>
+                            </div>
                         </md-content>
                     </md-tab>
                 </md-tabs>                    

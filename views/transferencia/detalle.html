@@ -8,13 +8,13 @@
          layout="column"
          layout-xs="column">
         <div layout="column" ng-cloak
-             data-ng-init="datosTransferencia()"
-             ng-show="transferencia"
+             data-ng-init="vm.datosTransferencia()"
+             ng-show="vm.transferencia"
              class="distribucion-panel">
             <md-toolbar class="md-accent">
                 <div class="md-toolbar-tools">
                     <h4 class="md-flex" style="width:100%; text-align: center;">
-                        N° de transferencia {{transferencia.idTransferencia}}
+                        N° de transferencia {{vm.transferencia.idTransferencia}}
                     </h4>
                 </div>
             </md-toolbar>
@@ -27,54 +27,54 @@
                             </p>
                         </div>
                         <div layout="column" flex style="margin-bottom: 0px;"
-                             ng-controller="UsuarioController"
-                             data-ng-init="detailUsuario()">
+                             ng-controller="UsuarioController as usCtrl"
+                             data-ng-init="usCtrl.detailUsuario()">
                             <p style="font-weight: bolder;">
-                                {{user.nombre}} {{user.apellido}}
+                                {{usCtrl.user.nombre}} {{usCtrl.user.apellido}}
                             </p>
                             <p style="font-weight: bolder;">
-                                {{user.usuarioSucursal.nombreSucursal}}
+                                {{usCtrl.user.usuarioSucursal.nombreSucursal}}
                             </p>
                         </div>
                         <div layout="column" flex class="padd">
                             <label style="margin-bottom: 0px;">Estado de la transferencia</label>
                             <div>
-                                <div ng-if="transferencia.estadoPedido === true">Resuelto</div>
-                                <div ng-if="transferencia.estadoPedido === false">Sin resolver</div>
+                                <div ng-if="vm.transferencia.estadoPedido === true">Resuelto</div>
+                                <div ng-if="vm.transferencia.estadoPedido === false">Sin resolver</div>
                             </div>
                         </div>
                         <div layout="column" flex class="padd">
                             <label style="margin-bottom: 0px;">Fecha de creación</label>
-                            <div>{{transferencia.fechaCreacion|date:'medium'}}</div>
+                            <div>{{vm.transferencia.fechaCreacion|date:'medium'}}</div>
                         </div>
                         <div layout="column" flex class="padd">
                             <label style="margin-bottom: 0px;">Sucursal de pedido</label>
-                            <div ng-if="transferencia.sucursalPedido === 1">Tierra de colores</div>
-                            <div ng-if="transferencia.sucursalPedido === 2">Bebelandia</div>
-                            <div ng-if="transferencia.sucursalPedido === 3">Libertador</div>
+                            <div ng-if="vm.transferencia.sucursalPedido === 1">Tierra de colores</div>
+                            <div ng-if="vm.transferencia.sucursalPedido === 2">Bebelandia</div>
+                            <div ng-if="vm.transferencia.sucursalPedido === 3">Libertador</div>
                         </div>
                         <div layout="column" flex class="padd">
                             <label style="margin-bottom: 0px;">Sucursal de respuesta</label>
-                            <div ng-if="transferencia.sucursalRespuesta === 1">Tierra de colores</div>
-                            <div ng-if="transferencia.sucursalRespuesta === 2">Bebelandia</div>
-                            <div ng-if="transferencia.sucursalRespuesta === 3">Libertador</div>
-                            <div ng-if="transferencia.sucursalRespuesta === 4">Aprobado por administrador</div>
-                            <div ng-if="transferencia.sucursalRespuesta === 5">Cancelado</div>
-                            <div ng-if="transferencia.sucursalRespuesta === 0">En espera</div>
+                            <div ng-if="vm.transferencia.sucursalRespuesta === 1">Tierra de colores</div>
+                            <div ng-if="vm.transferencia.sucursalRespuesta === 2">Bebelandia</div>
+                            <div ng-if="vm.transferencia.sucursalRespuesta === 3">Libertador</div>
+                            <div ng-if="vm.transferencia.sucursalRespuesta === 4">Aprobado por administrador</div>
+                            <div ng-if="vm.transferencia.sucursalRespuesta === 5">Cancelado</div>
+                            <div ng-if="vm.transferencia.sucursalRespuesta === 0">En espera</div>
                         </div>
                         <div layout="column" flex class="padd">
                             <button class="btn btn-block btn-success"
-                                    ng-disabled="transferencia.estadoPedido === true || transferencia.sucursalRespuesta === 5"
+                                    ng-disabled="vm.transferencia.estadoPedido === true || vm.transferencia.sucursalRespuesta === 5"
                                     style="margin-top: 50px; margin-bottom: 8px;"
-                                    ng-click="aceptarTransferencia()">
+                                    ng-click="vm.aceptarTransferencia()">
                                 <md-tooltip md-direction="bottom" md-theme="default">
                                     Aceptar transferencia y finalizar (Solo admins y receptores del pedido)
                                 </md-tooltip>
                                 Aceptar transferencia
                             </button>
                             <button class="btn btn-block btn-danger"
-                                    ng-disabled="transferencia.estadoPedido === true || transferencia.sucursalRespuesta === 5"
-                                    ng-click="cancelarTransferencia()">
+                                    ng-disabled="vm.transferencia.estadoPedido === true || vm.transferencia.sucursalRespuesta === 5"
+                                    ng-click="vm.cancelarTransferencia()">
                                 <md-tooltip md-direction="bottom" md-theme="default">
                                     Cancelar transferencia
                                 </md-tooltip>
@@ -89,21 +89,21 @@
     <div flex-lg="75"
          flex-md="70"
          layout="column"
-         layout-xs="column" ng-show="transferencia">
+         layout-xs="column" ng-show="vm.transferencia">
         <div class="distribucion-panel">
             <div ng-cloak>
                 <md-content md-theme="docs-dark" style="min-height: 598px;">
                     <md-toolbar class="md-accent">
                         <div class="md-toolbar-tools" layout="row" flex>                            
                             <h3 flex class="modal-title">Lista de productos solicitados</h3>                        
-                            <md-switch ng-model="oculto" 
+                            <md-switch ng-model="vm.oculto" 
                                        flex-lg="20"
                                        flex-md="30"
-                                       ng-change="cleanBusqAvanzada()"
+                                       ng-change="vm.cleanBusqAvanzada()"
                                        aria-label="Switch"
                                        class="md-primary">
-                                <div ng-if="oculto === false">Busq. normal</div>
-                                <div ng-if="oculto === true">Busq. avanzada</div>
+                                <div ng-if="vm.oculto === false">Busq. normal</div>
+                                <div ng-if="vm.oculto === true">Busq. avanzada</div>
                             </md-switch>
                         </div>
                     </md-toolbar>
@@ -111,9 +111,9 @@
                         <md-content class="md-padding" flex layout="row">                            
                             <div flex="grow">
                                 <div layout="column" flex>
-                                    <form name="busqTrans" ng-hide="oculto" class="show-hide">                                        
+                                    <form name="busqTrans" ng-hide="vm.oculto" class="show-hide">                                        
                                         <div layout="row" flex>
-                                            <md-radio-group ng-model="busq.sucursal">
+                                            <md-radio-group ng-model="vm.busq.sucursal">
                                                 <md-radio-button value="1">Tierra de colores</md-radio-button>
                                                 <md-radio-button value="2">Bebelanda</md-radio-button>
                                                 <md-radio-button value="3">Libertador</md-radio-button>
@@ -125,14 +125,14 @@
                                                            md-maxlength="40"
                                                            maxlength="40"
                                                            name="descripcion"
-                                                           ng-disabled="transferencia.estadoPedido === true"
-                                                           ng-model="busq.descripcion"
+                                                           ng-disabled="vm.transferencia.estadoPedido === true"
+                                                           ng-model="vm.busq.descripcion"
                                                            placeholder="Ingresa una descripción"/>
                                                 </md-input-container>
                                                 <div>
                                                     <md-button class="md-raised"
-                                                               ng-disabled="transferencia.estadoPedido === true || transferencia.sucursalRespuesta === 5"
-                                                               ng-click="buscarStock(busq)"
+                                                               ng-disabled="vm.transferencia.estadoPedido === true || transferencia.sucursalRespuesta === 5"
+                                                               ng-click="vm.buscarStock(vm.busq)"
                                                                type="search">
                                                         Buscar <span class="glyphicon glyphicon-search"></span>
                                                     </md-button>
@@ -144,16 +144,16 @@
                                 <div class="table-responsive">
                                     <table ng-table="TableDetallesTrans" style="margin-top: 10px;" 
                                            class="table table-condensed table-hover table-striped light-table"
-                                           data-ng-init="listaDetalleTransferencia()">
+                                           data-ng-init="vm.listaDetalleTransferencia()">
                                         <thead id="headTableProductos">
                                             <tr>
                                                 <th>Id</th>
                                                 <th>Descripcion</th>                                                
                                                 <th>Cantidad</th>
-                                                <th ng-hide="oculto">Talla</th>
+                                                <th ng-hide="vm.oculto">Talla</th>
                                                 <th>Color</th>
-                                                <th ng-hide="oculto">Sucursal</th>
-                                                <th ng-hide="oculto">Acciones</th>
+                                                <th ng-hide="vm.oculto">Sucursal</th>
+                                                <th ng-hide="vm.oculto">Acciones</th>
                                             </tr>
                                         </thead>
                                         <tbody style="text-align: center;">
@@ -161,25 +161,25 @@
                                                 <td>{{detalle.idDetalleTransferencia}}</td>
                                                 <td>{{detalle.producto.descripcion}}</td>
                                                 <td>{{::detalle.cantidad}}</td>  
-                                                <td ng-hide="oculto">{{detalle.producto.talla}}</td>
+                                                <td ng-hide="vm.oculto">{{detalle.producto.talla}}</td>
                                                 <td>{{detalle.producto.colorProducto}}</td>
-                                                <td ng-hide="oculto">
+                                                <td ng-hide="vm.oculto">
                                                     <div ng-if="detalle.idSucursal === 1">Tierra de colores</div>
                                                     <div ng-if="detalle.idSucursal === 2">Bebelandia</div>
                                                     <div ng-if="detalle.idSucursal === 3">Libertador</div>
                                                 </td>
-                                                <td ng-hide="oculto">
+                                                <td ng-hide="vm.oculto">
                                                     <button class="btn btn-xs btn-danger"
-                                                            ng-disabled="transferencia.estadoPedido === true || transferencia.sucursalRespuesta === 5"
-                                                            ng-click="eliminarDetalleTransferencia(detalle)">
+                                                            ng-disabled="vm.transferencia.estadoPedido === true || vm.transferencia.sucursalRespuesta === 5"
+                                                            ng-click="vm.eliminarDetalleTransferencia(detalle)">
                                                         <md-tooltip md-direction="bottom" md-theme="default">
                                                             Eliminar detalle de la transferencia
                                                         </md-tooltip>
                                                         <span class="glyphicon glyphicon-remove"></span>
                                                     </button>
                                                     <button class="btn btn-xs btn-warning"
-                                                            ng-disabled="transferencia.estadoPedido === true || transferencia.sucursalRespuesta === 5"
-                                                            ng-click="modificarDetalleTransferencia(detalle)">
+                                                            ng-disabled="vm.transferencia.estadoPedido === true || vm.transferencia.sucursalRespuesta === 5"
+                                                            ng-click="vm.modificarDetalleTransferencia(detalle)">
                                                         <md-tooltip md-direction="bottom" md-theme="default">
                                                             Modificar cantidad del detalle
                                                         </md-tooltip>
@@ -192,21 +192,21 @@
                                             <tr>
                                                 <td></td>
                                                 <td></td>
-                                                <td ng-hide="oculto"></td>
+                                                <td ng-hide="vm.oculto"></td>
                                                 <td>SIN DETALLES</td>
-                                                <td ng-hide="oculto"></td>
+                                                <td ng-hide="vm.oculto"></td>
                                             </tr>
                                         </tfoot>
                                     </table>
                                 </div> 
                             </div>
-                            <main flex="grow" class="show-hide" ng-show="oculto">
+                            <main flex="grow" class="show-hide" ng-show="vm.oculto">
                                 <md-content class="md-padding">
                                     <form name="busqu">
                                         <md-input-container class="md-block show-hide" flex>
                                             <label>Descripción</label>
                                             <input type="text"
-                                                   ng-model="busq.descripcion"
+                                                   ng-model="vm.busq.descripcion"
                                                    md-maxlength="40"
                                                    maxlength="40"
                                                    name="descripcion"
@@ -215,7 +215,7 @@
                                         <md-input-container class="md-block show-hide" flex>
                                             <label>Marca</label>
                                             <input type="text"
-                                                   ng-model="busq.marca"
+                                                   ng-model="vm.busq.marca"
                                                    md-maxlength="30"
                                                    maxlength="30"
                                                    name="marca"
@@ -225,7 +225,7 @@
                                             <md-input-container class="md-block" flex style="max-height: 58px; margin-bottom: 0px; margin-top: 0px;">
                                                 <label>Talla</label>
                                                 <input type="text"
-                                                       ng-model="busq.talla"
+                                                       ng-model="vm.busq.talla"
                                                        md-maxlength="12"
                                                        name="talla"
                                                        maxlength="12"
@@ -234,7 +234,7 @@
                                             <md-input-container class="md-block" flex style="max-height: 58px; margin-bottom: 0px; margin-top: 0px;">
                                                 <label>Codigo</label>
                                                 <input type="text"
-                                                       ng-model="busq.codigo"
+                                                       ng-model="vm.busq.codigo"
                                                        md-maxlength="30"
                                                        maxlength="30"
                                                        name="codigo"
@@ -244,22 +244,22 @@
                                         <md-input-container class="md-block show-hide" flex>
                                             <label>Categoria</label>
                                             <input type="text"
-                                                   ng-model="busq.categoria"
+                                                   ng-model="vm.busq.categoria"
                                                    md-maxlength="25"
                                                    maxlength="25"
                                                    name="categoria"
                                                    placeholder="Nombre de categoria"/>
                                         </md-input-container>
                                         <div flex layout="row">
-                                            <md-radio-group ng-model="busq.sucursal" flex>
+                                            <md-radio-group ng-model="vm.busq.sucursal" flex>
                                                 <md-radio-button value="1">Tierra de colores</md-radio-button>
                                                 <md-radio-button value="2">Bebelanda</md-radio-button>
                                                 <md-radio-button value="3">Libertador</md-radio-button>
                                             </md-radio-group>
                                             <div>
                                                 <md-button class="md-raised"
-                                                           ng-disabled="transferencia.estadoPedido === true || transferencia.sucursalRespuesta === 5"
-                                                           ng-click="buscarStock(busq)"
+                                                           ng-disabled="vm.transferencia.estadoPedido === true || vm.transferencia.sucursalRespuesta === 5"
+                                                           ng-click="vm.buscarStock(vm.busq)"
                                                            type="search">
                                                     Buscar <span class="glyphicon glyphicon-search"></span>
                                                 </md-button>

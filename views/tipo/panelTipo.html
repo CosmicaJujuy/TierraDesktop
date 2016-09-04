@@ -14,7 +14,7 @@
                     <md-tab label="Tipos de producto">
                         <md-content class="md-padding" layout="row" flex>
                             <div class="table-responsive" flex>
-                                <table data-ng-init="listaTipo()"
+                                <table data-ng-init="vm.listaTipo()"
                                        ng-table="tableTipos"
                                        class="table table-hover table-condensed table-striped light-table">
                                     <thead id="headTableProductos">
@@ -33,7 +33,7 @@
                                             <th style="text-align: center">
                                                 <button type="button"
                                                         class="btn btn-xs btn-info"
-                                                        ng-click="hidePanelTipo(tipo)">
+                                                        ng-click="vm.hidePanelTipo(tipo)">
                                                     <md-tooltip md-direction="top" md-theme="default">
                                                         Modificar
                                                     </md-tooltip>
@@ -41,7 +41,7 @@
                                                 </button>
                                                 <button type="button"
                                                         class="btn btn-xs btn-danger"
-                                                        ng-click="eliminarTipo(tipo)">
+                                                        ng-click="vm.eliminarTipo(tipo)">
                                                     <md-tooltip md-direction="top" md-theme="default">
                                                         Eliminar
                                                     </md-tooltip>
@@ -52,11 +52,11 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <div flex="45" ng-hide="panelTipoEdit" class="show-hide">
+                            <div flex="45" ng-hide="vm.panelTipoEdit" class="show-hide">
                                 <p flex style="text-align: center; font-weight: bold">
-                                    Modificar Tipo de producto #{{editTipo.idTipo}}
+                                    Modificar Tipo de producto #{{vm.editTipo.idTipo}}
                                     <button class="pull-right"
-                                            ng-click="panelTipoEdit = true"
+                                            ng-click="vm.panelTipoEdit = true"
                                             style="background: transparent; border: none;">
                                         <md-tooltip md-direction="top" md-theme="default">
                                             Cerrar panel
@@ -74,7 +74,7 @@
                                                    md-maxlength="20"
                                                    minlength="4"
                                                    placeholder="Ingrese nombre del tipo de producto"
-                                                   ng-model="editTipo.nombreTipo" name="tipo" required/>
+                                                   ng-model="vm.editTipo.nombreTipo" name="tipo" required/>
                                             <!-- MENSAJES-->
                                             <div ng-messages="updateTipo.tipo.$error"
                                                  ng-if='updateTipo.tipo.$dirty || updateTipo.tipo.$touched'>
@@ -83,12 +83,12 @@
                                                 <div ng-message="required">Este campo no puede estar vacio.</div>
                                             </div>
                                         </md-input-container>
-                                        <div class="md-block" flex ng-controller="TipoController">
-                                            <center>
-                                                <button ng-click="modificarTipo(editTipo)"
+                                        <div class="md-block" flex>
+                                            <div style="text-align: center;">
+                                                <button ng-click="vm.modificarTipo(vm.editTipo)"
                                                         type="submit" class="btn btn-success"
                                                         ng-disabled="updateTipo.$invalid" style="margin-top: 5%;">Modificar</button>
-                                            </center>                                    
+                                            </div> 
                                         </div>
                                     </form>
                                 </md-content>
@@ -96,9 +96,8 @@
                         </md-content>
                     </md-tab>
                     <md-tab label="Agregar nuevo Tipo de producto">
-                        <md-content class="md-padding" layout="row">
-                            <div flex="20"></div>
-                            <div flex="60">
+                        <md-content class="md-padding" layout="row">                            
+                            <div flex="60" flex-offset="20">
                                 <form name="nuevoTipo">
                                     <md-input-container class="md-block md-icon" flex>
                                         <label>Nombre tipo de producto</label>
@@ -108,7 +107,7 @@
                                                md-maxlength="20"
                                                minlength="4"
                                                placeholder="Ingrese nombre del tipo de producto"
-                                               ng-model="_tipo.nombreTipo" name="tipo" required/>
+                                               ng-model="vm._tipo.nombreTipo" name="tipo" required/>
                                         <!-- MENSAJES-->
                                         <div ng-messages="nuevoTipo.tipo.$error"
                                              ng-if='nuevoTipo.tipo.$dirty || nuevoTipo.tipo.$touched'>
@@ -118,7 +117,7 @@
                                         </div>
                                     </md-input-container>
                                     <div class="md-block" flex style="text-align: center;">                                        
-                                        <button ng-click="agregarTipo(_tipo)"
+                                        <button ng-click="vm.agregarTipo(vm._tipo)"
                                                 type="submit" class="btn btn-success"
                                                 ng-disabled="nuevoTipo.$invalid" style="margin-top: 5%;">
                                             Agregar

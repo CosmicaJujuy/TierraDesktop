@@ -14,7 +14,7 @@
                     <md-tab label="Categorias">
                         <md-content class="md-padding" layout="row" flex>
                             <div class="table-responsive" flex>
-                                <table data-ng-init="listaCategorias()"
+                                <table data-ng-init="vm.listaCategorias()"
                                        ng-table="tableCategorias"
                                        class="table table-striped table-hover table-condensed light-table">
                                     <thead id="headTableProductos">
@@ -22,20 +22,20 @@
                                             <th style="text-align: center">ID</th>
                                             <th style="text-align: center">Nombre</th>
                                             <th style="text-align: center">Tipo de producto</th>
-                                            <th style="text-align: center" ng-hide="!panelCategoriaEdit">Fecha creación</th> 
+                                            <th style="text-align: center" ng-hide="!vm.panelCategoriaEdit">Fecha creación</th> 
                                             <th style="text-align: center">Acciones</th> 
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr ng-repeat="categoria in $data">
-                                            <th style="text-align: center">{{::categoria.idCategoria}}</th>
-                                            <th style="text-align: center">{{::categoria.nombreCategoria}}</th>                     
-                                            <th style="text-align: center">{{::categoria.tipoCategoria.nombreTipo}}</th>                     
-                                            <th style="text-align: center" ng-hide="!panelCategoriaEdit">{{::categoria.fechaCreacion}}</th>                        
+                                        <tr ng-repeat="ca in $data">
+                                            <th style="text-align: center">{{::ca.idCategoria}}</th>
+                                            <th style="text-align: center">{{::ca.nombreCategoria}}</th>                     
+                                            <th style="text-align: center">{{::ca.tipoCategoria.nombreTipo}}</th>                     
+                                            <th style="text-align: center" ng-hide="!vm.panelCategoriaEdit">{{::ca.fechaCreacion}}</th>                        
                                             <th style="text-align: center">
                                                 <button type="button"                                     
                                                         class="btn btn-xs btn-info"
-                                                        ng-click="hidePanelCategoria(categoria)">
+                                                        ng-click="vm.hidePanelCategoria(ca)">
                                                     <md-tooltip md-direction="top" md-theme="default">
                                                         Modificar
                                                     </md-tooltip>
@@ -43,7 +43,7 @@
                                                 </button>
                                                 <button type="button"
                                                         class="btn btn-xs btn-danger" 
-                                                        ng-click="eliminarCategoria(categoria)">
+                                                        ng-click="vm.eliminarCategoria(ca)">
                                                     <md-tooltip md-direction="top" md-theme="default">
                                                         Eliminar
                                                     </md-tooltip>
@@ -54,11 +54,11 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <div flex="45" ng-hide="panelCategoriaEdit" class="show-hide">
+                            <div flex="45" ng-hide="vm.panelCategoriaEdit" class="show-hide">
                                 <p flex style="text-align: center; font-weight: bold">
-                                    Modificar Categoria #{{editCategoria.idCategoria}}
+                                    Modificar Categoria #{{vm.editCategoria.idCategoria}}
                                     <button class="pull-right"
-                                            ng-click="panelCategoriaEdit = true"
+                                            ng-click="vm.panelCategoriaEdit = true"
                                             style="background: transparent; border: none;">
                                         <md-tooltip md-direction="top" md-theme="default">
                                             Cerrar panel
@@ -76,7 +76,7 @@
                                                    maxlength="30"
                                                    md-maxlength="30"
                                                    placeholder="Ingrese nombre de categoria"
-                                                   ng-model="editCategoria.nombreCategoria"
+                                                   ng-model="vm.editCategoria.nombreCategoria"
                                                    name="categoria" required/>
                                             <!-- MENSAJES-->
                                             <div ng-messages="updateCategoria.categoria.$error"
@@ -89,9 +89,9 @@
                                         <md-input-container class="md-block md-icon" flex ng-controller="TipoController" data-ng-init="listaTipo()">
                                             <label>Tipo de producto</label>
                                             <md-icon class="material-icons">&#xE252;</md-icon>
-                                            <md-select ng-model="editCategoria.tipoCategoria"
+                                            <md-select ng-model="vm.editCategoria.tipoCategoria"
                                                        ng-model-options="{trackBy: '$value.idTipo'}"
-                                                       data-ng-init="editCategoria.tipoCategoria"
+                                                       data-ng-init="vm.editCategoria.tipoCategoria"
                                                        required name="tipos">                                            
                                                 <md-option ng-value="tipo" 
                                                            ng-repeat="tipo in tipos">{{tipo.nombreTipo}}</md-option>                                            
@@ -103,7 +103,7 @@
                                             </div>
                                         </md-input-container>
                                         <div flex style="text-align: center;">                                            
-                                            <button ng-click="modificarCategoria(editCategoria)"
+                                            <button ng-click="vm.modificarCategoria(vm.editCategoria)"
                                                     type="submit"
                                                     id="btnAgregarCategoria"
                                                     class="btn btn-success"
@@ -130,7 +130,7 @@
                                                    maxlength="30"
                                                    md-maxlength="30"
                                                    placeholder="Ingrese nombre de categoria"
-                                                   ng-model="_categoria.nombreCategoria"
+                                                   ng-model="vm._categoria.nombreCategoria"
                                                    name="categoria" required/>
                                             <!-- MENSAJES-->
                                             <div ng-messages="newCategoria.categoria.$error"
@@ -143,7 +143,7 @@
                                         <md-input-container class="md-block md-icon" flex ng-controller="TipoController" data-ng-init="listaTipo()">
                                             <label>Tipo de producto</label>
                                             <md-icon class="material-icons">&#xE252;</md-icon>
-                                            <md-select ng-model="_categoria.tipoCategoria"
+                                            <md-select ng-model="vm._categoria.tipoCategoria"
                                                        required name="tipos">                                            
                                                 <md-option ng-value="tipo" 
                                                            ng-repeat="tipo in tipos">{{tipo.nombreTipo}}</md-option>                                            
@@ -155,7 +155,7 @@
                                             </div>
                                         </md-input-container>
                                         <div flex style="text-align: center;">
-                                            <button ng-click="agrearCategoria(_categoria)"
+                                            <button ng-click="vm.agregarCategoria(vm._categoria)"
                                                     type="submit"
                                                     id="btnAgregarCategoria"
                                                     class="btn btn-success"

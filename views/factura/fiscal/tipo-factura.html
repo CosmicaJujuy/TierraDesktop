@@ -22,7 +22,7 @@
                     </md-select>
                 </md-input-container>
                 <md-input-container style="min-height: 58px;" class="md-icon md-block"
-                                    flex data-ng-init="listaVendedores()">
+                                    flex data-ng-init="vm.listaVendedores()">
                     <label>Vendedores</label>
                     <md-select ng-model="vendedorComprobante"
                                placeholder="Elige un vendedor"
@@ -36,7 +36,7 @@
                 <div flex style="text-align: center;">
                     <button class="btn btn-success"
                             ng-disabled="printFiscal.$invalid"
-                            ng-click="confirmarImpresion(comprobanteFiscal, vendedorComprobante);">
+                            ng-click="vm.confirmarImpresion(comprobanteFiscal, vendedorComprobante);">
                         Imprimir
                     </button>
                 </div>

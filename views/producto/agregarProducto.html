@@ -22,7 +22,7 @@
                                    minlength="5"
                                    ng-disabled="descripcionProducto"
                                    placeholder="Descripción del producto"
-                                   ng-model="_producto.descripcion"
+                                   ng-model="vm._producto.descripcion"
                                    name="descripcion" required/>
                             <div ng-messages="nuevoProducto.descripcion.$error"
                                  ng-if='nuevoProducto.descripcion.$dirty || nuevoProducto.descripcion.$touched'>
@@ -32,7 +32,7 @@
                             </div>
                         </md-input-container>
                         <div style="max-height: 58px !important;" flex class="md-block"
-                             ng-controller="MarcaController">
+                             ng-controller="MarcaController as maCtrl">
                             <md-autocomplete flex required
                                              ng-disabled="marcaProducto"
                                              style="margin-top: 0px !important;"
@@ -41,9 +41,9 @@
                                              md-input-minlength="2"
                                              md-min-length="2"
                                              md-input-maxlength="40"
-                                             md-selected-item="_producto.marcas"
+                                             md-selected-item="vm._producto.marcas"
                                              md-search-text="searchText"
-                                             md-items="item in getMarca(searchText)"
+                                             md-items="item in maCtrl.getMarca(searchText)"
                                              md-item-text="item.nombreMarca"
                                              md-floating-label="Marca">
                                 <md-item-template>
@@ -64,14 +64,14 @@
                     <div layout="row" flex>
                         <md-input-container style="min-height: 48px;"
                                             class="md-block"
-                                            flex ng-controller="CategoriaController"
-                                            data-ng-init="listaCategorias()">
+                                            flex ng-controller="CategoriaController as caCtrl"
+                                            data-ng-init="caCtrl.listaCategorias()">
                             <label>Categoria</label>
-                            <md-select ng-model="_producto.categoria"
+                            <md-select ng-model="vm._producto.categoria"
                                        placeholder="Categoria"
                                        ng-disabled="categoriaProducto"
                                        ng-model-options="{trackBy: '$value.idCategoria'}"
-                                       data-ng-init="_producto.categoria"
+                                       data-ng-init="vm._producto.categoria"
                                        required name="categorias">                                            
                                 <md-option ng-value="categoria"
                                            ng-repeat="categoria in categorias">{{categoria.nombreCategoria}}</md-option>                                            
@@ -83,15 +83,15 @@
                         </md-input-container>
                         <md-input-container style="min-height: 48px;"
                                             class="md-block"
-                                            flex ng-controller="TemporadaController"
-                                            data-ng-init="listaTemporadas()">
+                                            flex ng-controller="TemporadaController as teCtrl"
+                                            data-ng-init="teCtrl.listaTemporadas()">
                             <label>Temporada</label>
-                            <md-select ng-model="_producto.temporada"
+                            <md-select ng-model="vm._producto.temporada"
                                        placeholder="Elige una temporada"
                                        ng-disabled="temporadaProducto"
                                        ng-model-options="{trackBy: '$value.idTemporada'}"
-                                       data-ng-init="_producto.temporada"
-                                       required name="temporadas">                                            
+                                       data-ng-init="vm._producto.temporada"
+                                       required name="temporadas">
                                 <md-option ng-value="temporada"
                                            ng-repeat="temporada in temporadas">{{temporada.nombreTemporada}}</md-option>                                            
                             </md-select>
@@ -103,15 +103,15 @@
                     </div>
                     <div layout="row" flex>
                         <md-input-container style="min-height: 48px;"
-                                            class="md-block"
-                                            flex data-ng-init="listaSexos()"
-                                            ng-controller="SexoController">
+                                            class="md-block"                                            
+                                            ng-controller="SexoController as seCtrl"
+                                            flex data-ng-init="seCtrl.listaSexos()">
                             <label>Sexo</label>
-                            <md-select ng-model="_producto.sexo"
+                            <md-select ng-model="vm._producto.sexo"
                                        placeholder="Elige un sexo"
                                        ng-disabled="sexoProducto"
                                        ng-model-options="{trackBy: '$value.idSexo'}"
-                                       data-ng-init="_producto.sexo"
+                                       data-ng-init="vm._producto.sexo"
                                        required name="sexos">                                            
                                 <md-option ng-value="sexo"
                                            ng-repeat="sexo in sexos">{{sexo.nombreSexo}}</md-option>                                            
@@ -130,7 +130,7 @@
                                    minlength="1"
                                    ng-disabled="tallaProducto"
                                    placeholder="Talla del producto"
-                                   ng-model="_producto.talla"
+                                   ng-model="vm._producto.talla"
                                    name="talla" required/>
                             <div ng-messages="nuevoProducto.talla.$error"
                                  ng-if='nuevoProducto.talla.$dirty || nuevoProducto.talla.$touched'>
@@ -150,7 +150,7 @@
                                    minlength="1"
                                    ng-disabled="colorProducto"
                                    placeholder="Color del producto"
-                                   ng-model="_producto.colorProducto"
+                                   ng-model="vm._producto.colorProducto"
                                    name="color" required/>
                             <div ng-messages="nuevoProducto.color.$error"
                                  ng-if='nuevoProducto.color.$dirty || nuevoProducto.color.$touched'>
@@ -163,7 +163,7 @@
                             <md-input-container class="md-block" flex>
                                 <label>Codigo</label>
                                 <input type="text"
-                                       ng-model="_producto.codigoProducto" 
+                                       ng-model="vm._producto.codigoProducto" 
                                        name="codigo" required
                                        minlength="8"
                                        md-maxlength="30"
@@ -179,10 +179,10 @@
                             </md-input-container>
                             <div>
                                 <button class="btn btn-danger" style="margin-top: 12px;"
-                                        ng-click="_producto.codigoProducto = randomCode(
-                                                    _producto.categoria.idCategoria,
-                                                    _producto.marcas.idMarca)"
-                                        ng-disabled="_producto.codigoProducto"
+                                        ng-click="vm._producto.codigoProducto = vm.randomCode(
+                                                    vm._producto.categoria.idCategoria,
+                                                    vm._producto.marcas.idMarca)"
+                                        ng-disabled="vm._producto.codigoProducto"
                                         type="button">Random</button>
                             </div>
                         </div>
@@ -190,12 +190,12 @@
                     <div layout="row" flex>
                         <md-input-container class="md-block" flex>
                             <label>Clase</label>
-                            <md-select ng-model="_producto.claseProducto"
+                            <md-select ng-model="vm._producto.claseProducto"
                                        placeholder="Elige una clase"
                                        ng-disabled="claseProducto"
                                        required name="clase">
                                 <md-option value="{{class.value}}"
-                                           ng-repeat="class in classes">{{ class.name}}</md-option>
+                                           ng-repeat="class in vm.classes">{{ class.name}}</md-option>
                             </md-select>
                             <div ng-messages="nuevoProducto.clase.$error"
                                  ng-if="nuevoProducto.clase.$dirty || nuevoProducto.clase.$touched">
@@ -209,7 +209,7 @@
                                    max="300"
                                    ng-disabled="stockProducto"
                                    placeholder="Ingresar stock total"
-                                   ng-model="_producto.cantidadTotal" name="stock" required/>
+                                   ng-model="vm._producto.cantidadTotal" name="stock" required/>
                             <div ng-messages="nuevoProducto.stock.$error"
                                  ng-if="nuevoProducto.stock.$dirty || nuevoProducto.stock.$touched">
                                 <div ng-message="required">Este campo no puede estar vacio.</div>
@@ -224,7 +224,7 @@
                                    min="0"
                                    ng-disabled="minimoProducto"
                                    placeholder="Ingresar stock minimo"
-                                   ng-model="_producto.cantidadMinima" name="minimo" required/>
+                                   ng-model="vm._producto.cantidadMinima" name="minimo" required/>
                             <div ng-messages="nuevoProducto.minimo.$error"
                                  ng-if="nuevoProducto.minimo.$dirty || nuevoProducto.minimo.$touched">                                
                                 <div ng-message="min">Cantidad de stock muy baja.</div>
@@ -238,7 +238,7 @@
                                    max="999999"
                                    min="0"
                                    placeholder="0000.00"
-                                   ng-model="_producto.precioLista" name="lista" required/>
+                                   ng-model="vm._producto.precioLista" name="lista" required/>
                             <div ng-messages="nuevoProducto.lista.$error"
                                  ng-if="nuevoProducto.lista.$dirty || nuevoProducto.lista.$touched">                                
                                 <div ng-message="min">Precio invalido, es muy bajo.</div>
@@ -252,7 +252,7 @@
                                    max="999999"
                                    min="0"
                                    placeholder="0000.00"
-                                   ng-model="_producto.precioCosto" name="costo" required/>
+                                   ng-model="vm._producto.precioCosto" name="costo" required/>
                             <div ng-messages="nuevoProducto.costo.$error"
                                  ng-if="nuevoProducto.costo.$dirty || nuevoProducto.costo.$touched">                                
                                 <div ng-message="min">Precio invalido, es muy bajo.</div>
@@ -266,7 +266,7 @@
                                    max="999999"
                                    min="0"
                                    placeholder="0000.00"
-                                   ng-model="_producto.precioVenta" name="venta" required/>
+                                   ng-model="vm._producto.precioVenta" name="venta" required/>
                             <div ng-messages="nuevoProducto.venta.$error"
                                  ng-if="nuevoProducto.venta.$dirty || nuevoProducto.venta.$touched">                                
                                 <div ng-message="min">Precio invalido, es muy bajo.</div>
@@ -276,13 +276,16 @@
                         </md-input-container>
                     </div>
                     <button class="btn btn-success pull-right"
-                            uib-tooltip="Agregar producto"
-                            ng-click="elegirCarga(_producto)"
-                            ng-disabled="nuevoProducto.$invalid"
-                            >Agregar</button>
+                            ng-click="vm.elegirCarga(vm._producto)"
+                            ng-disabled="nuevoProducto.$invalid">
+                        <md-tooltip md-direction="bottom" md-theme="default">
+                            Agregar nuevo producto
+                        </md-tooltip>
+                        Agregar
+                    </button>
                     <button class="btn btn-success pull-right"
                             style="width: 77px; margin-right: 10px;"
-                            ng-click="windowBusqueda()">
+                            ng-click="vm.windowBusqueda()">
                         <md-tooltip md-direction="bottom" md-theme="default">
                             Abrir una ventana de busqueda.
                         </md-tooltip>

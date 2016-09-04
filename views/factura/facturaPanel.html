@@ -10,7 +10,7 @@
         <div layout="column" ng-cloak
              class="distribucion-panel"
              ng-show="factura"
-             data-ng-init="detailFactura()">
+             data-ng-init="vm.detailFactura()">
             <md-toolbar class="md-accent">
                 <div class="md-toolbar-tools">
                     <h4 class="md-flex" style="width:100%; text-align: center;">
@@ -34,18 +34,18 @@
                             <label flex class="padd">Saldo</label>
                             <div flex style="margin-bottom: 10px;">{{factura.total - totalPago|currency}}</div>
                         </div>
-                        <div layout="column" ng-controller="FiscalController">
+                        <div layout="column" ng-controller="FiscalController as fsCtrl">
                             <button class="btn btn-block btn-primary" flex
-                                    ng-disabled="factura.numeracion !== null || factura.estado === 'CONFIRMADO'"
-                                    ng-click="optImprimir()">
+                                    ng-disabled="factura.numeracion !== null || factura.estado === 'CONFIRMADO' || factura.estado === 'CANCELADO'"
+                                    ng-click="fsCtrl.optImprimir()">
                                 <md-tooltip md-direction="top" md-theme="default">
                                     Imprimir comprobante fiscal y finalizar factura
                                 </md-tooltip>
                                 Imprimir
                             </button>
                             <button class="btn btn-block btn-success" flex
-                                    ng-disabled="factura.estado === 'CONFIRMADO'"
-                                    ng-click="cerrarFactura($event)"
+                                    ng-disabled="factura.estado === 'CONFIRMADO' || factura.estado === 'CANCELADO'"
+                                    ng-click="vm.cerrarFactura($event)"
                                     style="float: bottom;">
                                 <md-tooltip md-direction="top" md-theme="default">
                                     Finalizar factura
@@ -53,15 +53,15 @@
                                 Finalizar
                             </button>
                             <button class="btn btn-block btn-danger" flex
-                                    ng-disabled="factura.estado === 'CONFIRMADO'"
-                                    ng-click="cancelarFactura()"
+                                    ng-disabled="factura.estado === 'CONFIRMADO' || factura.estado === 'CANCELADO'"
+                                    ng-click="vm.cancelarFactura()"
                                     style="float: bottom;">
                                 <md-tooltip md-direction="top" md-theme="default">
                                     Cancelar factura
                                 </md-tooltip>
                                 Cancelar
                             </button>
-                            <div data-ng-init="accesoFiscal()">
+                            <div data-ng-init="fsCtrl.accesoFiscal()">
                                 <h2>
                                     <span class="glyphicon glyphicon-print"
                                           ng-show="printer"
@@ -100,99 +100,101 @@
                              md-center-tabs="true"
                              md-selected="tabs">
                         <md-tab label="Productos">
-                            <md-content class="md-padding">
-                                <div class="col-lg-12"
-                                     data-ng-init="detailFactura()">
-                                    <md-content layout-padding>
-                                        <form name="codigoBarras" novalidate>
-                                            <div layout="row" flex>
-                                                <md-input-container flex class="md-block">
-                                                    <label>Codigo de barras</label>
-                                                    <input md-maxlength="30" required name="codigo" ng-model="codigo" focus-if>
-                                                    <div ng-messages="codigoBarras.codigo.$error">
-                                                        <div ng-message="required">No debe estar vacio para realizar una busqueda.</div>
-                                                        <div ng-message="md-maxlength">El codigo de barras es demasiado largo.</div>
-                                                    </div>                                                
-                                                </md-input-container>
-                                                <div>
-                                                    <md-button class="md-raised"
-                                                               type="search"
-                                                               ng-disabled="factura.estado === 'CONFIRMADO'"
-                                                               ng-click="buscarCodigoBarra(codigo)">Buscar <span class="glyphicon glyphicon-search"></span></md-button>
-                                                </div>
+                            <md-content class="md-padding">                                
+                                <md-content layout-padding>
+                                    <form name="codigoBarras" novalidate>
+                                        <div layout="row" flex>
+                                            <md-input-container flex class="md-block">
+                                                <label>Codigo de barras</label>
+                                                <input md-maxlength="30"
+                                                       required name="codigo"
+                                                       ng-model="vm.codigo">
+                                                <div ng-messages="codigoBarras.codigo.$error">
+                                                    <div ng-message="required">No debe estar vacio para realizar una busqueda.</div>
+                                                    <div ng-message="md-maxlength">El codigo de barras es demasiado largo.</div>
+                                                </div>                                                
+                                            </md-input-container>
+                                            <div>
+                                                <md-button class="md-raised"
+                                                           type="search"
+                                                           ng-disabled="factura.estado === 'CONFIRMADO' || factura.estado === 'CANCELADO'"
+                                                           ng-click="vm.buscarCodigoBarra(vm.codigo)">
+                                                    Buscar 
+                                                    <span class="glyphicon glyphicon-search"></span>
+                                                </md-button>
                                             </div>
-                                        </form>
-                                    </md-content>
-                                    <div class="table-responsive">
-                                        <table ng-table="tableParams"
-                                               class="table table-condensed table-hover table-striped light-table"
-                                               data-ng-init="listaDetalleFactura()">
-                                            <thead id="headTableProductos">
-                                                <tr>
-                                                    <th>Id</th>
-                                                    <th>Descripcion</th>
-                                                    <th>Cantidad</th>
-                                                    <th>P/U. + IVA 21%</th>
-                                                    <th>P/U. sin IVA</th>
-                                                    <th>Descuento</th>
-                                                    <th>Total</th>
-                                                    <th>Acciones</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody style="text-align: center;">
-                                                <tr ng-repeat="detalleFactura in $data">
-                                                    <td>{{detalleFactura.idDetalleFactura}}</td>
-                                                    <td style="font-size: smaller;">{{detalleFactura.producto.descripcion}}</td>
-                                                    <td>{{detalleFactura.cantidadDetalle}}</td>
-                                                    <td>{{detalleFactura.producto.precioVenta|currency}}</td>
-                                                    <td>{{detalleFactura.producto.precioVenta - (detalleFactura.producto.precioVenta * 21 / 100) | currency}}</td>
-                                                    <td>{{detalleFactura.descuentoDetalle|currency}}</td>
-                                                    <td>{{detalleFactura.totalDetalle|currency}}</td>
-                                                    <td style="width: 100px;">
-                                                        <button type="button"                                             
-                                                                ng-disabled="detalleFactura.descuentoDetalle !== 0 || factura.estado === 'CONFIRMADO'"
-                                                                ng-click="cargarDescuento(detalleFactura)"
-                                                                class="btn btn-xs btn-success">
-                                                            <md-tooltip md-direction="bottom" md-theme="default">
-                                                                Aplicar descuento
-                                                            </md-tooltip>
-                                                            <span class="glyphicon glyphicon-usd"></span>
-                                                        </button>
-                                                        <button type="button"
-                                                                ng-disabled="factura.estado === 'CONFIRMADO'"
-                                                                ng-click="eliminarDetalleFactura(detalleFactura)"
-                                                                class="btn btn-xs btn-danger">
-                                                            <md-tooltip md-direction="bottom" md-theme="default">
-                                                                Eliminar detalle de la factura
-                                                            </md-tooltip>
-                                                            <span class="glyphicon glyphicon-remove"></span>
-                                                        </button>
-                                                        <button type="button"
-                                                                ng-disabled="factura.estado === 'CONFIRMADO'"
-                                                                ng-click="eliminarDescuento(detalleFactura)"
-                                                                class="btn btn-xs btn-warning">
-                                                            <md-tooltip md-direction="bottom" md-theme="default">
-                                                                Eliminar descuento
-                                                            </md-tooltip>
-                                                            <span class="glyphicon glyphicon-erase"></span>
-                                                        </button>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                            <tfoot>
-                                                <tr>
-                                                    <th>Total</th>
-                                                    <th style="text-align: center;">{{totalCompra|currency}}</th>
-                                                </tr>
-                                            </tfoot>
-                                        </table>
-                                    </div>
-                                </div>
+                                        </div>
+                                    </form>
+                                </md-content>
+                                <div class="table-responsive">
+                                    <table ng-table="tableParams"
+                                           class="table table-condensed table-hover table-striped light-table"
+                                           data-ng-init="vm.listaDetalleFactura()">
+                                        <thead id="headTableProductos">
+                                            <tr>
+                                                <th>Id</th>
+                                                <th>Descripcion</th>
+                                                <th>Cantidad</th>
+                                                <th>P/U. + IVA 21%</th>
+                                                <th>P/U. sin IVA</th>
+                                                <th>Descuento</th>
+                                                <th>Total</th>
+                                                <th>Acciones</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody style="text-align: center;">
+                                            <tr ng-repeat="detalleFactura in $data">
+                                                <td>{{detalleFactura.idDetalleFactura}}</td>
+                                                <td style="font-size: smaller;">{{detalleFactura.producto.descripcion}}</td>
+                                                <td>{{detalleFactura.cantidadDetalle}}</td>
+                                                <td>{{detalleFactura.producto.precioVenta|currency}}</td>
+                                                <td>{{detalleFactura.producto.precioVenta - (detalleFactura.producto.precioVenta * 21 / 100) | currency}}</td>
+                                                <td>{{detalleFactura.descuentoDetalle|currency}}</td>
+                                                <td>{{detalleFactura.totalDetalle|currency}}</td>
+                                                <td style="width: 100px;">
+                                                    <button type="button"                                             
+                                                            ng-disabled="detalleFactura.descuentoDetalle !== 0 || factura.estado === 'CONFIRMADO'"
+                                                            ng-click="vm.cargarDescuento(detalleFactura)"
+                                                            class="btn btn-xs btn-success">
+                                                        <md-tooltip md-direction="bottom" md-theme="default">
+                                                            Aplicar descuento
+                                                        </md-tooltip>
+                                                        <span class="glyphicon glyphicon-usd"></span>
+                                                    </button>
+                                                    <button type="button"
+                                                            ng-disabled="factura.estado === 'CONFIRMADO' || factura.estado === 'CANCELADO'"
+                                                            ng-click="vm.eliminarDetalleFactura(detalleFactura)"
+                                                            class="btn btn-xs btn-danger">
+                                                        <md-tooltip md-direction="bottom" md-theme="default">
+                                                            Eliminar detalle de la factura
+                                                        </md-tooltip>
+                                                        <span class="glyphicon glyphicon-remove"></span>
+                                                    </button>
+                                                    <button type="button"
+                                                            ng-disabled="factura.estado === 'CONFIRMADO' || factura.estado === 'CANCELADO'"
+                                                            ng-click="vm.eliminarDescuento(detalleFactura)"
+                                                            class="btn btn-xs btn-warning">
+                                                        <md-tooltip md-direction="bottom" md-theme="default">
+                                                            Eliminar descuento
+                                                        </md-tooltip>
+                                                        <span class="glyphicon glyphicon-erase"></span>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <th>Total</th>
+                                                <th style="text-align: center;">{{totalCompra|currency}}</th>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>                                
                             </md-content>
                         </md-tab>
                         <md-tab label="Metodos de pago">
                             <md-content class="md-padding" layout="row">
-                                <div flex="40" class="md-padding" ng-controller="FacturaController">
+                                <div flex="40" class="md-padding">
                                     <form name="metodoPago">
                                         <md-input-container class="md-block md-icon">
                                             <label>Monto</label>
@@ -202,7 +204,7 @@
                                                    max="9999"
                                                    placeholder="Monto a pagar"
                                                    required type="number"
-                                                   ng-model="cargarMetodo.montoPago">
+                                                   ng-model="vm.cargarMetodo.montoPago">
                                             <div ng-messages="metodoPago.monto.$error"
                                                  ng-if='metodoPago.monto.$dirty || metodoPago.monto.$touched'>
                                                 <div ng-message="min">Monto demasiado bajo.</div>
@@ -212,15 +214,13 @@
                                         </md-input-container>
                                         <md-input-container style="min-height: 48px;"
                                                             class="md-block md-icon"
-                                                            data-ng-init="listaMedioPago()">
+                                                            data-ng-init="vm.listaMedioPago()">
                                             <label>Medio Pago</label>
                                             <md-icon class="material-icons">&#xE8B0;</md-icon>
-                                            <md-select ng-model="cargarMetodo.mediosPago"
+                                            <md-select ng-model="vm.cargarMetodo.mediosPago"
                                                        placeholder="Elegir medio de pago"
-                                                       ng-model-options="{
-                                                                           trackBy: '$value.idMedioPago'
-                                                                       }"
-                                                       data-ng-init="cargarMetodo.mediosPago"
+                                                       ng-model-options="{trackBy: '$value.idMedioPago'}"
+                                                       data-ng-init="vm.cargarMetodo.mediosPago"
                                                        required name="medios">                                            
                                                 <md-option ng-value="medio"
                                                            ng-repeat="medio in mediosPagos">{{medio.nombrePago}}</md-option>                                            
@@ -232,16 +232,15 @@
                                         </md-input-container>
                                         <md-input-container style="min-height: 48px;"
                                                             class="md-block md-icon"
-                                                            data-ng-init="listaEntidades()">
+                                                            data-ng-init="vm.listaEntidades()">
                                             <label>Entidad</label>
                                             <md-icon class="material-icons">&#xE84F;</md-icon>
-                                            <md-select ng-model="cargarMetodo.entidadPago"
-                                                       ng-disabled="disableSelectEntidades"
+                                            <md-select ng-model="vm.cargarMetodo.entidadPago"
+                                                       ng-disabled="vm.disableSelectEntidades"
                                                        placeholder="Elegir entidad financiera"
-                                                       ng-model-options="{
-                                                                           trackBy: '$value.idEntidadMonetaria'}"
-                                                       data-ng-init="cargarMetodo.entidadPago"
-                                                       ng-change="busquedaTarjeta()"
+                                                       ng-model-options="{trackBy: '$value.idEntidadMonetaria'}"
+                                                       data-ng-init="vm.cargarMetodo.entidadPago"
+                                                       ng-change="vm.busquedaTarjeta()"
                                                        required name="entidades">                                            
                                                 <md-option ng-value="entidad"
                                                            ng-repeat="entidad in entidades">{{entidad.nombreEntidad}}</md-option>                                            
@@ -253,16 +252,15 @@
                                         </md-input-container>
                                         <md-input-container style="min-height: 48px;"
                                                             class="md-block md-icon"
-                                                            data-ng-init="listaTarjetas()">
+                                                            data-ng-init="vm.listaTarjetas()">
                                             <label>Tarjeta</label>
                                             <md-icon class="material-icons">&#xE870;</md-icon>
-                                            <md-select ng-model="cargarMetodo.tarjetasPago"
-                                                       ng-disabled="disableSelectTarjeta"
+                                            <md-select ng-model="vm.cargarMetodo.tarjetasPago"
+                                                       ng-disabled="vm.disableSelectTarjeta"
                                                        placeholder="Elegir tarjeta"
-                                                       ng-model-options="{
-                                                                           trackBy: '$value.idTarjeta'}"
-                                                       data-ng-init="cargarMetodo.tarjetasPago"
-                                                       ng-change="busquedaPlanByTarjeta()"
+                                                       ng-model-options="{trackBy: '$value.idTarjeta'}"
+                                                       data-ng-init="vm.cargarMetodo.tarjetasPago"
+                                                       ng-change="vm.busquedaPlanByTarjeta()"
                                                        required name="tarjetas">
                                                 <md-option ng-value="tarjeta"
                                                            ng-repeat="tarjeta in tarjetas">{{tarjeta.nombreTarjeta}}</md-option>                                            
@@ -274,16 +272,14 @@
                                         </md-input-container>
                                         <md-input-container style="min-height: 48px;"
                                                             class="md-block md-icon"
-                                                            data-ng-init="listaPlanesPago()">
+                                                            data-ng-init="vm.listaPlanesPago()">
                                             <label>Plan de pago</label>
                                             <md-icon class="material-icons">&#xE870;</md-icon>
-                                            <md-select ng-model="cargarMetodo.planPago"
-                                                       ng-disabled="disableSelectMetodo"
+                                            <md-select ng-model="vm.cargarMetodo.planPago"
+                                                       ng-disabled="vm.disableSelectMetodo"
                                                        placeholder="Elegir plan de pago"
-                                                       ng-model-options="{
-                                                                           trackBy: '$value.idPlanesPago'
-                                                                       }"
-                                                       data-ng-init="cargarMetodo.planPago"
+                                                       ng-model-options="{trackBy: '$value.idPlanesPago'}"
+                                                       data-ng-init="vm.cargarMetodo.planPago"
                                                        required name="planes">
                                                 <md-option ng-value="plan"
                                                            ng-repeat="plan in planesPago">{{plan.nombrePlanesPago}}</md-option>                                            
@@ -301,8 +297,8 @@
                                                    maxlength="20"
                                                    minlength="5"
                                                    md-maxlength="20"
-                                                   ng-disabled="!cargarMetodo.planPago" name="comprobante"
-                                                   ng-model="cargarMetodo.comprobantePago">
+                                                   ng-disabled="!vm.cargarMetodo.planPago" name="comprobante"
+                                                   ng-model="vm.cargarMetodo.comprobantePago">
                                             <div ng-messages="metodoPago.comprobante.$error"
                                                  ng-if="metodoPago.comprobante.$dirty || metodoPago.comprobante.$touched">
                                                 <div ng-message="required">Este campo no puede estar vacio.</div>
@@ -312,8 +308,8 @@
                                         </md-input-container>
                                         <div flex style="text-align: center;">
                                             <button class="btn btn-success"
-                                                    ng-click="agregarMetodoPago(cargarMetodo)"
-                                                    ng-disabled="factura.estado === 'CONFIRMADO'">
+                                                    ng-click="vm.agregarMetodoPago(vm.cargarMetodo)"
+                                                    ng-disabled="factura.estado === 'CONFIRMADO' || factura.estado === 'CANCELADO'">
                                                 Agregar
                                             </button>
                                         </div>
@@ -323,7 +319,7 @@
                                     <h4 style="text-align: center;">Metodos cargados</h4>
                                     <table class="table table-striped table-hover table-condensed light-table"
                                            ng-table="tableMetodos"
-                                           data-ng-init="listaMetodoPagoFactura()">
+                                           data-ng-init="vm.listaMetodoPagoFactura()">
                                         <thead>
                                             <tr>
                                                 <th>Metodo</th>
@@ -358,10 +354,10 @@
                                             <md-autocomplete flex md-input-name="clientes"
                                                              md-input-minlength="2"
                                                              md-min-length="2"
-                                                             md-input-maxlength="40"
+                                                             md-input-maxlength="45"
                                                              md-selected-item="dynamicCliente"
                                                              md-search-text="searchText"
-                                                             md-items="item in getCliente(searchText)"
+                                                             md-items="item in vm.getCliente(searchText)"
                                                              md-item-text="item.nombreCliente"
                                                              md-floating-label="Cliente">
                                                 <md-item-template>
@@ -381,8 +377,9 @@
                                             </md-autocomplete>
                                             <div>
                                                 <md-button class="md-raised"
+                                                           ng-disabled="factura.estado === 'CONFIRMADO' || factura.estado === 'CANCELADO'"
                                                            type="search"
-                                                           ng-click="agregarClienteDynamic(dynamicCliente)">
+                                                           ng-click="vm.agregarClienteDynamic(dynamicCliente)">
                                                     <md-tooltip md-direction="bottom" md-theme="default">
                                                         Añadir cliente en la busqueda
                                                     </md-tooltip>
@@ -390,8 +387,8 @@
                                                 </md-button>
                                                 <md-button class="md-raised"
                                                            type="search"
-                                                           ng-disabled="factura.cliente"
-                                                           ng-click="panelCliente = false">
+                                                           ng-disabled="factura.cliente || factura.estado ==='CANCELADO'"
+                                                           ng-click="vm.panelCliente = false">
                                                     <md-tooltip md-direction="bottom" md-theme="default">
                                                         Agregar nuevo cliente
                                                     </md-tooltip>
@@ -402,7 +399,7 @@
                                     </form>
                                 </md-content>
                                 <!-- DATOS CLIENTE-->                                
-                                <div ng-show="panelCliente">
+                                <div ng-show="vm.panelCliente">
                                     <md-content layout-padding layout="column">
                                         <p flex style="text-align: center; font-weight: bold">
                                             Datos del cliente
@@ -461,12 +458,12 @@
                                         </div>
                                     </md-content>
                                 </div>
-                                <div ng-hide="panelCliente" flex>
+                                <div ng-hide="vm.panelCliente" flex>
                                     <md-content class="md-padding" flex style="padding-top: 0px;">
                                         <p flex style="text-align: center; font-weight: bold">
                                             Agregar nuevo cliente
                                             <button class="pull-right"
-                                                    ng-click="panelCliente = true"
+                                                    ng-click="vm.panelCliente = true"
                                                     style="background: transparent; border: none;">
                                                 <md-tooltip md-direction="bottom" md-theme="default">
                                                     Cerrar panel
@@ -480,7 +477,7 @@
                                                     <label>Documento</label>
                                                     <md-icon class="material-icons">&#xE90D;</md-icon>
                                                     <input type="text" 
-                                                           ng-model="clienteFactura.documento"
+                                                           ng-model="vm.clienteFactura.documento"
                                                            name="documento" required
                                                            placeholder="N° de documento del cliente o empresa"
                                                            maxlength="11"
@@ -496,7 +493,7 @@
                                                 <md-input-container class="md-block" flex>
                                                     <label>Tipo de documento</label>
                                                     <md-icon class="material-icons">&#xE90D;</md-icon>
-                                                    <md-select ng-model="clienteFactura.tipoDocumento"
+                                                    <md-select ng-model="vm.clienteFactura.tipoDocumento"
                                                                placeholder="Elige un tipo de documento"
                                                                required name="tipo">
                                                         <md-option value="C">CUIT</md-option>
@@ -517,7 +514,7 @@
                                                     <label>Nombre cliente/empresa</label>
                                                     <md-icon class="material-icons">&#xE150;</md-icon>
                                                     <input type="text" 
-                                                           ng-model="clienteFactura.nombreCliente"
+                                                           ng-model="vm.clienteFactura.nombreCliente"
                                                            name="nombre" required
                                                            placeholder="Nombre del cliente o empresa"
                                                            maxlength="45"
@@ -534,7 +531,7 @@
                                                     <label>Domicilio</label>
                                                     <md-icon class="material-icons">&#xE88A;</md-icon>
                                                     <input type="text" 
-                                                           ng-model="clienteFactura.domicilio"
+                                                           ng-model="vm.clienteFactura.domicilio"
                                                            name="domicilio" required
                                                            placeholder="Dirección del domicilio"
                                                            maxlength="45"
@@ -552,7 +549,7 @@
                                                 <md-input-container class="md-block" flex>
                                                     <label>Tipo de documento</label>
                                                     <md-icon class="material-icons">&#xE801;</md-icon>
-                                                    <md-select ng-model="clienteFactura.responsabilidadIva"
+                                                    <md-select ng-model="vm.clienteFactura.responsabilidadIva"
                                                                placeholder="Elige la responsabilidad frente al IVA."
                                                                required name="iva">
                                                         <md-option value="I">Responsable inscripto</md-option>
@@ -573,7 +570,7 @@
                                                     <label>Teléfono</label>
                                                     <md-icon class="material-icons">&#xE0CD;</md-icon>
                                                     <input type="tel" 
-                                                           ng-model="clienteFactura.telefono"
+                                                           ng-model="vm.clienteFactura.telefono"
                                                            name="telefono"
                                                            placeholder="Teléfono del cliente"
                                                            maxlength="20"
@@ -592,7 +589,7 @@
                                                     <label>E-mail</label>
                                                     <md-icon class="material-icons">&#xE0BE;</md-icon>
                                                     <input type="email" 
-                                                           ng-model="clienteFactura.emailCliente"
+                                                           ng-model="vm.clienteFactura.emailCliente"
                                                            name="email" 
                                                            placeholder="Dirección de e-mail"
                                                            maxlength="30"
@@ -609,7 +606,7 @@
                                                     <label>Fecha de Nacimiento</label>
                                                     <md-icon class="material-icons">&#xE916;</md-icon>
                                                     <input type="date" 
-                                                           ng-model="clienteFactura.fechaNacimiento"
+                                                           ng-model="vm.clienteFactura.fechaNacimiento"
                                                            name="fecha"
                                                            placeholder="Fecha de nacimiento del cliente"/>
                                                     <div ng-messages="newCliente.fecha.$error"
@@ -620,7 +617,7 @@
                                                 <div flex="50" style="text-align: center;">
                                                     <button type="submit"
                                                             ng-disabled="newCliente.$invalid"
-                                                            ng-click="agregarCliente(clienteFactura)"
+                                                            ng-click="vm.agregarCliente(vm.clienteFactura)"
                                                             class="btn btn-success">
                                                         Agregar
                                                     </button>

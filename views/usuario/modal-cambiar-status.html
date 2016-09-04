@@ -20,11 +20,11 @@
                         <button class="btn btn-success"
                                 type="button"
                                 ng-hide="ngDialogData.usuario.estado"
-                                ng-click="confirmarCambiarEstado(true, ngDialogData.usuario.idUsuario)">Activar</button>
+                                ng-click="vm.confirmarCambiarEstado(true, ngDialogData.usuario.idUsuario)">Activar</button>
                         <button class="btn btn-danger"
                                 type="button"
                                 ng-show="ngDialogData.usuario.estado"
-                                ng-click="confirmarCambiarEstado(false, ngDialogData.usuario.idUsuario)">Desactivar</button>
+                                ng-click="vm.confirmarCambiarEstado(false, ngDialogData.usuario.idUsuario)">Desactivar</button>
                     </div>
                 </form>
             </md-whiteframe>

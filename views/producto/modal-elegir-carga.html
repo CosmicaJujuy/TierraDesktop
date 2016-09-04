@@ -15,7 +15,7 @@
                     <button class="btn btn-success"
                             style="width: 180px;"
                             uib-tooltip="Finaliza la accion y te redirige a la lista de productos"
-                            ng-click="agregarProducto(ngDialogData.producto)"
+                            ng-click="vm.agregarProducto(ngDialogData.producto)"
                             >Finalizar</button>
                 </div>
                 <div flex class="padd">
@@ -23,7 +23,7 @@
                     <button class="btn btn-success"
                             style="width: 180px;"
                             uib-tooltip="Agrega el producto actual y te permite agregar una clase diferente del mismo producto"
-                            ng-click="agregarRepetirClase(ngDialogData.producto)"
+                            ng-click="vm.agregarRepetirClase(ngDialogData.producto)"
                             >Clase</button>
                 </div>
                 <div flex class="padd">
@@ -31,7 +31,7 @@
                     <button class="btn btn-success"
                             uib-tooltip="Agrega el producto actual y te permite agregar una talla diferente del mismo producto"
                             style="width: 180px;"
-                            ng-click="agregarCambiarTalla(ngDialogData.producto)"
+                            ng-click="vm.agregarCambiarTalla(ngDialogData.producto)"
                             >Talla</button>
                 </div>
             </form>

@@ -3,8 +3,8 @@
      layout-margin
      layout-xs="row"
      md-theme="docs-dark"
-     ng-controller="NotaCreditoController"
-     data-ng-init="detalleNotaCredito()"
+     ng-controller="NotaCreditoController as ncCtrl"
+     data-ng-init="ncCtrl.detalleNotaCredito()"
      ng-show="notaCreditoDetalle">
     <div flex-lg="25"
          flex-md="30"
@@ -49,7 +49,8 @@
                         </div>
                         <div layout="column" flex class="padd">
                             <button class="btn btn-block btn-danger"
-                                    ng-click="cancelarNotaCredito()">
+                                    ng-disabled="notaCreditoDetalle.estadoUso === 'USADO'"
+                                    ng-click="ncCtrl.cancelarNotaCredito()">
                                 <md-tooltip md-direction="bottom" md-theme="default">
                                     Cancelar nota de credito
                                 </md-tooltip>
@@ -84,7 +85,7 @@
                                             <input minlength="8"
                                                    md-maxlength="30"
                                                    ng-disabled="notaCreditoDetalle.estadoUso === 'SIN USO'"
-                                                   ng-model="busq" required
+                                                   ng-model="vm.busq" required
                                                    name="barcode" placeholder="Buscar producto por codigo"/>
                                             <!-- MENSAJES-->
                                             <div ng-messages="notaCredito.barcode.$error"
@@ -97,7 +98,7 @@
                                         <div>
                                             <md-button class="md-raised"
                                                        ng-disabled="notaCredito.$invalid"
-                                                       ng-click="buscarProductoOnFactura(busq)"
+                                                       ng-click="vm.buscarProductoOnFactura(vm.busq)"
                                                        type="search">
                                                 Buscar 
                                                 <span class="glyphicon glyphicon-search"></span>
@@ -109,7 +110,7 @@
                             <div class="table-responsive">
                                 <table ng-table="tableDetallesNotaCredito" style="margin-top: 10px;" 
                                        class="table table-condensed table-hover table-striped light-table"
-                                       data-ng-init="listaDetalleNotaCredito()">
+                                       data-ng-init="vm.listaDetalleNotaCredito()">
                                     <thead id="headTableProductos">
                                         <tr>
                                             <th>Id</th>
@@ -133,7 +134,8 @@
                                             <td>{{detalle.fechaCreacion| date: 'medium'}}</td>
                                             <td>
                                                 <button type="button"
-                                                        ng-disabled="notaCreditoDetalle.estadoUso === 'SIN USO'"                                                        ng-click="eliminarDetalleNota(detalle)"
+                                                        ng-disabled="notaCreditoDetalle.estadoUso === 'SIN USO' || notaCreditoDetalle.estadoUso === 'USADO' || notaCreditoDetalle.estadoUso === 'CANCELADO'" 
+                                                        ng-click="vm.eliminarDetalleNota(detalle)"
                                                         class="btn btn-xs btn-danger">
                                                     <md-tooltip md-direction="bottom" md-theme="default">
                                                         Eliminar detalle de la nota de credito
@@ -141,8 +143,8 @@
                                                     <span class="glyphicon glyphicon-remove"></span>
                                                 </button>
                                                 <button type="button"
-                                                        ng-disabled="notaCreditoDetalle.estadoUso === 'SIN USO'"
-                                                        ng-click="modificarDetalleNota(detalle)"
+                                                        ng-disabled="notaCreditoDetalle.estadoUso === 'SIN USO' || notaCreditoDetalle.estadoUso === 'USADO' || notaCreditoDetalle.estadoUso === 'CANCELADO'"
+                                                        ng-click="vm.modificarDetalleNota(detalle)"
                                                         class="btn btn-xs btn-warning">
                                                     <md-tooltip md-direction="bottom" md-theme="default">
                                                         Modificar cantidad del detalle
@@ -158,7 +160,7 @@
                     </md-content>
                     <div class="md-padding" flex>
                         <button class="btn btn-success pull-right"
-                                ng-disabled="notaCreditoDetalle.estadoUso === 'SIN USO'"
+                                ng-disabled="notaCreditoDetalle.estadoUso === 'SIN USO' || notaCreditoDetalle.estadoUso === 'USADO' || notaCreditoDetalle.estadoUso === 'CANCELADO'"
                                 ui-sref="detalle_nota_credito.finalizar">
                             <md-tooltip md-direction="bottom" md-theme="default">
                                 Finalizar carga de productos en la nota de credito
