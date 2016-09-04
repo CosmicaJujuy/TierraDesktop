@@ -1,14 +1,14 @@
+'use strict';
 var packager = require('electron-packager');
 var options = {
     'arch': 'ia32',
     'platform': 'win32',
     'dir': './',
     'app-copyright': 'Paulo Galdo',
-    'app-version': '2.1.5',
+    'app-version': '2.1.6',
     'asar': true,
     'icon': './app.ico',
     'name': 'TierraDesktop',
-    'ignore': ['./releases', './.git', './nbproject'],
     'out': './releases',
     'overwrite': true,
     'prune': true,
