@@ -1,4 +1,5 @@
-miAppHome.service('sessionProvider', function (localStorageService, hotkeys, $state) {
+angular
+            .module('tierraDeColoresApp').service('sessionProvider', function (localStorageService, hotkeys, $state) {
     this.getPath = function () {
         hotkeys.add({
             combo: 'ctrl+p',
