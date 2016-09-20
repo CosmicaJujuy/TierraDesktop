@@ -549,9 +549,34 @@
             $rootScope.$broadcast('updateStock', {});
         });
 
-        function printDiv(divName) {
-            var printContents = document.getElementById(divName).innerHTML;
-            sendCommandToWorker(printContents);
+        function printDiv(divName, producto, path, type) {
+            var native = false;
+            if (!native) {
+                var spaceless = producto.descripcion.split(' ').join('%20');
+                var descripcion = spaceless.split('Ñ').join('%C3%91');
+                var talla = producto.talla.split(' ').join('%20');
+                var codigo = producto.codigoProducto.split(' ').join('%20');
+                var url = "";
+                if (type) {
+                    url = "http://localhost:3000/printer.html#/" + path + "/" +
+                            talla + "/" +
+                            codigo;
+                } else {
+                    url = "http://localhost:3000/printer.html#/" + path + "/" +
+                            descripcion + "/" +
+                            talla + "/" +
+                            codigo;
+                }
+                var exec = require('child_process').exec;
+                exec('start /max chrome.exe --incognito --app=' + url, function (error, stdout, stderr) {
+                    if (error !== null) {
+                        console.log('exec error: ' + error);
+                    }
+                });
+            } else {
+                var printContents = document.getElementById(divName).innerHTML;
+                sendCommandToWorker(printContents);
+            }
         }
 
         function randomCode(idCategoria, idMarca) {
@@ -621,7 +646,7 @@
             }
         }
 
-        function windowBusqueda() {            
+        function windowBusqueda() {
             var busq = new electron.remote.BrowserWindow({
                 transparent: false,
                 frame: false,
@@ -630,7 +655,6 @@
                 height: 550,
                 show: false,
                 modal: true,
-                parent: window,
                 resizable: false,
                 icon: __dirname + '/styles/images/app.png'
             });
