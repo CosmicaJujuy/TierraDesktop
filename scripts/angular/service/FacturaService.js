@@ -3,6 +3,7 @@
     angular
             .module('tierraDeColoresApp')
             .service('facturaService', facturaService);
+    
     facturaService.$inject = ['$q', '$http', 'cookieService', 'BaseURL'];
 
     function facturaService($q, $http, cookieService, BaseURL) {
