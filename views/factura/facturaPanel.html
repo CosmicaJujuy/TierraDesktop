@@ -15,6 +15,7 @@
                 <div class="md-toolbar-tools">
                     <h4 class="md-flex" style="width:100%; text-align: center;">
                         <div>Factura N°{{factura.idFactura}} {{factura.numeracion}}</div>
+                        <div ng-if="factura.regalo !== null"> Regalo {{factura.regalo}}</div>
                     </h4>
                 </div>
             </md-toolbar>
@@ -42,6 +43,14 @@
                                     Imprimir comprobante fiscal y finalizar factura
                                 </md-tooltip>
                                 Imprimir
+                            </button>
+                            <button class="btn btn-block btn-info" flex
+                                    ng-disabled="!(factura.estado === 'CONFIRMADO' && factura.regalo === null && printer === true)"
+                                    ng-click="fsCtrl.imprimirTicketRegalo()">
+                                <md-tooltip md-direction="top" md-theme="default">
+                                    Imprimir ticket regalo.
+                                </md-tooltip>
+                                Regalo
                             </button>
                             <button class="btn btn-block btn-success" flex
                                     ng-disabled="factura.estado === 'CONFIRMADO' || factura.estado === 'CANCELADO'"
@@ -106,6 +115,7 @@
                                         <div layout="row" flex>
                                             <md-input-container flex class="md-block">
                                                 <label>Codigo de barras</label>
+                                                <md-icon class="material-icons">&#xE8B6;</md-icon>
                                                 <input md-maxlength="30"
                                                        required name="codigo"
                                                        ng-model="vm.codigo">
@@ -387,7 +397,7 @@
                                                 </md-button>
                                                 <md-button class="md-raised"
                                                            type="search"
-                                                           ng-disabled="factura.cliente || factura.estado ==='CANCELADO'"
+                                                           ng-disabled="factura.cliente || factura.estado === 'CANCELADO'"
                                                            ng-click="vm.panelCliente = false">
                                                     <md-tooltip md-direction="bottom" md-theme="default">
                                                         Agregar nuevo cliente
