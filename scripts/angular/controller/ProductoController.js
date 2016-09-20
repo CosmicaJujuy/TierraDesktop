@@ -10,6 +10,8 @@
         var electron = require('electron');
         var vm = this;
         var window = electron.remote.getCurrentWindow();
+        var Config = require('electron-config');
+        var config = new Config();
         /*VARIABLES*/
         vm._producto = {
             "idProducto": null,
@@ -550,7 +552,7 @@
         });
 
         function printDiv(divName, producto, path, type) {
-            var native = false;
+            var native = config.get('printer');
             if (!native) {
                 var spaceless = producto.descripcion.split(' ').join('%20');
                 var descripcion = spaceless.split('Ñ').join('%C3%91');
@@ -648,22 +650,22 @@
 
         function windowBusqueda() {
             var busq = new electron.remote.BrowserWindow({
-                transparent: false,
-                frame: false,
-                fullscreen: false,
-                width: 1100,
-                height: 550,
-                show: false,
-                modal: true,
-                resizable: false,
-                icon: __dirname + '/styles/images/app.png'
+            transparent: false,
+                    frame: false,
+                    fullscreen: false,
+                    width: 1100,
+                    height: 550,
+                    show: false,
+                    modal: true,
+                    resizable: false,
+                    icon: __dirname + '/styles/images/app.png'
             });
-            busq.loadURL(`file://${__dirname}/index.html#/helper`);
-            busq.once('ready-to-show', function () {
-                busq.show();
-            });
-        }
+                    busq.loadURL(`file://${__dirname}/index.html#/helper`);
+                            busq.once('ready-to-show', function () {
+                                busq.show();
+                            });
+                }
 
-    }
+            }
 
-})();
+        })();
