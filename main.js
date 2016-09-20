@@ -1,70 +1,78 @@
-const {ipcMain, Menu, shell, app, BrowserWindow} = require('electron');
+const {
+    ipcMain,
+    Menu,
+    shell,
+    app,
+    BrowserWindow
+} = require('electron');
 // this should be placed at top of main.js to handle setup events quickly
 if (handleSquirrelEvent()) {
-  // squirrel event handled and app will exit in 1000ms, so don't do anything else
-  return;
+    // squirrel event handled and app will exit in 1000ms, so don't do anything else
+    return;
 }
 
 function handleSquirrelEvent() {
-  if (process.argv.length === 1) {
-    return false;
-  }
+    if (process.argv.length === 1) {
+        return false;
+    }
 
-  const ChildProcess = require('child_process');
-  const path = require('path');
+    const ChildProcess = require('child_process');
+    const path = require('path');
 
-  const appFolder = path.resolve(process.execPath, '..');
-  const rootAtomFolder = path.resolve(appFolder, '..');
-  const updateDotExe = path.resolve(path.join(rootAtomFolder, 'Update.exe'));
-  const exeName = path.basename(process.execPath);
+    const appFolder = path.resolve(process.execPath, '..');
+    const rootAtomFolder = path.resolve(appFolder, '..');
+    const updateDotExe = path.resolve(path.join(rootAtomFolder, 'Update.exe'));
+    const exeName = path.basename(process.execPath);
 
-  const spawn = function(command, args) {
-    let spawnedProcess, error;
+    const spawn = function(command, args) {
+        let spawnedProcess, error;
 
-    try {
-      spawnedProcess = ChildProcess.spawn(command, args, {detached: true});
-    } catch (error) {}
+        try {
+            spawnedProcess = ChildProcess.spawn(command, args, {
+                detached: true
+            });
+        } catch (error) {}
 
-    return spawnedProcess;
-  };
+        return spawnedProcess;
+    };
 
-  const spawnUpdate = function(args) {
-    return spawn(updateDotExe, args);
-  };
+    const spawnUpdate = function(args) {
+        return spawn(updateDotExe, args);
+    };
 
-  const squirrelEvent = process.argv[1];
-  switch (squirrelEvent) {
-    case '--squirrel-install':
-    case '--squirrel-updated':
-      // Optionally do things such as:
-      // - Add your .exe to the PATH
-      // - Write to the registry for things like file associations and
-      //   explorer context menus
+    const squirrelEvent = process.argv[1];
+    switch (squirrelEvent) {
+        case '--squirrel-install':
+        case '--squirrel-updated':
+            // Optionally do things such as:
+            // - Add your .exe to the PATH
+            // - Write to the registry for things like file associations and
+            //   explorer context menus
 
-      // Install desktop and start menu shortcuts
-      spawnUpdate(['--createShortcut', exeName]);
+            // Install desktop and start menu shortcuts
+            spawnUpdate(['--createShortcut', exeName]);
 
-      setTimeout(app.quit, 1000);
-      return true;
+            setTimeout(app.quit, 1000);
+            return true;
 
-    case '--squirrel-uninstall':
-      // Undo anything you did in the --squirrel-install and
-      // --squirrel-updated handlers
+        case '--squirrel-uninstall':
+            // Undo anything you did in the --squirrel-install and
+            // --squirrel-updated handlers
 
-      // Remove desktop and start menu shortcuts
-      spawnUpdate(['--removeShortcut', exeName]);
+            // Remove desktop and start menu shortcuts
+            spawnUpdate(['--removeShortcut', exeName]);
 
-      setTimeout(app.quit, 1000);
-      return true;
+            setTimeout(app.quit, 1000);
+            return true;
 
-    case '--squirrel-obsolete':
-      // This is called on the outgoing version of your app before
-      // we update to the new version - it's the opposite of
-      // --squirrel-updated
+        case '--squirrel-obsolete':
+            // This is called on the outgoing version of your app before
+            // we update to the new version - it's the opposite of
+            // --squirrel-updated
 
-      app.quit();
-      return true;
-  }
+            app.quit();
+            return true;
+    }
 };
 
 //Importing modules to print and manage the app
@@ -91,12 +99,12 @@ function createWindow() {
         icon: __dirname + '/styles/images/app.png'
     });
     //mainWindow.setIcon( __dirname + '/styles/images/appIcon.png');
-        
+
     mainWindow.loadURL(`file://${__dirname}/index.html`);
     mainWindow.once('ready-to-show', () => {
         mainWindow.show()
     })
-    mainWindow.on('closed', function () {
+    mainWindow.on('closed', function() {
         var windows = BrowserWindow.getAllWindows();
         windows.forEach(function(value) {
             if (value.getTitle() === 'Busqueda de productos') {
@@ -109,45 +117,47 @@ function createWindow() {
         workerWindow = null;
     });
     /*WORKER WINDOW*/
-    workerWindow = new BrowserWindow({ show: false });
+    workerWindow = new BrowserWindow({
+        show: false
+    });
     workerWindow.loadURL(`file://${__dirname}/worker.html`);
     workerWindow.hide();
 }
 app.on('ready', createWindow);
-app.on('window-all-closed', function () {
+app.on('window-all-closed', function() {
     if (process.platform !== 'darwin') {
         app.quit();
     }
 });
 
-app.on('activate', function () {
+app.on('activate', function() {
     if (mainWindow === null) {
         createWindow();
     }
 });
 
-ipcMain.on("printPDF", function (event, content) {
+ipcMain.on("printPDF", function(event, content) {
     workerWindow.webContents.send("printPDF", content);
 });
 
-app.on("open-url", function (event, content) {
+app.on("open-url", function(event, content) {
     event.preventDefault();
 });
 
 /*TRIGGER PRINT FUNCTION, NEED CALIBRATE*/
-ipcMain.on("printer", function (event) {
+ipcMain.on("printer", function(event) {
     workerWindow.webContents.print();
-//    mainWindow.webContents.print();
+    //    mainWindow.webContents.print();
 });
 
-ipcMain.on("readyToPrintPDF", function (event) {
+ipcMain.on("readyToPrintPDF", function(event) {
     const pdfPath = path.join(os.tmpdir(), 'print.pdf');
     //    workerWindow.webContents.print({silent: true});
-    workerWindow.webContents.printToPDF({}, function (error, data) {
+    workerWindow.webContents.printToPDF({}, function(error, data) {
         if (error) {
             throw error;
         }
-        fs.writeFile(pdfPath, data, function (error) {
+        fs.writeFile(pdfPath, data, function(error) {
             if (error) {
                 throw error;
             }
@@ -156,3 +166,21 @@ ipcMain.on("readyToPrintPDF", function (event) {
         })
     })
 });
+var Config = require('electron-config');
+var config = new Config();
+var printer = config.get('printer');
+console.log(printer);
+if (typeof printer === 'undefined') {
+    config.set('printer', true);
+} else {
+    if (!printer) {
+        var express = require('express');
+        var appExp = express();
+        var path = require('path');
+
+        appExp.use(express.static(__dirname));
+        appExp.use(express.static(path.join(__dirname, '/printer.html')));
+
+        appExp.listen(3000);
+    }
+}
