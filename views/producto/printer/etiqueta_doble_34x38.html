@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<div>
+    <div class="row">
+        <div style="float: left; text-align: center; font-size: smaller;">
+            <center>
+                <div class="etiqueta">
+                    T-N: {{vm.talla}}
+                </div>
+                <span kendo-barcode
+                      k-type="'code128'"
+                      ng-model="vm.codigo"
+                      style="width: 100px; height: 40px;"></span>
+                <div style="font-size: x-small;">
+                    {{vm.descripcion}}
+                </div>
+            </center>
+        </div>
+        <div style="float: right; text-align: center; font-size: smaller;">
+            <center>
+                <div class="etiqueta">
+                    T-N: {{vm.talla}}
+                </div>
+                <span kendo-barcode
+                      k-type="'code128'"
+                      ng-model="vm.codigo"
+                      style="width: 100px; height: 40px;"></span>
+                <div style="font-size: x-small;">
+                    {{vm.descripcion}}
+                </div>
+            </center>
+        </div>
+    </div>
+</div>

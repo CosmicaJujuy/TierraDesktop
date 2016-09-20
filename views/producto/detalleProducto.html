@@ -191,7 +191,7 @@
                                                 </div>
                                                 <span kendo-barcode
                                                       k-type="'code128'"
-                                                      ng-model="foundProducto.codigoProducto"
+                                                      ng-model="vm.foundProducto.codigoProducto"
                                                       style="width: 100px; height: 40px;"></span>
                                                 <div style="font-size: x-small;">
                                                     {{vm.foundProducto.descripcion}}
@@ -227,15 +227,15 @@
                                                 Imprimir 20mm x 30mm
                                             </p>
                                             <!-- BOTON 20 X 30  -->
-                                            <button ng-click="vm.printDiv('printable');"
+                                            <button ng-click="vm.printDiv('printable', vm.foundProducto, 'doble20x30', true);"
                                                     style='margin-top: 10%;' flex
                                                     class="btn btn-info">Doble</button>
                                             <!-- BOTON 20 X 30  -->
-                                            <button ng-click="vm.printDiv('printableIzq');"
+                                            <button ng-click="vm.printDiv('printableIzq', vm.foundProducto, 'izquierda20x30', true);"
                                                     style='margin-top: 10%;' flex
                                                     class="btn btn-info">Izquierda</button>
                                             <!-- BOTON 20 X 30  -->
-                                            <button ng-click="vm.printDiv('printableDer');"
+                                            <button ng-click="vm.printDiv('printableDer', vm.foundProducto, 'derecha20x30', true);"
                                                     style='margin-top: 10%;' flex
                                                     class="btn btn-info">Derecha</button>
                                         </div>
@@ -247,15 +247,15 @@
                                                 Imprimir 34mm x 38mm
                                             </p>
                                             <!-- BOTON  34 X 38 -->
-                                            <button ng-click="vm.printDiv('printable2');"
+                                            <button ng-click="vm.printDiv('printable2', vm.foundProducto, 'doble34x38', false);"
                                                     style='margin-top: 10%;' flex
                                                     class="btn btn-info">Doble</button>
                                             <!-- BOTON  34 X 38 -->
-                                            <button ng-click="vm.printDiv('printable2Izq');"
+                                            <button ng-click="vm.printDiv('printable2Izq', vm.foundProducto, 'izquierda34x38', false);"
                                                     style='margin-top: 10%;' flex
                                                     class="btn btn-info">Izquierda</button>
                                             <!-- BOTON  34 X 38 -->
-                                            <button ng-click="vm.printDiv('printable2Der');"
+                                            <button ng-click="vm.printDiv('printable2Der', vm.foundProducto, 'derecha34x38', false);"
                                                     style='margin-top: 10%;' flex
                                                     class="btn btn-info">Derecha</button>
                                         </div>
