@@ -1075,4 +1075,21 @@ angular.module('tierraDeColoresApp').controller('ModalController', function (
         });
     };
 
+    $scope.buscarSerialRegalo = function (serial) {
+        $scope.facturaSerial = "";
+        $regalo = facturaService.regalo(serial);
+        $regalo.then(function (datos) {
+            if (datos.status === 200) {
+                $scope.facturaSerial = datos.data;
+            }else{
+                toaster.pop({
+                    type: 'error',
+                    title: "Op's!",
+                    body: "No se encontraron resultados.",
+                    showCloseButton: false
+                });
+            }
+        });
+    };
+
 });
