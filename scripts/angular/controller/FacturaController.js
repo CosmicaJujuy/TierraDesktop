@@ -21,7 +21,8 @@
             "usuarioModificacion": null,
             "total": null,
             "numeracion": null,
-            "idSucursal": null
+            "idSucursal": null,
+            "regalo": null
         };
         vm.cargarMetodo = {
             montoPago: "",
@@ -60,6 +61,7 @@
         vm.agregarFactura = agregarFactura;
         vm.agregarMetodoPago = agregarMetodoPago;
         vm.buscarCodigoBarra = buscarCodigoBarra;
+        vm.buscarRegalo = buscarRegalo;
         vm.busquedaPlanByTarjeta = busquedaPlanByTarjeta;
         vm.busquedaTarjeta = busquedaTarjeta;
         vm.cancelarFactura = cancelarFactura;
@@ -263,6 +265,17 @@
                             });
                         }
                     });
+        }
+        
+        function buscarRegalo (){
+            ngDialog.open({
+                template: 'views/factura/modal-buscar-regalo.html',
+                className: 'ngdialog-theme-lg',
+                showClose: false,
+                controller: 'ModalController',
+                closeByDocument: false,
+                closeByEscape: true
+            });
         }
 
         function busquedaPlanByTarjeta() {
