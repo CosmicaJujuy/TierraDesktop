@@ -42,7 +42,7 @@
         this.connection = function () {
             var datosRecu = null;
             var deferred = $q.defer();
-            var uri = 'http://localhost:8085/HasarPrinterAPI-0.5/fiscal/connection';
+            var uri = 'http://localhost:8888/HasarPrinterAPI-0.5/fiscal/connection';
             var token = cookieService.get('ptk');
             token.then(function (data) {
                 $http({
@@ -88,7 +88,7 @@
             });
             return deferred.promise;
         };
-        
+
         this.factura_b = function (listaDetalles) {
             var datosRecu = null;
             var deferred = $q.defer();
@@ -139,10 +139,38 @@
             return deferred.promise;
         };
 
+        this.regalo = function (listaDetalles, serialRegalo) {
+            var datosRecu = null;
+            var deferred = $q.defer();
+            var uri = 'http://localhost:8888/HasarPrinterAPI-0.5/fiscal/regalo';
+            var token = cookieService.get('ptk');
+            token.then(function (data) {
+                $http({
+                    url: uri,
+                    method: 'post',
+                    data: angular.toJson(listaDetalles),
+                    params: {
+                        serial: serialRegalo
+                    },
+                    headers: {
+                        'Authorization': 'Bearer ' + data,
+                        'Content-type': 'application/json'
+                    }
+                }).then(function successCallback(response) {
+                    datosRecu = response;
+                    deferred.resolve(datosRecu);
+                }, function errorCallback(response) {
+                    datosRecu = response;
+                    deferred.resolve(datosRecu);
+                });
+            });
+            return deferred.promise;
+        };
+
         this.comprobanteZ = function () {
             var datosRecu = null;
             var deferred = $q.defer();
-            var uri = 'http://localhost:8085/HasarPrinterAPI-0.5/fiscal/comprobante/Z';
+            var uri = 'http://localhost:8888/HasarPrinterAPI-0.5/fiscal/comprobante/Z';
             var token = cookieService.get('ptk');
             token.then(function (data) {
                 $http({
