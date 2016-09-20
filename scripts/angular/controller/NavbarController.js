@@ -13,6 +13,7 @@
         var window = electron.remote.getCurrentWindow();
         var session = require('electron').remote.session;
         var ses = session.fromPartition('persist:name');
+
         vm.changeSettings = function (ev) {
             if ($state.current.name === 'login' || $state.current.name === 'loading') {
                 $scope.modal = 'views/modal-login-settings.html';
@@ -42,14 +43,16 @@
                 ];
                 $scope.userPalette = config.get('Color');
                 $scope.url = url;
+                $scope.printer = config.get('printer');
                 $scope.confirm = true;
                 $scope.colorOculto = true;
                 $scope.closeDialog = function () {
                     $mdDialog.hide();
                 };
-                $scope.updateURL = function (newUrl) {
+                $scope.updateSettings = function (newUrl, printer) {
                     var data = {BaseUrl: newUrl};
                     localStorageService.set('BaseURL', data);
+                    config.set('printer', printer);
                     if (url) {
                         $mdDialog.hide();
                         toaster.pop({
@@ -97,6 +100,9 @@
                             showCloseButton: false
                         });
                         return $timeout(function timer() {
+                            ses.clearStorageData([], function (data) {
+                                console.log("Cookies limpiadas: ", data);
+                            });
                             window.close();
                         }, 3000);
                     });
