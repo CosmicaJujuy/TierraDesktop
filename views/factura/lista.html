@@ -29,80 +29,41 @@
                         </div>                    
                         <div layout="column" flex style="margin-bottom: 10px;">
                             <label flex>Facturas</label>
-                            <div layout="row" flex>
-                                <label flex="10">Hoy</label>
-                                <div flex>
-                                    <div ng-if="vm.metrics.totalFacturasHoy === null">
-                                        {{0|currency}}
-                                    </div>
-                                    <div ng-if="vm.metrics.totalFacturasHoy !== null">
-                                        {{vm.metrics.totalFacturasHoy|currency}}
-                                    </div>                                    
+                            <div flex>
+                                <div ng-if="vm.metrics.totalFacturasHoy === null">
+                                    {{0|currency}}
                                 </div>
-                                <label flex="10">Mes</label>
-                                <div flex>
-                                    <div ng-if="vm.metrics.totalFacturasMensual === null">
-                                        {{0|currency}}
-                                    </div>
-                                    <div ng-if="vm.metrics.totalFacturasMensual !== null">
-                                        {{vm.metrics.totalFacturasMensual|currency}}
-                                    </div>
+                                <div ng-if="vm.metrics.totalFacturasHoy !== null">
+                                    {{vm.metrics.totalFacturasHoy|currency}}
                                 </div>
                             </div>                            
                         </div>
                         <div layout="column" flex style="margin-bottom: 10px;">
                             <label flex>Reservas</label>
-                            <div layout="row" flex>
-                                <label flex="10">Hoy</label>
-                                <div flex>
-                                    <div ng-if="vm.metrics.totalReservasHoy === null">
-                                        {{0|currency}}
-                                    </div>
-                                    <div ng-if="vm.metrics.totalReservasHoy !== null">
-                                        {{vm.metrics.totalReservasHoy|currency}}
-                                    </div>
+                            <div flex>                                
+                                <div ng-if="vm.metrics.totalReservasHoy === null">
+                                    {{0|currency}}
                                 </div>
-                                <label flex="10">Mes</label>
-                                <div flex>
-                                    <div ng-if="vm.metrics.totalReservasMensual === null">
-                                        {{0|currency}}
-                                    </div>
-                                    <div ng-if="vm.metrics.totalReservasMensual !== null">
-                                        {{vm.metrics.totalReservasMensual|currency}}
-                                    </div>
-                                </div>
+                                <div ng-if="vm.metrics.totalReservasHoy !== null">
+                                    {{vm.metrics.totalReservasHoy|currency}}
+                                </div>                                
                             </div>
                         </div>                  
                         <div layout="column" flex style="margin-bottom: 10px;">
                             <label flex>Efectivo</label>
-                            <div layout="row" flex>
-                                <label flex="10">Hoy</label>
-                                <div flex>
-                                    <div ng-if="vm.metrics.efectivoHoy === null">
-                                        {{0|currency}}
-                                    </div>
-                                    <div ng-if="vm.metrics.efectivoHoy !== null">
-                                        {{vm.metrics.efectivoHoy|currency}}
-                                    </div>
+                            <div flex>                                
+                                <div ng-if="vm.metrics.efectivoHoy === null">
+                                    {{0|currency}}
                                 </div>
-                                <label flex="10">Mes</label>
-                                <div flex>
-                                    <div ng-if="vm.metrics.efectivoMensual === null">
-                                        {{0|currency}}
-                                    </div>
-                                    <div ng-if="vm.metrics.efectivoMensual !== null">
-                                        {{vm.metrics.efectivoMensual|currency}}
-                                    </div>
-                                </div>
+                                <div ng-if="vm.metrics.efectivoHoy !== null">
+                                    {{vm.metrics.efectivoHoy|currency}}
+                                </div>                                
                             </div>  
                         </div>                  
                         <div layout="column" flex style="margin-bottom: 10px;">
                             <label flex>Impresas</label>
-                            <div layout="row" flex>
-                                <label flex="10">Hoy</label>
-                                <div flex>{{vm.metrics.impresasHoy}}</div>
-                                <label flex="10">Mes</label>
-                                <div flex>{{vm.metrics.impresasMensual}}</div>
+                            <div flex>                                
+                                {{vm.metrics.impresasHoy}}                                
                             </div>  
                         </div>                  
                         <div layout="column" flex class="padd">
@@ -124,7 +85,6 @@
                                 </md-tooltip>
                                 Nueva Reserva
                             </button>
-
                             <div  ng-controller="FiscalController as fsCtrl" data-ng-init="fsCtrl.accesoFiscal()">
                                 <button class="btn btn-block btn-primary"
                                         style="margin-top: 8px; margin-bottom: 8px;"
@@ -135,6 +95,15 @@
                                     Comprobante Z
                                 </button>
                             </div>
+                            <button 
+                                style="margin-top: 8px; margin-bottom: 8px;"
+                                ng-click="vm.buscarRegalo()"
+                                class="btn btn-block btn-info">
+                                <md-tooltip md-direction="top" md-theme="default">
+                                    Buscar factura de ticket regalo
+                                </md-tooltip>
+                                Buscar regalo
+                            </button>
                         </div>
                     </form>
                 </div>
@@ -166,7 +135,8 @@
                                             <th style="text-align: center;">Fecha</th>
                                             <th style="text-align: center;">Estado</th>
                                             <th style="text-align: center; font-size: smaller;">Vendedor</th>
-                                            <th style="text-align: center;">N°</th>
+                                            <th style="text-align: center;">Factura</th>
+                                            <th style="text-align: center;">Regalo</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -217,6 +187,10 @@
                                             </td>
                                             <td style="text-align: center;">{{factura.numeracion}}
                                                 <div ng-if="factura.numeracion === null">S/N</div>
+                                            </td>
+                                            <td style="text-align: center;">
+                                                {{factura.regalo}}
+                                                <div ng-if="factura.regalo === null">S/N</div>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -236,7 +210,8 @@
                                             <th style="text-align: center;">Fecha</th>
                                             <th style="text-align: center;">Estado</th>
                                             <th style="text-align: center; font-size: smaller;">Vendedor</th>
-                                            <th style="text-align: center;">N°</th>
+                                            <th style="text-align: center;">Factura</th>
+                                            <th style="text-align: center;">Regalo</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -285,8 +260,13 @@
                                             <td style="text-align: center; font-size: smaller;">{{factura.idVendedor.nombre}} {{factura.idVendedor.apellido}}
                                                 <div ng-if="factura.idVendedor === null"> ~ </div>
                                             </td>
-                                            <td style="text-align: center;">{{factura.numeracion}}
+                                            <td style="text-align: center;">
+                                                {{factura.numeracion}}
                                                 <div ng-if="factura.numeracion === null">S/N</div>
+                                            </td>
+                                            <td style="text-align: center;">
+                                                {{factura.regalo}}
+                                                <div ng-if="factura.regalo === null">S/N</div>
                                             </td>
                                         </tr>
                                     </tbody>
