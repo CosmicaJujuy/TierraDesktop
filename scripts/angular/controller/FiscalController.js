@@ -14,9 +14,11 @@
         /*METODOS*/
         vm.accesoFiscal = accesoFiscal;
         vm.confirmarImpresion = confirmarImpresion;
+        vm.confirmarImpresionRegalo = confirmarImpresionRegalo;
         vm.finalizarComprobanteZ = finalizarComprobanteZ;
         vm.imprimir = imprimir;
         vm.imprimirComprobanteZ = imprimirComprobanteZ;
+        vm.imprimirTicketRegalo = imprimirTicketRegalo;
         vm.listaVendedores = listaVendedores;
         vm.optImprimir = optImprimir;
 
@@ -53,6 +55,40 @@
                     vendedorFiscal: vendedorFiscal
                 }
             });
+        }
+
+        function confirmarImpresionRegalo() {
+            var serialRegalo = Math.floor((Math.random() * 99999) + 1000);
+            facturaService
+                    .getDetalleFacturaList($stateParams.idFactura)
+                    .then(function (datos) {
+                        fiscalService
+                                .regalo(datos.data, serialRegalo)
+                                .then(function (datos) {
+                                    console.log(datos);
+                                    if (datos.status === 200) {
+                                        facturaService
+                                                .searchById($stateParams.idFactura)
+                                                .then(function (datos) {
+                                                    datos.data.regalo = serialRegalo;
+                                                    facturaService
+                                                            .update(datos.data)
+                                                            .then(function (datos) {
+                                                                if (datos.status === 200) {
+                                                                    $rootScope.factura.regalo = serialRegalo;
+                                                                    ngDialog.closeAll();
+                                                                    toaster.pop({
+                                                                        type: 'success',
+                                                                        title: 'Exito',
+                                                                        body: 'Comprobante de regalo impreso.',
+                                                                        showCloseButton: false
+                                                                    });
+                                                                }
+                                                            });
+                                                });
+                                    }
+                                });
+                    });
         }
 
         function finalizarComprobanteZ() {
@@ -143,6 +179,17 @@
             ngDialog.open({
                 template: 'views/factura/modal-comprobante-z.html',
                 className: 'ngdialog-theme-advertencia',
+                showClose: false,
+                controller: 'FiscalController as vm',
+                closeByDocument: false,
+                closeByEscape: true
+            });
+        }
+
+        function imprimirTicketRegalo() {
+            ngDialog.open({
+                template: 'views/factura/fiscal/modal-ticket-regalo.html',
+                className: 'ngdialog-theme-sm',
                 showClose: false,
                 controller: 'FiscalController as vm',
                 closeByDocument: false,
