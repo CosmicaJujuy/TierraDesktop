@@ -109,18 +109,18 @@
 }
 
 .ngdialog.ngdialog-theme-flat .ngdialog-overlay {
-    background: rgba(255, 255, 255, 0.4);
+    //background: rgba(255, 255, 255, 0.4);
 }
 .ngdialog.ngdialog-theme-advertencia .ngdialog-overlay {
-    background: rgba(255, 255, 255, 0.4);
+    //background: rgba(255, 255, 255, 0.4);
 }
 /*LARGE*/
 .ngdialog.ngdialog-theme-lg .ngdialog-overlay {
-    background: rgba(255, 255, 255, 0.4);
+    /*background: rgba(255, 255, 255, 0.4);*/
 }
 /*SMALL*/
 .ngdialog.ngdialog-theme-sm .ngdialog-overlay {
-    background: rgba(255, 255, 255, 0.4);
+    /*background: rgba(255, 255, 255, 0.4);*/
 }
 
 .ngdialog.ngdialog-theme-flat.ngdialog-closing .ngdialog-content {
@@ -147,7 +147,7 @@
     animation: ngdialog-flipin-horizontal .5s;
     background: #fff;
     color: #444;
-    border: 2px solid purple;
+    /*border: 2px solid purple;*/
     font-family: "Helvetica Neue",sans-serif;
     line-height: 1.5em;
     margin: 0 auto;
@@ -166,7 +166,7 @@
     animation: ngdialog-flipin-horizontal .5s;
     background: #fff;
     color: #444;
-    border: 2px solid purple;
+    /*border: 2px solid purple;*/
     font-family: "Helvetica Neue",sans-serif;
     line-height: 1.5em;
     margin: 0 auto;
@@ -185,7 +185,7 @@
     animation: ngdialog-flipin-horizontal .5s;
     background: #fff;
     color: #444;
-    border: 2px solid purple;
+    /*border: 2px solid purple;*/
     font-family: "Helvetica Neue",sans-serif;
     line-height: 1.5em;
     margin: 0 auto;
@@ -204,7 +204,7 @@
     animation: ngdialog-flipin-horizontal .5s;
     background: #fff;
     color: #444;
-    border: 2px solid purple;
+    /*border: 2px solid purple;*/
     font-family: "Helvetica Neue",sans-serif;
     line-height: 1.5em;
     margin: 0 auto;

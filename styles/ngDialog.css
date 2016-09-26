@@ -68,7 +68,8 @@
 
 .ngdialog-overlay {
     position: fixed;
-    background: rgba(74, 11, 144, 0.5) !important;
+    /*background: rgba(74, 11, 144, 0.5) !important;*/
+    background-color: rgba(33,33,33,0.5);
     top: 0;
     right: 0;
     bottom: 0;
