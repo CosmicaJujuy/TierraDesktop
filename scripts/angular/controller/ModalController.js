@@ -606,7 +606,7 @@ angular.module('tierraDeColoresApp').controller('ModalController', function (
         $approve = transferenciaService.approve($stateParams.idTransferencia);
         $approve.then(function (datos) {
             ngDialog.closeAll();
-            if (datos.status === 200) {
+            if (datos.status === 200) {                
                 $rootScope.$broadcast('reloadTransferenciaDatos', {});
                 toaster.pop({
                     type: 'success',
@@ -614,6 +614,7 @@ angular.module('tierraDeColoresApp').controller('ModalController', function (
                     body: datos.data.msg,
                     showCloseButton: false
                 });
+                $state.go('transferencias');
             } else {
                 toaster.pop({
                     type: 'warning',
