@@ -34,6 +34,7 @@
                 var Config = require('electron-config');
                 var config = new Config();
                 $scope.colores = [
+                    'verde', 'celeste', 'dorado', 'naranja', 'miel',
                     'red', 'pink', 'purple',
                     'deep-purple', 'indigo', 'blue',
                     'light-blue', 'cyan', 'teal',
