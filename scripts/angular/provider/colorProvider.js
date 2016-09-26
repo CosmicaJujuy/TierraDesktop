@@ -7,11 +7,15 @@
     colorConfProvider.$inject = [];
 
     function colorConfProvider() {
-
+        
         var palette = {
-            primaryPalette: 'blue',
-            warnPalette: 'red',
-            accentPalette: 'yellow',
+            primaryModal: 'verde',
+            warnModal: 'miel',
+            accentModal: 'celeste',
+            backgroundModal: 'grey',
+            primaryPalette: 'celeste',
+            warnPalette: 'naranja',
+            accentPalette: 'dorado',
             backgroundPalette: 'grey',
             dark: false
         };
