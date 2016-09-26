@@ -1,34 +1,37 @@
 <!DOCTYPE html>
-<div ng-cloak style="width: 100%;" onmousedown="return false">
+<div ng-cloak 
+     md-theme="header"
+     style="width: 100%;"
+     onmousedown="return false">
     <md-toolbar class="md-menu-toolbar">
         <div layout="row" ng-controller="NavbarController as navbar">
             <center ng-bind="title" ng-cloak class="title-page">Titulo</center>
             <button class="settingbtn" ng-click="navbar.changeSettings($event)">
-                <md-tooltip md-direction="bottom" md-theme="default">
+                <md-tooltip md-direction="bottom" >
                     Ajustes
                 </md-tooltip>
                 <md-icon class="material-icons">&#xE8B8;</md-icon>
             </button>
             <button class="back" ng-click="navbar.goBack()">
-                <md-tooltip md-direction="bottom" md-theme="default">
+                <md-tooltip md-direction="bottom" >
                     Atras
                 </md-tooltip>
                 <md-icon class="material-icons">&#xE166;</md-icon>
             </button>
             <button class="update" ng-click="navbar.reloadPage()">
-                <md-tooltip md-direction="bottom" md-theme="default">
+                <md-tooltip md-direction="bottom" >
                     Recargar aplicación
                 </md-tooltip>
                 <md-icon class="material-icons">&#xE5D5;</md-icon>
             </button>
             <button class="homebtn" ui-sref="home">
-                <md-tooltip md-direction="bottom" md-theme="default">
+                <md-tooltip md-direction="bottom" >
                     Inicio
                 </md-tooltip>
                 <md-icon class="material-icons">&#xE88A;</md-icon>
             </button>
             <button class="quit" ng-click="navbar.logoutApp()" id="quit">
-                <md-tooltip md-direction="bottom" md-theme="default">
+                <md-tooltip md-direction="bottom" >
                     Cerrar sesión y salir
                 </md-tooltip>
                 <md-icon class="material-icons">&#xE14C;</md-icon>
@@ -139,103 +142,3 @@
     </md-toolbar>
 </div>
 <toaster-container toaster-options="{'time-out': 3000, 'close-button':true, 'animation-class': 'toast-top-center'}"></toaster-container>
-<style>
-    .title-page{
-        top: 5px;
-        font-family: inherit;
-        color: white; 
-        opacity: 0.7;
-        font-size: large;
-        position: absolute;
-        width: 100%;
-        transition: all linear 0.5s;
-    }
-    a.md-button.md-default-theme:not([disabled]):hover, a.md-button:not([disabled]):hover, .md-button.md-default-theme:not([disabled]):hover, .md-button:not([disabled]):hover {
-        background-color: rgba(40, 53, 147, 0.35);
-    }
-    a:focus, a:hover {
-        color: rgb(255,128,171);
-    }
-
-    md-select-menu.md-docs-dark-theme md-option:focus:not([disabled]):not([selected]) {
-        background: rgb(238,238,238);
-        color: black;
-    }
-
-    .lighter{color:white!important;}
-    .lighter:hover{
-        font-weight: bold;
-        color: white !important;
-    }
-
-
-    .menu-content{
-        background-color: rgba(132, 0, 214, 0.73);
-        color: white;        
-    }
-    md-menu-item>.md-button {
-        font-weight: bolder;
-    }
-    md-icon.md-default-theme, md-icon{
-        color: rgb(250,250,250);
-    }
-    md-menu-bar.md-default-theme md-menu.md-open > button,
-    md-menu-bar md-menu.md-open > button, 
-    md-menu-bar.md-default-theme md-menu > button:focus,
-    md-menu-bar md-menu > button:focus {
-        background: rgba(63, 81, 181, 0.53);
-    }
-    a.md-button.md-default-theme:not([disabled]):hover,
-    a.md-button:not([disabled]):hover, 
-    .md-button.md-default-theme:not([disabled]):hover, 
-    .md-button:not([disabled]):hover {
-        background-color: rgba(63, 81, 181, 0.53);
-        color: rgb(255,128,171);
-    }
-    md-toolbar.md-default-theme.md-menu-toolbar, md-toolbar.md-menu-toolbar {
-        /*background-color: rgb(66,66,66);*/
-        background-color: rgba(132, 0, 214, 0.53);
-        /*color: rgb(240,98,146);*/
-        color: rgba(255,255,255,0.87);
-    }
-    .quit{
-        background-color: transparent;
-        border-color: transparent;
-        color: black;
-        top: 0px;
-        right: 0;
-        position: absolute;
-    }
-    .settingbtn{
-        background-color: transparent;
-        border-color: transparent;
-        color: black;
-        top: 0px;
-        right: 30px;
-        position: absolute;
-    }
-    .homebtn{
-        background-color: transparent;
-        border-color: transparent;
-        color: black;
-        top: 0px;
-        right: 60px;
-        position: absolute;
-    }
-    .update{
-        background-color: transparent;
-        border-color: transparent;
-        color: black;
-        top: 0px;
-        right: 90px;
-        position: absolute;
-    }
-    .back{
-        background-color: transparent;
-        border-color: transparent;
-        color: black;
-        top: 0px;
-        right: 120px;
-        position: absolute;
-    }
-</style>
