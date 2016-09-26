@@ -37,13 +37,6 @@
         $mdIconProvider
                 .iconSet('social', 'img/icons/sets/social-icons.svg', 24)
                 .defaultIconSet('styles/icons/sets/core-icons.svg', 24);
-        $mdThemingProvider.theme('docs-dark')
-                .primaryPalette(colorConfProvider.colorPalette().primaryPalette)
-                .warnPalette(colorConfProvider.colorPalette().warnPalette)
-                .accentPalette(colorConfProvider.colorPalette().accentPalette)
-                .backgroundPalette(colorConfProvider.colorPalette().backgroundPalette)
-                .dark(colorConfProvider.colorPalette().dark);
-
 
         function auth($http, $state, $timeout, cookieService, BaseURL) {
             var uri = BaseURL + 'usuarios/logged';
@@ -397,7 +390,7 @@
                             controller: null
                         },
                         'body': {
-                            templateUrl: "views/producto/busqueda_Producto.html",
+                            templateUrl: "views/producto/busqueda_producto.html",
                             controller: 'ProductoController as vm'
                         }
                     }
