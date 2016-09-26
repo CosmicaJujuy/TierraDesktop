@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<div class="ngdialog-message ngdialog-advertencia" md-theme="docs-dark">
+<div class="ngdialog-message ngdialog-advertencia" md-theme="modal">
     <md-toolbar class="md-accent">
         <div class="md-toolbar-tools">
             <h3 class="modal-title" style="width: 100%; text-align: center;">FINALIZAR CARGA</h3>
@@ -16,8 +16,12 @@
                         <p style="font-size: small;">Una vez finalizada esta acción no podras deshacer los cambios.</p>
                     </div>
                     <div flex class="md-padding">
-                        <button class="btn btn-md btn-success" style="width: 50px;" ng-click="finalizarCargaFactura()">Si</button>
-                        <button class="btn btn-md btn-danger" style="width: 50px;" ng-click="closeThisDialog(0)">No</button>
+                        <button class="btn btn-md btn-success"
+                                style="width: 50px;"
+                                ng-click="vm.finalizarCargaFactura()">Si</button>
+                        <button class="btn btn-md btn-danger" 
+                                style="width: 50px;"
+                                ng-click="closeThisDialog(0)">No</button>
                     </div>
                 </form>
             </md-whiteframe>

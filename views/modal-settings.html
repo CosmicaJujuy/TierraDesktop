@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<div class="ngdialog-message ngdialog-advertencia" md-theme="docs-dark" style="min-height: 590px; min-width: 500px;">
+<div class="ngdialog-message ngdialog-advertencia" md-theme="modal" style="min-height: 590px; min-width: 500px;">
     <md-toolbar class="md-accent">
         <div class="md-toolbar-tools">
             <h3 class="modal-title" style="width: 100%; text-align: center;">AJUSTES</h3>
@@ -12,11 +12,8 @@
                  md-center-tabs="false"
                  md-selected="tabs">
             <md-tab label="Color">                
-                <md-content class="md-padding" flex>
-                    <p flex style="text-align: center; font-weight: bold; font-size: small;">
-                        Configura el color de la aplicación desde aquí
-                    </p>
-                    <form name="colorProvider" style="margin-top: 10px;">
+                <md-content class="md-padding" flex style="padding-bottom: 0px; ">
+                    <form name="colorProvider">                       
                         <div flex layout="row">
                             <md-input-container class="md-block" flex>
                                 <label>Primario</label>
@@ -46,19 +43,47 @@
                             </md-input-container>
                         </div>
                         <div flex layout="row">
+                            <md-input-container class="md-block" flex>
+                                <label>Primario Modal</label>
+                                <md-select ng-model="userPalette.primaryModal" placeholder="Elige un color" required name="color">
+                                    <md-option value="{{color}}" ng-repeat="color in colores">{{color|capitalize}}</md-option>
+                                </md-select>
+                            </md-input-container>
+                            <md-input-container class="md-block" flex>
+                                <label>Enfasis Modal</label>
+                                <md-select ng-model="userPalette.accentModal" placeholder="Elige un color" required name="color">
+                                    <md-option value="{{color}}" ng-repeat="color in colores">{{color|capitalize}}</md-option>
+                                </md-select>
+                            </md-input-container>
+                        </div>
+                        <div flex layout="row">
+                            <md-input-container class="md-block" flex>
+                                <label>Advertencia Modal</label>
+                                <md-select ng-model="userPalette.warnModal" placeholder="Elige un color" required name="color">
+                                    <md-option value="{{color}}" ng-repeat="color in colores">{{color|capitalize}}</md-option>
+                                </md-select>
+                            </md-input-container>
+                            <md-input-container class="md-block" flex>
+                                <label>Fondo Modal</label>
+                                <md-select ng-model="userPalette.backgroundModal" placeholder="Elige un color" required name="color">
+                                    <md-option value="{{color}}" ng-repeat="color in colores">{{color|capitalize}}</md-option>
+                                </md-select>
+                            </md-input-container>
+                        </div>
+                        <div flex layout="row">
                             <label flex style="margin-top: 21px; margin-bottom: 16px; text-align: right; margin-right: 10px;">Contexto</label>
                             <md-switch ng-model="userPalette.dark" flex aria-label="Switch" class="md-primary">
                                 <div ng-if="userPalette.dark === false">Luminoso</div>
                                 <div ng-if="userPalette.dark === true">Oscuro</div>
                             </md-switch>
-                        </div>
+                        </div>                  
                         <div flex style="text-align: center;">
-                            <md-button ng-click="colorOculto = false" type="button" ng-show="colorOculto" class="md-raised">Cambiar</md-button>
-                            <div ng-hide="colorOculto">
-                                <p>¿Estas seguro de que quieres continuar?</p>
-                                <button ng-click="updateColor(userPalette)" style="width: 50px;" class="btn btn-success">Si</button>
-                                <button ng-click="colorOculto = true" style="width: 50px;" class="btn btn-danger">No</button>
-                            </div>
+                            <md-button 
+                                ng-click="updateColor(userPalette)"
+                                type="button"
+                                ng-show="colorOculto" class="md-raised">
+                                Cambiar
+                            </md-button>
                         </div>
                     </form>
                 </md-content>
