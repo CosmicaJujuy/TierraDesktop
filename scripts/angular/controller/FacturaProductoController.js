@@ -103,7 +103,7 @@
                 template: 'views/factura_producto/modal-confirmar-finalizar-carga-factura.html',
                 className: 'ngdialog-theme-advertencia',
                 showClose: false,
-                controller: 'FacturaProductoController',
+                controller: 'FacturaProductoController as vm',
                 closeByDocument: false,
                 closeByEscape: true
             });
