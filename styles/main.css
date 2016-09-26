@@ -1,11 +1,18 @@
 @font-face{
-    font-family: kaufmann-bold;
-    font-style: normal;
-    font-weight: 400;
+    font-family: PabloLet;
     src: local('Pacifico Regular'), local('Pacifico-Regular'), url(https://fonts.gstatic.com/s/pacifico/v7/Q_Z9mv4hySLTMoMjnk_rCfesZW2xOQ-xsNqO47m55DA.woff2) format('woff2');
 }
+@font-face {
+    font-family: "Pablo LET";
+    src: url("http://db.onlinewebfonts.com/t/53540985ae811f0cb4bc0c198e10de5b.eot");
+    src: url("http://db.onlinewebfonts.com/t/53540985ae811f0cb4bc0c198e10de5b.eot?#iefix") format("embedded-opentype"),
+        url("http://db.onlinewebfonts.com/t/53540985ae811f0cb4bc0c198e10de5b.woff2") format("woff2"),
+        url("http://db.onlinewebfonts.com/t/53540985ae811f0cb4bc0c198e10de5b.woff") format("woff"),
+        url("http://db.onlinewebfonts.com/t/53540985ae811f0cb4bc0c198e10de5b.ttf") format("truetype"),
+        url("http://db.onlinewebfonts.com/t/53540985ae811f0cb4bc0c198e10de5b.svg#Pablo LET") format("svg");
+}
 #tituloInicio{
-    font-family: kaufmann-bold;
+    font-family: "Pablo LET";
     font-size: 50pt;
     text-shadow: 2px 0 0 #fff;
 }
@@ -23,10 +30,10 @@
     border-radius: 50%;
 }
 #nav-titulo{
-    font-family: kaufmann-bold !important;
-    font-size: 30pt;
-    color: #fb6b8c;
-    text-shadow: 2px 0 0 white;
+    font-family:  "Pablo LET" !important;
+    font-size: 40pt;
+    color: inherit;
+    text-shadow: 2px 0 0 black;
     /*text-shadow: 2px 0 0 #8904B1;*/
     width: 100%;
 }
@@ -113,12 +120,17 @@
     margin-top: 10px;
     margin-bottom: 10px;
 }
-md-backdrop.md-opaque.md-default-theme, md-backdrop.md-opaque {
+md-backdrop.md-opaque.md-header-theme, md-backdrop.md-opaque {
+    //OVERLAY
     /*background-color: rgba(33,33,33,0);*/ 
     background-color: rgba(74, 11, 144, 1);
 }
+md-backdrop.md-opaque.md-modal-theme, md-backdrop.md-opaque {
+    //OVERLAY    
+    /*background-color: rgba(74, 11, 144, 1);*/
+}
 md-dialog.md-transition-in {
-    border: 2px solid purple;
+    /*border: 2px solid purple;*/
 }
 md-tooltip {
     font-size: 10pt;
@@ -147,4 +159,55 @@ md-tooltip {
 }
 .cfp-hotkeys-close{
     border: none;
+}
+/*ESTILOS ENCABEZADO*/
+.title-page{
+    top: 5px;
+    font-family: inherit;
+    color: white;
+    font-size: large;
+    position: absolute;
+    width: 100%;
+    transition: all linear 0.5s;
+}
+md-icon.md-header-theme {
+    color: inherit;
+}
+md-menu-content.md-header-theme md-menu-item md-icon {
+    color: rgba(255,255,255,1);
+}
+.quit{
+    background-color: transparent;
+    border-color: transparent;
+    top: 5px;
+    right: 0;
+    position: absolute;
+}
+.settingbtn{
+    background-color: transparent;
+    border-color: transparent;
+    top: 5px;
+    right: 30px;
+    position: absolute;
+}
+.homebtn{
+    background-color: transparent;
+    border-color: transparent;
+    top: 5px;
+    right: 60px;
+    position: absolute;
+}
+.update{
+    background-color: transparent;
+    border-color: transparent;
+    top: 5px;
+    right: 90px;
+    position: absolute;
+}
+.back{
+    background-color: transparent;
+    border-color: transparent;
+    top: 5px;
+    right: 120px;
+    position: absolute;
 }
