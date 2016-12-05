@@ -86,7 +86,9 @@
                                                 <div ng-message="required">Este campo no puede estar vacio.</div>
                                             </div>
                                         </md-input-container>
-                                        <md-input-container class="md-block md-icon" flex ng-controller="TipoController" data-ng-init="listaTipo()">
+                                        <md-input-container class="md-block md-icon"
+                                                            flex ng-controller="TipoController as tpCtrl"
+                                                            data-ng-init="tpCtrl.listaTipo()">
                                             <label>Tipo de producto</label>
                                             <md-icon class="material-icons">&#xE252;</md-icon>
                                             <md-select ng-model="vm.editCategoria.tipoCategoria"
@@ -118,8 +120,7 @@
                     </md-tab>
                     <md-tab label="Agregar nueva Categoria">
                         <md-content class="md-padding" layout="row">
-                            <div flex="20"></div>
-                            <div flex="60">
+                            <div flex="60" flex-offset="20">
                                 <md-content class="md-padding" flex>
                                     <form name="newCategoria">
                                         <md-input-container class="md-block md-icon" flex>
@@ -140,10 +141,13 @@
                                                 <div ng-message="required">Este campo no puede estar vacio.</div>
                                             </div>
                                         </md-input-container>
-                                        <md-input-container class="md-block md-icon" flex ng-controller="TipoController" data-ng-init="listaTipo()">
+                                        <md-input-container class="md-block md-icon" 
+                                                            flex ng-controller="TipoController as tpCtrl"
+                                                            data-ng-init="tpCtrl.listaTipo()">
                                             <label>Tipo de producto</label>
                                             <md-icon class="material-icons">&#xE252;</md-icon>
                                             <md-select ng-model="vm._categoria.tipoCategoria"
+                                                       placeholder="Seleccione un tipo de producto"
                                                        required name="tipos">                                            
                                                 <md-option ng-value="tipo" 
                                                            ng-repeat="tipo in tipos">{{tipo.nombreTipo}}</md-option>                                            

@@ -2,6 +2,7 @@
 <div ng-controller="UsuarioController as usCtrl"
      data-ng-init="usCtrl.detailUsuario()"
      ng-show="usCtrl.user.username"
+     md-theme="docs-dark"
      layout="row"
      layout-margin
      layout-xs="row">
@@ -11,7 +12,7 @@
          layout-xs="column">
         <div layout="column" ng-cloak
              class="distribucion-panel">
-            <md-toolbar class="md-accent" md-theme="docs-dark">
+            <md-toolbar class="md-warn">
                 <div class="md-toolbar-tools">
                     <h4 class="md-flex" style="width:100%; text-align: center;">
                         <div>{{usCtrl.user.nombre}} {{usCtrl.user.apellido}}</div>
@@ -19,7 +20,7 @@
                     </h4>
                 </div>
             </md-toolbar>
-            <md-content flex layout="row" md-theme="docs-dark">
+            <md-content flex layout="row">
                 <div class="md-padding" flex>
                     <form style="text-align: center;" data-ng-init="vm.metricas()">
                         <div layout="column" flex style="margin-bottom: 0px;">
@@ -116,7 +117,7 @@
          layout-xs="column">
         <div class="distribucion-panel">
             <div ng-cloak>
-                <md-content md-theme="docs-dark" style="min-height: 598px;">
+                <md-content style="min-height: 598px;">
                     <md-tabs md-dynamic-height md-border-bottom
                              md-no-ink-bar="false"
                              md-stretch-tabs="always"

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <div>
     <div class="row">
-        <div style="float: left; text-align: center; font-size: smaller;">
+        <div class="ei">
             <center>
                 <div class="etiqueta">
                     T-N: {{vm.talla}}
@@ -15,7 +15,7 @@
                 </div>
             </center>
         </div>
-        <div style="float: right; text-align: center; font-size: smaller;">
+        <div class="ed">
             <center>
                 <div class="etiqueta">
                     T-N: {{vm.talla}}
@@ -31,3 +31,19 @@
         </div>
     </div>
 </div>
+<style>
+    .ed{
+        margin-right: 10px;
+        margin-top: 15px;
+        float: right;
+        text-align: center;
+        font-size: smaller;
+    }
+    .ei{
+        margin-left: 35px;
+        margin-top: 10px;
+        float: left;
+        text-align: center;
+        font-size: smaller;
+    }
+</style>

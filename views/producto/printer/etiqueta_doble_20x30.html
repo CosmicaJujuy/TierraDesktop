@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <div class="row">
-    <div style="float: left; text-align: center; font-size: smaller;">
+    <div class="ei">
         <div class="etiqueta">T-N: {{vm.talla}}</div>
         <span kendo-barcode
               k-type="'code128'"
               ng-model="vm.codigo"
               style="width: 100px; height: 40px;"></span>
     </div>
-    <div style="float: right; text-align: center; font-size: smaller;">
+    <div class="ed">
         <div class="etiqueta">T-N: {{vm.talla}}</div>
         <span kendo-barcode
               k-type="'code128'"
@@ -15,4 +15,19 @@
               style="width: 100px; height: 40px;"></span>
     </div>
 </div>
-
+<style>
+    .ed{
+        margin-right: 15px;
+        margin-top: 15px;
+        float: right;
+        text-align: center;
+        font-size: smaller;
+    }
+    .ei{
+        margin-left: 35px;
+        margin-top: 15px;
+        float: left;
+        text-align: center;
+        font-size: smaller;
+    }
+</style>

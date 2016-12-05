@@ -13,7 +13,8 @@
             </div>
         </md-toolbar>
         <md-content class="md-padding" style="min-height: 550px;">
-            <form name="newFactura">
+            <form name="newFactura"
+                  ng-controller="ProveedorController as prCtrl">
                 <md-input-container class="md-icon md-block">
                     <label>N° Factura</label>
                     <input type="text"
@@ -31,9 +32,8 @@
                         <div ng-message="required">Este campo no puede estar vacio.</div>
                     </div>
                 </md-input-container>
-                <div style="max-height: 58px !important;"
-                     ng-controller="ProveedorController as prCtrl">
-                    <md-autocomplete flex required
+                
+                    <md-autocomplete flex required                                     
                                      style="margin-top: 0px !important;"
                                      placeholder="Buscar proveedor"
                                      md-input-name="proveedor"
@@ -58,7 +58,7 @@
                             <div ng-message="maxlength">El termino de busqueda es demasiado largo.</div>
                         </div>
                     </md-autocomplete>
-                </div>
+                
                 <md-input-container class="md-icon md-block" flex>
                     <!-- LABEL FECHA-->
                     <label>Fecha</label>
@@ -122,12 +122,6 @@
     md-input-container:not(.md-input-has-value) input:not(:focus)::-webkit-datetime-edit-text,
     md-input-container:not(.md-input-has-value) input:not(:focus)::-webkit-datetime-edit-week-field,
     md-input-container:not(.md-input-has-value) input:not(:focus)::-webkit-datetime-edit-year-field {
-        color: rgb(245, 245, 245);
-    }
-    md-autocomplete[md-floating-label] md-input-container {
-        padding-bottom: 0px!important;
-    }
-    md-autocomplete-wrap.layout-row, md-input-container.ng-scope.md-docs-dark-theme.flex{
-        margin-top: 0px !important;
+        /*color: rgb(245, 245, 245);*/
     }
 </style>

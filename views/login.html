@@ -17,23 +17,45 @@
             </md-tooltip>
             <md-icon class="material-icons">&#xE14C;</md-icon>
         </button>
-        <p class="form-title">Iniciar sesión</p>
-        <form class="login form-class">
-            <input type="text"
-                   class="customPlaceholder"
-                   md-autofocus
-                   ng-model="vm.usuario.username"
-                   placeholder="Usuario" />
-            <input type="password"
-                   class="customPlaceholder"
-                   ng-model="vm.usuario.password"
-                   placeholder="Contraseña" />
-            <input href="javascript:void(0)"
-                   type="submit" style="width: 250px; margin-top: 20px;"
-                   ng-click="vm.iniciarSesion()"
-                   value='ENTRAR'
-                   class="btn btn-success"/>
-        </form>
+        <div class="bg" md-theme="docs-dark">
+            <p class="form-title">Iniciar sesión</p>
+            <form class="login form-class" name="login">
+                <md-input-container flex class="md-block md-icon">
+                    <label>Usuario</label>
+                    <md-icon class="material-icons">&#xE90D;</md-icon>
+                    <input type="text"
+                           required
+                           name="dni"
+                           ng-model="vm.usuario.username"
+                           placeholder="Ingresar nombre de usuario">
+                    <!-- MENSAJES -->
+                    <div ng-messages="login.dni.$error"
+                         ng-if='login.dni.$dirty || login.dni.$touched'>
+                        <div ng-message="required">Este campo no puede estar vacio.</div>
+                    </div>
+                </md-input-container>
+                <md-input-container flex class="md-block md-icon">
+                    <label>Contraseña</label>
+                    <md-icon class="material-icons">&#xE0DA;</md-icon>
+                    <input type="password"
+                           required minlength="8"
+                           name="password"
+                           ng-model="vm.usuario.password"
+                           placeholder="Ingresa contraseña">
+                    <!-- MENSAJES -->
+                    <div ng-messages="login.password.$error"
+                         ng-if='login.password.$dirty || login.password.$touched'>
+                        <div ng-message="required">Este campo no puede estar vacio.</div>
+                        <div ng-message="minlength">Contraseña demasiado corta.</div>
+                    </div>
+                </md-input-container>
+                <input href="javascript:void(0)"
+                       type="submit" style="width: 250px; margin-bottom: 20px;"
+                       ng-click="vm.iniciarSesion()"
+                       value='ENTRAR'
+                       class="btn btn-success"/>
+            </form>
+        </div>
     </div>
 </div>
 <script>
@@ -44,6 +66,14 @@
     });
 </script>
 <style>
+    .bg{
+        margin-top: 40px;
+        border-radius: 25px;
+        background: white;
+        width: 50%;
+        margin-left: 25%;
+        margin-right: 25%;
+    }
     .customPlaceholder::-webkit-input-placeholder {
         color: #717171;
     }
@@ -79,7 +109,7 @@
     p.form-title
     {
         /*font-family: 'Open Sans' , sans-serif;*/
-        font-family: 'Pablo LET';
+        font-family: 'Pablo Std';
         text-shadow: 2px 0 0 #fff;
         font-size: 70px;
         text-align: center;
@@ -101,7 +131,7 @@
 
     form.login input[type="text"], form.login input[type="password"]
     {
-        text-align: center;
+        /*text-align: center;
         width: 100%;
         margin: 0;
         padding: 5px 10px;
@@ -115,7 +145,7 @@
         letter-spacing: 1px;
         margin-bottom: 5px;
         color: #000;
-        outline: 0;
+        outline: 0;*/
     }
 
     form.login input[type="submit"]
@@ -124,7 +154,6 @@
         font-size: 14px;
         text-transform: uppercase;
         font-weight: 500;
-        margin-top: 16px;
         outline: 0;
         cursor: pointer;
         letter-spacing: 1px;
@@ -132,7 +161,7 @@
 
     form.login input[type="submit"]:hover
     {
-        transition: background-color 0.5s ease;
+        /*transition: background-color 0.5s ease;*/
     }
 
     form.login .remember-forgot
@@ -149,9 +178,9 @@
     }
     form.login label, form.login a
     {
-        font-size: 12px;
+        /*font-size: 12px;
         font-weight: 400;
-        color: #FFFFFF;
+        color: #FFFFFF;*/
     }
 
     form.login a

@@ -151,6 +151,7 @@
                                         <input type="text"
                                                ng-model="vm._tarjeta.nombreTarjeta" name="nombre" required
                                                minlength="4"
+                                               placeholder="Nombre de la tarjeta"
                                                md-maxlength="30"
                                                maxlength="30"/>
                                         <!-- MENSAJES-->
@@ -165,6 +166,7 @@
                                         <label>Tipo de tarjeta</label>
                                         <md-icon class="material-icons">&#xE252;</md-icon>
                                         <md-select ng-model="vm._tarjeta.medioPago"
+                                                   placeholder="Seleccione un tipo de tarjeta"
                                                    required name="medios">                                            
                                             <md-option ng-value="medio" 
                                                        ng-repeat="medio in medioPagos">{{medio.nombrePago}}</md-option>                                            
@@ -179,8 +181,9 @@
                                         <label>Entidad bancaria</label>
                                         <md-icon class="material-icons">&#xE84F;</md-icon>
                                         <md-select ng-model="vm._tarjeta.entidadBancaria"
+                                                   placeholder="Seleccione un banco"
                                                    required name="entidades">                                            
-                                            <md-option ng-value="entidad" 
+                                            <md-option ng-value="entidad"
                                                        ng-repeat="entidad in entidadBancarias">{{entidad.nombreEntidad}}</md-option>                                            
                                         </md-select>
                                         <!-- MENSAJES-->

@@ -10,6 +10,7 @@
                     <label>Nombre</label>
                     <md-icon class="material-icons">&#xE8A6;</md-icon>
                     <input minlength="4"
+                           tabindex="1"
                            md-maxlength="20"
                            maxlength="25"
                            ng-model="vm.user.nombre"
@@ -28,6 +29,7 @@
                     <md-icon class="material-icons">&#xE0CD;</md-icon>
                     <!-- INPUT TELEFONO-->
                     <input type="tel"
+                           tabindex="6"
                            maxlength="10"
                            md-maxlength="10"
                            placeholder="Telefono"
@@ -47,6 +49,7 @@
                     <md-icon class="material-icons">&#xE8A6;</md-icon>
                     <!-- INPUT APELLIDO-->
                     <input type="text" 
+                           tabindex="2"
                            minlength="4" 
                            md-maxlength="20"
                            maxlength="25"
@@ -66,6 +69,7 @@
                     <md-icon class="material-icons">&#xE0BE;</md-icon>
                     <!-- INPUT EMAIL-->
                     <input type="email"
+                           tabindex="7"
                            ng-minlength="8" 
                            md-maxlength="35"
                            maxlength="40"
@@ -88,6 +92,7 @@
                     <md-icon class="material-icons">&#xE90D;</md-icon>
                     <!-- INPUT DNI-->
                     <input type="text" 
+                           tabindex="3"
                            minlength="4" 
                            md-maxlength="8"
                            maxlength="8"
@@ -106,6 +111,7 @@
                         <md-icon class="material-icons">&#xE7FD;</md-icon>
                         <!-- INPUT EMAIL-->
                         <input type="text"
+                               tabindex="8"
                                ng-minlength="8" 
                                md-maxlength="35"
                                maxlength="40"
@@ -123,6 +129,7 @@
                         <label>Contraseña</label>
                         <md-icon class="material-icons">&#xE0DA;</md-icon>
                         <input type="password"
+                               tabindex="9"
                                md-maxlength="15"
                                maxlenght="15"
                                ng-minlength="8"
@@ -149,6 +156,7 @@
                     <!-- INPUT DOMICILIO-->
                     <input type="text"
                            minlength="8" 
+                           tabindex="4"
                            md-maxlength="25"
                            placeholder="Domicilio"
                            ng-model="vm.user.domicilio" name="domicilio" required/>
@@ -164,6 +172,8 @@
                     <label>Rol</label>
                     <md-icon class="material-icons">&#xE7EF;</md-icon>
                     <md-select ng-model="vm.user.roles"
+                               tabindex="10"
+                               placeholder="Seleccione un rol"
                                required name="rol">                                            
                         <md-option ng-value="rol" 
                                    ng-repeat="rol in roles">{{rol.nombreRol}}</md-option>                                            
@@ -184,6 +194,7 @@
                     <input ng-model="vm.user.fechaNacimiento"
                            name="nacimiento" id="nacimientoDate"
                            min="1950-01-01"
+                           tabindex="5"
                            type="date" placeholder="Fecha de nacimiento"
                            required ng-pattern="/^([0-9]{4})+([-]{1})+([0-9]{2})+([-]{1})+([0-9]{2})$/">
                     <!-- MENSAJES-->
@@ -199,6 +210,8 @@
                     <label>Sucursal</label>
                     <md-icon class="material-icons">&#xE7F1;</md-icon>
                     <md-select ng-model="vm.user.usuarioSucursal"
+                               tabindex="11"
+                               placeholder="Selecciona una sucursal"
                                required name="sucursal">                                            
                         <md-option ng-value="sucursal"
                                    ng-repeat="sucursal in sucursales">{{sucursal.nombreSucursal}}</md-option>                                            
@@ -212,6 +225,7 @@
             </div>
             <!-- BOTON AGREGAR USUARIO-->
             <button class="btn btn-success"
+                    tabindex="12"
                     type="submit" style="float: right; margin-right: 35px; margin-bottom: 15px; margin-top: -5px;"
                     ng-click="vm.nuevoUsuario(vm.user)"
                     ng-disabled="registrarUsuario.$invalid">Registrar</button>

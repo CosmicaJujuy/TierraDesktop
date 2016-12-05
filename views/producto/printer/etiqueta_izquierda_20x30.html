@@ -1,10 +1,19 @@
 <!DOCTYPE html>
 <div class="row">
-    <div style="float: left; text-align: center; font-size: smaller;">
+    <div class="ei">
         <div class="etiqueta">T-N: {{vm.talla}}</div>
         <span kendo-barcode
               k-type="'code128'"
               ng-model="vm.codigo"
               style="width: 100px; height: 40px;"></span>
     </div>
-</div>   
+</div>
+<style>
+    .ei{
+        margin-left: 35px;
+        margin-top: 15px;
+        float: left;
+        text-align: center;
+        font-size: smaller;
+    }
+</style>

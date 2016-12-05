@@ -11,7 +11,7 @@
              class="distribucion-panel"
              ng-show="factura"
              data-ng-init="vm.detailFactura()">
-            <md-toolbar class="md-accent">
+            <md-toolbar class="md-warn">
                 <div class="md-toolbar-tools">
                     <h4 class="md-flex" style="width:100%; text-align: center;">
                         <div>Factura N°{{factura.idFactura}} {{factura.numeracion}}</div>
@@ -19,7 +19,7 @@
                     </h4>
                 </div>
             </md-toolbar>
-            <md-content flex layout="row" md-theme="docs-dark">
+            <md-content flex layout="row">
                 <div class="md-padding" flex>
                     <form style="text-align: center;">
                         <p ng-if="factura.idSucursal === 1" style="font-weight: bolder; font-size: medium; margin-bottom: 0px;">Tierra de colores</p>
@@ -102,7 +102,7 @@
          layout-xs="column" ng-show="factura">
         <div class="distribucion-panel">
             <div ng-cloak>
-                <md-content md-theme="docs-dark" style="min-height: 598px;">
+                <md-content style="min-height: 598px;">
                     <md-tabs md-dynamic-height md-border-bottom
                              md-no-ink-bar="false"
                              md-stretch-tabs="always"
