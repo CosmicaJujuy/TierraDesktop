@@ -8,6 +8,17 @@
 
     function run($rootScope, hotkeys, $state) {
 
+        var sudo = require('sudo-prompt');
+        var options = {
+            name: 'Electron'
+        };
+        var command = "wspooler.exe -p3 -c '9∟Z'";
+        sudo.exec(command, options, function (error, stdout, stderr) {
+            console.log(error, command);
+            console.log(stdout);
+            console.log(stderr);
+        });
+
         var session = require('electron').remote.session;
         var ses = session.fromPartition('persist:name');
         $rootScope.tabs = 0;
