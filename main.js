@@ -1,3 +1,5 @@
+/* global __dirname, process */
+
 const {
     ipcMain,
     Menu,
@@ -24,19 +26,20 @@ function handleSquirrelEvent() {
     const updateDotExe = path.resolve(path.join(rootAtomFolder, 'Update.exe'));
     const exeName = path.basename(process.execPath);
 
-    const spawn = function(command, args) {
+    const spawn = function (command, args) {
         let spawnedProcess, error;
 
         try {
             spawnedProcess = ChildProcess.spawn(command, args, {
                 detached: true
             });
-        } catch (error) {}
+        } catch (error) {
+        }
 
         return spawnedProcess;
     };
 
-    const spawnUpdate = function(args) {
+    const spawnUpdate = function (args) {
         return spawn(updateDotExe, args);
     };
 
@@ -73,7 +76,7 @@ function handleSquirrelEvent() {
             app.quit();
             return true;
     }
-};
+}
 
 //Importing modules to print and manage the app
 
@@ -91,8 +94,8 @@ function createWindow() {
         transparent: false,
         frame: false,
         fullscreen: false,
-        width: 780,
-        height: 350,
+        width: 800,
+        height: 400,
         resizable: false,
         movable: false,
         show: false,
@@ -102,11 +105,11 @@ function createWindow() {
 
     mainWindow.loadURL(`file://${__dirname}/index.html`);
     mainWindow.once('ready-to-show', () => {
-        mainWindow.show()
-    })
-    mainWindow.on('closed', function() {
+        mainWindow.show();
+    });
+    mainWindow.on('closed', function () {
         var windows = BrowserWindow.getAllWindows();
-        windows.forEach(function(value) {
+        windows.forEach(function (value) {
             if (value.getTitle() === 'Busqueda de productos') {
                 value.close();
                 value = null;
@@ -124,40 +127,40 @@ function createWindow() {
     workerWindow.hide();
 }
 app.on('ready', createWindow);
-app.on('window-all-closed', function() {
+app.on('window-all-closed', function () {
     if (process.platform !== 'darwin') {
         app.quit();
     }
 });
 
-app.on('activate', function() {
+app.on('activate', function () {
     if (mainWindow === null) {
         createWindow();
     }
 });
 
-ipcMain.on("printPDF", function(event, content) {
+ipcMain.on("printPDF", function (event, content) {
     workerWindow.webContents.send("printPDF", content);
 });
 
-app.on("open-url", function(event, content) {
+app.on("open-url", function (event, content) {
     event.preventDefault();
 });
 
 /*TRIGGER PRINT FUNCTION, NEED CALIBRATE*/
-ipcMain.on("printer", function(event) {
+ipcMain.on("printer", function (event) {
     workerWindow.webContents.print();
     //    mainWindow.webContents.print();
 });
 
-ipcMain.on("readyToPrintPDF", function(event) {
+ipcMain.on("readyToPrintPDF", function (event) {
     const pdfPath = path.join(os.tmpdir(), 'print.pdf');
     //    workerWindow.webContents.print({silent: true});
-    workerWindow.webContents.printToPDF({}, function(error, data) {
+    workerWindow.webContents.printToPDF({}, function (error, data) {
         if (error) {
             throw error;
         }
-        fs.writeFile(pdfPath, data, function(error) {
+        fs.writeFile(pdfPath, data, function (error) {
             if (error) {
                 throw error;
             }
@@ -169,7 +172,6 @@ ipcMain.on("readyToPrintPDF", function(event) {
 var Config = require('electron-config');
 var config = new Config();
 var printer = config.get('printer');
-console.log(printer);
 if (typeof printer === 'undefined') {
     config.set('printer', true);
 } else {

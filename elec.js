@@ -5,14 +5,14 @@ var options = {
     'platform': 'win32',
     'dir': './',
     'app-copyright': 'Paulo Galdo',
-    'app-version': '2.1.6',
+    'app-version': '2.2.2',
     'asar': true,
     'icon': './app.ico',
     'name': 'TierraDesktop',
     'out': './releases',
     'overwrite': true,
     'prune': true,
-    'version': '1.3.4',
+    'version': '1.4.10',
     'version-string': {
         'CompanyName': 'Paulo Galdo',
         'FileDescription': 'Tierra de colores', /*This is what display windows on task manager, shortcut and process*/

@@ -1,7 +1,7 @@
 {
   "name": "TierraDesktop",
   "productName": "TierraDesktop",
-  "version": "2.2.0",
+  "version": "2.2.5",
   "description": "Aplicacion de escritorio tierra de colores",
   "main": "main.js",
   "scripts": {
@@ -19,14 +19,16 @@
   ],
   "author": "PauloGaldo",
   "license": "CC0-1.0",
-  "devDependencies": {
-    "debug-menu": "^0.4.0",
-    "electron": "1.4.0",
+  "devDependencies": {    
+    "electron": "1.4.10",
     "electron-packager": "^8.0.0",
     "electron-winstaller": "^2.3.4"
   },
   "dependencies": {
+    "debug-menu": "^0.4.0",
     "electron-config": "^0.2.1",
-    "express": "^4.14.0"
+    "electron-sudo": "^4.0.12",
+    "express": "^4.14.0",
+    "sudo-prompt": "^6.2.0"
   }
 }
