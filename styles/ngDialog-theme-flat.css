@@ -109,10 +109,10 @@
 }
 
 .ngdialog.ngdialog-theme-flat .ngdialog-overlay {
-    //background: rgba(255, 255, 255, 0.4);
+    /*background: rgba(255, 255, 255, 0.4);*/
 }
 .ngdialog.ngdialog-theme-advertencia .ngdialog-overlay {
-    //background: rgba(255, 255, 255, 0.4);
+    /*background: rgba(255, 255, 255, 0.4);*/
 }
 /*LARGE*/
 .ngdialog.ngdialog-theme-lg .ngdialog-overlay {
