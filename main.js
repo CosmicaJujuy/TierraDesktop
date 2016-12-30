@@ -172,7 +172,7 @@ ipcMain.on("readyToPrintPDF", function (event) {
 var Config = require('electron-config');
 var config = new Config();
 var printer = config.get('printer');
-if (typeof printer === 'undefined') {
+if (typeof printer === 'undefined' || printer === null) {
     config.set('printer', true);
 } else {
     if (!printer) {
