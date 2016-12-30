@@ -45,7 +45,7 @@
                                 Imprimir
                             </button>
                             <button class="btn btn-block btn-info" flex
-                                    ng-disabled="!(factura.estado === 'CONFIRMADO' && factura.regalo === null && printer === true)"
+                                    ng-disabled="!(factura.estado === 'CONFIRMADO' && factura.regalo === null)"
                                     ng-click="fsCtrl.imprimirTicketRegalo()">
                                 <md-tooltip md-direction="top" md-theme="default">
                                     Imprimir ticket regalo.
