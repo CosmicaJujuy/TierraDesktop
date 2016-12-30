@@ -3,190 +3,146 @@
     angular
             .module('tierraDeColoresApp')
             .service('fiscalService', fiscalService);
-    fiscalService.$inject = ['$q', '$http', 'cookieService', 'BaseURL'];
+    fiscalService.$inject = ['$q', '$http', 'cookieService', 'BaseURL', 'toaster', '$rootScope'];
 
-    function fiscalService($q, $http, cookieService, BaseURL) {
-
+    function fiscalService($q, $http, cookieService, BaseURL, toaster, $rootScope) {
+        const exec = require('child_process').exec;
+        const http = require('http');
+        const fs = require('fs');
+        const path = require('path');
+        var parser = document.createElement('a');
+        parser.href = BaseURL;
         var Auth = {
             'usuario': 'AFIP_SMH/P-441F',
             'password': 'T13RR4$7j15vker4L-L'
         };
 
-        this.printer = function () {
+        this.read = function () {
             var datosRecu = null;
             var deferred = $q.defer();
-            var uri = 'http://localhost:8888/HasarPrinterAPI-0.5/oauth/token';
-            $http({
-                ignoreLoadingBar: true,
-                url: uri,
-                method: 'post',
-                headers: {
-                    'Authorization': 'Basic U1RBVElPTl9TTUgvUC00NDFGOjQwMTNGRFRZMzAyMw==',
-                    'Content-type': 'application/json'
-                },
-                params: {
-                    username: Auth.usuario,
-                    password: Auth.password,
-                    grant_type: 'password'
+            var filePath = path.join(__dirname, 'FILE.ans');
+            fs.readFile(filePath, {encoding: 'utf-8'}, function (err, data) {
+                if (!err) {
+                    datosRecu = data;
+                    deferred.resolve(datosRecu);
                 }
-            }).then(function successCallback(response) {
-                datosRecu = response;
-                deferred.resolve(datosRecu);
-            }, function errorCallback(response) {
-                datosRecu = response;
-                deferred.resolve(datosRecu);
             });
             return deferred.promise;
         };
 
-        this.connection = function () {
-            var datosRecu = null;
-            var deferred = $q.defer();
-            var uri = 'http://localhost:8888/HasarPrinterAPI-0.5/fiscal/connection';
-            var token = cookieService.get('ptk');
-            token.then(function (data) {
-                $http({
-                    ignoreLoadingBar: true,
-                    url: uri,
-                    method: 'get',
-                    headers: {
-                        'Authorization': 'Bearer ' + data,
-                        'Content-type': 'application/json'
-                    }
-                }).then(function successCallback(response) {
-                    datosRecu = response;
-                    deferred.resolve(datosRecu);
-                }, function errorCallback(response) {
-                    datosRecu = response;
-                    deferred.resolve(datosRecu);
-                });
+        function print(tipo) {
+            exec('wspooler.exe -p4 -l -f FILE.200', function (err, stdout, stderr) {
+                if (err !== null) {
+                    console.log(err);
+                    $rootScope.$broadcast("printState", {tipo: tipo, status: false});
+                } else {
+                    $rootScope.$broadcast("printState", {tipo: tipo, status: true});
+                }
             });
-            return deferred.promise;
+        }
+
+        this.cleanFiles = function () {
+            fs.unlink('FILE.200', function (err) {
+                if (err) {
+                    console.log(err);
+                }
+                console.log('successfully deleted FILE.200');
+            });
+            fs.unlink('FILE.ans', function (err) {
+                if (err) {
+                    console.log(err);
+                }
+                console.log('successfully deleted FILE.ans');
+            });
+            return true;
         };
 
-        this.factura_a = function (listaDetalles) {
-            var datosRecu = null;
-            var deferred = $q.defer();
-            var uri = 'http://localhost:8888/HasarPrinterAPI-0.5/fiscal/factura/A';
-            var token = cookieService.get('ptk');
+        this.factura_aOrFactura_b = function (factura, cliente, type) {
+            var options = null;
+            var token = cookieService.get('token');
+            var tipo;
             token.then(function (data) {
-                $http({
-                    url: uri,
-                    method: 'post',
-                    data: angular.toJson(listaDetalles),
+                options = {
+                    host: parser.hostname,
+                    port: parser.port,
+                    method: 'POST',
                     headers: {
-                        'Authorization': 'Bearer ' + data,
-                        'Content-type': 'application/json'
+                        'Authorization': 'Bearer ' + data
                     }
-                }).then(function successCallback(response) {
-                    datosRecu = response;
-                    deferred.resolve(datosRecu);
-                }, function errorCallback(response) {
-                    datosRecu = response;
-                    deferred.resolve(datosRecu);
+                };
+                if (type === 0) {
+                    options.path = '/fiscal/factura_a?factura=' + factura + "&cliente=" + cliente;
+                    tipo = "Factura A";
+                } else if (1) {
+                    options.path = '/fiscal/factura_b?factura=' + factura + "&cliente=" + cliente;
+                    tipo = "Factura B";
+                }
+                var files = fs.createWriteStream("FILE.200");
+                var request = http.get(options, function (response) {
+                    if (response.statusCode === 200) {
+                        response.pipe(files);
+                        print(tipo);
+                    }
                 });
             });
-            return deferred.promise;
         };
 
-        this.factura_b = function (listaDetalles) {
-            var datosRecu = null;
-            var deferred = $q.defer();
-            var uri = 'http://localhost:8888/HasarPrinterAPI-0.5/fiscal/factura/B';
-            var token = cookieService.get('ptk');
+        this.ticketOrRegalo = function (factura, serial) {
+            var token = cookieService.get('token');
+            var type;
             token.then(function (data) {
-                $http({
-                    url: uri,
-                    method: 'post',
-                    data: angular.toJson(listaDetalles),
+                var options = {
+                    host: parser.hostname,
+                    port: parser.port,
+                    method: 'POST',
                     headers: {
-                        'Authorization': 'Bearer ' + data,
-                        'Content-type': 'application/json'
+                        'Authorization': 'Bearer ' + data
                     }
-                }).then(function successCallback(response) {
-                    datosRecu = response;
-                    deferred.resolve(datosRecu);
-                }, function errorCallback(response) {
-                    datosRecu = response;
-                    deferred.resolve(datosRecu);
+                };
+                if (serial !== null & typeof serial !== 'undefined') {
+                    options.path = '/fiscal/regalo?factura=' + factura + "&serial=" + serial;
+                    type = "Regalo";
+                } else {
+                    options.path = '/fiscal/ticket?factura=' + factura;
+                }
+                var files = fs.createWriteStream("FILE.200");
+                var request = http.get(options, function (response) {
+                    if (response.statusCode === 200) {
+                        response.pipe(files);
+                        print();
+                    }
                 });
             });
-            return deferred.promise;
-        };
-
-        this.ticket = function (listaDetalles) {
-            var datosRecu = null;
-            var deferred = $q.defer();
-            var uri = 'http://localhost:8888/HasarPrinterAPI-0.5/fiscal/ticket';
-            var token = cookieService.get('ptk');
-            token.then(function (data) {
-                $http({
-                    url: uri,
-                    method: 'post',
-                    data: angular.toJson(listaDetalles),
-                    headers: {
-                        'Authorization': 'Bearer ' + data,
-                        'Content-type': 'application/json'
-                    }
-                }).then(function successCallback(response) {
-                    datosRecu = response;
-                    deferred.resolve(datosRecu);
-                }, function errorCallback(response) {
-                    datosRecu = response;
-                    deferred.resolve(datosRecu);
-                });
-            });
-            return deferred.promise;
-        };
-
-        this.regalo = function (listaDetalles, serialRegalo) {
-            var datosRecu = null;
-            var deferred = $q.defer();
-            var uri = 'http://localhost:8888/HasarPrinterAPI-0.5/fiscal/regalo';
-            var token = cookieService.get('ptk');
-            token.then(function (data) {
-                $http({
-                    url: uri,
-                    method: 'post',
-                    data: angular.toJson(listaDetalles),
-                    params: {
-                        serial: serialRegalo
-                    },
-                    headers: {
-                        'Authorization': 'Bearer ' + data,
-                        'Content-type': 'application/json'
-                    }
-                }).then(function successCallback(response) {
-                    datosRecu = response;
-                    deferred.resolve(datosRecu);
-                }, function errorCallback(response) {
-                    datosRecu = response;
-                    deferred.resolve(datosRecu);
-                });
-            });
-            return deferred.promise;
         };
 
         this.comprobanteZ = function () {
-            var datosRecu = null;
             var deferred = $q.defer();
-            var uri = 'http://localhost:8888/HasarPrinterAPI-0.5/fiscal/comprobante/Z';
-            var token = cookieService.get('ptk');
-            token.then(function (data) {
-                $http({
-                    url: uri,
-                    method: 'post',
-                    headers: {
-                        'Authorization': 'Bearer ' + data,
-                        'Content-type': 'application/json'
-                    }
-                }).then(function successCallback(response) {
-                    datosRecu = response;
-                    deferred.resolve(datosRecu);
-                }, function errorCallback(response) {
-                    datosRecu = response;
-                    deferred.resolve(datosRecu);
-                });
+            const exec = require('child_process').exec;
+            exec('wspooler.exe -p4 -l -f compZ.200', (err, stdout, stderr) => {
+                if (err !== null) {
+                    deferred.resolve(false);
+                    console.log(err);
+                    console.log(stderr);
+                    console.log(stdout);
+                } else {
+                    deferred.resolve(true);
+                }
+            });
+            return deferred.promise;
+        };
+
+        this.isConnected = function () {
+            var deferred = $q.defer();
+            const exec = require('child_process').exec;
+            exec('wspooler.exe -p4 -l -f CONNECTED.200', (err, stdout, stderr) => {
+                if (err !== null) {
+                    deferred.resolve(false);
+                    console.log(err);
+                    console.log(stderr);
+                    console.log(stdout);
+                } else {
+                    deferred.resolve(true);
+                }
             });
             return deferred.promise;
         };
