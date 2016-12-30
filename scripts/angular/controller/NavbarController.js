@@ -49,11 +49,13 @@
                 $scope.colorOculto = true;
                 $scope.closeDialog = function () {
                     $mdDialog.hide();
-                };
-                $scope.updateSettings = function (newUrl, printer) {
+                };                
+                $scope.updateSettings = function (newUrl, printer, login) {
                     var data = {BaseUrl: newUrl};
                     localStorageService.set('BaseURL', data);
-                    config.set('printer', printer);
+                    if(!login){
+                        config.set('printer', printer);
+                    }
                     if (url) {
                         $mdDialog.hide();
                         toaster.pop({
