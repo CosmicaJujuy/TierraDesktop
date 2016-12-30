@@ -20,7 +20,7 @@
   "author": "PauloGaldo",
   "license": "CC0-1.0",
   "devDependencies": {
-    "electron": "1.4.12",        
+    "electron": "1.4.13",        
     "debug-menu": "^0.4.0",
     "electron-packager": "^8.0.0",
     "electron-winstaller": "^2.3.4"
