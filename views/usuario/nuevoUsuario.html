@@ -2,11 +2,11 @@
 <div layout="column"
      layout-margin
      layout-xs="column">
-    <md-content layout="column" layout-xs="column"
-                flex layout-padding md-theme="docs-dark">
-        <form name="registrarUsuarios">
+    <md-content layout="row"
+                layout-padding md-theme="docs-dark">
+        <form name="registrarUsuarios" flex>
             <div layout="row">
-                <md-input-container class="md-icon md-block" flex>
+                <md-input-container class="md-icon md-block" flex="50">
                     <label>Nombre</label>
                     <md-icon class="material-icons">&#xE8A6;</md-icon>
                     <input minlength="4"
@@ -23,7 +23,7 @@
                         <div ng-message="required">Este campo no puede estar vacio.</div>
                     </div>
                 </md-input-container>
-                <md-input-container class="md-icon md-block" flex>
+                <md-input-container class="md-icon md-block" flex="50">
                     <!-- LABEL TELEFONO-->
                     <label>Telefono</label>
                     <md-icon class="material-icons">&#xE0CD;</md-icon>
@@ -248,9 +248,3 @@
     today = yyyy + '-' + mm + '-' + dd;
     document.getElementById("nacimientoDate").setAttribute("max", today);
 </script>
-<style>
-    .layout-lg-row>.flex, .layout-row>.flex {
-        min-width: 0;
-        max-width: 639px !important;
-    }
-</style>
