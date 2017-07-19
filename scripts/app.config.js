@@ -21,35 +21,16 @@
         hotkeysProvider.cheatSheetDescription = 'Mostrar / Ocultar este menu de ayuda.';
 
         $provide.decorator('BaseURL', function (localStorageService) {
-            var xhr = new XMLHttpRequest();
             var URL = localStorageService.get('BaseURL');
             var conexion;
-            var Redirect;
             if (URL === null) {
-                var data = {
-                    BaseUrl: 'https://tierradecoloresapi.herokuapp.com/'
-                };
+                var data = {BaseUrl: 'https://tierradecoloresapi.herokuapp.com/'};
                 localStorageService.set('BaseURL', data);
                 conexion = data.BaseUrl;
             } else {
-                xhr.open("GET", URL.BaseUrl);
-                xhr.send();
-                xhr.onload = function () {
-                    if (this.status === 200) {
-                        var data = {
-                            RedirectURL: xhr.responseURL
-                        };
-                        localStorageService.set('RedirectURL', data);
-                    }
-                };
-                Redirect = localStorageService.get('RedirectURL');
-                if(Redirect !== null){
-                    conexion = Redirect.RedirectURL;
-                }                
+                conexion = URL.BaseUrl;
             }
-            console.log("Conexion con: ", URL);
-            console.log('Predeterminado: ', conexion);
-            console.log("Redirect: ", Redirect);
+            console.log("Conexion con: ", URL, 'Predeterminado: ', conexion);
             return conexion;
         });
 
