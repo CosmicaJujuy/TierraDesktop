@@ -155,7 +155,7 @@
                                         resizable: false,
                                         icon: __dirname + '/styles/images/app.png'
                                 });
-                                busq.loadURL(`file://${__dirname}/index.html#/helper`);
+                                busq.loadURL(`file://${__dirname}/index.html#!/helper`);
                                         busq.once('ready-to-show', function () {
                                             busq.show();
                                         });
