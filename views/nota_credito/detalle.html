@@ -2,16 +2,16 @@
 <div layout="row"
      layout-margin
      layout-xs="row"
+     style="height: 100%;"
      md-theme="docs-dark"
      ng-controller="NotaCreditoController as ncCtrl"
      data-ng-init="ncCtrl.detalleNotaCredito()"
      ng-show="notaCreditoDetalle">
-    <div flex-lg="25"
-         flex-md="30"
+    <div flex="30"
          layout="column"
          layout-xs="column">
-        <div layout="column" ng-cloak
-             class="distribucion-panel">
+        <div layout="column" layout-xs="column" flex
+             ng-cloak  md-theme="docs-dark" class="distribucion-panel">
             <md-toolbar class="md-accent">
                 <div class="md-toolbar-tools">
                     <h4 class="md-flex" style="width:100%; text-align: center;">
@@ -62,114 +62,112 @@
             </md-content>
         </div>
     </div>
-    <main flex-lg="75"
-          flex-md="70"
+    <main flex="70"
           layout="column"
           layout-xs="column" ui-view>
-        <div class="distribucion-panel">
-            <div ng-cloak>
-                <md-content md-theme="docs-dark" style="min-height: 598px;">
-                    <md-toolbar class="md-accent">
-                        <div class="md-toolbar-tools">
-                            <h3 class="modal-title" style="width: 100%; text-align: center;">Lista de detalles</h3>
-                        </div>
-                    </md-toolbar>
-                    <md-content flex>
-                        <md-content class="md-padding" flex>
-                            <div flex layout="column">
-                                <form name="notaCredito">
-                                    <div layout="row" flex>
-                                        <md-input-container class="md-block md-icon" flex>
-                                            <label>Buscar producto</label>
-                                            <md-icon class="material-icons">&#xE8B6;</md-icon>
-                                            <input minlength="8"
-                                                   md-maxlength="30"
-                                                   ng-disabled="notaCreditoDetalle.estadoUso === 'SIN USO'"
-                                                   ng-model="vm.busq" required
-                                                   name="barcode" placeholder="Buscar producto por codigo"/>
-                                            <!-- MENSAJES-->
-                                            <div ng-messages="notaCredito.barcode.$error"
-                                                 ng-if='notaCredito.barcode.$dirty || notaCredito.barcode.$touched'>
-                                                <div ng-message="minlength">Codigo demasiado corto.</div>
-                                                <div ng-message="md-maxlength">Codigo demasiado largo.</div>
-                                                <div ng-message="required">Este campo no puede estar vacio.</div>
-                                            </div>
-                                        </md-input-container>
-                                        <div>
-                                            <md-button class="md-raised"
-                                                       ng-disabled="notaCredito.$invalid"
-                                                       ng-click="vm.buscarProductoOnFactura(vm.busq)"
-                                                       type="search">
-                                                Buscar 
-                                                <span class="glyphicon glyphicon-search"></span>
-                                            </md-button>
-                                        </div>
-                                    </div>
-                                </form>                                    
-                            </div>
-                            <div class="table-responsive">
-                                <table ng-table="tableDetallesNotaCredito" style="margin-top: 10px;" 
-                                       class="table table-condensed table-hover table-striped light-table"
-                                       data-ng-init="vm.listaDetalleNotaCredito()">
-                                    <thead id="headTableProductos">
-                                        <tr>
-                                            <th>Id</th>
-                                            <th>N° Factura</th>
-                                            <th>N° Detalle</th>
-                                            <th>Codigo</th>
-                                            <th>Monto</th>
-                                            <th>Cantidad</th>
-                                            <th>Fecha creacion</th>
-                                            <th>Acciones</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody style="text-align: center;">
-                                        <tr ng-repeat="detalle in $data">
-                                            <td>{{detalle.idDetalleNotaCredito}}</td>
-                                            <td>{{detalle.detalleFactura.factura.idFactura}}</td>
-                                            <td>{{detalle.detalleFactura.idDetalleFactura}}</td>
-                                            <td>{{detalle.detalleFactura.producto.codigoProducto}}</td>
-                                            <td>{{detalle.monto|currency}}</td>
-                                            <td>{{::detalle.cantidad}}</td>
-                                            <td>{{detalle.fechaCreacion| date: 'medium'}}</td>
-                                            <td>
-                                                <button type="button"
-                                                        ng-disabled="notaCreditoDetalle.estadoUso === 'SIN USO' || notaCreditoDetalle.estadoUso === 'USADO' || notaCreditoDetalle.estadoUso === 'CANCELADO'" 
-                                                        ng-click="vm.eliminarDetalleNota(detalle)"
-                                                        class="btn btn-xs btn-danger">
-                                                    <md-tooltip md-direction="bottom" md-theme="default">
-                                                        Eliminar detalle de la nota de credito
-                                                    </md-tooltip>
-                                                    <span class="glyphicon glyphicon-remove"></span>
-                                                </button>
-                                                <button type="button"
-                                                        ng-disabled="notaCreditoDetalle.estadoUso === 'SIN USO' || notaCreditoDetalle.estadoUso === 'USADO' || notaCreditoDetalle.estadoUso === 'CANCELADO'"
-                                                        ng-click="vm.modificarDetalleNota(detalle)"
-                                                        class="btn btn-xs btn-warning">
-                                                    <md-tooltip md-direction="bottom" md-theme="default">
-                                                        Modificar cantidad del detalle
-                                                    </md-tooltip>
-                                                    <span class="glyphicon glyphicon-cog"></span>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>                                
-                        </md-content>
-                    </md-content>
-                    <div class="md-padding" flex>
-                        <button class="btn btn-success pull-right"
-                                ng-disabled="notaCreditoDetalle.estadoUso === 'SIN USO' || notaCreditoDetalle.estadoUso === 'USADO' || notaCreditoDetalle.estadoUso === 'CANCELADO'"
-                                ui-sref="detalle_nota_credito.finalizar">
-                            <md-tooltip md-direction="bottom" md-theme="default">
-                                Finalizar carga de productos en la nota de credito
-                            </md-tooltip>
-                            Finalizar Carga
-                        </button>
+        <div layout="column" layout-xs="column" flex
+             ng-cloak  md-theme="docs-dark" class="distribucion-panel"> 
+            <md-content md-theme="docs-dark" style="min-height: 598px;">
+                <md-toolbar class="md-accent">
+                    <div class="md-toolbar-tools">
+                        <h3 class="modal-title" style="width: 100%; text-align: center;">Lista de detalles</h3>
                     </div>
+                </md-toolbar>
+                <md-content flex>
+                    <md-content class="md-padding" flex>
+                        <div flex layout="column">
+                            <form name="notaCredito">
+                                <div layout="row" flex>
+                                    <md-input-container class="md-block md-icon" flex>
+                                        <label>Buscar producto</label>
+                                        <md-icon class="material-icons">&#xE8B6;</md-icon>
+                                        <input minlength="8"
+                                               md-maxlength="30"
+                                               ng-disabled="notaCreditoDetalle.estadoUso === 'SIN USO'"
+                                               ng-model="vm.busq" required
+                                               name="barcode" placeholder="Buscar producto por codigo"/>
+                                        <!-- MENSAJES-->
+                                        <div ng-messages="notaCredito.barcode.$error"
+                                             ng-if='notaCredito.barcode.$dirty || notaCredito.barcode.$touched'>
+                                            <div ng-message="minlength">Codigo demasiado corto.</div>
+                                            <div ng-message="md-maxlength">Codigo demasiado largo.</div>
+                                            <div ng-message="required">Este campo no puede estar vacio.</div>
+                                        </div>
+                                    </md-input-container>
+                                    <div>
+                                        <md-button class="md-raised"
+                                                   ng-disabled="notaCredito.$invalid"
+                                                   ng-click="vm.buscarProductoOnFactura(vm.busq)"
+                                                   type="search">
+                                            Buscar 
+                                            <span class="glyphicon glyphicon-search"></span>
+                                        </md-button>
+                                    </div>
+                                </div>
+                            </form>                                    
+                        </div>
+                        <div class="table-responsive">
+                            <table ng-table="tableDetallesNotaCredito" style="margin-top: 10px;" 
+                                   class="table table-condensed table-hover table-striped light-table"
+                                   data-ng-init="vm.listaDetalleNotaCredito()">
+                                <thead id="headTableProductos">
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>N° Factura</th>
+                                        <th>N° Detalle</th>
+                                        <th>Codigo</th>
+                                        <th>Monto</th>
+                                        <th>Cantidad</th>
+                                        <th>Fecha creacion</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody style="text-align: center;">
+                                    <tr ng-repeat="detalle in $data">
+                                        <td>{{detalle.idDetalleNotaCredito}}</td>
+                                        <td>{{detalle.detalleFactura.factura.idFactura}}</td>
+                                        <td>{{detalle.detalleFactura.idDetalleFactura}}</td>
+                                        <td>{{detalle.detalleFactura.producto.codigoProducto}}</td>
+                                        <td>{{detalle.monto|currency}}</td>
+                                        <td>{{::detalle.cantidad}}</td>
+                                        <td>{{detalle.fechaCreacion| date: 'medium'}}</td>
+                                        <td>
+                                            <button type="button"
+                                                    ng-disabled="notaCreditoDetalle.estadoUso === 'SIN USO' || notaCreditoDetalle.estadoUso === 'USADO' || notaCreditoDetalle.estadoUso === 'CANCELADO'" 
+                                                    ng-click="vm.eliminarDetalleNota(detalle)"
+                                                    class="btn btn-xs btn-danger">
+                                                <md-tooltip md-direction="bottom" md-theme="default">
+                                                    Eliminar detalle de la nota de credito
+                                                </md-tooltip>
+                                                <span class="glyphicon glyphicon-remove"></span>
+                                            </button>
+                                            <button type="button"
+                                                    ng-disabled="notaCreditoDetalle.estadoUso === 'SIN USO' || notaCreditoDetalle.estadoUso === 'USADO' || notaCreditoDetalle.estadoUso === 'CANCELADO'"
+                                                    ng-click="vm.modificarDetalleNota(detalle)"
+                                                    class="btn btn-xs btn-warning">
+                                                <md-tooltip md-direction="bottom" md-theme="default">
+                                                    Modificar cantidad del detalle
+                                                </md-tooltip>
+                                                <span class="glyphicon glyphicon-cog"></span>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>                                
+                    </md-content>
                 </md-content>
-            </div>
+                <div class="md-padding" flex>
+                    <button class="btn btn-success pull-right"
+                            ng-disabled="notaCreditoDetalle.estadoUso === 'SIN USO' || notaCreditoDetalle.estadoUso === 'USADO' || notaCreditoDetalle.estadoUso === 'CANCELADO'"
+                            ui-sref="detalle_nota_credito.finalizar">
+                        <md-tooltip md-direction="bottom" md-theme="default">
+                            Finalizar carga de productos en la nota de credito
+                        </md-tooltip>
+                        Finalizar Carga
+                    </button>
+                </div>
+            </md-content>            
         </div>
     </main>
 </div>

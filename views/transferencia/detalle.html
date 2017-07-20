@@ -1,16 +1,15 @@
 <!DOCTYPE html>
 <div md-theme="docs-dark"
      layout="row"
+     style="height: 100%;"
      layout-margin
      layout-xs="row">
-    <div flex-lg="25"
-         flex-md="30"
+    <div flex="30"
          layout="column"
          layout-xs="column">
-        <div layout="column" ng-cloak
-             data-ng-init="vm.datosTransferencia()"
-             ng-show="vm.transferencia"
-             class="distribucion-panel">
+        <div layout="column" layout-xs="column" flex
+             ng-init="vm.datosTransferencia()"
+             ng-cloak  md-theme="docs-dark" class="distribucion-panel">
             <md-toolbar class="md-accent">
                 <div class="md-toolbar-tools">
                     <h4 class="md-flex" style="width:100%; text-align: center;">
@@ -86,192 +85,190 @@
             </md-content>
         </div>
     </div>
-    <div flex-lg="75"
-         flex-md="70"
+    <div flex="70"
          layout="column"
          layout-xs="column" ng-show="vm.transferencia">
-        <div class="distribucion-panel">
-            <div ng-cloak>
-                <md-content md-theme="docs-dark" style="min-height: 598px;">
-                    <md-toolbar class="md-accent">
-                        <div class="md-toolbar-tools" layout="row" flex>                            
-                            <h3 flex class="modal-title">Lista de productos solicitados</h3>                        
-                            <md-switch ng-model="vm.oculto" 
-                                       flex-lg="20"
-                                       flex-md="30"
-                                       ng-change="vm.cleanBusqAvanzada()"
-                                       aria-label="Switch"
-                                       class="md-primary">
-                                <div ng-if="vm.oculto === false">Busq. normal</div>
-                                <div ng-if="vm.oculto === true">Busq. avanzada</div>
-                            </md-switch>
-                        </div>
-                    </md-toolbar>
-                    <md-content flex>
-                        <md-content class="md-padding" flex layout="row">                            
-                            <div flex="grow">
-                                <div layout="column" flex>
-                                    <form name="busqTrans" ng-hide="vm.oculto" class="show-hide">                                        
-                                        <div layout="row" flex>
-                                            <md-radio-group ng-model="vm.busq.sucursal">
-                                                <md-radio-button value="1">Tierra de colores</md-radio-button>
-                                                <md-radio-button value="2">Bebelanda</md-radio-button>
-                                                <md-radio-button value="3">Libertador</md-radio-button>
-                                            </md-radio-group>
-                                            <div class="md-padding" layout="row" flex>
-                                                <md-input-container class="md-block" flex>
-                                                    <label>Busqueda por descripción</label>
-                                                    <input type="text"
-                                                           md-maxlength="40"
-                                                           maxlength="40"
-                                                           name="descripcion"
-                                                           ng-disabled="vm.transferencia.estadoPedido === true"
-                                                           ng-model="vm.busq.descripcion"
-                                                           placeholder="Ingresa una descripción"/>
-                                                </md-input-container>
-                                                <div>
-                                                    <md-button class="md-raised"
-                                                               ng-disabled="vm.transferencia.estadoPedido === true || transferencia.sucursalRespuesta === 5"
-                                                               ng-click="vm.buscarStock(vm.busq)"
-                                                               type="search">
-                                                        Buscar <span class="glyphicon glyphicon-search"></span>
-                                                    </md-button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                                <div class="table-responsive">
-                                    <table ng-table="TableDetallesTrans" style="margin-top: 10px;" 
-                                           class="table table-condensed table-hover table-striped light-table"
-                                           data-ng-init="vm.listaDetalleTransferencia()">
-                                        <thead id="headTableProductos">
-                                            <tr>
-                                                <th>Id</th>
-                                                <th>Descripcion</th>                                                
-                                                <th>Cantidad</th>
-                                                <th ng-hide="vm.oculto">Talla</th>
-                                                <th>Color</th>
-                                                <th ng-hide="vm.oculto">Sucursal</th>
-                                                <th ng-hide="vm.oculto">Acciones</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody style="text-align: center;">
-                                            <tr ng-repeat="detalle in $data">
-                                                <td>{{detalle.idDetalleTransferencia}}</td>
-                                                <td>{{detalle.producto.descripcion}}</td>
-                                                <td>{{::detalle.cantidad}}</td>  
-                                                <td ng-hide="vm.oculto">{{detalle.producto.talla}}</td>
-                                                <td>{{detalle.producto.colorProducto}}</td>
-                                                <td ng-hide="vm.oculto">
-                                                    <div ng-if="detalle.idSucursal === 1">Tierra de colores</div>
-                                                    <div ng-if="detalle.idSucursal === 2">Bebelandia</div>
-                                                    <div ng-if="detalle.idSucursal === 3">Libertador</div>
-                                                </td>
-                                                <td ng-hide="vm.oculto">
-                                                    <button class="btn btn-xs btn-danger"
-                                                            ng-disabled="vm.transferencia.estadoPedido === true || vm.transferencia.sucursalRespuesta === 5"
-                                                            ng-click="vm.eliminarDetalleTransferencia(detalle)">
-                                                        <md-tooltip md-direction="bottom" md-theme="default">
-                                                            Eliminar detalle de la transferencia
-                                                        </md-tooltip>
-                                                        <span class="glyphicon glyphicon-remove"></span>
-                                                    </button>
-                                                    <button class="btn btn-xs btn-warning"
-                                                            ng-disabled="vm.transferencia.estadoPedido === true || vm.transferencia.sucursalRespuesta === 5"
-                                                            ng-click="vm.modificarDetalleTransferencia(detalle)">
-                                                        <md-tooltip md-direction="bottom" md-theme="default">
-                                                            Modificar cantidad del detalle
-                                                        </md-tooltip>
-                                                        <span class="glyphicon glyphicon-cog"></span>
-                                                    </button>
-                                                </td>                                                                                              
-                                            </tr>
-                                        </tbody>
-                                        <tfoot ng-if="detallesTrans.length === 0">
-                                            <tr>
-                                                <td></td>
-                                                <td></td>
-                                                <td ng-hide="vm.oculto"></td>
-                                                <td>SIN DETALLES</td>
-                                                <td ng-hide="vm.oculto"></td>
-                                            </tr>
-                                        </tfoot>
-                                    </table>
-                                </div> 
-                            </div>
-                            <main flex="grow" class="show-hide" ng-show="vm.oculto">
-                                <md-content class="md-padding">
-                                    <form name="busqu">
-                                        <md-input-container class="md-block show-hide" flex>
-                                            <label>Descripción</label>
-                                            <input type="text"
-                                                   ng-model="vm.busq.descripcion"
-                                                   md-maxlength="40"
-                                                   maxlength="40"
-                                                   name="descripcion"
-                                                   placeholder="Ingresa una descripción"/>
-                                        </md-input-container>
-                                        <md-input-container class="md-block show-hide" flex>
-                                            <label>Marca</label>
-                                            <input type="text"
-                                                   ng-model="vm.busq.marca"
-                                                   md-maxlength="30"
-                                                   maxlength="30"
-                                                   name="marca"
-                                                   placeholder="Nombre de marca"/>
-                                        </md-input-container>
-                                        <div layout="row">
-                                            <md-input-container class="md-block" flex style="max-height: 58px; margin-bottom: 0px; margin-top: 0px;">
-                                                <label>Talla</label>
+        <div layout="column" layout-xs="column" flex
+             ng-cloak  md-theme="docs-dark" class="distribucion-panel">
+            <md-content md-theme="docs-dark" style="min-height: 598px;">
+                <md-toolbar class="md-accent">
+                    <div class="md-toolbar-tools" layout="row" flex>                            
+                        <h3 flex class="modal-title">Lista de productos solicitados</h3>                        
+                        <md-switch ng-model="vm.oculto" 
+                                   flex-lg="20"
+                                   flex-md="30"
+                                   ng-change="vm.cleanBusqAvanzada()"
+                                   aria-label="Switch"
+                                   class="md-primary">
+                            <div ng-if="vm.oculto === false">Busq. normal</div>
+                            <div ng-if="vm.oculto === true">Busq. avanzada</div>
+                        </md-switch>
+                    </div>
+                </md-toolbar>
+                <md-content flex>
+                    <md-content class="md-padding" flex layout="row">                            
+                        <div flex="grow">
+                            <div layout="column" flex>
+                                <form name="busqTrans" ng-hide="vm.oculto" class="show-hide">                                        
+                                    <div layout="row" flex>
+                                        <md-radio-group ng-model="vm.busq.sucursal">
+                                            <md-radio-button value="1">Tierra de colores</md-radio-button>
+                                            <md-radio-button value="2">Bebelanda</md-radio-button>
+                                            <md-radio-button value="3">Libertador</md-radio-button>
+                                        </md-radio-group>
+                                        <div class="md-padding" layout="row" flex>
+                                            <md-input-container class="md-block" flex>
+                                                <label>Busqueda por descripción</label>
                                                 <input type="text"
-                                                       ng-model="vm.busq.talla"
-                                                       md-maxlength="12"
-                                                       name="talla"
-                                                       maxlength="12"
-                                                       placeholder="Número de talla y/o edad"/>
+                                                       md-maxlength="40"
+                                                       maxlength="40"
+                                                       name="descripcion"
+                                                       ng-disabled="vm.transferencia.estadoPedido === true"
+                                                       ng-model="vm.busq.descripcion"
+                                                       placeholder="Ingresa una descripción"/>
                                             </md-input-container>
-                                            <md-input-container class="md-block" flex style="max-height: 58px; margin-bottom: 0px; margin-top: 0px;">
-                                                <label>Codigo</label>
-                                                <input type="text"
-                                                       ng-model="vm.busq.codigo"
-                                                       md-maxlength="30"
-                                                       maxlength="30"
-                                                       name="codigo"
-                                                       placeholder="Codigo de barras"/>
-                                            </md-input-container>
-                                        </div>                                        
-                                        <md-input-container class="md-block show-hide" flex>
-                                            <label>Categoria</label>
-                                            <input type="text"
-                                                   ng-model="vm.busq.categoria"
-                                                   md-maxlength="25"
-                                                   maxlength="25"
-                                                   name="categoria"
-                                                   placeholder="Nombre de categoria"/>
-                                        </md-input-container>
-                                        <div flex layout="row">
-                                            <md-radio-group ng-model="vm.busq.sucursal" flex>
-                                                <md-radio-button value="1">Tierra de colores</md-radio-button>
-                                                <md-radio-button value="2">Bebelanda</md-radio-button>
-                                                <md-radio-button value="3">Libertador</md-radio-button>
-                                            </md-radio-group>
                                             <div>
                                                 <md-button class="md-raised"
-                                                           ng-disabled="vm.transferencia.estadoPedido === true || vm.transferencia.sucursalRespuesta === 5"
+                                                           ng-disabled="vm.transferencia.estadoPedido === true || transferencia.sucursalRespuesta === 5"
                                                            ng-click="vm.buscarStock(vm.busq)"
                                                            type="search">
                                                     Buscar <span class="glyphicon glyphicon-search"></span>
                                                 </md-button>
                                             </div>
                                         </div>
-                                    </form>
-                                </md-content>
-                            </main>
-                        </md-content>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="table-responsive">
+                                <table ng-table="TableDetallesTrans" style="margin-top: 10px;" 
+                                       class="table table-condensed table-hover table-striped light-table"
+                                       data-ng-init="vm.listaDetalleTransferencia()">
+                                    <thead id="headTableProductos">
+                                        <tr>
+                                            <th>Id</th>
+                                            <th>Descripcion</th>                                                
+                                            <th>Cantidad</th>
+                                            <th ng-hide="vm.oculto">Talla</th>
+                                            <th>Color</th>
+                                            <th ng-hide="vm.oculto">Sucursal</th>
+                                            <th ng-hide="vm.oculto">Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody style="text-align: center;">
+                                        <tr ng-repeat="detalle in $data">
+                                            <td>{{detalle.idDetalleTransferencia}}</td>
+                                            <td>{{detalle.producto.descripcion}}</td>
+                                            <td>{{::detalle.cantidad}}</td>  
+                                            <td ng-hide="vm.oculto">{{detalle.producto.talla}}</td>
+                                            <td>{{detalle.producto.colorProducto}}</td>
+                                            <td ng-hide="vm.oculto">
+                                                <div ng-if="detalle.idSucursal === 1">Tierra de colores</div>
+                                                <div ng-if="detalle.idSucursal === 2">Bebelandia</div>
+                                                <div ng-if="detalle.idSucursal === 3">Libertador</div>
+                                            </td>
+                                            <td ng-hide="vm.oculto">
+                                                <button class="btn btn-xs btn-danger"
+                                                        ng-disabled="vm.transferencia.estadoPedido === true || vm.transferencia.sucursalRespuesta === 5"
+                                                        ng-click="vm.eliminarDetalleTransferencia(detalle)">
+                                                    <md-tooltip md-direction="bottom" md-theme="default">
+                                                        Eliminar detalle de la transferencia
+                                                    </md-tooltip>
+                                                    <span class="glyphicon glyphicon-remove"></span>
+                                                </button>
+                                                <button class="btn btn-xs btn-warning"
+                                                        ng-disabled="vm.transferencia.estadoPedido === true || vm.transferencia.sucursalRespuesta === 5"
+                                                        ng-click="vm.modificarDetalleTransferencia(detalle)">
+                                                    <md-tooltip md-direction="bottom" md-theme="default">
+                                                        Modificar cantidad del detalle
+                                                    </md-tooltip>
+                                                    <span class="glyphicon glyphicon-cog"></span>
+                                                </button>
+                                            </td>                                                                                              
+                                        </tr>
+                                    </tbody>
+                                    <tfoot ng-if="detallesTrans.length === 0">
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td ng-hide="vm.oculto"></td>
+                                            <td>SIN DETALLES</td>
+                                            <td ng-hide="vm.oculto"></td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div> 
+                        </div>
+                        <main flex="grow" class="show-hide" ng-show="vm.oculto">
+                            <md-content class="md-padding">
+                                <form name="busqu">
+                                    <md-input-container class="md-block show-hide" flex>
+                                        <label>Descripción</label>
+                                        <input type="text"
+                                               ng-model="vm.busq.descripcion"
+                                               md-maxlength="40"
+                                               maxlength="40"
+                                               name="descripcion"
+                                               placeholder="Ingresa una descripción"/>
+                                    </md-input-container>
+                                    <md-input-container class="md-block show-hide" flex>
+                                        <label>Marca</label>
+                                        <input type="text"
+                                               ng-model="vm.busq.marca"
+                                               md-maxlength="30"
+                                               maxlength="30"
+                                               name="marca"
+                                               placeholder="Nombre de marca"/>
+                                    </md-input-container>
+                                    <div layout="row">
+                                        <md-input-container class="md-block" flex style="max-height: 58px; margin-bottom: 0px; margin-top: 0px;">
+                                            <label>Talla</label>
+                                            <input type="text"
+                                                   ng-model="vm.busq.talla"
+                                                   md-maxlength="12"
+                                                   name="talla"
+                                                   maxlength="12"
+                                                   placeholder="Número de talla y/o edad"/>
+                                        </md-input-container>
+                                        <md-input-container class="md-block" flex style="max-height: 58px; margin-bottom: 0px; margin-top: 0px;">
+                                            <label>Codigo</label>
+                                            <input type="text"
+                                                   ng-model="vm.busq.codigo"
+                                                   md-maxlength="30"
+                                                   maxlength="30"
+                                                   name="codigo"
+                                                   placeholder="Codigo de barras"/>
+                                        </md-input-container>
+                                    </div>                                        
+                                    <md-input-container class="md-block show-hide" flex>
+                                        <label>Categoria</label>
+                                        <input type="text"
+                                               ng-model="vm.busq.categoria"
+                                               md-maxlength="25"
+                                               maxlength="25"
+                                               name="categoria"
+                                               placeholder="Nombre de categoria"/>
+                                    </md-input-container>
+                                    <div flex layout="row">
+                                        <md-radio-group ng-model="vm.busq.sucursal" flex>
+                                            <md-radio-button value="1">Tierra de colores</md-radio-button>
+                                            <md-radio-button value="2">Bebelanda</md-radio-button>
+                                            <md-radio-button value="3">Libertador</md-radio-button>
+                                        </md-radio-group>
+                                        <div>
+                                            <md-button class="md-raised"
+                                                       ng-disabled="vm.transferencia.estadoPedido === true || vm.transferencia.sucursalRespuesta === 5"
+                                                       ng-click="vm.buscarStock(vm.busq)"
+                                                       type="search">
+                                                Buscar <span class="glyphicon glyphicon-search"></span>
+                                            </md-button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </md-content>
+                        </main>
                     </md-content>
                 </md-content>
-            </div>
+            </md-content>            
         </div>
     </div>
 </div>
