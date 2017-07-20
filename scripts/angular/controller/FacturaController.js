@@ -5,9 +5,13 @@
             .module('tierraDeColoresApp')
             .controller('FacturaController', FacturaController);
 
-    FacturaController.$inject = ['$scope', 'BaseURL', '$mdDialog', 'cookieService', 'ngDialog', '$state', '$stateParams', 'clienteService', 'toaster', '$rootScope', 'NgTableParams', '_productoService', '$http', '$timeout', 'facturaService', 'metodoPagoFacturaService', 'medioPagoService', 'entidadBancariaService', 'planPagoService', 'tarjetaService'];
+    FacturaController.$inject = ['$scope', 'BaseURL', '$mdDialog', 'cookieService', 'ngDialog', '$state', '$stateParams',
+        'clienteService', 'toaster', '$rootScope', 'NgTableParams', '_productoService', '$http', '$timeout', 'facturaService',
+        'metodoPagoFacturaService', 'medioPagoService', 'entidadBancariaService', 'planPagoService', 'tarjetaService', '$window'];
 
-    function FacturaController($scope, BaseURL, $mdDialog, cookieService, ngDialog, $state, $stateParams, clienteService, toaster, $rootScope, NgTableParams, _productoService, $http, $timeout, facturaService, metodoPagoFacturaService, medioPagoService, entidadBancariaService, planPagoService, tarjetaService) {
+    function FacturaController($scope, BaseURL, $mdDialog, cookieService, ngDialog, $state, $stateParams,
+            clienteService, toaster, $rootScope, NgTableParams, _productoService, $http, $timeout, facturaService,
+            metodoPagoFacturaService, medioPagoService, entidadBancariaService, planPagoService, tarjetaService, $window) {
         var vm = this;
         /*VARIABLS*/
         vm._newFactura = {
@@ -266,8 +270,8 @@
                         }
                     });
         }
-        
-        function buscarRegalo (){
+
+        function buscarRegalo() {
             ngDialog.open({
                 template: 'views/factura/modal-buscar-regalo.html',
                 className: 'ngdialog-theme-lg',
@@ -496,7 +500,7 @@
                         });
                         $scope.tableParams = new NgTableParams({
                             page: 1,
-                            count: 5
+                            count: ($window.innerHeight > 734) ? 18 : 5
                         }, {
                             total: data.length,
                             getData: function (params) {
@@ -554,7 +558,7 @@
             token.then(function (data) {
                 $scope.tableFacturasDiaria = new NgTableParams({
                     page: 1,
-                    count: 12
+                    count: ($window.innerHeight > 734) ? 22 : 13
                 }, {
                     getData: function (params) {
                         return $http({
@@ -588,7 +592,7 @@
                             var data = datos.data;
                             $scope.tableFacturasMensual = new NgTableParams({
                                 page: 1,
-                                count: 13
+                                count: ($window.innerHeight > 734) ? 22 : 13
                             }, {
                                 total: data.length,
                                 getData: function (params) {
@@ -608,7 +612,7 @@
             token.then(function (data) {
                 $scope.tableFacturasMensualPaged = new NgTableParams({
                     page: 1,
-                    count: 12
+                    count: ($window.innerHeight > 734) ? 22 : 12
                 }, {
                     getData: function (params) {
                         return $http({
@@ -652,7 +656,7 @@
                         });
                         $scope.tableMetodos = new NgTableParams({
                             page: 1,
-                            count: 5
+                            count: ($window.innerHeight > 734) ? 21 : 5
                         }, {
                             total: data.length,
                             getData: function (params) {

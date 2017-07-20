@@ -5,9 +5,9 @@
             .module('tierraDeColoresApp')
             .controller('TarjetaController', TarjetaController);
 
-    TarjetaController.$inject = ['$scope', 'ngDialog', '$state', 'NgTableParams', 'tarjetaService', '$timeout', 'toaster'];
+    TarjetaController.$inject = ['$scope', 'ngDialog', '$state', 'NgTableParams', 'tarjetaService', '$timeout', 'toaster', '$window'];
 
-    function TarjetaController($scope, ngDialog, $state, NgTableParams, tarjetaService, $timeout, toaster) {
+    function TarjetaController($scope, ngDialog, $state, NgTableParams, tarjetaService, $timeout, toaster, $window) {
         var vm = this;
         /*VARIABLES*/
         vm._tarjeta = {
@@ -81,7 +81,7 @@
                         var data = datos.data;
                         $scope.tableTarjetas = new NgTableParams({
                             page: 1,
-                            count: 13
+                            count: ($window.innerHeight > 734) ? 22 : 13
                         }, {
                             total: data.length,
                             getData: function (params) {

@@ -5,9 +5,11 @@
             .module('tierraDeColoresApp')
             .controller('ProveedorController', ProveedorController);
 
-    ProveedorController.$inject = ['$scope', 'BaseURL', 'ngDialog', 'cookieService', 'NgTableParams', 'toaster', '$state', '$stateParams', '$http', '$timeout', '_proveedorService'];
+    ProveedorController.$inject = ['$scope', 'BaseURL', 'ngDialog', 'cookieService', 'NgTableParams', 'toaster', '$state', '$stateParams',
+        '$http', '$timeout', '_proveedorService', '$window'];
 
-    function ProveedorController($scope, BaseURL, ngDialog, cookieService, NgTableParams, toaster, $state, $stateParams, $http, $timeout, _proveedorService) {
+    function ProveedorController($scope, BaseURL, ngDialog, cookieService, NgTableParams, toaster, $state, $stateParams,
+            $http, $timeout, _proveedorService, $window) {
         var vm = this;
         /*VARIABLES*/
         vm._proveedor = {
@@ -116,7 +118,7 @@
                             var data = datos;
                             $scope.tableProveedores = new NgTableParams({
                                 page: 1,
-                                count: 13
+                                count: ($window.innerHeight > 734) ? 22 : 13
                             }, {
                                 total: data.length,
                                 getData: function (params) {

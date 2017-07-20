@@ -5,9 +5,11 @@
             .module('tierraDeColoresApp')
             .controller('FacturaProductoController', FacturaProductoController);
 
-    FacturaProductoController.$inject = ['$scope', 'BaseURL', '$http', 'cookieService', 'ngDialog', 'NgTableParams', 'toaster', '$timeout', 'facturaProductoService', '$state', '$stateParams'];
+    FacturaProductoController.$inject = ['$scope', 'BaseURL', '$http', 'cookieService', 'ngDialog', 'NgTableParams', 'toaster',
+        '$timeout', 'facturaProductoService', '$state', '$stateParams', '$window'];
 
-    function FacturaProductoController($scope, BaseURL, $http, cookieService, ngDialog, NgTableParams, toaster, $timeout, facturaProductoService, $state, $stateParams) {
+    function FacturaProductoController($scope, BaseURL, $http, cookieService, ngDialog, NgTableParams, toaster,
+            $timeout, facturaProductoService, $state, $stateParams, $window) {
         var vm = this;
         /*VARIABLES*/
         vm._facturaProducto = {
@@ -157,7 +159,7 @@
             token.then(function (data) {
                 $scope.tableFacturaProductos = new NgTableParams({
                     page: 1,
-                    count: 11
+                    count: ($window.innerHeight > 734) ? ($state.current.name === 'distribucion' ? 20 : 22) : ($state.current.name === 'distribucion' ? 11 : 13)
                 }, {
                     getData: function (params) {
                         return $http({

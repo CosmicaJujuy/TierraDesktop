@@ -5,9 +5,9 @@
             .module('tierraDeColoresApp')
             .controller('ReservaController', ReservaController);
 
-    ReservaController.$inject = ['$scope', '$state', 'reservaService', '$http', 'cookieService', 'NgTableParams', 'BaseURL'];
+    ReservaController.$inject = ['$scope', '$state', 'reservaService', '$http', 'cookieService', 'NgTableParams', 'BaseURL', '$window'];
 
-    function ReservaController($scope, $state, reservaService, $http, cookieService, NgTableParams, BaseURL) {
+    function ReservaController($scope, $state, reservaService, $http, cookieService, NgTableParams, BaseURL, $window) {
         var vm = this;
         /*VARIBLAES*/
         vm.nuevaReserva = {
@@ -43,7 +43,7 @@
             token.then(function (data) {
                 $scope.tableReservasDiaria = new NgTableParams({
                     page: 1,
-                    count: 12
+                    count: ($window.innerHeight > 734) ? 22 : 13
                 }, {
                     getData: function (params) {
                         return $http({
@@ -72,7 +72,7 @@
             token.then(function (data) {
                 $scope.tableReservasMensual = new NgTableParams({
                     page: 1,
-                    count: 12
+                    count: ($window.innerHeight > 734) ? 22 : 13
                 }, {
                     getData: function (params) {
                         return $http({

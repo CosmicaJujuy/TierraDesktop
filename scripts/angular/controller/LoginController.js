@@ -53,6 +53,7 @@
                                 $state.go('home');
                                 $timeout(function timer() {
                                     window.maximize();
+                                    window.show();
                                 }, 3000);
                                 $timeout(function timer() {
                                     toaster.pop({

@@ -5,9 +5,9 @@
             .module('tierraDeColoresApp')
             .controller('TipoController', TipoController);
 
-    TipoController.$inject = ['$scope', 'ngDialog', '$state', 'toaster', '$timeout', '_tipoService', 'NgTableParams'];
+    TipoController.$inject = ['$scope', 'ngDialog', '$state', 'toaster', '$timeout', '_tipoService', 'NgTableParams', '$window'];
 
-    function TipoController($scope, ngDialog, $state, toaster, $timeout, _tipoService, NgTableParams) {
+    function TipoController($scope, ngDialog, $state, toaster, $timeout, _tipoService, NgTableParams, $window) {
         var vm = this;
         /*VARIABLES*/
         vm._tipo = {
@@ -79,7 +79,7 @@
                             var data = datos.data;
                             $scope.tableTipos = new NgTableParams({
                                 page: 1,
-                                count: 13
+                                count: ($window.innerHeight > 734) ? 22 : 13
                             }, {
                                 total: data.length,
                                 getData: function (params) {
