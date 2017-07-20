@@ -35,13 +35,14 @@
              onmousedown="return false">
 
         </div>
-            <main class="anim-in-out anim-slide-below-fade"
+        <main class="anim-in-out anim-slide-below-fade"
               ui-view="body"
               data-anim-speed="1000"
               layout="column"
               layout-xs="column"
               layout-align="center none"
-              style="position: absolute; width: 100%; height: 87.7%;">
+              ng-style="{height: height}"
+              style="position: absolute; width: 100%;">
         </main>
 
         <style>
@@ -175,10 +176,10 @@
     </body>
 
     <script>
-                 console.log("Electron version: ", process.versions.electron);
-                 /* 
+                  console.log("Electron version: ", process.versions.electron);
+                  /* */
                   const debugMenu = require('debug-menu');
-                  debugMenu.install();*/
+                  debugMenu.install();
 
     </script>
 </html>
