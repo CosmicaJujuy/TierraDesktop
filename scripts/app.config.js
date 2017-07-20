@@ -4,9 +4,9 @@
             .module('tierraDeColoresApp')
             .config(config);
 
-    config.$inject = ['$provide', '$stateProvider', '$httpProvider', '$mdIconProvider', 'colorConfProvider', 'hotkeysProvider', '$mdThemingProvider'];
+    config.$inject = ['$provide', '$stateProvider', '$httpProvider', '$mdIconProvider', 'hotkeysProvider'];
 
-    function config($provide, $stateProvider, $httpProvider, $mdIconProvider, colorConfProvider, hotkeysProvider, $mdThemingProvider) {
+    function config($provide, $stateProvider, $httpProvider, $mdIconProvider, hotkeysProvider) {
 
         $httpProvider.interceptors.push(function () {
             return {
