@@ -154,8 +154,8 @@
                                             </a>
                                         </td>
                                         <td style="text-align: center; font-size: smaller;">
-                                            {{factura.cliente.nombreCliente}} {{factura.cliente.apellidoCliente}}
-                                            <div ng-if="factura.cliente === null">Sin cliente</div>
+                                            {{factura.cliente.nombreCliente}}
+                                            <div ng-if="factura.nombreCliente === null">Sin cliente</div>
                                         </td>
                                         <td style="text-align: center">{{factura.total|currency}}</td>
                                         <td style="text-align: center; font-size: smaller;">{{factura.fechaCreacion| date : 'M/d/yy H:mm'}}</td>
@@ -229,8 +229,8 @@
                                             </a>
                                         </td>
                                         <td style="text-align: center; font-size: smaller;">
-                                            {{factura.cliente.nombreCliente}} {{factura.cliente.apellidoCliente}}
-                                            <div ng-if="factura.cliente === null">Sin cliente</div>
+                                            {{factura.nombreCliente}}
+                                            <div ng-if="factura.nombreCliente === null">Sin cliente</div>
                                         </td>
                                         <td style="text-align: center">{{factura.total|currency}}</td>
                                         <td style="text-align: center; font-size: smaller;">{{factura.fechaCreacion| date : 'M/d/yy H:mm'}}</td>
@@ -257,8 +257,8 @@
                                                 &#xE8AE;
                                             </i>
                                         </td>
-                                        <td style="text-align: center; font-size: smaller;">{{factura.idVendedor.nombre}} {{factura.idVendedor.apellido}}
-                                            <div ng-if="factura.idVendedor === null"> ~ </div>
+                                        <td style="text-align: center; font-size: smaller;">{{factura.nombre}} {{factura.apellido}}
+                                            <div ng-if="factura.idUsuario === null"> ~ </div>
                                         </td>
                                         <td style="text-align: center;">
                                             {{factura.numeracion}}
