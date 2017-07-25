@@ -22,7 +22,6 @@
             }
         });
         ses.cookies.get({name: 'token'}, function (error, cookies) {
-            console.log(cookies[0]);
             console.log(cookies[0].value);
         });
 
