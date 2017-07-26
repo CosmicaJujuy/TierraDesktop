@@ -33,16 +33,15 @@
                                 </thead>
                                 <tbody>
                                     <tr ng-repeat="plan in $data">
-                                        <th style="text-align: center">{{::plan.idPlanesPago}}</th>
-                                        <th style="text-align: center">{{::plan.nombrePlanesPago}}</th> 
-                                        <th style="text-align: center" ng-show="vm.panelPlanEdit">{{::plan.tarjeta.nombreTarjeta}}</th>                        
-                                        <th style="text-align: center">{{::plan.cuotasPlanesPago}}</th>                       
-                                        <th style="text-align: center" ng-show="vm.panelPlanEdit">{{::plan.fechaInicioPlanes| date:'yyyy-MM-dd'}}</th>                       
-                                        <th style="text-align: center" ng-show="vm.panelPlanEdit">{{::plan.fechaFinalizacionPlanes| date:'yyyy-MM-dd'}}</th>                       
-                                        <th style="text-align: center">{{::plan.porcentajeInterez}}</th>                       
-                                        <th style="text-align: center">{{::plan.fechaCierre}}</th>                       
-
-                                        <th style="text-align: center">
+                                        <td style="text-align: center">{{::plan.idPlanesPago}}</td>
+                                        <td style="text-align: center">{{::plan.nombrePlanesPago}}</td> 
+                                        <td style="text-align: center" ng-show="vm.panelPlanEdit">{{::plan.tarjeta.nombreTarjeta}}</td>
+                                        <td style="text-align: center">{{::plan.cuotasPlanesPago}}</td>  
+                                        <td style="text-align: center" ng-show="vm.panelPlanEdit">{{::plan.fechaInicioPlanes| date:'yyyy-MM-dd'}}</td>                       
+                                        <td style="text-align: center" ng-show="vm.panelPlanEdit">{{::plan.fechaFinalizacionPlanes| date:'yyyy-MM-dd'}}</td>                       
+                                        <td style="text-align: center">{{::plan.porcentajeInterez}}</td>                       
+                                        <td style="text-align: center">{{::plan.fechaCierre}}</td>                       
+                                        <td style="text-align: center">
                                             <button type="button"
                                                     class="btn btn-xs btn-info"
                                                     ng-click="vm.hidePanelPlan(plan)">
@@ -59,7 +58,7 @@
                                                 </md-tooltip>
                                                 <span class="glyphicon glyphicon-trash"></span>
                                             </button>
-                                        </th>                        
+                                        </td>                        
                                     </tr>
                                 </tbody>
                             </table>
