@@ -5,9 +5,9 @@
             .module('tierraDeColoresApp')
             .controller('EntidadBancariaController', EntidadBancariaController);
 
-    EntidadBancariaController.$inject = ['$scope', '$state', 'ngDialog', '$timeout', 'NgTableParams', 'toaster', 'entidadBancariaService'];
+    EntidadBancariaController.$inject = ['$scope', '$state', 'ngDialog', '$timeout', 'NgTableParams', 'toaster', 'entidadBancariaService', '$window'];
 
-    function EntidadBancariaController($scope, $state, ngDialog, $timeout, NgTableParams, toaster, entidadBancariaService) {
+    function EntidadBancariaController($scope, $state, ngDialog, $timeout, NgTableParams, toaster, entidadBancariaService, $window) {
         var vm = this;
         /*VARIABLES*/
         vm._entidadBancaria = {
@@ -73,7 +73,7 @@
                         var data = datos.data;
                         $scope.tableEntidades = new NgTableParams({
                             page: 1,
-                            count: 13
+                            count: ($window.innerHeight > 734) ? 22 : 13
                         }, {
                             total: data.length,
                             getData: function (params) {

@@ -1,109 +1,108 @@
 <!DOCTYPE html>
 <div layout="column"
      layout-margin
+     style="height: 100%;"
      layout-xs="column">
-    <div class="distribucion-panel"
-         layout="column" layout-xs="column" flex>
-        <div ng-cloak>
-            <md-content md-theme="docs-dark" style="min-height: 598px;">
-                <md-tabs md-dynamic-height md-border-bottom
-                         md-no-ink-bar="false"
-                         md-stretch-tabs="always"
-                         md-center-tabs="true"
-                         md-selected="tabs">
-                    <md-tab label="Listado de productos">
-                        <md-content class="md-padding">
-                            <div class="table-responsive">                
-                                <table data-ng-init="vm.listaProductos()"
-                                       class="table table-striped table-hover light-table table-condensed"
-                                       ng-table="tableProductos"
-                                       id="tableProductos">
-                                    <thead id="headTableProductos">
-                                        <tr>
-                                            <th style="text-align: center">ID</th>
-                                            <th style="text-align: center">Descripcion</th>
-                                            <th style="text-align: center">Marca</th>
-                                            <th style="text-align: center">Cantidad</th> 
-                                            <th style="text-align: center">Talla</th> 
-                                            <th style="text-align: center">Color</th> 
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr ng-repeat="producto in $data"
-                                            ng-class="{ danger: stockMinimo(producto) }"                
-                                            >
-                                            <td style="text-align: center">{{producto.idProducto}}</td>
-                                            <td style="text-align: center; font-size: small;">
-                                                <a href="" ui-sref="producto({idProducto:{{producto.idProducto}}})">
-                                                    {{producto.descripcion}}
-                                                </a>
-                                            </td>
-                                            <td style="text-align: center; font-size: small;">{{producto.marcas.nombreMarca}}</td>
-                                            <td style="text-align: center">{{producto.cantidadTotal}}</td>
-                                            <td style="text-align: center">{{producto.talla| uppercase}}</td>
-                                            <td style="text-align: center; font-size: small;">{{producto.colorProducto| uppercase}}</td>                
-                                        </tr>
-                                    </tbody>
-                                </table>
-                                <div flex>
-                                    <button class="btn btn-success pull-right" 
-                                            type="button"
-                                            ui-sref="add_factura_producto">
-                                        <md-tooltip md-direction="top" md-theme="default">
-                                            Agregar nuevos productos.
-                                        </md-tooltip>
-                                        Iniciar Carga
-                                    </button>
-                                </div>
-                            </div>                            
-                        </md-content>
-                    </md-tab>
-                    <md-tab label="Listado de facturas">
-                        <md-content class="md-padding">
-                            <div class="table-responsive">
-                                <table class="table table-striped table-hover light-table table-condensed"
-                                       ng-table="tableFacturaProductos"
-                                       ng-controller="FacturaProductoController as fpCtrl"
-                                       data-ng-init="fpCtrl.listaFacturaProducto()">
-                                    <thead id="headTableProductos">
-                                        <tr>
-                                            <th>ID</th>
-                                            <th>N° Factura</th>
-                                            <th>Proveedor</th>
-                                            <th>Monto</th>
-                                            <th>Estado</th>
-                                            <th>Carga</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody ng-repeat="facturaProducto in $data">
-                                        <tr ng-class="{danger: facturaProducto.carga === true,
+    <div layout="column" layout-xs="column" flex
+         ng-cloak  md-theme="docs-dark" class="distribucion-panel">    
+        <md-content style="min-height: 598px;">
+            <md-tabs md-dynamic-height md-border-bottom
+                     md-no-ink-bar="false"
+                     md-stretch-tabs="always"
+                     md-center-tabs="true"
+                     md-selected="tabs">
+                <md-tab label="Listado de productos">
+                    <md-content class="md-padding">
+                        <div class="table-responsive">                
+                            <table data-ng-init="vm.listaProductos()"
+                                   class="table table-striped table-hover light-table table-condensed"
+                                   ng-table="tableProductos"
+                                   id="tableProductos">
+                                <thead id="headTableProductos">
+                                    <tr>
+                                        <th style="text-align: center">ID</th>
+                                        <th style="text-align: center">Descripcion</th>
+                                        <th style="text-align: center">Marca</th>
+                                        <th style="text-align: center">Cantidad</th> 
+                                        <th style="text-align: center">Talla</th> 
+                                        <th style="text-align: center">Color</th> 
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="producto in $data"
+                                        ng-class="{ danger: stockMinimo(producto) }"                
+                                        >
+                                        <td style="text-align: center">{{producto.idProducto}}</td>
+                                        <td style="text-align: center; font-size: small;">
+                                            <a href="" ui-sref="producto({idProducto:{{producto.idProducto}}})">
+                                                {{producto.descripcion}}
+                                            </a>
+                                        </td>
+                                        <td style="text-align: center; font-size: small;">{{producto.marcas.nombreMarca}}</td>
+                                        <td style="text-align: center">{{producto.cantidadTotal}}</td>
+                                        <td style="text-align: center">{{producto.talla| uppercase}}</td>
+                                        <td style="text-align: center; font-size: small;">{{producto.colorProducto| uppercase}}</td>                
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div flex>
+                                <button class="btn btn-success pull-right" 
+                                        type="button"
+                                        ui-sref="add_factura_producto">
+                                    <md-tooltip md-direction="top" md-theme="default">
+                                        Agregar nuevos productos.
+                                    </md-tooltip>
+                                    Iniciar Carga
+                                </button>
+                            </div>
+                        </div>                            
+                    </md-content>
+                </md-tab>
+                <md-tab label="Listado de facturas">
+                    <md-content class="md-padding">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-hover light-table table-condensed"
+                                   ng-table="tableFacturaProductos"
+                                   ng-controller="FacturaProductoController as fpCtrl"
+                                   data-ng-init="fpCtrl.listaFacturaProducto()">
+                                <thead id="headTableProductos">
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>N° Factura</th>
+                                        <th>Proveedor</th>
+                                        <th>Monto</th>
+                                        <th>Estado</th>
+                                        <th>Carga</th>
+                                    </tr>
+                                </thead>
+                                <tbody ng-repeat="facturaProducto in $data">
+                                    <tr ng-class="{danger: facturaProducto.carga === true,
                                                     info: facturaProducto.carga === false && facturaProducto.estadoLocal !== 'REPARTIDO',
                                                 success: facturaProducto.carga === false && facturaProducto.estadoLocal === 'REPARTIDO'}">
-                                            <td style="text-align: center">{{facturaProducto.idFacturaProducto}}</td>
-                                            <td style="text-align: center">
-                                                <a ui-sref="panel_factura_producto({idFactura: facturaProducto.idFacturaProducto})"
-                                                   ng-class="{ disabled: facturaProducto.carga === false}">{{facturaProducto.numeroFactura}}</a>
-                                            </td>
-                                            <td style="text-align: center">{{facturaProducto.proveedor.nombreProveedor}}</td>
-                                            <td style="text-align: center">{{facturaProducto.monto|currency}}</td>
-                                            <td style="text-align: center">
-                                                <span style="color:#3c763d;"
-                                                      ng-if="facturaProducto.estadoLocal === 'REPARTIDO'"
-                                                      class="glyphicon glyphicon-ok"></span>
-                                                {{facturaProducto.estadoLocal}}
-                                            </td>
-                                            <td style="text-align: center">
-                                                <div ng-show="facturaProducto.carga">INICIADA</div>                                
-                                                <div ng-hide="facturaProducto.carga">FINALIZADA</div> 
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </md-content>
-                    </md-tab>
-                </md-tabs>                    
-            </md-content>
-        </div>
+                                        <td style="text-align: center">{{facturaProducto.idFacturaProducto}}</td>
+                                        <td style="text-align: center">
+                                            <a ui-sref="panel_factura_producto({idFactura: facturaProducto.idFacturaProducto})"
+                                               ng-class="{ disabled: facturaProducto.carga === false}">{{facturaProducto.numeroFactura}}</a>
+                                        </td>
+                                        <td style="text-align: center">{{facturaProducto.proveedor.nombreProveedor}}</td>
+                                        <td style="text-align: center">{{facturaProducto.monto|currency}}</td>
+                                        <td style="text-align: center">
+                                            <span style="color:#3c763d;"
+                                                  ng-if="facturaProducto.estadoLocal === 'REPARTIDO'"
+                                                  class="glyphicon glyphicon-ok"></span>
+                                            {{facturaProducto.estadoLocal}}
+                                        </td>
+                                        <td style="text-align: center">
+                                            <div ng-show="facturaProducto.carga">INICIADA</div>                                
+                                            <div ng-hide="facturaProducto.carga">FINALIZADA</div> 
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </md-content>
+                </md-tab>
+            </md-tabs>                    
+        </md-content>        
     </div>          
 </div>

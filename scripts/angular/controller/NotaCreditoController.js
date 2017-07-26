@@ -3,9 +3,11 @@
             .module('tierraDeColoresApp')
             .controller('NotaCreditoController', NotaCreditoController);
 
-    NotaCreditoController.$inject = ['toaster', '$mdDialog', 'ngDialog', '$rootScope', 'detalleNotaCreditoService', '$scope', '$state', '$stateParams', 'notaCreditoService', 'NgTableParams'];
+    NotaCreditoController.$inject = ['toaster', 'ngDialog', '$rootScope', 'detalleNotaCreditoService',
+        '$scope', '$state', '$stateParams', 'notaCreditoService', 'NgTableParams', '$window'];
 
-    function NotaCreditoController(toaster, $mdDialog, ngDialog, $rootScope, detalleNotaCreditoService, $scope, $state, $stateParams, notaCreditoService, NgTableParams) {
+    function NotaCreditoController(toaster, ngDialog, $rootScope, detalleNotaCreditoService,
+            $scope, $state, $stateParams, notaCreditoService, NgTableParams, $window) {
         var vm = this;
         /*VARIABLES*/
         vm._notaCredito = {
@@ -45,7 +47,7 @@
                         }
                     });
         }
-        
+
         function backToNota() {
             $state.go('detalle_nota_credito', {idNota: $stateParams.idNota});
         }
@@ -102,7 +104,7 @@
                             });
                             $scope.tableNotaCredito = new NgTableParams({
                                 page: 1,
-                                count: 12
+                                count: ($window.innerHeight > 734) ? 22 : 13
                             }, {
                                 total: data.length,
                                 getData: function (params) {
@@ -134,7 +136,7 @@
                             });
                             $scope.tableNotaCreditoMes = new NgTableParams({
                                 page: 1,
-                                count: 12
+                                count: ($window.innerHeight > 734) ? 22 : 13
                             }, {
                                 total: data.length,
                                 getData: function (params) {

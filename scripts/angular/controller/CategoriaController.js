@@ -4,9 +4,9 @@
             .module('tierraDeColoresApp')
             .controller('CategoriaController', CategoriaController);
 
-    CategoriaController.$inject = ['$scope', '$rootScope', '$timeout', 'toaster', 'NgTableParams', 'categoriaService', 'ngDialog'];
+    CategoriaController.$inject = ['$scope', '$rootScope', '$timeout', 'toaster', 'NgTableParams', 'categoriaService', 'ngDialog', '$window'];
 
-    function CategoriaController($scope, $rootScope, $timeout, toaster, NgTableParams, categoriaService, ngDialog) {
+    function CategoriaController($scope, $rootScope, $timeout, toaster, NgTableParams, categoriaService, ngDialog, $window) {
         var vm = this;
         /*VARIABLES*/
         vm._categoria = {
@@ -81,7 +81,7 @@
                         var data = datos.data;
                         $scope.tableCategorias = new NgTableParams({
                             page: 1,
-                            count: 13
+                            count: ($window.innerHeight > 734) ? 22 : 13
                         }, {
                             total: data.length,
                             getData: function (params) {

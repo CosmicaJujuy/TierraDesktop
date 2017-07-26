@@ -5,9 +5,9 @@
             .module('tierraDeColoresApp')
             .controller('PlanPagoController', PlanPagoController);
 
-    PlanPagoController.$inject = ['$scope', 'ngDialog', '$timeout', 'toaster', '$state', 'NgTableParams', 'planPagoService'];
+    PlanPagoController.$inject = ['$scope', 'ngDialog', '$timeout', 'toaster', '$state', 'NgTableParams', 'planPagoService', '$window'];
 
-    function PlanPagoController($scope, ngDialog, $timeout, toaster, $state, NgTableParams, planPagoService) {
+    function PlanPagoController($scope, ngDialog, $timeout, toaster, $state, NgTableParams, planPagoService, $window) {
         var vm = this;
         /*VARIBLAES*/
         vm._planPago = {
@@ -96,7 +96,7 @@
                         var data = datos.data;
                         $scope.tablePlanes = new NgTableParams({
                             page: 1,
-                            count: 13
+                            count: ($window.innerHeight > 734) ? 22 : 13
                         }, {
                             total: data.length,
                             getData: function (params) {

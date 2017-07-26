@@ -1,180 +1,179 @@
 <!DOCTYPE html>
 <div layout="column"
      layout-margin
+     style="height: 100%;"
      layout-xs="column">
     <div layout="column" layout-xs="column" flex
-         class="distribucion-panel">
-        <div ng-cloak>
-            <md-content md-theme="docs-dark" style="min-height: 598px;">
-                <md-tabs md-dynamic-height md-border-bottom
-                         md-no-ink-bar="false"
-                         md-stretch-tabs="always"
-                         md-center-tabs="true"
-                         md-selected="tabs">
-                    <md-tab label="Categorias">
-                        <md-content class="md-padding" layout="row" flex>
-                            <div class="table-responsive" flex>
-                                <table data-ng-init="vm.listaCategorias()"
-                                       ng-table="tableCategorias"
-                                       class="table table-striped table-hover table-condensed light-table">
-                                    <thead id="headTableProductos">
-                                        <tr>
-                                            <th style="text-align: center">ID</th>
-                                            <th style="text-align: center">Nombre</th>
-                                            <th style="text-align: center">Tipo de producto</th>
-                                            <th style="text-align: center" ng-hide="!vm.panelCategoriaEdit">Fecha creación</th> 
-                                            <th style="text-align: center">Acciones</th> 
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr ng-repeat="ca in $data">
-                                            <th style="text-align: center">{{::ca.idCategoria}}</th>
-                                            <th style="text-align: center">{{::ca.nombreCategoria}}</th>                     
-                                            <th style="text-align: center">{{::ca.tipoCategoria.nombreTipo}}</th>                     
-                                            <th style="text-align: center" ng-hide="!vm.panelCategoriaEdit">{{::ca.fechaCreacion}}</th>                        
-                                            <th style="text-align: center">
-                                                <button type="button"                                     
-                                                        class="btn btn-xs btn-info"
-                                                        ng-click="vm.hidePanelCategoria(ca)">
-                                                    <md-tooltip md-direction="top" md-theme="default">
-                                                        Modificar
-                                                    </md-tooltip>
-                                                    <span class="glyphicon glyphicon-pencil"></span>
-                                                </button>
-                                                <button type="button"
-                                                        class="btn btn-xs btn-danger" 
-                                                        ng-click="vm.eliminarCategoria(ca)">
-                                                    <md-tooltip md-direction="top" md-theme="default">
-                                                        Eliminar
-                                                    </md-tooltip>
-                                                    <span class="glyphicon glyphicon-trash"></span>
-                                                </button>
-                                            </th>                        
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div flex="45" ng-hide="vm.panelCategoriaEdit" class="show-hide">
-                                <p flex style="text-align: center; font-weight: bold">
-                                    Modificar Categoria #{{vm.editCategoria.idCategoria}}
-                                    <button class="pull-right"
-                                            ng-click="vm.panelCategoriaEdit = true"
-                                            style="background: transparent; border: none;">
-                                        <md-tooltip md-direction="top" md-theme="default">
-                                            Cerrar panel
-                                        </md-tooltip>
-                                        <md-icon class="material-icons">&#xE14C;</md-icon>
-                                    </button>
-                                </p>
-                                <md-content class="md-padding">
-                                    <form name="updateCategoria" style="margin-top: 30px;">
-                                        <md-input-container class="md-block md-icon" flex>
-                                            <label>Nombre categoria</label>
-                                            <md-icon class="material-icons">&#xE150;</md-icon>
-                                            <input type="text"
-                                                   minlength="4"
-                                                   maxlength="30"
-                                                   md-maxlength="30"
-                                                   placeholder="Ingrese nombre de categoria"
-                                                   ng-model="vm.editCategoria.nombreCategoria"
-                                                   name="categoria" required/>
-                                            <!-- MENSAJES-->
-                                            <div ng-messages="updateCategoria.categoria.$error"
-                                                 ng-if='updateCategoria.categoria.$dirty || updateCategoria.categoria.$touched'>
-                                                <div ng-message="minlength">Nombre demasiado corto.</div>
-                                                <div ng-message="md-maxlength">Nombre demasiado largo.</div>
-                                                <div ng-message="required">Este campo no puede estar vacio.</div>
-                                            </div>
-                                        </md-input-container>
-                                        <md-input-container class="md-block md-icon"
-                                                            flex ng-controller="TipoController as tpCtrl"
-                                                            data-ng-init="tpCtrl.listaTipo()">
-                                            <label>Tipo de producto</label>
-                                            <md-icon class="material-icons">&#xE252;</md-icon>
-                                            <md-select ng-model="vm.editCategoria.tipoCategoria"
-                                                       ng-model-options="{trackBy: '$value.idTipo'}"
-                                                       data-ng-init="vm.editCategoria.tipoCategoria"
-                                                       required name="tipos">                                            
-                                                <md-option ng-value="tipo" 
-                                                           ng-repeat="tipo in tipos">{{tipo.nombreTipo}}</md-option>                                            
-                                            </md-select>
-                                            <!-- MENSAJES-->
-                                            <div ng-messages="updateCategoria.tipos.$error"
-                                                 ng-if='updateCategoria.tipos.$touched'>
-                                                <div ng-message="required">Este campo no puede estar vacio.</div>
-                                            </div>
-                                        </md-input-container>
-                                        <div flex style="text-align: center;">                                            
-                                            <button ng-click="vm.modificarCategoria(vm.editCategoria)"
-                                                    type="submit"
-                                                    id="btnAgregarCategoria"
-                                                    class="btn btn-success"
-                                                    ng-disabled="updateCategoria.$invalid">
-                                                Modificar
-                                            </button>                                                                            
+         ng-cloak  md-theme="docs-dark" class="distribucion-panel"> 
+        <md-content md-theme="docs-dark" style="min-height: 598px;">
+            <md-tabs md-dynamic-height md-border-bottom
+                     md-no-ink-bar="false"
+                     md-stretch-tabs="always"
+                     md-center-tabs="true"
+                     md-selected="tabs">
+                <md-tab label="Categorias">
+                    <md-content class="md-padding" layout="row" flex>
+                        <div class="table-responsive" flex>
+                            <table data-ng-init="vm.listaCategorias()"
+                                   ng-table="tableCategorias"
+                                   class="table table-striped table-hover table-condensed light-table">
+                                <thead id="headTableProductos">
+                                    <tr>
+                                        <th style="text-align: center">ID</th>
+                                        <th style="text-align: center">Nombre</th>
+                                        <th style="text-align: center">Tipo de producto</th>
+                                        <th style="text-align: center" ng-hide="!vm.panelCategoriaEdit">Fecha creación</th> 
+                                        <th style="text-align: center">Acciones</th> 
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="ca in $data">
+                                        <th style="text-align: center">{{::ca.idCategoria}}</th>
+                                        <th style="text-align: center">{{::ca.nombreCategoria}}</th>                     
+                                        <th style="text-align: center">{{::ca.tipoCategoria.nombreTipo}}</th>                     
+                                        <th style="text-align: center" ng-hide="!vm.panelCategoriaEdit">{{::ca.fechaCreacion}}</th>                        
+                                        <th style="text-align: center">
+                                            <button type="button"                                     
+                                                    class="btn btn-xs btn-info"
+                                                    ng-click="vm.hidePanelCategoria(ca)">
+                                                <md-tooltip md-direction="top" md-theme="default">
+                                                    Modificar
+                                                </md-tooltip>
+                                                <span class="glyphicon glyphicon-pencil"></span>
+                                            </button>
+                                            <button type="button"
+                                                    class="btn btn-xs btn-danger" 
+                                                    ng-click="vm.eliminarCategoria(ca)">
+                                                <md-tooltip md-direction="top" md-theme="default">
+                                                    Eliminar
+                                                </md-tooltip>
+                                                <span class="glyphicon glyphicon-trash"></span>
+                                            </button>
+                                        </th>                        
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div flex="45" ng-hide="vm.panelCategoriaEdit" class="show-hide">
+                            <p flex style="text-align: center; font-weight: bold">
+                                Modificar Categoria #{{vm.editCategoria.idCategoria}}
+                                <button class="pull-right"
+                                        ng-click="vm.panelCategoriaEdit = true"
+                                        style="background: transparent; border: none;">
+                                    <md-tooltip md-direction="top" md-theme="default">
+                                        Cerrar panel
+                                    </md-tooltip>
+                                    <md-icon class="material-icons">&#xE14C;</md-icon>
+                                </button>
+                            </p>
+                            <md-content class="md-padding">
+                                <form name="updateCategoria" style="margin-top: 30px;">
+                                    <md-input-container class="md-block md-icon" flex>
+                                        <label>Nombre categoria</label>
+                                        <md-icon class="material-icons">&#xE150;</md-icon>
+                                        <input type="text"
+                                               minlength="4"
+                                               maxlength="30"
+                                               md-maxlength="30"
+                                               placeholder="Ingrese nombre de categoria"
+                                               ng-model="vm.editCategoria.nombreCategoria"
+                                               name="categoria" required/>
+                                        <!-- MENSAJES-->
+                                        <div ng-messages="updateCategoria.categoria.$error"
+                                             ng-if='updateCategoria.categoria.$dirty || updateCategoria.categoria.$touched'>
+                                            <div ng-message="minlength">Nombre demasiado corto.</div>
+                                            <div ng-message="md-maxlength">Nombre demasiado largo.</div>
+                                            <div ng-message="required">Este campo no puede estar vacio.</div>
                                         </div>
-                                    </form>
-                                </md-content>
-                            </div>
-                        </md-content>
-                    </md-tab>
-                    <md-tab label="Agregar nueva Categoria">
-                        <md-content class="md-padding" layout="row">
-                            <div flex="60" flex-offset="20">
-                                <md-content class="md-padding" flex>
-                                    <form name="newCategoria">
-                                        <md-input-container class="md-block md-icon" flex>
-                                            <label>Nombre categoria</label>
-                                            <md-icon class="material-icons">&#xE150;</md-icon>
-                                            <input type="text"
-                                                   minlength="4"
-                                                   maxlength="30"
-                                                   md-maxlength="30"
-                                                   placeholder="Ingrese nombre de categoria"
-                                                   ng-model="vm._categoria.nombreCategoria"
-                                                   name="categoria" required/>
-                                            <!-- MENSAJES-->
-                                            <div ng-messages="newCategoria.categoria.$error"
-                                                 ng-if='newCategoria.categoria.$dirty || newCategoria.categoria.$touched'>
-                                                <div ng-message="minlength">Nombre demasiado corto.</div>
-                                                <div ng-message="md-maxlength">Nombre demasiado largo.</div>
-                                                <div ng-message="required">Este campo no puede estar vacio.</div>
-                                            </div>
-                                        </md-input-container>
-                                        <md-input-container class="md-block md-icon" 
-                                                            flex ng-controller="TipoController as tpCtrl"
-                                                            data-ng-init="tpCtrl.listaTipo()">
-                                            <label>Tipo de producto</label>
-                                            <md-icon class="material-icons">&#xE252;</md-icon>
-                                            <md-select ng-model="vm._categoria.tipoCategoria"
-                                                       placeholder="Seleccione un tipo de producto"
-                                                       required name="tipos">                                            
-                                                <md-option ng-value="tipo" 
-                                                           ng-repeat="tipo in tipos">{{tipo.nombreTipo}}</md-option>                                            
-                                            </md-select>
-                                            <!-- MENSAJES-->
-                                            <div ng-messages="newCategoria.tipos.$error"
-                                                 ng-if='newCategoria.tipos.$touched'>
-                                                <div ng-message="required">Este campo no puede estar vacio.</div>
-                                            </div>
-                                        </md-input-container>
-                                        <div flex style="text-align: center;">
-                                            <button ng-click="vm.agregarCategoria(vm._categoria)"
-                                                    type="submit"
-                                                    id="btnAgregarCategoria"
-                                                    class="btn btn-success"
-                                                    ng-disabled="newCategoria.$invalid">
-                                                Agregar
-                                            </button>       
+                                    </md-input-container>
+                                    <md-input-container class="md-block md-icon"
+                                                        flex ng-controller="TipoController as tpCtrl"
+                                                        data-ng-init="tpCtrl.listaTipo()">
+                                        <label>Tipo de producto</label>
+                                        <md-icon class="material-icons">&#xE252;</md-icon>
+                                        <md-select ng-model="vm.editCategoria.tipoCategoria"
+                                                   ng-model-options="{trackBy: '$value.idTipo'}"
+                                                   data-ng-init="vm.editCategoria.tipoCategoria"
+                                                   required name="tipos">                                            
+                                            <md-option ng-value="tipo" 
+                                                       ng-repeat="tipo in tipos">{{tipo.nombreTipo}}</md-option>                                            
+                                        </md-select>
+                                        <!-- MENSAJES-->
+                                        <div ng-messages="updateCategoria.tipos.$error"
+                                             ng-if='updateCategoria.tipos.$touched'>
+                                            <div ng-message="required">Este campo no puede estar vacio.</div>
                                         </div>
-                                    </form>
-                                </md-content>
-                            </div>
-                        </md-content>
-                    </md-tab>
-                </md-tabs>                    
-            </md-content>
-        </div>
+                                    </md-input-container>
+                                    <div flex style="text-align: center;">                                            
+                                        <button ng-click="vm.modificarCategoria(vm.editCategoria)"
+                                                type="submit"
+                                                id="btnAgregarCategoria"
+                                                class="btn btn-success"
+                                                ng-disabled="updateCategoria.$invalid">
+                                            Modificar
+                                        </button>                                                                            
+                                    </div>
+                                </form>
+                            </md-content>
+                        </div>
+                    </md-content>
+                </md-tab>
+                <md-tab label="Agregar nueva Categoria">
+                    <md-content class="md-padding" layout="row">
+                        <div flex="60" flex-offset="20">
+                            <md-content class="md-padding" flex>
+                                <form name="newCategoria">
+                                    <md-input-container class="md-block md-icon" flex>
+                                        <label>Nombre categoria</label>
+                                        <md-icon class="material-icons">&#xE150;</md-icon>
+                                        <input type="text"
+                                               minlength="4"
+                                               maxlength="30"
+                                               md-maxlength="30"
+                                               placeholder="Ingrese nombre de categoria"
+                                               ng-model="vm._categoria.nombreCategoria"
+                                               name="categoria" required/>
+                                        <!-- MENSAJES-->
+                                        <div ng-messages="newCategoria.categoria.$error"
+                                             ng-if='newCategoria.categoria.$dirty || newCategoria.categoria.$touched'>
+                                            <div ng-message="minlength">Nombre demasiado corto.</div>
+                                            <div ng-message="md-maxlength">Nombre demasiado largo.</div>
+                                            <div ng-message="required">Este campo no puede estar vacio.</div>
+                                        </div>
+                                    </md-input-container>
+                                    <md-input-container class="md-block md-icon" 
+                                                        flex ng-controller="TipoController as tpCtrl"
+                                                        data-ng-init="tpCtrl.listaTipo()">
+                                        <label>Tipo de producto</label>
+                                        <md-icon class="material-icons">&#xE252;</md-icon>
+                                        <md-select ng-model="vm._categoria.tipoCategoria"
+                                                   placeholder="Seleccione un tipo de producto"
+                                                   required name="tipos">                                            
+                                            <md-option ng-value="tipo" 
+                                                       ng-repeat="tipo in tipos">{{tipo.nombreTipo}}</md-option>                                            
+                                        </md-select>
+                                        <!-- MENSAJES-->
+                                        <div ng-messages="newCategoria.tipos.$error"
+                                             ng-if='newCategoria.tipos.$touched'>
+                                            <div ng-message="required">Este campo no puede estar vacio.</div>
+                                        </div>
+                                    </md-input-container>
+                                    <div flex style="text-align: center;">
+                                        <button ng-click="vm.agregarCategoria(vm._categoria)"
+                                                type="submit"
+                                                id="btnAgregarCategoria"
+                                                class="btn btn-success"
+                                                ng-disabled="newCategoria.$invalid">
+                                            Agregar
+                                        </button>       
+                                    </div>
+                                </form>
+                            </md-content>
+                        </div>
+                    </md-content>
+                </md-tab>
+            </md-tabs>                    
+        </md-content>        
     </div>
 </div>
 

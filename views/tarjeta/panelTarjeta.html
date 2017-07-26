@@ -1,162 +1,88 @@
 <!DOCTYPE html>
 <div layout="column"
      layout-margin
+     style="height: 100%;"
      layout-xs="column">
     <!-- TABS TARJETAS-->
-    <div class="distribucion-panel"
-         layout="column" layout-xs="column" flex>
-        <div ng-cloak>
-            <md-content md-theme="docs-dark" style="min-height: 597px;">
-                <md-tabs md-dynamic-height md-border-bottom
-                         md-no-ink-bar="false"
-                         md-stretch-tabs="always"
-                         md-center-tabs="true"
-                         md-selected="tabs">
-                    <md-tab label="Tarjetas">
-                        <md-content class="md-padding" layout="row" flex>
-                            <!-- TABLA TARJETAS-->
-                            <div class="table-responsive" flex>
-                                <table data-ng-init="vm.listaTarjetas()"
-                                       class="table table-hover table-striped table-condensed light-table"
-                                       ng-table="tableTarjetas">
-                                    <!-- ENCABEZADO TABLA-->
-                                    <thead id="headTableProductos">
-                                        <tr>
-                                            <th style="text-align: center">ID</th>
-                                            <th style="text-align: center">Nombre tarjeta</th> 
-                                            <th style="text-align: center">Entidad Bancaria</th> 
-                                            <th style="text-align: center">Medio de pago</th>
-                                            <th style="text-align: center"ng-show="vm.panelTarjetaEdit">Acciones</th> 
-                                        </tr>
-                                    </thead>
-                                    <!-- CUERPO TABLA-->
-                                    <tbody>
-                                        <tr ng-repeat="tarjeta in $data">
-                                            <th style="text-align: center">{{::tarjeta.idTarjeta}}</th>
-                                            <th style="text-align: center">{{::tarjeta.nombreTarjeta}}</th>                        
-                                            <th style="text-align: center">{{::tarjeta.entidadBancaria.nombreEntidad}}</th>                        
-                                            <th style="text-align: center" ng-show="vm.panelTarjetaEdit">{{::tarjeta.medioPago.nombrePago}}</th>                        
-                                            <th style="text-align: center">
-                                                <button type="button"
-                                                        class="btn btn-xs btn-info"
-                                                        ng-click="vm.hidePanel(tarjeta)">
-                                                    <md-tooltip md-direction="top" md-theme="default">
-                                                        Modificar
-                                                    </md-tooltip>
-                                                    <span class="glyphicon glyphicon-pencil"></span>
-                                                </button>
-                                                <button type="button" 
-                                                        class="btn btn-xs btn-danger"                                   
-                                                        ng-click="vm.eliminarTarjeta(tarjeta)">
-                                                    <md-tooltip md-direction="top" md-theme="default">
-                                                        Eliminar
-                                                    </md-tooltip>
-                                                    <span class="glyphicon glyphicon-trash"></span>
-                                                </button>
-                                            </th>                        
-                                        </tr>
-                                    </tbody>
-                                </table><!-- FFIN TABLA TARJETAS-->
-                            </div>
-                            <div flex="45" ng-hide="vm.panelTarjetaEdit">
-                                <p flex style="text-align: center; font-weight: bold">
-                                    Modificar Tarjeta #{{vm.editTarjeta.idTarjeta}}
-                                    <button class="pull-right"
-                                            ng-click="vm.panelTarjetaEdit = true"
-                                            style="background: transparent; border: none;">
-                                        <md-tooltip md-direction="top" md-theme="default">
-                                            Cerrar panel
-                                        </md-tooltip>
-                                        <md-icon class="material-icons">&#xE14C;</md-icon>
-                                    </button>
-                                </p>
-                                <md-content class="md-padding">
-                                    <form name="updateTarjeta" style="margin-top: 30px;">
-                                        <md-input-container class="md-icon md-block">
-                                            <label>Nombre tarjeta</label>
-                                            <md-icon class="material-icons">&#xE150;</md-icon>
-                                            <input type="text"
-                                                   ng-model="vm.editTarjeta.nombreTarjeta" name="nombre" required
-                                                   minlength="4"
-                                                   md-maxlength="30"
-                                                   maxlength="30"/>
-                                            <!-- MENSAJES-->
-                                            <div ng-messages="updateTarjeta.nombre.$error"
-                                                 ng-if='updateTarjeta.nombre.$dirty || updateTarjeta.nombre.$touched'>
-                                                <div ng-message="minlength">Nombre demasiado corto.</div>
-                                                <div ng-message="md-maxlength">Nombre demasiado largo.</div>
-                                                <div ng-message="required">Este campo no puede estar vacio.</div>
-                                            </div>
-                                        </md-input-container>                                    
-                                        <md-input-container class="md-icon md-block" ng-controller="MedioPagoController as meCtrl" data-ng-init="meCtrl.listaMedioPago()" style="min-height: 54px;">
-                                            <label>Tipo de tarjeta</label>
-                                            <md-icon class="material-icons">&#xE252;</md-icon>
-                                            <md-select ng-model="vm.editTarjeta.medioPago"
-                                                       ng-model-options="{
-                                                                           trackBy: '$value.idMedioPago'
-                                                                       }"
-                                                       data-ng-init="vm.editTarjeta.medioPago"
-                                                       required name="medios">                                            
-                                                <md-option ng-value="medio" 
-                                                           ng-repeat="medio in medioPagos">{{medio.nombrePago}}</md-option>                                            
-                                            </md-select>
-                                            <!-- MENSAJES-->
-                                            <div ng-messages="updateTarjeta.medios.$error"
-                                                 ng-if='updateTarjeta.medios.$touched'>
-                                                <div ng-message="required">Este campo no puede estar vacio.</div>
-                                            </div>
-                                        </md-input-container>
-                                        <md-input-container class="md-icon md-block" ng-controller="EntidadBancariaController as enCtrl" data-ng-init="enCtrl.listaEntidadBancaria()" style="min-height: 54px;">
-                                            <label>Entidad bancaria</label>
-                                            <md-icon class="material-icons">&#xE84F;</md-icon>
-                                            <md-select ng-model="vm.editTarjeta.entidadBancaria"
-                                                       ng-model-options="{
-                                                                           trackBy: '$value.idEntidadMonetaria'}"
-                                                       data-ng-init="vm.editTarjeta.entidadBancaria"
-                                                       required name="entidades">                                            
-                                                <md-option ng-value="entidad" 
-                                                           ng-repeat="entidad in entidadBancarias">{{entidad.nombreEntidad}}</md-option>                                            
-                                            </md-select>
-                                            <!-- MENSAJES-->
-                                            <div ng-messages="updateTarjeta.entidades.$error"
-                                                 ng-if='updateTarjeta.entidades.$touched'>
-                                                <div ng-message="required">Este campo no puede estar vacio.</div>
-                                            </div>
-                                        </md-input-container>
-
-                                        <!-- BOTON MODIFICAR-->
-                                        <div flex style="text-align: center;">
-                                            <button ng-click="vm.modificarTarjeta(vm.editTarjeta)"
-                                                    type="submit" 
-                                                    class="btn btn-success"
-                                                    ng-disabled="updateTarjeta.$invalid">
-                                                Modificar
+    <div layout="column" layout-xs="column" flex
+         ng-cloak  md-theme="docs-dark" class="distribucion-panel">        
+        <md-content style="min-height: 597px;">
+            <md-tabs md-dynamic-height md-border-bottom
+                     md-no-ink-bar="false"
+                     md-stretch-tabs="always"
+                     md-center-tabs="true"
+                     md-selected="tabs">
+                <md-tab label="Tarjetas">
+                    <md-content class="md-padding" layout="row" flex>
+                        <!-- TABLA TARJETAS-->
+                        <div class="table-responsive" flex>
+                            <table data-ng-init="vm.listaTarjetas()"
+                                   class="table table-hover table-striped table-condensed light-table"
+                                   ng-table="tableTarjetas">
+                                <!-- ENCABEZADO TABLA-->
+                                <thead id="headTableProductos">
+                                    <tr>
+                                        <th style="text-align: center">ID</th>
+                                        <th style="text-align: center">Nombre tarjeta</th> 
+                                        <th style="text-align: center">Entidad Bancaria</th> 
+                                        <th style="text-align: center">Medio de pago</th>
+                                        <th style="text-align: center"ng-show="vm.panelTarjetaEdit">Acciones</th> 
+                                    </tr>
+                                </thead>
+                                <!-- CUERPO TABLA-->
+                                <tbody>
+                                    <tr ng-repeat="tarjeta in $data">
+                                        <th style="text-align: center">{{::tarjeta.idTarjeta}}</th>
+                                        <th style="text-align: center">{{::tarjeta.nombreTarjeta}}</th>                        
+                                        <th style="text-align: center">{{::tarjeta.entidadBancaria.nombreEntidad}}</th>                        
+                                        <th style="text-align: center" ng-show="vm.panelTarjetaEdit">{{::tarjeta.medioPago.nombrePago}}</th>                        
+                                        <th style="text-align: center">
+                                            <button type="button"
+                                                    class="btn btn-xs btn-info"
+                                                    ng-click="vm.hidePanel(tarjeta)">
+                                                <md-tooltip md-direction="top" md-theme="default">
+                                                    Modificar
+                                                </md-tooltip>
+                                                <span class="glyphicon glyphicon-pencil"></span>
                                             </button>
-                                        </div>
-
-                                    </form>
-                                </md-content>
-                            </div>
-                        </md-content>                            
-                    </md-tab>
-                    <md-tab label="Agregar nueva Tarjeta">
-                        <md-content class="md-padding">
-                            <div class="col-lg-2"></div>
-                            <div class="col-lg-8">
-                                <!-- FORMULARIO AGREGAR TARJETA-->
-                                <form name="addTarjeta" >
+                                            <button type="button" 
+                                                    class="btn btn-xs btn-danger"                                   
+                                                    ng-click="vm.eliminarTarjeta(tarjeta)">
+                                                <md-tooltip md-direction="top" md-theme="default">
+                                                    Eliminar
+                                                </md-tooltip>
+                                                <span class="glyphicon glyphicon-trash"></span>
+                                            </button>
+                                        </th>                        
+                                    </tr>
+                                </tbody>
+                            </table><!-- FFIN TABLA TARJETAS-->
+                        </div>
+                        <div flex="45" ng-hide="vm.panelTarjetaEdit">
+                            <p flex style="text-align: center; font-weight: bold">
+                                Modificar Tarjeta #{{vm.editTarjeta.idTarjeta}}
+                                <button class="pull-right"
+                                        ng-click="vm.panelTarjetaEdit = true"
+                                        style="background: transparent; border: none;">
+                                    <md-tooltip md-direction="top" md-theme="default">
+                                        Cerrar panel
+                                    </md-tooltip>
+                                    <md-icon class="material-icons">&#xE14C;</md-icon>
+                                </button>
+                            </p>
+                            <md-content class="md-padding">
+                                <form name="updateTarjeta" style="margin-top: 30px;">
                                     <md-input-container class="md-icon md-block">
                                         <label>Nombre tarjeta</label>
                                         <md-icon class="material-icons">&#xE150;</md-icon>
                                         <input type="text"
-                                               ng-model="vm._tarjeta.nombreTarjeta" name="nombre" required
+                                               ng-model="vm.editTarjeta.nombreTarjeta" name="nombre" required
                                                minlength="4"
-                                               placeholder="Nombre de la tarjeta"
                                                md-maxlength="30"
                                                maxlength="30"/>
                                         <!-- MENSAJES-->
-                                        <div ng-messages="addTarjeta.nombre.$error"
-                                             ng-if='addTarjeta.nombre.$dirty || addTarjeta.nombre.$touched'>
+                                        <div ng-messages="updateTarjeta.nombre.$error"
+                                             ng-if='updateTarjeta.nombre.$dirty || updateTarjeta.nombre.$touched'>
                                             <div ng-message="minlength">Nombre demasiado corto.</div>
                                             <div ng-message="md-maxlength">Nombre demasiado largo.</div>
                                             <div ng-message="required">Este campo no puede estar vacio.</div>
@@ -165,48 +91,121 @@
                                     <md-input-container class="md-icon md-block" ng-controller="MedioPagoController as meCtrl" data-ng-init="meCtrl.listaMedioPago()" style="min-height: 54px;">
                                         <label>Tipo de tarjeta</label>
                                         <md-icon class="material-icons">&#xE252;</md-icon>
-                                        <md-select ng-model="vm._tarjeta.medioPago"
-                                                   placeholder="Seleccione un tipo de tarjeta"
+                                        <md-select ng-model="vm.editTarjeta.medioPago"
+                                                   ng-model-options="{
+                                                       trackBy: '$value.idMedioPago'
+                                                       }"
+                                                   data-ng-init="vm.editTarjeta.medioPago"
                                                    required name="medios">                                            
                                             <md-option ng-value="medio" 
                                                        ng-repeat="medio in medioPagos">{{medio.nombrePago}}</md-option>                                            
                                         </md-select>
                                         <!-- MENSAJES-->
-                                        <div ng-messages="addTarjeta.medios.$error"
-                                             ng-if='addTarjeta.medios.$touched'>
+                                        <div ng-messages="updateTarjeta.medios.$error"
+                                             ng-if='updateTarjeta.medios.$touched'>
                                             <div ng-message="required">Este campo no puede estar vacio.</div>
                                         </div>
                                     </md-input-container>
                                     <md-input-container class="md-icon md-block" ng-controller="EntidadBancariaController as enCtrl" data-ng-init="enCtrl.listaEntidadBancaria()" style="min-height: 54px;">
                                         <label>Entidad bancaria</label>
                                         <md-icon class="material-icons">&#xE84F;</md-icon>
-                                        <md-select ng-model="vm._tarjeta.entidadBancaria"
-                                                   placeholder="Seleccione un banco"
+                                        <md-select ng-model="vm.editTarjeta.entidadBancaria"
+                                                   ng-model-options="{
+                                                       trackBy: '$value.idEntidadMonetaria'}"
+                                                   data-ng-init="vm.editTarjeta.entidadBancaria"
                                                    required name="entidades">                                            
-                                            <md-option ng-value="entidad"
+                                            <md-option ng-value="entidad" 
                                                        ng-repeat="entidad in entidadBancarias">{{entidad.nombreEntidad}}</md-option>                                            
                                         </md-select>
                                         <!-- MENSAJES-->
-                                        <div ng-messages="addTarjeta.entidades.$error"
-                                             ng-if='addTarjeta.entidades.$touched'>
+                                        <div ng-messages="updateTarjeta.entidades.$error"
+                                             ng-if='updateTarjeta.entidades.$touched'>
                                             <div ng-message="required">Este campo no puede estar vacio.</div>
                                         </div>
                                     </md-input-container>
+
+                                    <!-- BOTON MODIFICAR-->
                                     <div flex style="text-align: center;">
-                                        <button ng-click="vm.agregarTarjeta(vm._tarjeta)"
+                                        <button ng-click="vm.modificarTarjeta(vm.editTarjeta)"
                                                 type="submit" 
                                                 class="btn btn-success"
-                                                ng-disabled="addTarjeta.$invalid">
-                                            Agregar
+                                                ng-disabled="updateTarjeta.$invalid">
+                                            Modificar
                                         </button>
                                     </div>
+
                                 </form>
-                            </div>
-                            <div class="col-lg-2"></div>
-                        </md-content>                            
-                    </md-tab>
-                </md-tabs>                    
-            </md-content>
-        </div>
+                            </md-content>
+                        </div>
+                    </md-content>                            
+                </md-tab>
+                <md-tab label="Agregar nueva Tarjeta">
+                    <md-content class="md-padding">
+                        <div class="col-lg-2"></div>
+                        <div class="col-lg-8">
+                            <!-- FORMULARIO AGREGAR TARJETA-->
+                            <form name="addTarjeta" >
+                                <md-input-container class="md-icon md-block">
+                                    <label>Nombre tarjeta</label>
+                                    <md-icon class="material-icons">&#xE150;</md-icon>
+                                    <input type="text"
+                                           ng-model="vm._tarjeta.nombreTarjeta" name="nombre" required
+                                           minlength="4"
+                                           placeholder="Nombre de la tarjeta"
+                                           md-maxlength="30"
+                                           maxlength="30"/>
+                                    <!-- MENSAJES-->
+                                    <div ng-messages="addTarjeta.nombre.$error"
+                                         ng-if='addTarjeta.nombre.$dirty || addTarjeta.nombre.$touched'>
+                                        <div ng-message="minlength">Nombre demasiado corto.</div>
+                                        <div ng-message="md-maxlength">Nombre demasiado largo.</div>
+                                        <div ng-message="required">Este campo no puede estar vacio.</div>
+                                    </div>
+                                </md-input-container>                                    
+                                <md-input-container class="md-icon md-block" ng-controller="MedioPagoController as meCtrl" data-ng-init="meCtrl.listaMedioPago()" style="min-height: 54px;">
+                                    <label>Tipo de tarjeta</label>
+                                    <md-icon class="material-icons">&#xE252;</md-icon>
+                                    <md-select ng-model="vm._tarjeta.medioPago"
+                                               placeholder="Seleccione un tipo de tarjeta"
+                                               required name="medios">                                            
+                                        <md-option ng-value="medio" 
+                                                   ng-repeat="medio in medioPagos">{{medio.nombrePago}}</md-option>                                            
+                                    </md-select>
+                                    <!-- MENSAJES-->
+                                    <div ng-messages="addTarjeta.medios.$error"
+                                         ng-if='addTarjeta.medios.$touched'>
+                                        <div ng-message="required">Este campo no puede estar vacio.</div>
+                                    </div>
+                                </md-input-container>
+                                <md-input-container class="md-icon md-block" ng-controller="EntidadBancariaController as enCtrl" data-ng-init="enCtrl.listaEntidadBancaria()" style="min-height: 54px;">
+                                    <label>Entidad bancaria</label>
+                                    <md-icon class="material-icons">&#xE84F;</md-icon>
+                                    <md-select ng-model="vm._tarjeta.entidadBancaria"
+                                               placeholder="Seleccione un banco"
+                                               required name="entidades">                                            
+                                        <md-option ng-value="entidad"
+                                                   ng-repeat="entidad in entidadBancarias">{{entidad.nombreEntidad}}</md-option>                                            
+                                    </md-select>
+                                    <!-- MENSAJES-->
+                                    <div ng-messages="addTarjeta.entidades.$error"
+                                         ng-if='addTarjeta.entidades.$touched'>
+                                        <div ng-message="required">Este campo no puede estar vacio.</div>
+                                    </div>
+                                </md-input-container>
+                                <div flex style="text-align: center;">
+                                    <button ng-click="vm.agregarTarjeta(vm._tarjeta)"
+                                            type="submit" 
+                                            class="btn btn-success"
+                                            ng-disabled="addTarjeta.$invalid">
+                                        Agregar
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-lg-2"></div>
+                    </md-content>                            
+                </md-tab>
+            </md-tabs>                    
+        </md-content>        
     </div>
 </div>

@@ -5,9 +5,11 @@
             .module('tierraDeColoresApp')
             .controller('UsuarioController', UsuarioController);
 
-    UsuarioController.$inject = ['$scope', 'BaseURL', '$mdDialog', 'ngDialog', 'NgTableParams', 'cookieService', '$state', 'toaster', '$timeout', 'Upload', '$location', 'UsuarioService', '$rootScope'];
+    UsuarioController.$inject = ['$scope', 'BaseURL', '$mdDialog', 'ngDialog', 'NgTableParams', 'cookieService',
+        '$state', 'toaster', '$timeout', 'Upload', 'UsuarioService', '$rootScope', '$window'];
 
-    function UsuarioController($scope, BaseURL, $mdDialog, ngDialog, NgTableParams, cookieService, $state, toaster, $timeout, Upload, $location, UsuarioService, $rootScope) {
+    function UsuarioController($scope, BaseURL, $mdDialog, ngDialog, NgTableParams, cookieService,
+            $state, toaster, $timeout, Upload, UsuarioService, $rootScope, $window) {
         var vm = this;
         /*VARIABLES*/
         vm.user = {
@@ -220,7 +222,7 @@
                     .then(function (datos) {
                         ngDialog.closeAll();
                         if (datos.status === 200) {
-                            $rootScope.$broadcast('reloadUsuarios', {});                            
+                            $rootScope.$broadcast('reloadUsuarios', {});
                         } else {
                             toaster.pop({
                                 type: 'error',
@@ -261,7 +263,7 @@
                             var data = datos.data;
                             $scope.tableUsuarios = new NgTableParams({
                                 page: 1,
-                                count: 12
+                                count: ($window.innerHeight > 734) ? 22 : 12
                             }, {
                                 total: data.length,
                                 getData: function (params) {

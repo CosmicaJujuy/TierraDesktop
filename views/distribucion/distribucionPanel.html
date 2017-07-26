@@ -1,270 +1,269 @@
 <!DOCTYPE html>
 <div  layout="column"
       layout-margin
+      style="height: 100%;"
       layout-xs="column">
-    <div layout="column" layout-xs="column" flex 
-         class="distribucion-panel">
-        <div ng-cloak>
-            <md-content md-theme="docs-dark" style="min-height: 598px;">
-                <md-tabs md-dynamic-height md-border-bottom
-                         md-no-ink-bar="false"
-                         md-stretch-tabs="always"
-                         md-center-tabs="true"
-                         md-selected="tabs">
-                    <md-tab label="Facturas">
-                        <md-content class="md-padding">
-                            <div class="table-responsive">
-                                <div layout="row">
-                                    <div flex="30"></div>
-                                    <md-input-container class="md-icon md-block"
-                                                        style="margin-bottom: 0px;"
-                                                        flex="40">
-                                        <label>Busqueda rapida</label>
-                                        <md-icon class="material-icons">&#xE8B6;</md-icon>
-                                        <input type="text"
-                                               placeholder="Busca lo que sea desde aqui"
-                                               name="busqFacturaProducto"
-                                               ng-model="f"/>
-                                    </md-input-container>
-                                </div>
-                                <table class="table table-striped table-hover table-condensed light-table"
-                                       ng-table="tableFacturaProductos"
-                                       ng-controller="FacturaProductoController as fpCtrl"
-                                       data-ng-init="fpCtrl.listaFacturaProducto()">
-                                    <thead id="headTableProductos">
-                                        <tr>
-                                            <th>ID</th>
-                                            <th>N° Factura</th>
-                                            <th>Proveedor</th>
-                                            <th>Monto</th>
-                                            <th>Estado</th>
-                                            <th>Carga</th>
-                                            <th>Acciones</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr ng-class="{danger: facturaProducto.carga === true,
+    <div layout="column" layout-xs="column" flex
+         ng-cloak  md-theme="docs-dark" class="distribucion-panel">
+        <md-content md-theme="docs-dark" style="min-height: 598px;">
+            <md-tabs md-dynamic-height md-border-bottom
+                     md-no-ink-bar="false"
+                     md-stretch-tabs="always"
+                     md-center-tabs="true"
+                     md-selected="tabs">
+                <md-tab label="Facturas">
+                    <md-content class="md-padding">
+                        <div class="table-responsive">
+                            <div layout="row">
+                                <div flex="30"></div>
+                                <md-input-container class="md-icon md-block"
+                                                    style="margin-bottom: 0px;"
+                                                    flex="40">
+                                    <label>Busqueda rapida</label>
+                                    <md-icon class="material-icons">&#xE8B6;</md-icon>
+                                    <input type="text"
+                                           placeholder="Busca lo que sea desde aqui"
+                                           name="busqFacturaProducto"
+                                           ng-model="f"/>
+                                </md-input-container>
+                            </div>
+                            <table class="table table-striped table-hover table-condensed light-table"
+                                   ng-table="tableFacturaProductos"
+                                   ng-controller="FacturaProductoController as fpCtrl"
+                                   data-ng-init="fpCtrl.listaFacturaProducto()">
+                                <thead id="headTableProductos">
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>N° Factura</th>
+                                        <th>Proveedor</th>
+                                        <th>Monto</th>
+                                        <th>Estado</th>
+                                        <th>Carga</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-class="{danger: facturaProducto.carga === true,
                                                     info: facturaProducto.carga === false && facturaProducto.estadoLocal !== 'REPARTIDO',
                                                 success: facturaProducto.carga === false && facturaProducto.estadoLocal === 'REPARTIDO'}"
-                                            ng-repeat="facturaProducto in $data| filter:f as results">
-                                            <td style="text-align: center">{{facturaProducto.idFacturaProducto}}</td>
-                                            <td style="text-align: center">
-                                                <a ui-sref="panel_factura_producto({idFactura: facturaProducto.idFacturaProducto})" 
-                                                   ng-class="{disabled: facturaProducto.carga === false}">
-                                                    {{facturaProducto.numeroFactura}}
-                                                </a>
-                                            </td>
-                                            <td style="text-align: center">{{facturaProducto.proveedor.nombreProveedor}}</td>
-                                            <td style="text-align: center">{{facturaProducto.monto|currency}}</td>
-                                            <td style="text-align: center">
-                                                <span style="color:#3c763d;"
-                                                      ng-if="facturaProducto.estadoLocal === 'REPARTIDO'"
-                                                      class="glyphicon glyphicon-ok"></span> {{facturaProducto.estadoLocal}}
-                                            </td>
-                                            <td style="text-align: center">
-                                                <div ng-show="facturaProducto.carga">INICIADA</div>                                
-                                                <div ng-hide="facturaProducto.carga">FINALIZADA</div> 
-                                            </td>
-                                            <td style="text-align: center">
-                                                <button class="btn btn-xs btn-success"
-                                                        ng-click="vm.verificarDistribucion(facturaProducto)"
-                                                        ng-disabled="false">
-                                                    <md-tooltip md-direction="top" md-theme="default">
-                                                        Distribuir productos
-                                                    </md-tooltip>
-                                                    <span class="glyphicon glyphicon-random"></span>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                                        ng-repeat="facturaProducto in $data| filter:f as results">
+                                        <td style="text-align: center">{{facturaProducto.idFacturaProducto}}</td>
+                                        <td style="text-align: center">
+                                            <a ui-sref="panel_factura_producto({idFactura: facturaProducto.idFacturaProducto})" 
+                                               ng-class="{disabled: facturaProducto.carga === false}">
+                                                {{facturaProducto.numeroFactura}}
+                                            </a>
+                                        </td>
+                                        <td style="text-align: center">{{facturaProducto.proveedor.nombreProveedor}}</td>
+                                        <td style="text-align: center">{{facturaProducto.monto|currency}}</td>
+                                        <td style="text-align: center">
+                                            <span style="color:#3c763d;"
+                                                  ng-if="facturaProducto.estadoLocal === 'REPARTIDO'"
+                                                  class="glyphicon glyphicon-ok"></span> {{facturaProducto.estadoLocal}}
+                                        </td>
+                                        <td style="text-align: center">
+                                            <div ng-show="facturaProducto.carga">INICIADA</div>                                
+                                            <div ng-hide="facturaProducto.carga">FINALIZADA</div> 
+                                        </td>
+                                        <td style="text-align: center">
+                                            <button class="btn btn-xs btn-success"
+                                                    ng-click="vm.verificarDistribucion(facturaProducto)"
+                                                    ng-disabled="false">
+                                                <md-tooltip md-direction="top" md-theme="default">
+                                                    Distribuir productos
+                                                </md-tooltip>
+                                                <span class="glyphicon glyphicon-random"></span>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </md-content>
+                </md-tab>
+                <md-tab label="Stock tierra de colores">
+                    <md-content class="md-padding">
+                        <div class="table-responsive">
+                            <div layout="row">
+                                <div flex="30"></div>
+                                <md-input-container class="md-icon md-block"
+                                                    style="margin-bottom: 0px;"
+                                                    flex="40">
+                                    <label>Busqueda rapida</label>
+                                    <md-icon class="material-icons">&#xE8B6;</md-icon>
+                                    <input type="text"
+                                           placeholder="Busca lo que sea desde aqui"
+                                           name="busqStockTierra"
+                                           ng-model="q"/>
+                                </md-input-container>
                             </div>
-                        </md-content>
-                    </md-tab>
-                    <md-tab label="Stock tierra de colores">
-                        <md-content class="md-padding">
-                            <div class="table-responsive">
-                                <div layout="row">
-                                    <div flex="30"></div>
-                                    <md-input-container class="md-icon md-block"
-                                                        style="margin-bottom: 0px;"
-                                                        flex="40">
-                                        <label>Busqueda rapida</label>
-                                        <md-icon class="material-icons">&#xE8B6;</md-icon>
-                                        <input type="text"
-                                               placeholder="Busca lo que sea desde aqui"
-                                               name="busqStockTierra"
-                                               ng-model="q"/>
-                                    </md-input-container>
-                                </div>
-                                <table class="table table-striped table-hover table-condensed light-table"
-                                       ng-table="tableTierraStock"
-                                       data-ng-init="vm.listaTierra()">
-                                    <thead id="headTableProductos">
-                                        <tr>
-                                            <th>ID</th>
-                                            <th>Descripción</th>
-                                            <th>Color</th>
-                                            <th>Cantidad</th>
-                                            <th>Talla</th>
-                                            <th>N° Factura</th>
-                                            <th>Precio U.</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr ng-repeat="producto in $data| orderBy: 'producto.idProducto.idProducto' | filter:q as results">                                            
-                                            <td style="text-align: center">{{producto.idProducto.idProducto}}</td>
-                                            <td style="text-align: center">
-                                                <a href=""
-                                                   ui-sref="producto({idProducto:{{producto.idProducto.idProducto}}})">
-                                                    {{producto.idProducto.descripcion}}
-                                                </a>
-                                            </td>
-                                            <td style="text-align: center">{{producto.idProducto.colorProducto}}</td>
-                                            <td style="text-align: center">{{producto.cantidad}}</td>
-                                            <td style="text-align: center">{{producto.idProducto.talla}}</td>
-                                            <td style="text-align: center">{{producto.idProducto.facturaProducto.numeroFactura}}</td>
-                                            <td style="text-align: center">{{producto.idProducto.precioVenta|currency}}</td>
-                                        </tr>
-                                        <tr ng-if="results.length === 0">
-                                            <td style="text-align: center"></td>
-                                            <td style="text-align: center"></td>
-                                            <td style="text-align: center"></td>
-                                            <td style="text-align: center"></td>
-                                            <td style="text-align: center">SIN RESULTADOS</td>
-                                            <td style="text-align: center"></td>
-                                            <td style="text-align: center"></td>
-                                            <td style="text-align: center"></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                            <table class="table table-striped table-hover table-condensed light-table"
+                                   ng-table="tableTierraStock"
+                                   data-ng-init="vm.listaTierra()">
+                                <thead id="headTableProductos">
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Descripción</th>
+                                        <th>Color</th>
+                                        <th>Cantidad</th>
+                                        <th>Talla</th>
+                                        <th>N° Factura</th>
+                                        <th>Precio U.</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="producto in $data| orderBy: 'producto.idProducto.idProducto' | filter:q as results">                                            
+                                        <td style="text-align: center">{{producto.idProducto.idProducto}}</td>
+                                        <td style="text-align: center">
+                                            <a href=""
+                                               ui-sref="producto({idProducto:{{producto.idProducto.idProducto}}})">
+                                                {{producto.idProducto.descripcion}}
+                                            </a>
+                                        </td>
+                                        <td style="text-align: center">{{producto.idProducto.colorProducto}}</td>
+                                        <td style="text-align: center">{{producto.cantidad}}</td>
+                                        <td style="text-align: center">{{producto.idProducto.talla}}</td>
+                                        <td style="text-align: center">{{producto.idProducto.facturaProducto.numeroFactura}}</td>
+                                        <td style="text-align: center">{{producto.idProducto.precioVenta|currency}}</td>
+                                    </tr>
+                                    <tr ng-if="results.length === 0">
+                                        <td style="text-align: center"></td>
+                                        <td style="text-align: center"></td>
+                                        <td style="text-align: center"></td>
+                                        <td style="text-align: center"></td>
+                                        <td style="text-align: center">SIN RESULTADOS</td>
+                                        <td style="text-align: center"></td>
+                                        <td style="text-align: center"></td>
+                                        <td style="text-align: center"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </md-content>
+                </md-tab>
+                <md-tab label="Stock bebelandia">
+                    <md-content class="md-padding">
+                        <div class="table-responsive">
+                            <div layout="row">
+                                <div flex="30"></div>
+                                <md-input-container class="md-icon md-block"
+                                                    style="margin-bottom: 0px;"
+                                                    flex="40">
+                                    <label>Busqueda rapida</label>
+                                    <md-icon class="material-icons">&#xE8B6;</md-icon>
+                                    <input type="text"
+                                           placeholder="Busca lo que sea desde aqui"
+                                           name="busqStockBebelandia"
+                                           ng-model="r"/>
+                                </md-input-container>
                             </div>
-                        </md-content>
-                    </md-tab>
-                    <md-tab label="Stock bebelandia">
-                        <md-content class="md-padding">
-                            <div class="table-responsive">
-                                <div layout="row">
-                                    <div flex="30"></div>
-                                    <md-input-container class="md-icon md-block"
-                                                        style="margin-bottom: 0px;"
-                                                        flex="40">
-                                        <label>Busqueda rapida</label>
-                                        <md-icon class="material-icons">&#xE8B6;</md-icon>
-                                        <input type="text"
-                                               placeholder="Busca lo que sea desde aqui"
-                                               name="busqStockBebelandia"
-                                               ng-model="r"/>
-                                    </md-input-container>
-                                </div>
-                                <table class="table table-striped table-hover table-condensed light-table"
-                                       ng-table="tableBebelandiaStock"
-                                       data-ng-init="vm.listaBebelandia()">
-                                    <thead id="headTableProductos">
-                                        <tr>
-                                            <th>ID</th>
-                                            <th>Descripción</th>
-                                            <th>Color</th>
-                                            <th>Cantidad</th>
-                                            <th>Talla</th>
-                                            <th>N° Factura</th>
-                                            <th>Precio U.</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr ng-repeat="bebelandia in $data| filter:r as results track by $index">
-                                            <td style="text-align: center">{{bebelandia.idProducto.idProducto}}</td>
-                                            <td style="text-align: center">
-                                                <a target="_blank"
-                                                   href=""
-                                                   ui-sref="producto({idProducto:{{bebelandia.idProducto.idProducto}}})">
-                                                    {{bebelandia.idProducto.descripcion}}
-                                                </a>
-                                            </td>
-                                            <td style="text-align: center">{{bebelandia.idProducto.colorProducto}}</td>
-                                            <td style="text-align: center">{{bebelandia.cantidad}}</td>
-                                            <td style="text-align: center">{{bebelandia.idProducto.talla}}</td>
-                                            <td style="text-align: center">{{bebelandia.idProducto.facturaProducto.numeroFactura}}</td>
-                                            <td style="text-align: center">{{bebelandia.idProducto.precioVenta|currency}}</td>
-                                        </tr>
-                                        <tr ng-if="results.length === 0">
-                                            <td style="text-align: center"></td>
-                                            <td style="text-align: center"></td>
-                                            <td style="text-align: center"></td>
-                                            <td style="text-align: center"></td>
-                                            <td style="text-align: center">SIN RESULTADOS</td>
-                                            <td style="text-align: center"></td>
-                                            <td style="text-align: center"></td>
-                                            <td style="text-align: center"></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                            <table class="table table-striped table-hover table-condensed light-table"
+                                   ng-table="tableBebelandiaStock"
+                                   data-ng-init="vm.listaBebelandia()">
+                                <thead id="headTableProductos">
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Descripción</th>
+                                        <th>Color</th>
+                                        <th>Cantidad</th>
+                                        <th>Talla</th>
+                                        <th>N° Factura</th>
+                                        <th>Precio U.</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="bebelandia in $data| filter:r as results track by $index">
+                                        <td style="text-align: center">{{bebelandia.idProducto.idProducto}}</td>
+                                        <td style="text-align: center">
+                                            <a target="_blank"
+                                               href=""
+                                               ui-sref="producto({idProducto:{{bebelandia.idProducto.idProducto}}})">
+                                                {{bebelandia.idProducto.descripcion}}
+                                            </a>
+                                        </td>
+                                        <td style="text-align: center">{{bebelandia.idProducto.colorProducto}}</td>
+                                        <td style="text-align: center">{{bebelandia.cantidad}}</td>
+                                        <td style="text-align: center">{{bebelandia.idProducto.talla}}</td>
+                                        <td style="text-align: center">{{bebelandia.idProducto.facturaProducto.numeroFactura}}</td>
+                                        <td style="text-align: center">{{bebelandia.idProducto.precioVenta|currency}}</td>
+                                    </tr>
+                                    <tr ng-if="results.length === 0">
+                                        <td style="text-align: center"></td>
+                                        <td style="text-align: center"></td>
+                                        <td style="text-align: center"></td>
+                                        <td style="text-align: center"></td>
+                                        <td style="text-align: center">SIN RESULTADOS</td>
+                                        <td style="text-align: center"></td>
+                                        <td style="text-align: center"></td>
+                                        <td style="text-align: center"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </md-content>
+                </md-tab>
+                <md-tab label="Stock libertador">
+                    <md-content class="md-padding">
+                        <div class="table-responsive">
+                            <div layout="row">
+                                <div flex="30"></div>
+                                <md-input-container class="md-icon md-block"
+                                                    style="margin-bottom: 0px;"
+                                                    flex="40">
+                                    <label>Busqueda rapida</label>
+                                    <md-icon class="material-icons">&#xE8B6;</md-icon>
+                                    <input type="text"
+                                           placeholder="Busca lo que sea desde aqui"
+                                           name="busqStockLibertador"
+                                           ng-model="s"/>
+                                </md-input-container>
                             </div>
-                        </md-content>
-                    </md-tab>
-                    <md-tab label="Stock libertador">
-                        <md-content class="md-padding">
-                            <div class="table-responsive">
-                                <div layout="row">
-                                    <div flex="30"></div>
-                                    <md-input-container class="md-icon md-block"
-                                                        style="margin-bottom: 0px;"
-                                                        flex="40">
-                                        <label>Busqueda rapida</label>
-                                        <md-icon class="material-icons">&#xE8B6;</md-icon>
-                                        <input type="text"
-                                               placeholder="Busca lo que sea desde aqui"
-                                               name="busqStockLibertador"
-                                               ng-model="s"/>
-                                    </md-input-container>
-                                </div>
-                                <table class="table table-striped table-hover table-condensed light-table"
-                                       ng-table="tableLibertadorStock"
-                                       data-ng-init="vm.listaLibertador()">
-                                    <thead id="headTableProductos">
-                                        <tr>
-                                            <th>ID</th>
-                                            <th>Descripción</th>
-                                            <th>Color</th>
-                                            <th>Cantidad</th>
-                                            <th>Talla</th>
-                                            <th>N° Factura</th>
-                                            <th>Precio U.</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr ng-repeat="libertador in $data| filter: s as results track by $index">
-                                            <td style="text-align: center">{{libertador.idProducto.idProducto}}</td>
-                                            <td style="text-align: center">
-                                                <a target="_blank"
-                                                   href=""
-                                                   ui-sref="producto({idProducto:{{libertador.idProducto.idProducto}}})">
-                                                    {{libertador.idProducto.descripcion}}
-                                                </a>
-                                            </td>
-                                            <td style="text-align: center">{{libertador.idProducto.colorProducto}}</td>
-                                            <td style="text-align: center">{{libertador.cantidad}}</td>
-                                            <td style="text-align: center">{{libertador.idProducto.talla}}</td>
-                                            <td style="text-align: center">{{libertador.idProducto.facturaProducto.numeroFactura}}</td>
-                                            <td style="text-align: center">{{libertador.idProducto.precioVenta|currency}}</td>
-                                        </tr>
-                                        <tr ng-if="results.length === 0">
-                                            <td style="text-align: center"></td>
-                                            <td style="text-align: center"></td>
-                                            <td style="text-align: center"></td>
-                                            <td style="text-align: center"></td>
-                                            <td style="text-align: center">SIN RESULTADOS</td>
-                                            <td style="text-align: center"></td>
-                                            <td style="text-align: center"></td>
-                                            <td style="text-align: center"></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </md-content>
-                    </md-tab>
-                </md-tabs>
-            </md-content>
-        </div>
+                            <table class="table table-striped table-hover table-condensed light-table"
+                                   ng-table="tableLibertadorStock"
+                                   data-ng-init="vm.listaLibertador()">
+                                <thead id="headTableProductos">
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Descripción</th>
+                                        <th>Color</th>
+                                        <th>Cantidad</th>
+                                        <th>Talla</th>
+                                        <th>N° Factura</th>
+                                        <th>Precio U.</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="libertador in $data| filter: s as results track by $index">
+                                        <td style="text-align: center">{{libertador.idProducto.idProducto}}</td>
+                                        <td style="text-align: center">
+                                            <a target="_blank"
+                                               href=""
+                                               ui-sref="producto({idProducto:{{libertador.idProducto.idProducto}}})">
+                                                {{libertador.idProducto.descripcion}}
+                                            </a>
+                                        </td>
+                                        <td style="text-align: center">{{libertador.idProducto.colorProducto}}</td>
+                                        <td style="text-align: center">{{libertador.cantidad}}</td>
+                                        <td style="text-align: center">{{libertador.idProducto.talla}}</td>
+                                        <td style="text-align: center">{{libertador.idProducto.facturaProducto.numeroFactura}}</td>
+                                        <td style="text-align: center">{{libertador.idProducto.precioVenta|currency}}</td>
+                                    </tr>
+                                    <tr ng-if="results.length === 0">
+                                        <td style="text-align: center"></td>
+                                        <td style="text-align: center"></td>
+                                        <td style="text-align: center"></td>
+                                        <td style="text-align: center"></td>
+                                        <td style="text-align: center">SIN RESULTADOS</td>
+                                        <td style="text-align: center"></td>
+                                        <td style="text-align: center"></td>
+                                        <td style="text-align: center"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </md-content>
+                </md-tab>
+            </md-tabs>
+        </md-content>
     </div>
 </div>

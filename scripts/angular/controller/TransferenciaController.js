@@ -5,9 +5,11 @@
             .module('tierraDeColoresApp')
             .controller('TransferenciaController', TransferenciaController);
 
-    TransferenciaController.$inject = ['$scope', 'toaster', 'ngDialog', '$state', '$stateParams', 'detalleTransferenciaService', 'transferenciaService', 'NgTableParams'];
+    TransferenciaController.$inject = ['$scope', 'toaster', 'ngDialog', '$state', '$stateParams', 'detalleTransferenciaService',
+        'transferenciaService', 'NgTableParams', '$window'];
 
-    function TransferenciaController($scope, toaster, ngDialog, $state, $stateParams, detalleTransferenciaService, transferenciaService, NgTableParams) {
+    function TransferenciaController($scope, toaster, ngDialog, $state, $stateParams, detalleTransferenciaService,
+            transferenciaService, NgTableParams, $window) {
         var vm = this;
         /*VARIABLES*/
         vm._transferencia = {
@@ -157,7 +159,7 @@
                         $scope.transferenciasHoy = datos.data;
                         $scope.tableHoyTransferencias = new NgTableParams({
                             page: 1,
-                            count: 12
+                            count: ($window.innerHeight > 734) ? 22 : 12
                         }, {
                             total: data.length,
                             getData: function (params) {
@@ -179,7 +181,7 @@
                         $scope.detallesTrans = datos.data;
                         $scope.TableDetallesTrans = new NgTableParams({
                             page: 1,
-                            count: 5
+                            count: ($window.innerHeight > 734) ? 18 : 5
                         }, {
                             total: data.length,
                             getData: function (params) {
@@ -209,7 +211,7 @@
                         $scope.transferenciasMoth = datos.data;
                         $scope.tableMesTransferencias = new NgTableParams({
                             page: 1,
-                            count: 12
+                            count: ($window.innerHeight > 734) ? 22 : 12
                         }, {
                             total: data.length,
                             getData: function (params) {

@@ -4,9 +4,11 @@
             .module('tierraDeColoresApp')
             .controller('ProductoController', ProductoController);
 
-    ProductoController.$inject = ['$scope', 'ngDialog', 'BaseURL', 'cookieService', '$state', 'facturaProductoService', '$stateParams', 'toaster', 'NgTableParams', '$rootScope', '$http', '$timeout', '_productoService'];
+    ProductoController.$inject = ['$scope', 'ngDialog', 'BaseURL', 'cookieService', '$state', 'facturaProductoService', '$stateParams',
+        'toaster', 'NgTableParams', '$rootScope', '$http', '$timeout', '_productoService', '$window'];
 
-    function ProductoController($scope, ngDialog, BaseURL, cookieService, $state, facturaProductoService, $stateParams, toaster, NgTableParams, $rootScope, $http, $timeout, _productoService) {
+    function ProductoController($scope, ngDialog, BaseURL, cookieService, $state, facturaProductoService, $stateParams,
+            toaster, NgTableParams, $rootScope, $http, $timeout, _productoService, $window) {
         var electron = require('electron');
         var vm = this;
         var window = electron.remote.getCurrentWindow();
@@ -430,7 +432,7 @@
             token.then(function (data) {
                 $scope.tableProductos = new NgTableParams({
                     page: 1,
-                    count: 13
+                    count: ($window.innerHeight > 734) ? 22 : 13
                 }, {
                     getData: function (params) {
                         return $http({
@@ -459,7 +461,7 @@
             token.then(function (data) {
                 $scope.tableProductosFactura = new NgTableParams({
                     page: 1,
-                    count: 12
+                    count: ($window.innerHeight > 734) ? 22 : 12
                 }, {
                     getData: function (params) {
                         return $http({
@@ -650,22 +652,22 @@
 
         function windowBusqueda() {
             var busq = new electron.remote.BrowserWindow({
-            transparent: false,
-                    frame: false,
-                    fullscreen: false,
-                    width: 1100,
-                    height: 550,
-                    show: false,
-                    modal: true,
-                    resizable: false,
-                    icon: __dirname + '/styles/images/app.png'
+                transparent: false,
+                frame: false,
+                fullscreen: false,
+                width: 1100,
+                height: 550,
+                show: false,
+                modal: true,
+                resizable: false,
+                icon: __dirname + '/styles/images/app.png'
             });
-                    busq.loadURL(`file://${__dirname}/index.html#/helper`);
-                            busq.once('ready-to-show', function () {
-                                busq.show();
-                            });
-                }
+            busq.loadURL(`file://${__dirname}/index.html#!/helper`);
+            busq.once('ready-to-show', function () {
+                busq.show();
+            });
+        }
 
-            }
+    }
 
-        })();
+})();

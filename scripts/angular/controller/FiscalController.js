@@ -11,6 +11,8 @@
         /*VARIABLES*/
         $scope.comprobanteFiscal = null;
         $scope.vendedorFiscal = null;
+        vm.disableBtnsRegalo = false;
+        vm.btnDisabled = false;
         /*METODOS*/
         vm.accesoFiscal = accesoFiscal;
         vm.confirmarImpresion = confirmarImpresion;
@@ -23,23 +25,15 @@
         vm.optImprimir = optImprimir;
 
         function accesoFiscal() {
-            var token = cookieService.has('ptk');
-            token.then(function (datos) {
-                if (!datos) {
-                    fiscalService
-                            .printer()
-                            .then(function (datos) {
-                                if (datos.status === 200) {
-                                    cookieService.put(datos.data.access_token, 'ptk');
-                                    $scope.printer = true;
-                                } else {
-                                    $scope.printer = false;
-                                }
-                            });
-                } else {
-                    $scope.printer = true;
-                }
-            });
+            fiscalService
+                    .isConnected()
+                    .then(function (datos) {
+                        if (datos) {
+                            $scope.printer = true;
+                        } else {
+                            $scope.printer = false;
+                        }
+                    });
         }
 
         function confirmarImpresion(comprobanteFiscal, vendedorFiscal) {
@@ -49,7 +43,7 @@
                 showClose: false,
                 controller: 'FiscalController as vm',
                 closeByDocument: false,
-                closeByEscape: true,
+                closeByEscape: false,
                 data: {
                     comprobanteFiscal: comprobanteFiscal,
                     vendedorFiscal: vendedorFiscal
@@ -60,43 +54,52 @@
         function confirmarImpresionRegalo() {
             var serialRegalo = Math.floor((Math.random() * 99999) + 1000);
             facturaService
-                    .getDetalleFacturaList($stateParams.idFactura)
+                    .searchById($stateParams.idFactura)
                     .then(function (datos) {
-                        fiscalService
-                                .regalo(datos.data, serialRegalo)
-                                .then(function (datos) {
-                                    console.log(datos);
-                                    if (datos.status === 200) {
-                                        facturaService
-                                                .searchById($stateParams.idFactura)
-                                                .then(function (datos) {
-                                                    datos.data.regalo = serialRegalo;
-                                                    facturaService
-                                                            .update(datos.data)
-                                                            .then(function (datos) {
-                                                                if (datos.status === 200) {
-                                                                    $rootScope.factura.regalo = serialRegalo;
-                                                                    ngDialog.closeAll();
-                                                                    toaster.pop({
-                                                                        type: 'success',
-                                                                        title: 'Exito',
-                                                                        body: 'Comprobante de regalo impreso.',
-                                                                        showCloseButton: false
-                                                                    });
-                                                                }
-                                                            });
-                                                });
-                                    }
-                                });
+                        ngDialog.closeAll();
+                        if (datos.status === 200 && datos.data.estado === 'CONFIRMADO') {
+                            fiscalService
+                                    .ticketOrRegalo($stateParams.idFactura, serialRegalo)
+                                    .then(function (datos) {
+                                        if (datos !== null) {
+                                            facturaService
+                                                    .searchById($stateParams.idFactura)
+                                                    .then(function (datos) {
+                                                        datos.data.regalo = serialRegalo;
+                                                        facturaService
+                                                                .update(datos.data)
+                                                                .then(function (datos) {
+                                                                    fiscalService.cleanFiles();
+                                                                    if (datos.status === 200) {
+                                                                        $rootScope.factura.regalo = serialRegalo;
+                                                                        toaster.pop({
+                                                                            type: 'success',
+                                                                            title: 'Exito',
+                                                                            body: 'Comprobante de regalo impreso.',
+                                                                            showCloseButton: false
+                                                                        });
+                                                                    }
+                                                                });
+                                                    });
+                                        } else {
+                                            toaster.pop({
+                                                type: 'error',
+                                                title: 'Error',
+                                                body: 'Comprobante no pudo ser impreso.',
+                                                showCloseButton: false
+                                            });
+                                        }
+                                    });
+                        }
                     });
         }
 
         function finalizarComprobanteZ() {
+            ngDialog.closeAll();
             fiscalService
                     .comprobanteZ()
                     .then(function (datos) {
-                        ngDialog.closeAll();
-                        if (datos.status === 200) {
+                        if (datos) {
                             toaster.pop({
                                 type: 'success',
                                 title: 'Exito',
@@ -193,7 +196,7 @@
                 showClose: false,
                 controller: 'FiscalController as vm',
                 closeByDocument: false,
-                closeByEscape: true
+                closeByEscape: false
             });
         }
 
@@ -219,54 +222,76 @@
             });
         }
 
+        $scope.$on('printState', function (obj, params) {
+            console.log(params);
+            if (params.status) {
+                var numeracion = null;
+                $scope.facturaImpresa = null;
+                facturaService
+                        .searchById($stateParams.idFactura)
+                        .then(function (datos) {
+                            console.log(datos);
+                            if (datos.status === 200 && datos.data.numeracion === null) {
+                                $scope.facturaImpresa = datos.data;
+                                $scope.facturaImpresa.tipoFactura = params.tipo;
+                                fiscalService
+                                        .read()
+                                        .then(function (datos) {
+                                            console.log(datos);
+                                            if (datos !== null) {
+                                                var split = datos.split("|");
+                                                numeracion = split[split.length - 1];
+                                                $scope.facturaImpresa.numeracion = numeracion;
+                                                $scope.facturaImpresa.estado = "CONFIRMADO";
+                                                $scope.facturaImpresa.idVendedor = params.vendedorFiscal;
+                                                var $update = facturaService.update($scope.facturaImpresa);
+                                                $update.then(function (datos) {
+                                                    ngDialog.closeAll();
+                                                    if (datos.status === 200) {
+                                                        toaster.pop({
+                                                            type: 'success',
+                                                            title: 'Exito',
+                                                            body: 'Comprobante impreso.',
+                                                            showCloseButton: false
+                                                        });
+                                                        $rootScope.factura = $scope.facturaImpresa;
+                                                        fiscalService.cleanFiles();
+                                                    }
+                                                });
+                                            }
+                                        });
+                            }
+                        });
+            } else {
+                ngDialog.closeAll();
+                toaster.pop({
+                    type: 'error',
+                    title: 'Error',
+                    body: 'Comprobante no puede ser impreso',
+                    showCloseButton: false
+                });
+            }
+        });
+
         $scope.$on('imprimirComprobante', function (obj, params) {
-            ngDialog.closeAll();
-            var numeracion = null;
             $scope.facturaImpresa = null;
             var $factura = facturaService.searchById($stateParams.idFactura);
             $factura.then(function (datos) {
                 if (datos.status === 200 && datos.data.numeracion === null) {
                     $scope.facturaImpresa = datos.data;
-                    var $detalles = facturaService.getDetalleFacturaList($stateParams.idFactura);
-                    $detalles.then(function (datos) {
-                        if (datos.status === 200) {
-                            var $ticket;
-                            switch (params.comprobanteFiscal) {
-                                case 1:
-                                    $ticket = fiscalService.ticket(datos.data);
-                                    $scope.facturaImpresa.tipoFactura = "ticket";
-                                    break;
-                                case 3:
-                                    $ticket = fiscalService.factura_a(datos.data);
-                                    $scope.facturaImpresa.tipoFactura = "Factura A";
-                                    break;
-                                case 4:
-                                    $ticket = fiscalService.factura_b(datos.data);
-                                    $scope.facturaImpresa.tipoFactura = "Factura B";
-                                    break;
-                            }
-                            $ticket.then(function (datos) {
-                                var lastString = datos.data[datos.data.length - 1];
-                                var split = lastString.split("|");
-                                numeracion = split[split.length - 1];
-                                $scope.facturaImpresa.numeracion = numeracion;
-                                $scope.facturaImpresa.estado = "CONFIRMADO";
-                                $scope.facturaImpresa.idVendedor = params.vendedorFiscal;
-                                var $update = facturaService.update($scope.facturaImpresa);
-                                $update.then(function (datos) {
-                                    if (datos.status === 200) {
-                                        toaster.pop({
-                                            type: 'success',
-                                            title: 'Exito',
-                                            body: 'Comprobante impreso.',
-                                            showCloseButton: false
-                                        });
-                                        $rootScope.factura = $scope.facturaImpresa;
-                                    }
-                                });
-                            });
-                        }
-                    });
+                    var $ticket;
+                    switch (params.comprobanteFiscal) {
+                        case 1:
+                            $ticket = fiscalService.ticketOrRegalo($stateParams.idFactura, null);
+                            break;
+                        case 3:
+                            fiscalService.factura_aOrFactura_b($stateParams.idFactura, datos.data.cliente.idCliente, 0);
+                            break;
+                        case 4:
+                            console.log("B");
+                            fiscalService.factura_aOrFactura_b($stateParams.idFactura, datos.data.cliente.idCliente, 1);
+                            break;
+                    }
                 }
             });
         });

@@ -5,9 +5,9 @@
             .module('tierraDeColoresApp')
             .controller('MarcaController', MarcaController);
 
-    MarcaController.$inject = ['$scope', 'BaseURL', 'ngDialog', 'cookieService', '$state', 'toaster', '$http', 'NgTableParams', '$timeout', '_marcaService'];
+    MarcaController.$inject = ['$scope', 'BaseURL', 'ngDialog', 'cookieService', '$state', 'toaster', '$http', 'NgTableParams', '$timeout', '_marcaService', '$window'];
 
-    function MarcaController($scope, BaseURL, ngDialog, cookieService, $state, toaster, $http, NgTableParams, $timeout, _marcaService) {
+    function MarcaController($scope, BaseURL, ngDialog, cookieService, $state, toaster, $http, NgTableParams, $timeout, _marcaService, $window) {
         var vm = this;
         /*VARIABLES*/
         vm._marcas = {
@@ -101,7 +101,7 @@
                         }
                         $scope.tableMarcas = new NgTableParams({
                             page: 1,
-                            count: 13
+                            count: ($window.innerHeight > 734) ? 22 : 13
                         }, {
                             total: data.length,
                             getData: function (params) {
