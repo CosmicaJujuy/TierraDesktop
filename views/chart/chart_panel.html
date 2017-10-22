@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<div md-theme="docs-dark" ng-cloak
+     layout="row"
+     layout-margin
+     style="height: 100%;">
+    <div flex="30"
+         layout="column">
+        <div layout="column" flex
+             class="distribucion-panel">
+            <md-toolbar class="md-warn">
+                <div class="md-toolbar-tools">
+                    <h4 class="md-flex" style="width:100%; text-align: center;">
+                        <div>Opciones</div>                        
+                    </h4>
+                </div>
+            </md-toolbar>
+            <md-content flex layout="row">
+                <div class="md-padding" flex>
+                    <div layout="column">
+                        <md-button class="md-raised" flex
+                                   ng-click="">
+                            <md-tooltip md-direction="top" md-theme="default">
+                                Imprimir comprobante fiscal y finalizar factura
+                            </md-tooltip>
+                            Imprimir
+                        </md-button>
+                    </div>
+                </div>
+            </md-content>
+        </div>
+    </div>
+    <div flex="70"
+         layout="column">
+        <div layout="column" layout-xs="column" flex
+             ng-cloak  md-theme="docs-dark" class="distribucion-panel">      
+            <md-content style="min-height: 598px;">
+
+
+            </md-content>
+        </div>       
+    </div>
+</div>

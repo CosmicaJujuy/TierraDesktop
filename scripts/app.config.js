@@ -843,6 +843,28 @@
                             controller: "TransferenciaController as vm"
                         }
                     }
+                })
+                .state('chart_panel', {
+                    url: '/chart/:sucursal',
+                    data: {
+                        pageTitle: 'Estadisticas Tierra de Colores S. S. de Jujuy'
+                    },
+                    resolve: {
+                        auth: auth
+                    },
+                    views: {
+                        'navbar': {
+                            templateProvider: function ($templateRequest, sessionProvider) {
+                                var templateName = sessionProvider.getPath();
+                                return $templateRequest(templateName);
+                            },
+                            controller: null
+                        },
+                        'body': {
+                            templateUrl: "views/chart/chart_panel.html",
+                            controller: null
+                        }
+                    }
                 });
 
     }

@@ -22,9 +22,34 @@
             }
         });
         ses.cookies.get({name: 'token'}, function (error, cookies) {
-            console.log(cookies[0].value);
-        });
+            if (cookies[0].value) {
+                console.log(cookies[0].value);
+                $window.ws = 'http://localhost:8080/socket_tdc?access_token=' + cookies[0].value;
+                var socket = new SockJS($window.ws);
+                $window.Client = Stomp.over(socket);
+                connectAndReconnectSocket($window.ws, function (frame) {
+                    console.log('Connected: ' + frame);
+                }, function (response) {
+                    console.log(response);
+                });
 
+                function connectAndReconnectSocket(ws, successCallback, errorCallback) {
+                    socket = new SockJS(ws);
+                    $window.Client = Stomp.over(socket);
+                    $window.Client.debug = null;
+                    $window.Client.heartbeat.outgoing = 2000;
+                    $window.Client.heartbeat.incoming = 2000;
+                    $window.Client.connect({}, function (frame) {
+                        return successCallback(frame);
+                    }, function (response, data) {
+                        setTimeout(function () {
+                            console.log(response, data);
+                            connectAndReconnectSocket($window.ws, null, null);
+                        }, 5000);
+                    });
+                }
+            }
+        });
     }
 
 })();

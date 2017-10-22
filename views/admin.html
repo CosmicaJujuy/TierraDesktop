@@ -211,21 +211,30 @@
                             </md-menu-item>
                         </md-menu-content>
                     </md-menu>
-                    <md-menu ng-hide="true">
+                    <md-menu ng-hide="false">
                         <button ng-click="$mdOpenMenu()">
                             Estadisticas
                         </button>
                         <md-menu-content class="menu-content">
                             <md-menu-item class="md-indent">
                                 <md-icon class="material-icons">&#xE8E5;</md-icon>
-                                <md-button>
+                                <md-button ui-sref="chart_panel">
                                     Tierra de colores
+                                    <span class="md-alt-text"> {{ 'S-T' | keyboardShortcut }}</span>
                                 </md-button>
                             </md-menu-item>                           
                             <md-menu-item class="md-indent">
                                 <md-icon class="material-icons">&#xE8E5;</md-icon>
                                 <md-button>
                                     Bebelandia
+                                    <span class="md-alt-text"> {{ 'S-B' | keyboardShortcut }}</span>
+                                </md-button>
+                            </md-menu-item>                           
+                            <md-menu-item class="md-indent">
+                                <md-icon class="material-icons">&#xE8E5;</md-icon>
+                                <md-button>
+                                    Libertador
+                                    <span class="md-alt-text"> {{ 'S-L' | keyboardShortcut }}</span>
                                 </md-button>
                             </md-menu-item>                           
                         </md-menu-content>
