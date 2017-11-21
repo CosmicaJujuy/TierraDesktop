@@ -274,6 +274,8 @@
         });
 
         $scope.$on('imprimirComprobante', function (obj, params) {
+            ngDialog.closeAll();
+            var numeracion = null;
             $scope.facturaImpresa = null;
             var $factura = facturaService.searchById($stateParams.idFactura);
             $factura.then(function (datos) {
@@ -282,16 +284,38 @@
                     var $ticket;
                     switch (params.comprobanteFiscal) {
                         case 1:
-                            $ticket = fiscalService.ticketOrRegalo($stateParams.idFactura, null);
+                            $ticket = fiscalService.ticket(datos.data);
+                            $scope.facturaImpresa.tipoFactura = "ticket";
                             break;
                         case 3:
-                            fiscalService.factura_aOrFactura_b($stateParams.idFactura, datos.data.cliente.idCliente, 0);
+                            $ticket = fiscalService.factura_a(datos.data);
+                            $scope.facturaImpresa.tipoFactura = "Factura A";
                             break;
                         case 4:
-                            console.log("B");
-                            fiscalService.factura_aOrFactura_b($stateParams.idFactura, datos.data.cliente.idCliente, 1);
+                            $ticket = fiscalService.factura_b(datos.data);
+                            $scope.facturaImpresa.tipoFactura = "Factura B";
                             break;
                     }
+                    $ticket.then(function (datos) {
+                        var lastString = datos.data[datos.data.length - 1];
+                        var split = lastString.split("|");
+                        numeracion = split[split.length - 1];
+                        $scope.facturaImpresa.numeracion = numeracion;
+                        $scope.facturaImpresa.estado = "CONFIRMADO";
+                        $scope.facturaImpresa.idVendedor = params.vendedorFiscal;
+                        var $update = facturaService.update($scope.facturaImpresa);
+                        $update.then(function (datos) {
+                            if (datos.status === 200) {
+                                toaster.pop({
+                                    type: 'success',
+                                    title: 'Exito',
+                                    body: 'Comprobante impreso.',
+                                    showCloseButton: false
+                                });
+                                $rootScope.factura = $scope.facturaImpresa;
+                            }
+                        });
+                    });
                 }
             });
         });
