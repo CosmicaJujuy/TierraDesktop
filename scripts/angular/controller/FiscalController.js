@@ -26,9 +26,10 @@
 
         function accesoFiscal() {
             fiscalService
-                    .isConnected()
+                    .printer()
                     .then(function (datos) {
-                        if (datos) {
+                        if (datos.status === 200) {
+                            cookieService.put(datos.data.access_token, 'ptk');
                             $scope.printer = true;
                         } else {
                             $scope.printer = false;
@@ -281,39 +282,42 @@
             $factura.then(function (datos) {
                 if (datos.status === 200 && datos.data.numeracion === null) {
                     $scope.facturaImpresa = datos.data;
-                    var $ticket;
-                    switch (params.comprobanteFiscal) {
-                        case 1:
-                            $ticket = fiscalService.ticket(datos.data);
-                            $scope.facturaImpresa.tipoFactura = "ticket";
-                            break;
-                        case 3:
-                            $ticket = fiscalService.factura_a(datos.data);
-                            $scope.facturaImpresa.tipoFactura = "Factura A";
-                            break;
-                        case 4:
-                            $ticket = fiscalService.factura_b(datos.data);
-                            $scope.facturaImpresa.tipoFactura = "Factura B";
-                            break;
-                    }
-                    $ticket.then(function (datos) {
-                        var lastString = datos.data[datos.data.length - 1];
-                        var split = lastString.split("|");
-                        numeracion = split[split.length - 1];
-                        $scope.facturaImpresa.numeracion = numeracion;
-                        $scope.facturaImpresa.estado = "CONFIRMADO";
-                        $scope.facturaImpresa.idVendedor = params.vendedorFiscal;
-                        var $update = facturaService.update($scope.facturaImpresa);
-                        $update.then(function (datos) {
-                            if (datos.status === 200) {
-                                toaster.pop({
-                                    type: 'success',
-                                    title: 'Exito',
-                                    body: 'Comprobante impreso.',
-                                    showCloseButton: false
-                                });
-                                $rootScope.factura = $scope.facturaImpresa;
-                            }
+                    var $detalles = facturaService.getDetalleFacturaList($stateParams.idFactura);
+                    $detalles.then(function (datos) {
+                        var $ticket;
+                        switch (params.comprobanteFiscal) {
+                            case 1:
+                                $ticket = fiscalService.ticket(datos.data);
+                                $scope.facturaImpresa.tipoFactura = "Ticket";
+                                break;
+                            case 3:
+                                $ticket = fiscalService.factura_a(datos.data);
+                                $scope.facturaImpresa.tipoFactura = "Factura A";
+                                break;
+                            case 4:
+                                $ticket = fiscalService.factura_b(datos.data);
+                                $scope.facturaImpresa.tipoFactura = "Factura B";
+                                break;
+                        }
+                        $ticket.then(function (datos) {
+                            var lastString = datos.data[datos.data.length - 1];
+                            var split = lastString.split("|");
+                            numeracion = split[split.length - 1];
+                            $scope.facturaImpresa.numeracion = numeracion;
+                            $scope.facturaImpresa.estado = "CONFIRMADO";
+                            $scope.facturaImpresa.idVendedor = params.vendedorFiscal;
+                            var $update = facturaService.update($scope.facturaImpresa);
+                            $update.then(function (datos) {
+                                if (datos.status === 200) {
+                                    toaster.pop({
+                                        type: 'success',
+                                        title: 'Exito',
+                                        body: 'Comprobante impreso.',
+                                        showCloseButton: false
+                                    });
+                                    $rootScope.factura = $scope.facturaImpresa;
+                                }
+                            });
                         });
                     });
                 }

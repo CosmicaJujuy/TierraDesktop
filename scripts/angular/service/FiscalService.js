@@ -15,7 +15,7 @@
         this.printer = function () {
             var datosRecu = null;
             var deferred = $q.defer();
-            var uri = 'http://localhost:8888/HasarPrinterAPI-0.5/oauth/token';
+            var uri = 'http://localhost:8888/oauth/token';
             $http({
                 ignoreLoadingBar: true,
                 url: uri,
@@ -42,7 +42,7 @@
         this.connection = function () {
             var datosRecu = null;
             var deferred = $q.defer();
-            var uri = 'http://localhost:8888/HasarPrinterAPI-0.5/fiscal/connection';
+            var uri = 'http://localhost:8888/fiscal/connection';
             var token = cookieService.get('ptk');
             token.then(function (data) {
                 $http({
@@ -67,7 +67,7 @@
         this.factura_a = function (listaDetalles) {
             var datosRecu = null;
             var deferred = $q.defer();
-            var uri = 'http://localhost:8888/HasarPrinterAPI-0.5/fiscal/factura/A';
+            var uri = 'http://localhost:8888/fiscal/factura/A';
             var token = cookieService.get('ptk');
             token.then(function (data) {
                 $http({
@@ -92,7 +92,7 @@
         this.factura_b = function (listaDetalles) {
             var datosRecu = null;
             var deferred = $q.defer();
-            var uri = 'http://localhost:8888/HasarPrinterAPI-0.5/fiscal/factura/B';
+            var uri = 'http://localhost:8888/fiscal/factura/B';
             var token = cookieService.get('ptk');
             token.then(function (data) {
                 $http({
@@ -117,7 +117,7 @@
         this.ticket = function (listaDetalles) {
             var datosRecu = null;
             var deferred = $q.defer();
-            var uri = 'http://localhost:8888/HasarPrinterAPI-0.5/fiscal/ticket';
+            var uri = 'http://localhost:8888/fiscal/ticket';
             var token = cookieService.get('ptk');
             token.then(function (data) {
                 $http({
@@ -142,7 +142,7 @@
         this.regalo = function (listaDetalles, serialRegalo) {
             var datosRecu = null;
             var deferred = $q.defer();
-            var uri = 'http://localhost:8888/HasarPrinterAPI-0.5/fiscal/regalo';
+            var uri = 'http://localhost:8888/fiscal/regalo';
             var token = cookieService.get('ptk');
             token.then(function (data) {
                 $http({
@@ -170,7 +170,7 @@
         this.comprobanteZ = function () {
             var datosRecu = null;
             var deferred = $q.defer();
-            var uri = 'http://localhost:8888/HasarPrinterAPI-0.5/fiscal/comprobante/Z';
+            var uri = 'http://localhost:8888/fiscal/comprobante/Z';
             var token = cookieService.get('ptk');
             token.then(function (data) {
                 $http({
