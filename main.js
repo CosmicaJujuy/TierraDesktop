@@ -106,8 +106,11 @@ function createWindow() {
 }
 var child_process = require('child_process');
 var printerProcess;
+var logStream = fs.createWriteStream('./logFile.log', {flags: 'a'});
 app.on('ready', function () {
     printerProcess = child_process.spawn('java', ['-jar', '.\\printer_service\\HasarPrinterAPI-0.5.jar']);
+    printerProcess.stdout.pipe(logStream);
+    printerProcess.stderr.pipe(logStream);
     printerProcess.stdout.on('data', function (data) {
         console.log("STDOUT: " + data);
     });
@@ -161,8 +164,8 @@ ipcMain.on("readyToPrintPDF", function (event) {
             }
             shell.openItem(pdfPath);
             event.sender.send('wrote-pdf', pdfPath);
-        })
-    })
+        });
+    });
 });
 var Config = require('electron-config');
 var config = new Config();
